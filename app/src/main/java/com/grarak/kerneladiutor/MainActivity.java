@@ -21,7 +21,6 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.LightingColorFilter;
 import android.os.AsyncTask;
@@ -96,6 +95,8 @@ public class MainActivity extends ActionBarActivity implements Constants {
     private String LAUNCH_NAME;
     private int cur_position;
 
+    private AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,9 +107,9 @@ public class MainActivity extends ActionBarActivity implements Constants {
         try {
             LAUNCH_NAME = getIntent().getStringExtra(LAUNCH_INTENT);
             if (LAUNCH_NAME == null && VERSION_NAME.contains("beta"))
-                new AlertDialog.Builder(MainActivity.this)
+                alertDialog = new AlertDialog.Builder(MainActivity.this)
                         .setMessage(getString(R.string.beta_message, VERSION_NAME))
-                        .setNeutralButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
@@ -257,31 +258,34 @@ public class MainActivity extends ActionBarActivity implements Constants {
             super.onPostExecute(result);
 
             if (!hasRoot || !hasBusybox) {
-                Intent i = new Intent(MainActivity.this, TextActivity.class);
-                Bundle args = new Bundle();
-                args.putString(TextActivity.ARG_TEXT, !hasRoot ? getString(R.string.no_root)
-                        : getString(R.string.no_busybox));
+                if (alertDialog != null)
+                    alertDialog.dismiss();
+
                 Log.d(TAG, !hasRoot ? getString(R.string.no_root) : getString(R.string.no_busybox));
-                i.putExtras(args);
-                startActivity(i);
+                alertDialog = new AlertDialog.Builder(MainActivity.this)
+                        .setMessage(!hasRoot ? getString(R.string.no_root) : getString(R.string.no_busybox))
+                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alertDialog.dismiss();
+                                finish();
+                            }
+                        }).show();
+            } else {
+                setInterface();
+                try {
+                    ((ViewGroup) progressBar.getParent()).removeView(progressBar);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
 
-                cancel(true);
-                finish();
-                return;
-            }
-
-            setInterface();
-            try {
-                ((ViewGroup) progressBar.getParent()).removeView(progressBar);
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-
-            if (LAUNCH_NAME == null) LAUNCH_NAME = KernelInformationFragment.class.getSimpleName();
-            for (int i = 0; i < mList.size(); i++) {
-                if (mList.get(i).getFragment() != null)
-                    if (LAUNCH_NAME.equals(mList.get(i).getFragment().getClass().getSimpleName()))
-                        selectItem(i);
+                if (LAUNCH_NAME == null)
+                    LAUNCH_NAME = KernelInformationFragment.class.getSimpleName();
+                for (int i = 0; i < mList.size(); i++) {
+                    if (mList.get(i).getFragment() != null)
+                        if (LAUNCH_NAME.equals(mList.get(i).getFragment().getClass().getSimpleName()))
+                            selectItem(i);
+                }
             }
         }
     }

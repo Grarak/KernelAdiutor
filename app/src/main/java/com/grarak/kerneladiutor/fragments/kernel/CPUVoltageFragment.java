@@ -155,11 +155,11 @@ public class CPUVoltageFragment extends RecyclerViewFragment {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setView(view)
-                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
-                        }).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        }).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CPUVoltage.setGlobalOffset(textView.getText().toString(), getActivity());

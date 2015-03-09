@@ -26,8 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.grarak.kerneladiutor.R;
-
 /**
  * Created by willi on 26.12.14.
  */
@@ -59,11 +57,11 @@ public class EditTextCardView extends CardViewItem {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setView(layout)
-                        .setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
-                        }).setPositiveButton(getContext().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        }).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (onEditTextCardListener != null)
