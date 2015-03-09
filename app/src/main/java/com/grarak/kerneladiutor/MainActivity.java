@@ -108,7 +108,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
             if (LAUNCH_NAME == null && VERSION_NAME.contains("beta"))
                 alertDialog = new AlertDialog.Builder(MainActivity.this)
                         .setMessage(getString(R.string.beta_message, VERSION_NAME))
-                        .setNeutralButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
@@ -265,7 +265,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
                 Log.d(TAG, !hasRoot ? getString(R.string.no_root) : getString(R.string.no_busybox));
                 alertDialog = new AlertDialog.Builder(MainActivity.this)
                         .setMessage(!hasRoot ? getString(R.string.no_root) : getString(R.string.no_busybox))
-                        .setNeutralButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 alertDialog.dismiss();

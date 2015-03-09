@@ -122,12 +122,12 @@ public class ProfileFragment extends RecyclerViewFragment {
                 }
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                dialog.setView(linearLayout).setNegativeButton(getString(R.string.cancel),
+                dialog.setView(linearLayout).setNegativeButton(android.R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
-                        }).setPositiveButton(getString(R.string.ok),
+                        }).setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

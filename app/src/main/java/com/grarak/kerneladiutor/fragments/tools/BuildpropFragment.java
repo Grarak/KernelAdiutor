@@ -179,7 +179,7 @@ public class BuildpropFragment extends RecyclerViewFragment implements View.OnCl
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog,
                                         int which) {
@@ -199,7 +199,7 @@ public class BuildpropFragment extends RecyclerViewFragment implements View.OnCl
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
-                }).setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                }).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 overwrite(key.trim(), value.trim(), "#" + key.trim(), value.trim());

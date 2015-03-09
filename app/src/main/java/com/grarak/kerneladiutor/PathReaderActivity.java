@@ -218,11 +218,11 @@ public class PathReaderActivity extends ActionBarActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setView(layout)
-                    .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
-                    }).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    }).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Control.runCommand(editText.getText().toString(), file, Control.CommandType.GENERIC, getActivity());
