@@ -92,6 +92,7 @@ public class BootService extends Service {
             mBuilder = new NotificationCompat.Builder(this);
             mBuilder.setContentTitle(getString(R.string.apply_on_boot))
                     .setContentText(getString(R.string.apply_on_boot_time, delay))
+					.setColor(0x002A7289)
                     .setSmallIcon(R.drawable.ic_launcher_preview);
             new Thread(new Runnable() {
                 @Override
