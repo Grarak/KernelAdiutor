@@ -4,12 +4,14 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextApearanceLight</item>
+		<item name="android:navigationBarColor">@color/color_primary_light</item>
     </style>
 
     <style name="AppThemeDark" parent="AppBaseThemeDark">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextApearanceDark</item>
+		<item name="android:navigationBarColor">@color/color_primary_dark</item>
     </style>
 
 </resources>
