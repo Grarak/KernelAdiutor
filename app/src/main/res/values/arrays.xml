@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_status</item>
+        <item>@drawable/ic_cpu</item>
+        <item>@drawable/ic_graphics</item>
+        <item>@drawable/ic_wake</item>
+        <item>@drawable/ic_voltage</item>
+        <item>@drawable/ic_sound</item>
+        <item>@drawable/ic_misc</item>
+        <item>@drawable/ic_arrow</item>
+        <item>@drawable/ic_tools</item>
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_about</item>
+    </array>
 
     <!-- Main Header -->
     <string-array name="main_header_picture_items">
