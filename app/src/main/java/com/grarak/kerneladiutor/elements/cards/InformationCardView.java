@@ -23,6 +23,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.grarak.cardview.BaseCardView;
@@ -38,6 +39,7 @@ public class InformationCardView extends BaseCardView {
     private TextView infoView;
     private Button okButton;
     private String infoText;
+    private static LinearLayout infoCard;
     private OnClickListener onClickListener;
 
     public InformationCardView(Context context) {
@@ -51,10 +53,15 @@ public class InformationCardView extends BaseCardView {
     public void setUpInnerLayout(View view) {
         infoView = (TextView) view.findViewById(R.id.info_text);
         okButton = (Button) view.findViewById(R.id.ok_button);
+        infoCard = (LinearLayout) view.findViewById(R.id.info_card);
 
         if (infoText != null) infoView.setText(infoText);
         if (onClickListener != null)
             okButton.setOnClickListener(onClickListener);
+    }
+
+    public static void removeCard() {
+        infoCard.setVisibility(View.GONE);
     }
 
     @Override

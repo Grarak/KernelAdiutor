@@ -86,6 +86,7 @@ public class ThermalFragment extends RecyclerViewFragment implements SwitchCardV
                 public void onClick(View v) {
                     // TODO: Recyclerview is bugged
                     //removeView(mInformationCard);
+                    InformationCardView.removeCard();
                     Utils.saveBoolean("hideinfocardthermal", true, getActivity());
                 }
             });
