@@ -1,5 +1,7 @@
 KernelAdiutor
 =============
+
+[![Join the chat at https://gitter.im/Grarak/KernelAdiutor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Grarak/KernelAdiutor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/kernel-adiutor/localized.png)](https://crowdin.com/project/kernel-adiutor)
 
 <img alt="Screenshot"
