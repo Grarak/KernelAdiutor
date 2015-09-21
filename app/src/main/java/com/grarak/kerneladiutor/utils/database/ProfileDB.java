@@ -48,13 +48,12 @@ public class ProfileDB extends JsonDB {
                 return true;
             }
         }
-
         return false;
     }
 
     public int getProfileId(String name) {
-
         List<ProfileItem> profiles = getAllProfiles();
+        
         for (int i = 0; i < profiles.size(); i++) {
             if (profiles.get(i).getName().equals(name)) {
                 return i;
@@ -62,10 +61,9 @@ public class ProfileDB extends JsonDB {
         }
         return -1;
     }
-
+    
     public void putProfile(String name, LinkedHashMap<String, String> commands) {
         try {
-
             JSONObject items = new JSONObject();
             items.put("name", name);
 
