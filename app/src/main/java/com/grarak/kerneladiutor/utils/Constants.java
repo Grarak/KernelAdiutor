@@ -615,6 +615,7 @@ public interface Constants {
     String[] VIBRATION_ARRAY = {
             "/sys/vibrator/pwmvalue",
             "/sys/class/timed_output/vibrator/amp",
+            "/sys/class/timed_output/vibrator/level",
             "/sys/class/timed_output/vibrator/vtg_level",
             "/sys/devices/platform/tspdrv/nforce_timed",
             "/sys/class/timed_output/vibrator/pwm_value",
