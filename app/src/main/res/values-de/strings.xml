@@ -209,7 +209,7 @@
   <string name="quad_core_mode">Quad-Core-Modus</string>
   <string name="dual_core_mode">Dual-Core-Modus</string>
   <string name="zen_decision">Zen Decision</string>
-  <string name="zen_decision_summary">Ein Kernel-Ersatz für Qualcomms MPDecision, entwickelt von Alucard.</string>
+  <string name="zen_decision_summary">Ein Kernel-Ersatz für Qualcomms MPDecision, entwickelt von bbedward.</string>
   <string name="wake_wait_time">Wake Wartezeit</string>
   <string name="wake_wait_time_summary">Wie lange warten bis alle Kerne eingeschalten werden. </string>
   <string name="bat_threshold_ignore">Batterie Schwellwert ignorieren</string>
