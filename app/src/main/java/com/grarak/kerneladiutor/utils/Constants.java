@@ -681,7 +681,11 @@ public interface Constants {
     String[] LOGGER_ARRAY = {LOGGER_MODE, LOGGER_ENABLED};
 
     // Fsync
-    String FSYNC = "/sys/devices/virtual/misc/fsynccontrol/fsync_enabled";
+    String FSYNC[] = {
+            "/sys/devices/virtual/misc/fsynccontrol/fsync_enabled",
+            "/sys/module/sync/parameters/fsync_enabled",
+    };
+
     String DYNAMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
 
     // Power suspend
