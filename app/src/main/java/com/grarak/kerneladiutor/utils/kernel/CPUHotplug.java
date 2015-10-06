@@ -1277,6 +1277,7 @@ public class CPUHotplug implements Constants {
 
     public static List<String> getIntelliPlugProfileMenu(Context context) {
         List<String> list = new ArrayList<>();
+        list.add(context.getString(R.string.insanity));
         list.add(context.getString(R.string.balanced));
         list.add(context.getString(R.string.performance));
         list.add(context.getString(R.string.conservative));
@@ -1286,6 +1287,7 @@ public class CPUHotplug implements Constants {
             list.add(context.getString(R.string.eco));
             list.add(context.getString(R.string.strict));
         } else {
+            list.add(context.getString(R.string.eco_insanity));
             list.add(context.getString(R.string.eco_performance));
             list.add(context.getString(R.string.eco_conservative));
         }
