@@ -152,5 +152,14 @@
       "XT1254"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/quark.json"
+  },
+  {
+    "vendor": [
+      "huawei"
+    ],
+    "device": [
+      "Angler"
+    ],
+    "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/Fechdakernel_Angler.json"
   }
 ]
