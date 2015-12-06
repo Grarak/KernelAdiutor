@@ -715,8 +715,11 @@ public interface Constants {
     };
     String DYNAMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
 
+    // Sched Features
     // Gentle fair sleepers
     String GENTLE_FAIR_SLEEPERS = "/sys/kernel/sched/gentle_fair_sleepers";
+    // Arch power
+    String ARCH_POWER = "/sys/kernel/sched/arch_power";
 
     // Power suspend
     String POWER_SUSPEND = "/sys/kernel/power_suspend";
@@ -729,8 +732,8 @@ public interface Constants {
     String HOSTNAME_KEY = "net.hostname";
 
     String[][] MISC_ARRAY = {{VIB_ENABLE, SENSOR_IND_WAKELOCK, MSM_HSIC_HOST_WAKELOCK, WLAN_RX_WAKELOCK_DIVIDER,
-            MSM_HSIC_WAKELOCK_DIVIDER, LOGGER_ENABLED, DYNAMIC_FSYNC, GENTLE_FAIR_SLEEPERS, POWER_SUSPEND_MODE,
-            POWER_SUSPEND_STATE, TCP_AVAILABLE_CONGESTIONS, HOSTNAME_KEY},
+            MSM_HSIC_WAKELOCK_DIVIDER, LOGGER_ENABLED, DYNAMIC_FSYNC, GENTLE_FAIR_SLEEPERS, ARCH_POWER,
+            POWER_SUSPEND_MODE, POWER_SUSPEND_STATE, TCP_AVAILABLE_CONGESTIONS, HOSTNAME_KEY},
             SMB135X_WAKELOCKS, WLAN_RX_WAKELOCKS, WLAN_CTRL_WAKELOCKS, WLAN_WAKELOCKS, VIBRATION_ARRAY, CRC_ARRAY, FSYNC_ARRAY};
 
     // Build prop
