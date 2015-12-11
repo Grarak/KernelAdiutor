@@ -39,6 +39,18 @@ public class Wake implements Constants {
     private static String DT2S_FILE;
     private static String WAKE_TIMEOUT_FILE;
 
+    public static void activatePocketMode(boolean active, Context context) {
+        Control.runCommand(active ? "1" : "0", POCKET_MODE, Control.CommandType.GENERIC, context);
+    }
+
+    public static boolean isPocketModeActive() {
+        return Utils.readFile(POCKET_MODE).equals("1");
+    }
+
+    public static boolean hasPocketMode() {
+        return Utils.existFile(POCKET_MODE);
+    }
+
     public static void activatePowerKeySuspend(boolean active, Context context) {
         Control.runCommand(active ? "1" : "0", POWER_KEY_SUSPEND, Control.CommandType.GENERIC, context);
     }

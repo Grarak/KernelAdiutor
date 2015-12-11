@@ -555,6 +555,9 @@ public interface Constants {
     String[][] WAKE_ARRAY = {DT2W_ARRAY, S2W_ARRY, T2W_ARRAY, WAKE_MISC_ARRAY, SLEEP_MISC_ARRAY, WAKE_TIMEOUT_ARRAY,
             {GESTURE_CRTL, POWER_KEY_SUSPEND}};
 
+    // Pocket mode for Gesture
+    String POCKET_MODE = "/sys/android_touch/pocket_mode";
+
     // Sound
     String SOUND_CONTROL_ENABLE = "/sys/module/snd_soc_wcd9320/parameters/enable_fs";
     String HEADPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_headphone_gain";
