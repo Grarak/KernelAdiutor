@@ -161,5 +161,14 @@
       "YUREKA"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/tomato.json"
+  },
+    {
+    "vendor": [
+      "Xiaomi"
+    ],
+    "device": [
+      "Ferrari"
+    ],
+    "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/ferrari.json"
   }
 ]
