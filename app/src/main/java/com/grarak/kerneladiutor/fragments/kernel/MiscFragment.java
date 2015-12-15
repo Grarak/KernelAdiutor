@@ -49,6 +49,8 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
 
     private SwitchCardView.DSwitchCard mCrcCard;
 
+    private SwitchCardView.DSwitchCard mFlashCard;
+
     private SwitchCardView.DSwitchCard mFsyncCard;
     private SwitchCardView.DSwitchCard mDynamicFsyncCard;
 
@@ -78,6 +80,7 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
         if (Misc.hasVibration()) vibrationInit();
         if (Misc.hasLoggerEnable()) loggerInit();
         if (Misc.hasCrc()) crcInit();
+        if (Misc.hasFlash()) flashInit();
         fsyncInit();
         if (Misc.hasGentleFairSleepers()) gentlefairsleepersInit();
         if (Misc.hasArchPower()) archpowerInit();
@@ -120,6 +123,16 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
         mCrcCard.setOnDSwitchCardListener(this);
 
         addView(mCrcCard);
+    }
+
+    private void flashInit() {
+        mFlashCard = new SwitchCardView.DSwitchCard();
+        mFlashCard.setTitle(getString(R.string.flash));
+        mFlashCard.setDescription(getString(R.string.flash_summary));
+        mFlashCard.setChecked(Misc.isFlashActive());
+        mFlashCard.setOnDSwitchCardListener(this);
+
+        addView(mFlashCard);
     }
 
     private void fsyncInit() {
@@ -374,6 +387,8 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
             Misc.activateLogger(checked, getActivity());
         else if (dSwitchCard == mCrcCard)
             Misc.activateCrc(checked, getActivity());
+        else if (dSwitchCard == mFlashCard)
+            Misc.activateFlash(checked, getActivity());
         else if (dSwitchCard == mFsyncCard)
             Misc.activateFsync(checked, getActivity());
         else if (dSwitchCard == mDynamicFsyncCard)
