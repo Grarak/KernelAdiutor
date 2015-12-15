@@ -521,6 +521,8 @@
     <string name="android_logger">Android logging</string>
     <string name="crc">Software CRC control</string>
     <string name="crc_summary">CRC is a mechanism aiming to prevent data corruption when enabled. Data blocks can lose up to 30% of their performance.</string>
+    <string name="flash">Low Power Flash Mode</string>
+    <string name="flash_summary">Fixes shutdowns when taking pictures with flash.</string>
     <string name="fsync">Fsync</string>
     <string name="fsync_summary">Disable for better file system performance at the risk of data lost when your phone crashes.</string>
     <string name="dynamic_fsync">Dynamic Fsync</string>
