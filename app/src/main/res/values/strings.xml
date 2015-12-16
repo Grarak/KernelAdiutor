@@ -295,6 +295,8 @@
     <string name="temp_safety">Temperature Safety</string>
     <string name="msm_thermal">MSM Thermal</string>
     <string name="msm_thermal_summary">An in-kernel replacement for Qualcomm\'s Thermald. Developed by show-p1984.</string>
+    <string name="msm_thermal_enabled">On/Off Switch for MSM Thermal.</string>
+    <string name="msm_thermal_enabled_summary">Not even show-p1984 would dare turn it off.</string>
     <string name="allowed_low_low">Phase 1: Allowed Low Low</string>
     <string name="allowed_low_high">Phase 1: Allowed Low High</string>
     <string name="allowed_low_freq">Phase 1: Allowed Low Frequency</string>

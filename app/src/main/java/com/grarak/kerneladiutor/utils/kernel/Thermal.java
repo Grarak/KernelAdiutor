@@ -30,10 +30,34 @@ import java.util.List;
  */
 public class Thermal implements Constants {
 
+  private enum MSMTHERMAL_TYPE {
+        SULTAN, NOTSULTAN
+    }
+
+    private static MSMTHERMAL_TYPE TYPE;
+
     private static String THERMAL_FILE;
     private static String CORE_CONTROL_ENABLE_FILE;
 
     private static String TEMP_LIMIT_FILE;
+
+    public static void activateEnabled(boolean active, Context context) {
+        String file = CONF_ENABLED;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_START;
+        Control.runCommand(active ? "1" : "0", file, Control.CommandType.GENERIC, context);
+    }
+
+    public static boolean isEnabledActive() {
+        String file = CONF_ENABLED;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_START;
+        return Utils.readFile(file).equals("1");
+    }
+
+    public static boolean hasEnabled() {
+        String file = CONF_ENABLED;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_START;
+        return Utils.existFile(file);
+    }
 
     public static void setShutdownTemp(int value, Context context) {
         Control.runCommand(String.valueOf(value), CONF_SHUTDOWN_TEMP, Control.CommandType.GENERIC, context);
@@ -48,126 +72,185 @@ public class Thermal implements Constants {
     }
 
     public static void setCheckIntervalMs(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_CHECK_INTERVAL_MS, Control.CommandType.GENERIC, context);
+        String file = CONF_POLL_MS;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getCheckIntervalMs() {
-        return Utils.stringToInt(Utils.readFile(CONF_CHECK_INTERVAL_MS));
+        String file = CONF_POLL_MS;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasCheckIntervalMs() {
-        return Utils.existFile(CONF_CHECK_INTERVAL_MS);
+        String file = CONF_POLL_MS;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedMaxFreq(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_MAX_FREQ, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_MAX_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_HIGH_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedMaxFreq() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_MAX_FREQ));
+        String file = CONF_ALLOWED_MAX_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_HIGH_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedMaxFreq() {
-        return Utils.existFile(CONF_ALLOWED_MAX_FREQ);
+        String file = CONF_ALLOWED_MAX_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_HIGH_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedMaxHigh(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_MAX_HIGH, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_MAX_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_HIGH_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedMaxHigh() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_MAX_HIGH));
+        String file = CONF_ALLOWED_MAX_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_HIGH_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedMaxHigh() {
-        return Utils.existFile(CONF_ALLOWED_MAX_HIGH);
+        String file = CONF_ALLOWED_MAX_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_HIGH_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedMaxLow(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_MAX_LOW, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_MAX_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_HIGH_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedMaxLow() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_MAX_LOW));
+        String file = CONF_ALLOWED_MAX_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_HIGH_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedMaxLow() {
-        return Utils.existFile(CONF_ALLOWED_MAX_LOW);
+        String file = CONF_ALLOWED_MAX_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_HIGH_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedMidFreq(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_MID_FREQ, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_MID_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_MID_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedMidFreq() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_MID_FREQ));
+        String file = CONF_ALLOWED_MID_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_MID_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedMidFreq() {
-        return Utils.existFile(CONF_ALLOWED_MID_FREQ);
+        String file = CONF_ALLOWED_MID_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_MID_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedMidHigh(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_MID_HIGH, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_MID_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_MID_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedMidHigh() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_MID_HIGH));
+        String file = CONF_ALLOWED_MID_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_MID_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedMidHigh() {
-        return Utils.existFile(CONF_ALLOWED_MID_HIGH);
+        String file = CONF_ALLOWED_MID_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_MID_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedMidLow(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_MID_LOW, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_MID_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_MID_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedMidLow() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_MID_LOW));
+        String file = CONF_ALLOWED_MID_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_MID_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedMidLow() {
-        return Utils.existFile(CONF_ALLOWED_MID_LOW);
+        String file = CONF_ALLOWED_MID_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_MID_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedLowFreq(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_LOW_FREQ, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_LOW_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_LOW_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedLowFreq() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_LOW_FREQ));
+        String file = CONF_ALLOWED_LOW_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_LOW_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedLowFreq() {
-        return Utils.existFile(CONF_ALLOWED_LOW_FREQ);
+        String file = CONF_ALLOWED_LOW_FREQ;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_FREQ_LOW_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedLowHigh(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_LOW_HIGH, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_LOW_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_LOW_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedLowHigh() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_LOW_HIGH));
+        String file = CONF_ALLOWED_LOW_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_LOW_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedLowHigh() {
-        return Utils.existFile(CONF_ALLOWED_LOW_HIGH);
+        String file = CONF_ALLOWED_LOW_HIGH;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_TRIP_LOW_THRESH;
+        return Utils.existFile(file);
     }
 
     public static void setAllowedLowLow(int value, Context context) {
-        Control.runCommand(String.valueOf(value), CONF_ALLOWED_LOW_LOW, Control.CommandType.GENERIC, context);
+        String file = CONF_ALLOWED_LOW_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_LOW_THRESH;
+        Control.runCommand(String.valueOf(value), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getAllowedLowLow() {
-        return Utils.stringToInt(Utils.readFile(CONF_ALLOWED_LOW_LOW));
+        String file = CONF_ALLOWED_LOW_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_LOW_THRESH;
+        return Utils.stringToInt(Utils.readFile(file));
     }
 
     public static boolean hasAllowedLowLow() {
-        return Utils.existFile(CONF_ALLOWED_LOW_LOW);
+        String file = CONF_ALLOWED_LOW_LOW;
+        if (TYPE == MSMTHERMAL_TYPE.SULTAN) file = CONF_RESET_LOW_THRESH;
+        return Utils.existFile(file);
     }
 
     public static boolean hasMsmThermal() {
+        if (Utils.existFile(CONF_RESET_LOW_THRESH)) TYPE = MSMTHERMAL_TYPE.SULTAN;
+        else TYPE = MSMTHERMAL_TYPE.NOTSULTAN;
         return Utils.existFile(MSM_THERMAL_CONF);
     }
 

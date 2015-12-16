@@ -61,6 +61,7 @@ public class ThermalFragment extends RecyclerViewFragment implements SwitchCardV
     private SwitchCardView.DSwitchCard mFreqLimitDebugCard;
     private PopupCardView.DPopupCard mMinFreqIndexCard;
 
+    private SwitchCardView.DSwitchCard mEnabledCard;
     private SeekBarCardView.DSeekBarCard mAllowedLowLowCard;
     private SeekBarCardView.DSeekBarCard mAllowedLowHighCard;
     private PopupCardView.DPopupCard mAllowedLowFreqCard;
@@ -314,6 +315,16 @@ public class ThermalFragment extends RecyclerViewFragment implements SwitchCardV
     private void msmThermalInit() {
         List<DAdapter.DView> views = new ArrayList<>();
 
+        if (Thermal.hasEnabled()) {
+        mEnabledCard = new SwitchCardView.DSwitchCard();
+        mEnabledCard.setTitle(getString(R.string.msm_thermal_enabled));
+        mEnabledCard.setDescription(getString(R.string.msm_thermal_enabled_summary));
+        mEnabledCard.setChecked(Thermal.isEnabledActive());
+        mEnabledCard.setOnDSwitchCardListener(this);
+
+        addView(mEnabledCard);
+        }
+
         if (Thermal.hasAllowedLowLow()) {
             List<String> list = new ArrayList<>();
             for (double i = 40; i < 101; i++)
@@ -483,6 +494,8 @@ public class ThermalFragment extends RecyclerViewFragment implements SwitchCardV
             Thermal.activateTempThrottle(checked, getActivity());
         else if (dSwitchCard == mFreqLimitDebugCard)
             Thermal.activateFreqLimitDebug(checked, getActivity());
+        else if (dSwitchCard == mEnabledCard)
+            Thermal.activateEnabled(checked, getActivity());
     }
 
     @Override
