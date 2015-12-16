@@ -291,6 +291,18 @@ public interface Constants {
     String CONF_ALLOWED_MAX_FREQ = MSM_THERMAL_CONF + "/allowed_max_freq";
     String CONF_CHECK_INTERVAL_MS = MSM_THERMAL_CONF + "/check_interval_ms";
     String CONF_SHUTDOWN_TEMP = MSM_THERMAL_CONF + "/shutdown_temp";
+    // Sultan's 8X60 Ones
+    String CONF_RESET_LOW_THRESH = MSM_THERMAL_CONF + "/reset_low_thresh";
+    String CONF_TRIP_LOW_THRESH = MSM_THERMAL_CONF + "/trip_low_thresh";
+    String CONF_FREQ_LOW_THRESH = MSM_THERMAL_CONF + "/freq_low_thresh";
+    String CONF_RESET_MID_THRESH = MSM_THERMAL_CONF + "/reset_mid_thresh";
+    String CONF_TRIP_MID_THRESH = MSM_THERMAL_CONF + "/trip_mid_thresh";
+    String CONF_FREQ_MID_THRESH = MSM_THERMAL_CONF + "/freq_mid_thresh";
+    String CONF_RESET_HIGH_THRESH = MSM_THERMAL_CONF + "/reset_high_thresh";
+    String CONF_TRIP_HIGH_THRESH = MSM_THERMAL_CONF + "/trip_high_thresh";
+    String CONF_FREQ_HIGH_THRESH = MSM_THERMAL_CONF + "/freq_high_thresh";
+    String CONF_POLL_MS = MSM_THERMAL_CONF + "/poll_ms";
+
 
     String[] THERMAL_ARRAY = {MSM_THERMAL, MSM_THERMAL_V2};
 
