@@ -54,7 +54,7 @@
   <string name="sound">Звук</string>
   <string name="battery">Батарея</string>
   <string name="io_scheduler">Планировщик I/O</string>
-  <string name="ksm">Объединенныя память</string>
+  <string name="ksm">Объединенная память</string>
   <string name="low_memory_killer">Low Memory Убийца</string>
   <string name="virtual_memory">Виртуальная память</string>
   <string name="entropy">Энтропия</string>
