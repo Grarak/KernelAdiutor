@@ -54,8 +54,8 @@
   <string name="sound">Звук</string>
   <string name="battery">Батарея</string>
   <string name="io_scheduler">Планировщик I/O</string>
-  <string name="ksm">Kernel Samepage Merging</string>
-  <string name="low_memory_killer">Low Memory Killer</string>
+  <string name="ksm">Объединенныя память</string>
+  <string name="low_memory_killer">Low Memory Убийца</string>
   <string name="virtual_memory">Виртуальная память</string>
   <string name="entropy">Энтропия</string>
   <string name="misc_controls">Прочие элементы управления</string>
@@ -394,7 +394,7 @@
   <string name="dt2w_s2w_charging">DoubleTap2Wake + Sweep2Wake во время зарядки</string>
   <string name="sleep">Сон</string>
   <string name="dt2s">Двойной Тап для Сна</string>
-  <string name="dt2s_summary">Блокируйте устройство двойным касанием в верхней части экрана.</string>
+  <string name="dt2s_summary">Блокируйте устройство двойным тапом в верхней части экрана.</string>
   <string name="slide_up">Сдвиг вверх</string>
   <string name="slide_down">Сдвиг вниз</string>
   <string name="slide_left">Сдвиг влево</string>
@@ -482,11 +482,11 @@
   <string name="tcp">Алгоритм передачи данных по TCP</string>
   <string name="tcp_summary">TCP протокол - один из сетевых протоколов (IP), также известный как TCP/IP.</string>
   <string name="hostname">Имя устройства</string>
-  <string name="wakelock">Wakelock</string>
+  <string name="wakelock">Блокировка сна(wakelock)</string>
   <string name="smb135x_wakelock">smb135x Wakelock</string>
-  <string name="smb135x_wakelock_summary">Предотвращение Wakelock\'а во время автономного питания.</string>
+  <string name="smb135x_wakelock_summary">Предотвращение блокировки сна\'а во время автономного питания.</string>
   <string name="sensor_ind_wakelock">sensor_ind Wakelock</string>
-  <string name="sensor_ind_wakelock_summary">Предотвратить wakelock при отключении функции Ambient Display.</string>
+  <string name="sensor_ind_wakelock_summary">Предотвратить блокировку сна при отключении функции Ambient Display.</string>
   <string name="msm_hsic_host_wakelock">msm_hsic_host Wakelock</string>
   <string name="msm_hsic_host_wakelock_summary">Предотвращать msm_hsic_host вэйклок.</string>
   <string name="wlan_rx_wakelock">wlan_rx Wakelock</string>
