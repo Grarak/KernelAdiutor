@@ -106,6 +106,7 @@ public interface Constants {
     String HOTPLUG_INTELLI_PLUG_HYSTERESIS = HOTPLUG_INTELLI_PLUG + "/nr_run_hysteresis";
     String HOTPLUG_INTELLI_PLUG_THRESHOLD = HOTPLUG_INTELLI_PLUG + "/cpu_nr_run_threshold";
     String HOTPLUG_INTELLI_PLUG_SCREEN_OFF_MAX = HOTPLUG_INTELLI_PLUG + "/screen_off_max";
+    String HOTPLUG_INTELLI_PLUG_INSANITY = HOTPLUG_INTELLI_PLUG + "/is_insanity";
 
     String HOTPLUG_INTELLI_PLUG_5 = "/sys/kernel/intelli_plug";
     String HOTPLUG_INTELLI_PLUG_5_ENABLE = HOTPLUG_INTELLI_PLUG_5 + "/intelli_plug_active";
@@ -291,6 +292,18 @@ public interface Constants {
     String CONF_ALLOWED_MAX_FREQ = MSM_THERMAL_CONF + "/allowed_max_freq";
     String CONF_CHECK_INTERVAL_MS = MSM_THERMAL_CONF + "/check_interval_ms";
     String CONF_SHUTDOWN_TEMP = MSM_THERMAL_CONF + "/shutdown_temp";
+    // Sultan's 8X60 Ones
+    String CONF_RESET_LOW_THRESH = MSM_THERMAL_CONF + "/reset_low_thresh";
+    String CONF_TRIP_LOW_THRESH = MSM_THERMAL_CONF + "/trip_low_thresh";
+    String CONF_FREQ_LOW_THRESH = MSM_THERMAL_CONF + "/freq_low_thresh";
+    String CONF_RESET_MID_THRESH = MSM_THERMAL_CONF + "/reset_mid_thresh";
+    String CONF_TRIP_MID_THRESH = MSM_THERMAL_CONF + "/trip_mid_thresh";
+    String CONF_FREQ_MID_THRESH = MSM_THERMAL_CONF + "/freq_mid_thresh";
+    String CONF_RESET_HIGH_THRESH = MSM_THERMAL_CONF + "/reset_high_thresh";
+    String CONF_TRIP_HIGH_THRESH = MSM_THERMAL_CONF + "/trip_high_thresh";
+    String CONF_FREQ_HIGH_THRESH = MSM_THERMAL_CONF + "/freq_high_thresh";
+    String CONF_POLL_MS = MSM_THERMAL_CONF + "/poll_ms";
+
 
     String[] THERMAL_ARRAY = {MSM_THERMAL, MSM_THERMAL_V2};
 
@@ -417,7 +430,9 @@ public interface Constants {
 
     String SCREEN_FB0_RGB = "/sys/class/graphics/fb0/rgb";
 
-    String[] SCREEN_RGB_ARRAY = {SCREEN_KCAL_CTRL, SCREEN_DIAG0_POWER, SCREEN_COLOR_CONTROL, SCREEN_SAMOLED_COLOR, SCREEN_FB0_RGB};
+    String SCREEN_FB_KCAL = "/sys/devices/virtual/graphics/fb0/kcal";
+
+    String[] SCREEN_RGB_ARRAY = {SCREEN_KCAL_CTRL, SCREEN_DIAG0_POWER, SCREEN_COLOR_CONTROL, SCREEN_SAMOLED_COLOR, SCREEN_FB0_RGB, SCREEN_FB_KCAL};
 
     String[] SCREEN_RGB_CTRL_ARRAY = {SCREEN_KCAL_CTRL_ENABLE, SCREEN_KCAL_CTRL_CTRL,
             SCREEN_DIAG0_POWER_CTRL, SCREEN_COLOR_CONTROL_CTRL};
@@ -514,6 +529,9 @@ public interface Constants {
 
     String[] S2W_ARRY = {S2W_ONLY, SW2, SW2_2};
 
+    // S2W Leniency
+    String LENIENT = "/sys/android_touch/sweep2wake_sensitive";
+
     // T2W
     String TSP_T2W = "/sys/devices/f9966000.i2c/i2c-1/1-004a/tsp";
     String TOUCHWAKE_T2W = "/sys/class/misc/touchwake/enabled";
@@ -553,7 +571,7 @@ public interface Constants {
     String POWER_KEY_SUSPEND = "/sys/module/qpnp_power_on/parameters/pwrkey_suspend";
 
     String[][] WAKE_ARRAY = {DT2W_ARRAY, S2W_ARRY, T2W_ARRAY, WAKE_MISC_ARRAY, SLEEP_MISC_ARRAY, WAKE_TIMEOUT_ARRAY,
-            {GESTURE_CRTL, POWER_KEY_SUSPEND}};
+            {GESTURE_CRTL, POWER_KEY_SUSPEND, LENIENT}};
 
     // Sound
     String SOUND_CONTROL_ENABLE = "/sys/module/snd_soc_wcd9320/parameters/enable_fs";
@@ -708,6 +726,9 @@ public interface Constants {
             "/sys/module/mmc_core/parameters/use_spi_crc"
     };
 
+    // Low Power Flash
+    String FLASH = "/sys/module/sec_m5mo/parameters/force_lp_flash";
+
     // Fsync
     String[] FSYNC_ARRAY = {
             "/sys/devices/virtual/misc/fsynccontrol/fsync_enabled",
@@ -715,8 +736,11 @@ public interface Constants {
     };
     String DYNAMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
 
+    // Sched Features
     // Gentle fair sleepers
     String GENTLE_FAIR_SLEEPERS = "/sys/kernel/sched/gentle_fair_sleepers";
+    // Arch power
+    String ARCH_POWER = "/sys/kernel/sched/arch_power";
 
     // Power suspend
     String POWER_SUSPEND = "/sys/kernel/power_suspend";
@@ -729,8 +753,8 @@ public interface Constants {
     String HOSTNAME_KEY = "net.hostname";
 
     String[][] MISC_ARRAY = {{VIB_ENABLE, SENSOR_IND_WAKELOCK, MSM_HSIC_HOST_WAKELOCK, WLAN_RX_WAKELOCK_DIVIDER,
-            MSM_HSIC_WAKELOCK_DIVIDER, LOGGER_ENABLED, DYNAMIC_FSYNC, GENTLE_FAIR_SLEEPERS, POWER_SUSPEND_MODE,
-            POWER_SUSPEND_STATE, TCP_AVAILABLE_CONGESTIONS, HOSTNAME_KEY},
+            MSM_HSIC_WAKELOCK_DIVIDER, LOGGER_ENABLED, FLASH, DYNAMIC_FSYNC, GENTLE_FAIR_SLEEPERS,
+            ARCH_POWER, POWER_SUSPEND_MODE, POWER_SUSPEND_STATE, TCP_AVAILABLE_CONGESTIONS, HOSTNAME_KEY},
             SMB135X_WAKELOCKS, WLAN_RX_WAKELOCKS, WLAN_CTRL_WAKELOCKS, WLAN_WAKELOCKS, VIBRATION_ARRAY, CRC_ARRAY, FSYNC_ARRAY};
 
     // Build prop

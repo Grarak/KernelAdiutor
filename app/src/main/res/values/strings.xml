@@ -155,9 +155,11 @@
     <string name="intelliplug">IntelliPlug</string>
     <string name="intelliplug_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by faux123.</string>
     <string name="profile_summary">The number in the parentheses indicates the amount of cores online at any time.</string>
+    <string name="insanity">InSaNiTy</string>
     <string name="balanced">Balanced</string>
     <string name="performance">Performance</string>
     <string name="conservative">Conservative</string>
+    <string name="eco_insanity">Eco InSaNiTy</string>
     <string name="eco_performance">Eco Performance</string>
     <string name="eco_conservative">Eco Conservative</string>
     <string name="tri">Tri</string>
@@ -414,6 +416,8 @@
     <string name="fullscreen">Fullscreen</string>
     <string name="s2w">Sweep2Wake</string>
     <string name="s2w_summary">Wake up your device by swiping on the screen.</string>
+    <string name="lenient">Sweep2Wake Leniency</string>
+    <string name="lenient_summary">Only require 1st and 4th button to trigger Sweep2Wake.</string>
     <string name="s2s">Sweep2Sleep</string>
     <string name="s2w_right">Sweep2Wake Right</string>
     <string name="s2w_left">Sweep2Wake Left</string>
@@ -521,12 +525,16 @@
     <string name="android_logger">Android logging</string>
     <string name="crc">Software CRC control</string>
     <string name="crc_summary">CRC is a mechanism aiming to prevent data corruption when enabled. Data blocks can lose up to 30% of their performance.</string>
+    <string name="flash">Low Power Flash Mode</string>
+    <string name="flash_summary">Fixes shutdowns when taking pictures with flash.</string>
     <string name="fsync">Fsync</string>
     <string name="fsync_summary">Disable for better file system performance at the risk of data lost when your phone crashes.</string>
     <string name="dynamic_fsync">Dynamic Fsync</string>
     <string name="dynamic_fsync_summary">When enabled and screen is on, fsync operation is asynchronous. When screen is off, this operation is committed synchronously.</string>
     <string name="gentlefairsleepers">Gentle Fair Sleepers</string>
     <string name="gentlefairsleepers_summary">Only give sleepers 50% of their service deficit. disable this can save a little battery power.</string>
+    <string name="archpower">Arch Power</string>
+    <string name="archpower_summary">Enable Arch Specific Power Function/Savings</string>
     <string name="power_suspend_mode">Power Suspend Mode</string>
     <string name="power_suspend_mode_summary">Kernel Mode, LCD Hooks and Highest Level Hook are automatically managed by the kernel. To manually enable or disable the Power Suspend State choose User Mode.</string>
     <string name="autosleep">Autosleep</string>

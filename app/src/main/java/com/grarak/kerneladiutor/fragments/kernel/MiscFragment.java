@@ -49,10 +49,13 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
 
     private SwitchCardView.DSwitchCard mCrcCard;
 
+    private SwitchCardView.DSwitchCard mFlashCard;
+
     private SwitchCardView.DSwitchCard mFsyncCard;
     private SwitchCardView.DSwitchCard mDynamicFsyncCard;
 
     private SwitchCardView.DSwitchCard mGentleFairSleepersCard;
+    private SwitchCardView.DSwitchCard mArchPowerCard;
 
     private PopupCardView.DPopupCard mPowerSuspendModeCard;
     private SwitchCardView.DSwitchCard mOldPowerSuspendStateCard;
@@ -77,8 +80,10 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
         if (Misc.hasVibration()) vibrationInit();
         if (Misc.hasLoggerEnable()) loggerInit();
         if (Misc.hasCrc()) crcInit();
+        if (Misc.hasFlash()) flashInit();
         fsyncInit();
         if (Misc.hasGentleFairSleepers()) gentlefairsleepersInit();
+        if (Misc.hasArchPower()) archpowerInit();
         if (Misc.hasPowerSuspend()) powersuspendInit();
         networkInit();
         wakelockInit();
@@ -120,6 +125,16 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
         addView(mCrcCard);
     }
 
+    private void flashInit() {
+        mFlashCard = new SwitchCardView.DSwitchCard();
+        mFlashCard.setTitle(getString(R.string.flash));
+        mFlashCard.setDescription(getString(R.string.flash_summary));
+        mFlashCard.setChecked(Misc.isFlashActive());
+        mFlashCard.setOnDSwitchCardListener(this);
+
+        addView(mFlashCard);
+    }
+
     private void fsyncInit() {
         if (Misc.hasFsync()) {
             mFsyncCard = new SwitchCardView.DSwitchCard();
@@ -150,6 +165,16 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
         mGentleFairSleepersCard.setOnDSwitchCardListener(this);
 
         addView(mGentleFairSleepersCard);
+    }
+
+    private void archpowerInit() {
+        mArchPowerCard = new SwitchCardView.DSwitchCard();
+        mArchPowerCard.setTitle(getString(R.string.archpower));
+        mArchPowerCard.setDescription(getString(R.string.archpower_summary));
+        mArchPowerCard.setChecked(Misc.isArchPowerActive());
+        mArchPowerCard.setOnDSwitchCardListener(this);
+
+        addView(mArchPowerCard);
     }
 
     private void powersuspendInit() {
@@ -362,12 +387,16 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
             Misc.activateLogger(checked, getActivity());
         else if (dSwitchCard == mCrcCard)
             Misc.activateCrc(checked, getActivity());
+        else if (dSwitchCard == mFlashCard)
+            Misc.activateFlash(checked, getActivity());
         else if (dSwitchCard == mFsyncCard)
             Misc.activateFsync(checked, getActivity());
         else if (dSwitchCard == mDynamicFsyncCard)
             Misc.activateDynamicFsync(checked, getActivity());
         else if (dSwitchCard == mGentleFairSleepersCard)
             Misc.activateGentleFairSleepers(checked, getActivity());
+        else if (dSwitchCard == mArchPowerCard)
+            Misc.activateArchPower(checked, getActivity());
         else if (dSwitchCard == mOldPowerSuspendStateCard)
             if (Misc.getPowerSuspendMode() == 1) {
                 Misc.activateOldPowerSuspend(checked, getActivity());
