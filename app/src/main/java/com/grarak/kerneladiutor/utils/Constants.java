@@ -566,10 +566,12 @@ public interface Constants {
     String MIC_BOOST = "/sys/devices/virtual/misc/soundcontrol/mic_boost";
     String SPEAKER_BOOST = "/sys/devices/virtual/misc/soundcontrol/speaker_boost";
     String VOLUME_BOOST = "/sys/devices/virtual/misc/soundcontrol/volume_boost";
+    
+    String HEADSET_HIGHPERF_MODE = "/sys/devices/virtual/misc/soundcontrol/highperf_enabled";
 
     String[] SPEAKER_GAIN_ARRAY = {SPEAKER_GAIN, SPEAKER_BOOST};
 
-    String[][] SOUND_ARRAY = {SPEAKER_GAIN_ARRAY, {SOUND_CONTROL_ENABLE, HEADPHONE_GAIN, HANDSET_MICROPONE_GAIN,
+    String[][] SOUND_ARRAY = {SPEAKER_GAIN_ARRAY, {SOUND_CONTROL_ENABLE, HEADSET_HIGHPERF_MODE, HEADPHONE_GAIN, HANDSET_MICROPONE_GAIN,
             CAM_MICROPHONE_GAIN, HEADPHONE_POWERAMP_GAIN, MIC_BOOST, VOLUME_BOOST}};
 
     // Battery
