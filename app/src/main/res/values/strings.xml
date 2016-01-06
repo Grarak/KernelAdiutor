@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Kernel Adiutor Donate</string>
+
+    <string name="checking_info">Checking info…</string>
+    <string name="checking_root">Checking root access</string>
+    <string name="searching_busybox">Searching for busybox</string>
+    <string name="collecting_info">Collecting info</string>
+    <string name="no_root">No root</string>
+    <string name="no_busybox">No busybox</string>
+    <string name="press_back_again">Press back again to exit</string>
+
+    <string name="select_picture">Select Picture</string>
+    <string name="no_picture">No Picture</string>
+    <string name="went_wrong">Something went wrong!</string>
+    <string name="no_permission">No permission</string>
+
+    <!-- Units -->
+    <string name="mhz">MHz</string>
+    <string name="ghz">GHz</string>
+
+    <!-- Welcome -->
+    <string name="welcome_title">Manage your kernel easily with a beautiful interface</string>
+    <string name="welcome_summary">Monitor your CPU, edit your build.prop, manage your init.d scripts or just enjoy the look and feel of this application.</string>
+    <string name="birthday_title">Happy Birthday!</string>
+    <string name="birthday_summary">Kernel Adiutor is celebrating its first birthday. That means new UI. Enjoy!</string>
+    <string name="lets_start">Lets start</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+
+    <!-- Navigation Header -->
+    <string name="information">Information</string>
+    <string name="kernel">Kernel</string>
+
+    <!-- Navigation Drawer -->
+    <string name="device_information">Device Information</string>
+    <string name="frequency_table">Frequency Table</string>
+    <string name="cpu">CPU</string>
+    <string name="donate">Donate</string>
+    <string name="settings">Settings</string>
+
+    <!-- Device Information -->
+    <string name="core_count">%d cores</string>
+    <string name="big">big</string>
+    <string name="little">LITTLE</string>
+    <string name="android_version">Android Version</string>
+    <string name="android_api_level">Android SDK</string>
+    <string name="android_codename">Android Codename</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="build_display_id">Build Display ID</string>
+    <string name="baseband">Baseband</string>
+    <string name="bootloader">Bootloader</string>
+    <string name="hardware">Hardware</string>
+    <string name="architecture">Architecture</string>
+
+    <!-- Frequency Table -->
+    <string name="deep_sleep">Deep Sleep</string>
+    <string name="error_frequency_table">Failed to load table</string>
+    <string name="uptime">Uptime</string>
+    <string name="unused_frequencies">Unused Frequencies</string>
+    <string name="refresh">Refresh</string>
+    <string name="reset">Reset</string>
+    <string name="restore">Restore</string>
+
+    <!-- Donate -->
+    <string name="_2euro">2€</string>
+    <string name="_5euro">5€</string>
+    <string name="_10euro">10€</string>
+    <string name="_20euro">20€</string>
+    <string name="play_store_not_available">Play Store is not available on your device</string>
+    <string name="same_price">The same price as</string>
+    <string name="can_beer">a can of beer</string>
+    <string name="hot_meal">a hot meal</string>
+    <string name="movie_night">one movie ticket</string>
+    <string name="tshirt">a t-shirt</string>
+
+    <!-- Settings -->
+    <string name="dark_theme">Dark Theme</string>
+    <string name="force_english">Force english language</string>
+</resources>

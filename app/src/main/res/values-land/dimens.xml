@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="recyclerview_padding">72dp</dimen>
+</resources>
