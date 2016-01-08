@@ -114,10 +114,11 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra(TextActivity.MESSAGE_INTENT, getString(hasRoot ?
                             R.string.no_busybox : R.string.no_root));
                     intent.putExtra(TextActivity.SUMMARY_INTENT,
-                            !hasRoot ? "https://play.google.com/store/apps/details?id=stericson.busybox" :
+                            hasRoot ? "https://play.google.com/store/apps/details?id=stericson.busybox" :
                                     "https://www.google.com/search?site=&source=hp&q=root+"
                                             + Device.getVendor() + "+" + Device.getModel());
                     startActivity(intent);
+                    finish();
                     return;
                 }
 
