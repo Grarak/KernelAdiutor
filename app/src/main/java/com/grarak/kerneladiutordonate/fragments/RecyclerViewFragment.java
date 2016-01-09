@@ -21,6 +21,7 @@ package com.grarak.kerneladiutordonate.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -80,6 +81,7 @@ public class RecyclerViewFragment extends BaseFragment {
 
     }
 
+    private static final String UPDATEDATA_INTENT = "updatedata";
     private static final String IMAGE_CONTAINER_TRANSLATION_INTENT = "image_container_translation";
     private static final String TOOLBAR_TRANSLATION_INTENT = "toolbar_translation";
 
@@ -88,11 +90,15 @@ public class RecyclerViewFragment extends BaseFragment {
     private int toolbarDistance;
     private CharSequence title;
     private ActionBar actionBar;
+    private boolean updateData;
 
     @Override
     public void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
         setContentView(R.layout.fragment_recyclerview);
+
+        if (savedInstanceState != null)
+            updateData = savedInstanceState.getBoolean(UPDATEDATA_INTENT);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         mContainer = (FrameLayout) findViewById(R.id.container);
@@ -109,27 +115,6 @@ public class RecyclerViewFragment extends BaseFragment {
         if (savedInstanceState != null) {
             mContainer.setTranslationY(savedInstanceState.getFloat(IMAGE_CONTAINER_TRANSLATION_INTENT, 0));
             getAppBarLayout().setTranslationY(savedInstanceState.getFloat(TOOLBAR_TRANSLATION_INTENT, 0));
-        }
-        if (viewInterface != null) {
-            List<Adapter.RecyclerItem> views = viewInterface.getViews(savedInstanceState);
-            if (views != null)
-                for (Adapter.RecyclerItem recyclerItem : views)
-                    adapter.addView(recyclerItem);
-
-            List<BaseFragment> fragments = viewInterface.getViewPagerFragments(savedInstanceState);
-            if (fragments != null) {
-                ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
-                mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
-                if (fragments.size() > 1) {
-                    CirclePageIndicator mIndicator = (CirclePageIndicator) findViewById(R.id.circlepageindicator);
-                    mIndicator.setViewPager(mViewPager);
-                }
-            }
-        }
-
-        if (actionBar != null) {
-            title = actionBar.getTitle();
-            actionBar.setTitle("");
         }
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -164,6 +149,52 @@ public class RecyclerViewFragment extends BaseFragment {
                 if (appBarLayout != null) appBarLayout.setTranslationY(-toolbarDistance);
             }
         });
+
+        if (viewInterface != null) {
+            if (!updateData)
+                new ViewTask(viewInterface, adapter).execute(savedInstanceState);
+
+            List<BaseFragment> fragments = viewInterface.getViewPagerFragments(savedInstanceState);
+            if (fragments != null) {
+                ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
+                mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
+                if (fragments.size() > 1) {
+                    CirclePageIndicator mIndicator = (CirclePageIndicator) findViewById(R.id.circlepageindicator);
+                    mIndicator.setViewPager(mViewPager);
+                }
+            }
+        }
+    }
+
+    private class ViewTask extends AsyncTask<Bundle, Void, List<Adapter.RecyclerItem>> {
+
+        private final ViewInterface viewInterface;
+        private final Adapter adapter;
+
+        public ViewTask(ViewInterface viewInterface, Adapter adapter) {
+            this.viewInterface = viewInterface;
+            this.adapter = adapter;
+        }
+
+        @Override
+        protected List<Adapter.RecyclerItem> doInBackground(Bundle... params) {
+            return viewInterface.getViews(params[0]);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            updateData = true;
+        }
+
+        @Override
+        protected void onPostExecute(List<Adapter.RecyclerItem> recyclerItems) {
+            super.onPostExecute(recyclerItems);
+            if (recyclerItems != null)
+                for (Adapter.RecyclerItem item : recyclerItems)
+                    adapter.addView(item);
+            updateData = false;
+        }
     }
 
     public void setViewInterface(ViewInterface viewInterface) {
@@ -184,6 +215,7 @@ public class RecyclerViewFragment extends BaseFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putBoolean(UPDATEDATA_INTENT, updateData);
         outState.putFloat(IMAGE_CONTAINER_TRANSLATION_INTENT, mContainer.getTranslationY());
         outState.putFloat(TOOLBAR_TRANSLATION_INTENT, getAppBarLayout().getTranslationY());
         if (viewInterface != null) viewInterface.onSaveInstanceState(outState);
@@ -192,6 +224,10 @@ public class RecyclerViewFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (actionBar != null) {
+            if (title == null) title = actionBar.getTitle();
+            actionBar.setTitle("");
+        }
         if (viewInterface != null) viewInterface.onResume();
     }
 

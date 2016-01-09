@@ -94,6 +94,8 @@ public class FrequencyTable extends RecyclerViewFragment.ViewInterface {
         if (savedInstanceState != null)
             updateData = savedInstanceState.getBoolean(UPDATEDATA_INTENT);
 
+        refreshData();
+
         return frequencyCards;
     }
 
@@ -102,24 +104,6 @@ public class FrequencyTable extends RecyclerViewFragment.ViewInterface {
         List<BaseFragment> views = new ArrayList<>();
         views.add(new ButtonsFragment());
         return views;
-    }
-
-    /**
-     * When the activity is about to change orientation
-     */
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(UPDATEDATA_INTENT, updateData);
-    }
-
-    /**
-     * Update the view when the application regains focus
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshData();
     }
 
     /**
