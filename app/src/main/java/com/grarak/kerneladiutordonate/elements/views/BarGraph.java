@@ -78,8 +78,8 @@ public class BarGraph extends View {
         float left = 0;
         float right = mPercentage <= 0 ? 0 : ((float) mPercentage / 100) * width;
         if (isRTL) {
-            left = mPercentage <= 0 ? 0 : ((float) (100 - mPercentage) / 100) * width;
-            right = 0;
+            left = mPercentage <= 0 ? width : ((float) (100 - mPercentage) / 100) * width;
+            right = width;
         }
         float top = 0;
 
