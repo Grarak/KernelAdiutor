@@ -255,6 +255,18 @@ public class Misc implements Constants {
         return Utils.existFile(GENTLE_FAIR_SLEEPERS);
     }
 
+    public static void activateArchPower(boolean active, Context context) {
+        Control.runCommand(active ? "1" : "0", ARCH_POWER, Control.CommandType.GENERIC, context);
+    }
+
+    public static boolean isArchPowerActive() {
+        return Utils.readFile(ARCH_POWER).equals("1");
+    }
+
+    public static boolean hasArchPower() {
+        return Utils.existFile(ARCH_POWER);
+    }
+
     public static void activateDynamicFsync(boolean active, Context context) {
         Control.runCommand(active ? "1" : "0", DYNAMIC_FSYNC, Control.CommandType.GENERIC, context);
     }
@@ -265,6 +277,18 @@ public class Misc implements Constants {
 
     public static boolean hasDynamicFsync() {
         return Utils.existFile(DYNAMIC_FSYNC);
+    }
+
+    public static void activateFlash(boolean active, Context context) {
+        Control.runCommand(active ? "1" : "0", FLASH, Control.CommandType.GENERIC, context);
+    }
+
+    public static boolean isFlashActive() {
+        return Utils.readFile(FLASH).equals("1");
+    }
+
+    public static boolean hasFlash() {
+        return Utils.existFile(FLASH);
     }
 
     public static void activateFsync(boolean active, Context context) {
