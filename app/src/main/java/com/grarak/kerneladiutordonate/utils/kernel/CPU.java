@@ -20,10 +20,14 @@
 package com.grarak.kerneladiutordonate.utils.kernel;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.grarak.kerneladiutordonate.utils.Constants;
 import com.grarak.kerneladiutordonate.utils.Utils;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -78,6 +82,14 @@ public class CPU {
         return freqs;
     }
 
+    public static int getCurFreq(int core) {
+        if (Utils.existFile(String.format(Constants.CPU_CUR_FREQ, core))) {
+            String value = Utils.readFile(String.format(Constants.CPU_CUR_FREQ, core));
+            if (value != null) return Utils.strToInt(value);
+        }
+        return 0;
+    }
+
     public static void activateCore(int core, boolean active, Context context) {
 
     }
@@ -115,6 +127,87 @@ public class CPU {
 
     public static int getCoreCount() {
         return cores == 0 ? cores = Runtime.getRuntime().availableProcessors() : cores;
+    }
+
+    public static float[] getCpuUsage() {
+        try {
+            Usage[] usage1 = getUsages();
+            Thread.sleep(500);
+            Usage[] usage2 = getUsages();
+
+            if (usage1 != null && usage2 != null) {
+                float[] pers = new float[usage1.length];
+                for (int i = 0; i < usage1.length; i++) {
+                    long idle1 = usage1[i].getIdle();
+                    long up1 = usage1[i].getUptime();
+
+                    long idle2 = usage2[i].getIdle();
+                    long up2 = usage2[i].getUptime();
+
+                    float cpu = -1f;
+                    if (idle1 >= 0 && up1 >= 0 && idle2 >= 0 && up2 >= 0) {
+                        if ((up2 + idle2) > (up1 + idle1) && up2 >= up1) {
+                            cpu = (up2 - up1) / (float) ((up2 + idle2) - (up1 + idle1));
+                            cpu *= 100.0f;
+                        }
+                    }
+
+                    pers[i] = cpu > -1 ? cpu : 0;
+                }
+                return pers;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static Usage[] getUsages() {
+        try {
+            RandomAccessFile reader = new RandomAccessFile("/proc/stat", "r");
+            Usage[] usage = new Usage[getCoreCount() + 1];
+            for (int i = 0; i < usage.length; i++)
+                usage[i] = new Usage(reader.readLine());
+            reader.close();
+            return usage;
+        } catch (FileNotFoundException e) {
+            Log.i(Constants.TAG, "/proc/stat does not exist");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static class Usage {
+
+        private long[] stats;
+
+        public Usage(String stats) {
+            if (stats == null) return;
+
+            String[] values = stats.replace("  ", " ").split(" ");
+            this.stats = new long[values.length - 1];
+            for (int i = 0; i < this.stats.length; i++)
+                this.stats[i] = Utils.strToLong(values[i + 1]);
+        }
+
+        public long getUptime() {
+            if (stats == null) return -1L;
+            long l = 0L;
+            for (int i = 0; i < stats.length; i++)
+                if (i != 3) l += stats[i];
+            return l;
+        }
+
+        public long getIdle() {
+            try {
+                return stats == null ? -1L : stats[3];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return -1L;
+            }
+        }
+
     }
 
 }

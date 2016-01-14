@@ -127,7 +127,6 @@ public class NavigationActivity extends AppCompatActivity implements CustomNavig
     public void onSelect(MenuItem item, Class fragmentclass, Intent intent,
                          int position, RecyclerViewFragment.ViewInterface viewInterface,
                          Bundle savedInstanceState) {
-
         if (fragmentclass != null) {
             if (lastItem != null) lastItem.setChecked(false);
             item.setChecked(true);

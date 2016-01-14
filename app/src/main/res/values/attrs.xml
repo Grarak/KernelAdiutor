@@ -6,4 +6,13 @@
         <attr name="barpercentage" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="XYGraph">
+        <attr name="linecolor" format="color" />
+        <attr name="edgecolor" format="color" />
+        <attr name="edgestrokewidth" format="dimension" />
+        <attr name="graphcolor" format="color" />
+        <attr name="graphstrokewidth" format="color" />
+        <attr name="edgevisibile" format="boolean" />
+    </declare-styleable>
+
 </resources>

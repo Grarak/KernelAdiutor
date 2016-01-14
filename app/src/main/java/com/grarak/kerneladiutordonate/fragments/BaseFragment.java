@@ -65,6 +65,10 @@ public abstract class BaseFragment extends Fragment {
         return rootView.findViewById(id);
     }
 
+    public LayoutInflater getInflater() {
+        return inflater;
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

@@ -61,6 +61,10 @@
     <string name="reset">Reset</string>
     <string name="restore">Restore</string>
 
+    <!-- CPU -->
+    <string name="offline">Offline</string>
+    <string name="core">Core %d</string>
+
     <!-- Donate -->
     <string name="_2euro">2€</string>
     <string name="_5euro">5€</string>

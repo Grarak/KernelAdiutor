@@ -320,7 +320,8 @@ public class FrequencyTable extends RecyclerViewFragment.ViewInterface {
         @Override
         public void refresh() {
             if (mBarGraphView != null) mBarGraphView.setBarPercentage(mPercentage);
-            if (mPercentageView != null) mPercentageView.setText(mPercentage + "%");
+            if (mPercentageView != null)
+                mPercentageView.setText(String.format("%d%%", mPercentage));
 
             if (mFreq != null && mFreqView != null) mFreqView.setText((mFreq));
             if (mDuration != null && mDurationView != null) mDurationView.setText(mDuration);
@@ -354,6 +355,7 @@ public class FrequencyTable extends RecyclerViewFragment.ViewInterface {
                 @Override
                 public void onClick(View v) {
                     rotate(v, false);
+                    if (frequencyTable.cpuSpyApp == null) return;
                     frequencyTable.refreshData();
                 }
             });
@@ -361,6 +363,7 @@ public class FrequencyTable extends RecyclerViewFragment.ViewInterface {
                 @Override
                 public void onClick(View v) {
                     rotate(v, true);
+                    if (frequencyTable.cpuSpyApp == null) return;
                     CpuStateMonitor cpuStateMonitor = frequencyTable.cpuSpyApp.getCpuStateMonitor();
                     CpuStateMonitor cpuStateMonitorLITTLE = null;
                     if (frequencyTable.cpuSpyAppLITTLE != null)
@@ -385,6 +388,7 @@ public class FrequencyTable extends RecyclerViewFragment.ViewInterface {
                 @Override
                 public void onClick(View v) {
                     rotate(v, true);
+                    if (frequencyTable.cpuSpyApp == null) return;
                     CpuStateMonitor cpuStateMonitor = frequencyTable.cpuSpyApp.getCpuStateMonitor();
                     CpuStateMonitor cpuStateMonitorLITTLE = null;
                     if (frequencyTable.cpuSpyAppLITTLE != null)

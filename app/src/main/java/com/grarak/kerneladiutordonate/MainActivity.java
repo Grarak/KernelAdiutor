@@ -38,7 +38,7 @@ import com.grarak.kerneladiutordonate.utils.Utils;
 import com.grarak.kerneladiutordonate.utils.root.RootUtils;
 import com.grarak.kerneladiutordonate.views.information.DeviceInformation;
 import com.grarak.kerneladiutordonate.views.information.FrequencyTable;
-import com.grarak.kerneladiutordonate.views.kernel.CPU;
+import com.grarak.kerneladiutordonate.views.kernel.CPUView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         Constants.ITEMS.add(new CustomNavigationView.NavigationHeader(getString(R.string.kernel)));
         Constants.ITEMS.add(new CustomNavigationView.NavigationItem(getString(R.string.cpu),
                 RecyclerViewFragment.class, null, ContextCompat.getDrawable(this, R.drawable.ic_cpu),
-                new CPU(this)));
+                new CPUView(this)));
         Constants.ITEMS.add(new CustomNavigationView.NavigationItem(getString(R.string.donate),
                 DonateFragment.class, null, ContextCompat.getDrawable(this, R.drawable.ic_donate), null));
         Constants.ITEMS.add(new CustomNavigationView.NavigationItem(getString(R.string.settings),

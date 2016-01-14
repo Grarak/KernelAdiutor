@@ -23,6 +23,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -79,6 +80,10 @@ public class RecyclerViewFragment extends BaseFragment {
             return getContext().getString(res, o);
         }
 
+        public boolean refresh() {
+            return false;
+        }
+
     }
 
     private static final String UPDATEDATA_INTENT = "updatedata";
@@ -91,6 +96,7 @@ public class RecyclerViewFragment extends BaseFragment {
     private CharSequence title;
     private ActionBar actionBar;
     private boolean updateData;
+    private Handler handler;
 
     @Override
     public void init(Bundle savedInstanceState) {
@@ -164,6 +170,8 @@ public class RecyclerViewFragment extends BaseFragment {
                 }
             }
         }
+
+        handler = new Handler();
     }
 
     private class ViewTask extends AsyncTask<Bundle, Void, List<Adapter.RecyclerItem>> {
@@ -210,6 +218,7 @@ public class RecyclerViewFragment extends BaseFragment {
         super.onDestroy();
         getAppBarLayout().setBackgroundColor(Utils.getColorPrimary(getActivity()));
         getAppBarLayout().setTranslationY(0);
+        handler.removeCallbacks(refreshRun);
     }
 
     @Override
@@ -229,6 +238,13 @@ public class RecyclerViewFragment extends BaseFragment {
             actionBar.setTitle("");
         }
         if (viewInterface != null) viewInterface.onResume();
+        handler.post(refreshRun);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(refreshRun);
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -251,5 +267,13 @@ public class RecyclerViewFragment extends BaseFragment {
         }
 
     }
+
+    private final Runnable refreshRun = new Runnable() {
+        @Override
+        public void run() {
+            if (viewInterface != null && viewInterface.refresh())
+                handler.postDelayed(this, 1000);
+        }
+    };
 
 }
