@@ -35,11 +35,11 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:id="@+id/donate_image_beer"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_beer" />
+                        android:layout_centerVertical="true" />
 
                     <TextView
                         android:id="@+id/_2euro_text"
@@ -73,11 +73,11 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:id="@+id/donate_image_chopsticks"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_chopsticks" />
+                        android:layout_centerVertical="true" />
 
                     <TextView
                         android:id="@+id/_5euro_text"
@@ -119,11 +119,11 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:id="@+id/donate_image_cinema"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_cinema" />
+                        android:layout_centerVertical="true" />
 
                     <TextView
                         android:id="@+id/_10euro_text"
@@ -157,11 +157,11 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:id="@+id/donate_image_tshirt"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_tshirt" />
+                        android:layout_centerVertical="true" />
 
                     <TextView
                         android:id="@+id/_20euro_text"

@@ -21,12 +21,16 @@ package com.grarak.kerneladiutordonate.fragments;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
@@ -112,6 +116,38 @@ public class DonateFragment extends BaseFragment implements View.OnClickListener
 
         if (BillingProcessor.isIabServiceAvailable(getActivity()))
             bp = new BillingProcessor(getActivity(), getString(R.string.license_key), this);
+
+        final ImageView _2Image = (ImageView) findViewById(R.id.donate_image_beer);
+        final ImageView _5Image = (ImageView) findViewById(R.id.donate_image_chopsticks);
+        final ImageView _10Image = (ImageView) findViewById(R.id.donate_image_cinema);
+        final ImageView _20Image = (ImageView) findViewById(R.id.donate_image_tshirt);
+
+        new AsyncTask<Void, Void, Void>() {
+
+            private Bitmap mBeer;
+            private Bitmap mChopsticks;
+            private Bitmap mCinema;
+            private Bitmap mTshirt;
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                mBeer = BitmapFactory.decodeResource(getResources(), R.drawable.ic_beer);
+                mChopsticks = BitmapFactory.decodeResource(getResources(), R.drawable.ic_chopsticks);
+                mCinema = BitmapFactory.decodeResource(getResources(), R.drawable.ic_cinema);
+                mTshirt = BitmapFactory.decodeResource(getResources(), R.drawable.ic_tshirt);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                _2Image.setImageBitmap(mBeer);
+                _5Image.setImageBitmap(mChopsticks);
+                _10Image.setImageBitmap(mCinema);
+                _20Image.setImageBitmap(mTshirt);
+            }
+
+        }.execute();
     }
 
     private void hideBar() {

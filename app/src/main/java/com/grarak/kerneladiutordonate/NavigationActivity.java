@@ -40,7 +40,8 @@ import com.grarak.kerneladiutordonate.utils.Constants;
 import com.grarak.kerneladiutordonate.utils.Utils;
 import com.grarak.kerneladiutordonate.utils.root.RootUtils;
 
-public class NavigationActivity extends AppCompatActivity implements CustomNavigationView.OnCustomNavigationListener {
+public class NavigationActivity extends AppCompatActivity
+        implements CustomNavigationView.OnCustomNavigationListener {
 
     private static final String CUR_POSITION_INTENT = "cur_position_intent";
 
@@ -50,6 +51,7 @@ public class NavigationActivity extends AppCompatActivity implements CustomNavig
     private boolean pressAgain;
     private MenuItem lastItem;
     private AppBarLayout appBarLayout;
+    private CustomNavigationView mNavigationView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class NavigationActivity extends AppCompatActivity implements CustomNavig
             ((ViewGroup) navHeaderView.getParent()).removeView(navHeaderView);
         }
 
-        CustomNavigationView mNavigationView = (CustomNavigationView) findViewById(R.id.nav_view);
+        mNavigationView = (CustomNavigationView) findViewById(R.id.nav_view);
         mNavigationView.addHeaderView(navHeaderView);
         mNavigationView.setOnCustomNavigationListener(this);
 
@@ -84,8 +86,10 @@ public class NavigationActivity extends AppCompatActivity implements CustomNavig
             cur_position = savedInstanceState.getInt(CUR_POSITION_INTENT, 0);
 
         if (mNavigationView.size() > 0)
-            onSelect(mNavigationView.getMenuItem(cur_position), mNavigationView.getFragmentClass(cur_position),
-                    null, cur_position, mNavigationView.getViewInterface(cur_position), savedInstanceState);
+            onSelect(mNavigationView.getMenuItem(cur_position),
+                    mNavigationView.getFragmentClass(cur_position),
+                    null, cur_position, mNavigationView.getViewInterface(cur_position),
+                    savedInstanceState);
     }
 
     @Override
@@ -97,9 +101,10 @@ public class NavigationActivity extends AppCompatActivity implements CustomNavig
                 super.onBackPressed();
             } else {
                 Fragment fragment = getSupportFragmentManager()
-                        .findFragmentByTag(Constants.ITEMS.get(cur_position).getTitle() + "_key");
-                if (fragment == null || (fragment instanceof BaseFragment
-                        && !((BaseFragment) fragment).onBackPressed())) {
+                        .findFragmentByTag(mNavigationView
+                                .getMenuItem(cur_position).getTitle() + "_key");
+                if (fragment == null || !(fragment instanceof BaseFragment) ||
+                        !((BaseFragment) fragment).onBackPressed()) {
                     if (pressAgain) {
                         Utils.toast(getString(R.string.press_back_again), this);
                         pressAgain = false;
