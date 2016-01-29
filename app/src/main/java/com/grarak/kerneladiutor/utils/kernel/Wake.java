@@ -266,11 +266,14 @@ public class Wake implements Constants {
     }
 
     public static void setS2w(int value, Context context) {
-        Control.runCommand(String.valueOf(value), S2W_FILE, Control.CommandType.GENERIC, context);
+        if (value == 0) Control.runCommand(String.valueOf(value), S2W_FILE, Control.CommandType.GENERIC, context);
+        if (value == 1) Control.runCommand(String.valueOf(15), S2W_FILE, Control.CommandType.GENERIC, context);
     }
 
     public static int getS2wValue() {
-        return Utils.stringToInt(Utils.readFile(S2W_FILE));
+        int val = Utils.stringToInt(Utils.readFile(S2W_FILE));
+        if (val == 0 ) return 0;
+        return 1;
     }
 
     public static List<String> getS2wMenu(Context context) {
@@ -279,8 +282,7 @@ public class Wake implements Constants {
         if (S2W_FILE != null) {
             switch (S2W_FILE) {
                 case SW2:
-                    list.add(context.getString(R.string.s2w) + " + " + context.getString(R.string.s2s));
-                    list.add(context.getString(R.string.s2s));
+                    list.add(context.getString(R.string.s2w));
                     break;
                 case SW2_2:
                     list.add(context.getString(R.string.s2w_right));
