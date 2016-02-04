@@ -21,6 +21,7 @@ import android.content.Context;
 import com.grarak.kerneladiutor.utils.Constants;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.root.Control;
+import com.kerneladiutor.library.root.RootUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -377,5 +378,22 @@ public class Misc implements Constants {
             }
         return VIBRATION_PATH != null;
     }
+
+    public static boolean isSELinuxActive () {
+        String result = RootUtils.runCommand(GETENFORCE);
+        if (result.equals("Enforcing")) return true;
+        return false;
+    }
+
+    public static void activateSELinux (boolean active, Context context) {
+        if (active == true) Control.runCommand("1", SETENFORCE, Control.CommandType.SHELL, context);
+        if (active == false) Control.runCommand("0", SETENFORCE, Control.CommandType.SHELL, context);
+    }
+
+    public static String getSELinuxStatus () {
+        String result = RootUtils.runCommand(GETENFORCE);
+        if (result.equals("Enforcing")) return "Enforcing";
+        else if (result.equals("Permissive")) return "Permissive";
+        return "Unknown Status";
 
 }

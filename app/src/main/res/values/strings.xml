@@ -527,6 +527,8 @@
     <string name="write">Write</string>
 
     <!-- Misc Controls -->
+    <string name="se_linux">Toggle SE Linux</string>
+    <string name="se_linux_summary">Current SELinux Status:</string>
     <string name="vibration_strength">Vibration Strength</string>
     <string name="android_logger">Android logging</string>
     <string name="crc">Software CRC control</string>

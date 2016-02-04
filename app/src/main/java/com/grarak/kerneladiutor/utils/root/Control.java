@@ -35,7 +35,7 @@ import java.util.List;
 public class Control implements Constants {
 
     public enum CommandType {
-        GENERIC, CPU, CPU_LITTLE, FAUX_GENERIC, CUSTOM
+        GENERIC, CPU, CPU_LITTLE, FAUX_GENERIC, CUSTOM, SHELL
     }
 
     public static void commandSaver(final Context context, final String path, final String command) {
@@ -68,6 +68,10 @@ public class Control implements Constants {
 
     private static void runGeneric(String file, String value, String id, Context context) {
         run("echo " + value + " > " + file, id != null ? file + id : file, context);
+    }
+
+    private static void runShell(String value, String command, Context context) {
+        run(command + " " + value, command, context);
     }
 
     private static void runFauxGeneric(String file, String value, Context context) {
@@ -124,6 +128,8 @@ public class Control implements Constants {
                     runFauxGeneric(file, value, context);
                 } else if (command == CommandType.CUSTOM) {
                     Control.run(value, id == null ? file : file + id, context);
+                } else if (command == CommandType.SHELL) {
+                    runShell(value, file, context);
                 }
             }
         });
