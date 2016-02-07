@@ -76,6 +76,7 @@ public interface Constants {
     String CPU_BOOST_DEBUG_MASK = CPU_BOOST + "/debug_mask";
     String CPU_BOOST_MS = CPU_BOOST + "/boost_ms";
     String CPU_BOOST_SYNC_THRESHOLD = CPU_BOOST + "/sync_threshold";
+    String INPUT_BOOST_ENABLE = CPU_BOOST + "/input_boost_enabled";
     String CPU_BOOST_INPUT_MS = CPU_BOOST + "/input_boost_ms";
     String CPU_BOOST_INPUT_BOOST_FREQ = CPU_BOOST + "/input_boost_freq";
     String CPU_BOOST_WAKEUP = CPU_BOOST + "/wakeup_boost";

@@ -133,7 +133,7 @@ public class CPUFragment extends ViewPagerFragment implements Constants {
         private PopupCardView.DPopupCard mCpuBoostSyncThresholdCard;
         private SeekBarCardView.DSeekBarCard mCpuBoostInputMsCard;
         private PopupCardView.DPopupCard[] mCpuBoostInputFreqCard;
-        private SwitchCardView.DSwitchCard mCpuBoostWakeupCard;
+        private SwitchCardView.DSwitchCard mCpuBoostWakeupCard, mCpuInputBoostEnableCard;
         private SwitchCardView.DSwitchCard mCpuBoostHotplugCard;
 
         private SwitchCardView.DSwitchCard mCpuTouchBoostCard;
@@ -454,45 +454,57 @@ public class CPUFragment extends ViewPagerFragment implements Constants {
 
                 views.add(mCpuBoostSyncThresholdCard);
             }
+            if (CPU.hasCpuInputBoostEnable()) {
+                mCpuInputBoostEnableCard = new SwitchCardView.DSwitchCard();
+                mCpuInputBoostEnableCard.setTitle(getString(R.string.input_boost));
+                mCpuInputBoostEnableCard.setDescription(getString(R.string.input_boost_summary));
+                mCpuInputBoostEnableCard.setChecked(CPU.isInputBoostActive());
+                mCpuInputBoostEnableCard.setOnDSwitchCardListener(this);
 
-            if (CPU.hasCpuBoostInputMs()) {
-                List<String> list = new ArrayList<>();
-                for (int i = 0; i < 5001; i += 10)
-                    list.add(i + getString(R.string.ms));
-
-                mCpuBoostInputMsCard = new SeekBarCardView.DSeekBarCard(list);
-                mCpuBoostInputMsCard.setTitle(getString(R.string.input_interval));
-                mCpuBoostInputMsCard.setDescription(getString(R.string.input_interval_summary));
-                mCpuBoostInputMsCard.setProgress(CPU.getCpuBootInputMs() / 10);
-                mCpuBoostInputMsCard.setOnDSeekBarCardListener(this);
-
-                views.add(mCpuBoostInputMsCard);
+                views.add(mCpuInputBoostEnableCard);
             }
 
-            if (CPU.hasCpuBoostInputFreq() && CPU.getFreqs() != null) {
-                List<String> list = new ArrayList<>();
-                list.add(getString(R.string.disabled));
-                for (int freq : CPU.getFreqs())
-                    list.add((freq / 1000) + getString(R.string.mhz));
+            if (CPU.isInputBoostActive()) {
 
-                List<Integer> freqs = CPU.getCpuBootInputFreq();
-                mCpuBoostInputFreqCard = new PopupCardView.DPopupCard[freqs.size()];
+                if (CPU.hasCpuBoostInputMs()) {
+                    List<String> list = new ArrayList<>();
+                    for (int i = 0; i < 5001; i += 10)
+                        list.add(i + getString(R.string.ms));
 
-                for (int i = 0; i < freqs.size(); i++) {
-                    mCpuBoostInputFreqCard[i] = new PopupCardView.DPopupCard(list);
-                    if (i == 0) {
-                        if (freqs.size() > 1)
-                            mCpuBoostInputFreqCard[i].setTitle(getString(R.string.input_boost_freq_core, i + 1));
-                        else
-                            mCpuBoostInputFreqCard[i].setTitle(getString(R.string.input_boost_freq));
-                        mCpuBoostInputFreqCard[i].setDescription(getString(R.string.input_boost_freq_summary));
-                    } else {
-                        mCpuBoostInputFreqCard[i].setDescription(getString(R.string.input_boost_freq_core, i + 1));
+                    mCpuBoostInputMsCard = new SeekBarCardView.DSeekBarCard(list);
+                    mCpuBoostInputMsCard.setTitle(getString(R.string.input_interval));
+                    mCpuBoostInputMsCard.setDescription(getString(R.string.input_interval_summary));
+                    mCpuBoostInputMsCard.setProgress(CPU.getCpuBootInputMs() / 10);
+                    mCpuBoostInputMsCard.setOnDSeekBarCardListener(this);
+
+                    views.add(mCpuBoostInputMsCard);
+                }
+
+                if (CPU.hasCpuBoostInputFreq() && CPU.getFreqs() != null) {
+                    List<String> list = new ArrayList<>();
+                    list.add(getString(R.string.disabled));
+                    for (int freq : CPU.getFreqs())
+                        list.add((freq / 1000) + getString(R.string.mhz));
+
+                    List<Integer> freqs = CPU.getCpuBootInputFreq();
+                    mCpuBoostInputFreqCard = new PopupCardView.DPopupCard[freqs.size()];
+
+                    for (int i = 0; i < freqs.size(); i++) {
+                        mCpuBoostInputFreqCard[i] = new PopupCardView.DPopupCard(list);
+                        if (i == 0) {
+                            if (freqs.size() > 1)
+                                mCpuBoostInputFreqCard[i].setTitle(getString(R.string.input_boost_freq_core, i + 1));
+                            else
+                                mCpuBoostInputFreqCard[i].setTitle(getString(R.string.input_boost_freq));
+                            mCpuBoostInputFreqCard[i].setDescription(getString(R.string.input_boost_freq_summary));
+                        } else {
+                            mCpuBoostInputFreqCard[i].setDescription(getString(R.string.input_boost_freq_core, i + 1));
+                        }
+                        mCpuBoostInputFreqCard[i].setItem(freqs.get(i));
+                        mCpuBoostInputFreqCard[i].setOnDPopupCardListener(this);
+
+                        views.add(mCpuBoostInputFreqCard[i]);
                     }
-                    mCpuBoostInputFreqCard[i].setItem(freqs.get(i));
-                    mCpuBoostInputFreqCard[i].setOnDPopupCardListener(this);
-
-                    views.add(mCpuBoostInputFreqCard[i]);
                 }
             }
 
@@ -634,6 +646,10 @@ public class CPUFragment extends ViewPagerFragment implements Constants {
                 CPU.activatePowerSavingWq(checked, getActivity());
             else if (dSwitchCard == mCpuBoostWakeupCard)
                 CPU.activateCpuBoostWakeup(checked, getActivity());
+            else if (dSwitchCard == mCpuInputBoostEnableCard) {
+                CPU.activateCpuInputBoost(checked, getActivity());
+                ForceRefresh();
+            }
             else if (dSwitchCard == mCpuBoostHotplugCard)
                 CPU.activateCpuBoostHotplug(checked, getActivity());
             else if (dSwitchCard == mCpuTouchBoostCard)
