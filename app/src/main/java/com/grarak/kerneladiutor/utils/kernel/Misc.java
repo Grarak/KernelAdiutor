@@ -262,11 +262,11 @@ public class Misc implements Constants {
     }
 
     public static void activateFsync(boolean active, Context context) {
-        Control.runCommand(active ? "1" : "0", FSYNC_FILE, Control.CommandType.GENERIC, context);
+        Control.runCommand(active ? "Y" : "N", FSYNC_FILE, Control.CommandType.GENERIC, context);
     }
 
     public static boolean isFsyncActive() {
-        return Utils.readFile(FSYNC_FILE).equals("1");
+        return Utils.readFile(FSYNC_FILE).equals("Y");
     }
 
     public static boolean hasFsync() {
