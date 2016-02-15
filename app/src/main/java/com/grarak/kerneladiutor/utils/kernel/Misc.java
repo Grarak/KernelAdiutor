@@ -266,8 +266,12 @@ public class Misc implements Constants {
     }
 
     public static boolean isFsyncActive() {
-        return Utils.readFile(FSYNC_FILE).equals("1");
+        if (Utils.readFile(FSYNC_FILE).equals("1") || Utils.readFile(FSYNC_FILE).equals("Y")) {
+            return true;
+        }
+        return false;
     }
+
 
     public static boolean hasFsync() {
         for (String file : FSYNC_ARRAY)
