@@ -395,5 +395,5 @@ public class Misc implements Constants {
         if (result.equals("Enforcing")) return "Enforcing";
         else if (result.equals("Permissive")) return "Permissive";
         return "Unknown Status";
-
+    }
 }
