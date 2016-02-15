@@ -272,6 +272,13 @@
     <string name="cycle_down_summary">Cycles to wait after the last hotplug event to unplug another core.</string>
     <string name="cycle_up">Cycle Up</string>
     <string name="cycle_up_summary">Cycles to wait after the last hotplug event to plug another core.</string>
+    <string name="msm_sleeper">MSM Sleeper</string>
+    <string name="msm_sleeper_summary">A customizable hotplug</string>
+    <string name="msm_sleeper_up_thresh">Threshold before onlining another core</string>
+    <string name="msm_sleeper_max_online">Max Online Cores</string>
+    <string name="msm_sleeper_suspend_max_online">Max Online Cores during suspend</string>
+    <string name="msm_sleeper_up_count_max">Amount of time threshold needs to be exceeded before online-ing a core</string>
+    <string name="msm_sleeper_down_count_max">Amount of time threshold needs to be below before offline-ing a core</string>
 
     <!-- Thermal -->
     <string name="thermal_info">Use only one thermal driver from the following options, using more at the same time may cause unexpected behavior.</string>
