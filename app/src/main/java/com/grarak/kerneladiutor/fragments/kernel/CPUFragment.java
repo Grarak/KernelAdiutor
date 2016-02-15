@@ -656,6 +656,11 @@ public class CPUFragment extends ViewPagerFragment implements Constants {
                 CPU.activateCpuTouchBoost(checked, getActivity());
         }
 
+        private void ForceRefresh() {
+            CPUFragment.cpuFragment.cpuPart.view.invalidate();
+            getActivity().getSupportFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+
         @Override
         public boolean onRefresh() {
 
