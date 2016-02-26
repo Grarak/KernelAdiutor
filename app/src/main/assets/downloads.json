@@ -190,5 +190,22 @@
       "YUNIQUE"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/jalebi.json"
+  },
+  {
+    "vendor": [
+      "Samsung",
+      "samsung"
+    ],
+    "device": [
+      "SM-G920T",
+      "SM-G920F",
+      "SM-G920I",
+      "SM-G920S",
+      "SM-G925F",
+      "SM-G925I",
+      "SM-G925S",
+      "SM-G925T"
+    ],
+    "link":"https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/sm-g920x_sm-g925x.json"
   }
 ]
