@@ -135,6 +135,8 @@
     <string name="interval_summary">Minimum interval a CPU is boosted.</string>
     <string name="sync_threshold">Sync Threshold</string>
     <string name="sync_threshold_summary">When CPU loading crosses the preset threshold, the current CPU is raised to this frequency.</string>
+    <string name="input_boost">Input Boost</string>
+    <string name="input_boost_summary">Boost the CPU when a touch is detected</string>
     <string name="input_interval">Input Interval</string>
     <string name="input_interval_summary">Minimum interval a CPU is boosted when input is detected.</string>
     <string name="input_boost_freq">Input Boost Frequency</string>
