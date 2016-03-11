@@ -678,7 +678,8 @@ public interface Constants {
             {"/sys/devices/platform/tspdrv/nforce_timed", 127, 1},
             {"/sys/devices/i2c-3/3-0033/vibrator/vib0/vib_duty_cycle", 100, 25}, // Needs enable path
             {"/sys/module/qpnp_vibrator/parameters/vib_voltage", 31, 12},
-            {"/sys/vibrator/pwmvalue", 127, 0}
+            {"/sys/vibrator/pwmvalue", 127, 0},
+            {"/sys/kernel/thunderquake_engine/level", 7, 0}
     };
 
     String VIB_LIGHT = "/sys/devices/virtual/timed_output/vibrator/vmax_mv_light";
