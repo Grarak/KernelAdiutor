@@ -27,6 +27,20 @@ import com.grarak.kerneladiutor.utils.root.Control;
  */
 public class Battery implements Constants {
 
+    private static String CURRENT_PATH;
+
+    public static boolean hasChargingCurrent() {
+        for(String path : BATTERY_CHARGING_CURRENT) {
+            if (Utils.existFile(path))
+                CURRENT_PATH = path;
+        }
+        return CURRENT_PATH != null;
+    }
+
+    public static int getChargingCurrent() {
+        return Utils.stringToInt(Utils.readFile(CURRENT_PATH));
+    }
+
     public static void setChargingRate(int value, Context context) {
         Control.runCommand(String.valueOf(value), CUSTOM_CHARGING_RATE, Control.CommandType.GENERIC, context);
     }

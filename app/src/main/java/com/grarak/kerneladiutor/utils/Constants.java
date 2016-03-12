@@ -607,6 +607,12 @@ public interface Constants {
 
     String[] BATTERY_ARRAY = {FORCE_FAST_CHARGE, BLX, CHARGE_RATE};
 
+    // Battery charging current
+    String[] BATTERY_CHARGING_CURRENT = {
+            "/sys/devices/platform/battery/power_supply/battery/BatteryAverageCurrent",
+            "/sys/class/power_supply/battery/BatteryAverageCurrent"
+    };
+
     // I/O
     String IO_INTERNAL_SCHEDULER = "/sys/block/mmcblk0/queue/scheduler";
     String IO_EXTERNAL_SCHEDULER = "/sys/block/mmcblk1/queue/scheduler";
