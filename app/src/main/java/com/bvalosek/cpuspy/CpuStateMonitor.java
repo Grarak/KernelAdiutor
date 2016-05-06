@@ -11,9 +11,8 @@ package com.bvalosek.cpuspy;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
-import com.grarak.kerneladiutordonate.utils.Constants;
-import com.grarak.kerneladiutordonate.utils.Utils;
-import com.grarak.kerneladiutordonate.utils.kernel.CPU;
+import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -165,13 +164,13 @@ public class CpuStateMonitor {
         _states.clear();
         try {
             String file;
-            if (Utils.existFile(String.format(Constants.CPU_TIME_STATE, core))) {
-                file = String.format(Constants.CPU_TIME_STATE, core);
+            if (Utils.existFile(Utils.strFormat(CPUFreq.TIME_STATE, core))) {
+                file = Utils.strFormat(CPUFreq.TIME_STATE, core);
             } else {
                 if (core > 0) {
-                    CPU.activateCore(core, true, null);
-                    file = String.format(Constants.CPU_TIME_STATE_2, core);
-                } else file = String.format(Constants.CPU_TIME_STATE_2, 0);
+                    CPUFreq.onlineCpu(core, true, null);
+                    file = Utils.strFormat(CPUFreq.TIME_STATE_2, core);
+                } else file = Utils.strFormat(CPUFreq.TIME_STATE_2, 0);
             }
             if (file == null)
                 throw new CpuStateMonitorException("Problem opening time-in-states file");

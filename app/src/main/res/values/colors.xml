@@ -3,17 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentTransparent">#50FF4081</color>
 
     <color name="semi_transparent">#26000000</color>
-    <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
-    <color name="material_red">#f44336</color>
-    <color name="material_red_light">#ef5350</color>
-    <color name="material_red_dark">#c62828</color>
-    <color name="material_green">#4caf50</color>
-    <color name="material_orange">#ff9800</color>
-    <color name="material_blue">#2196f3</color>
-
-    <color name="textcolor_light">#737373</color>
-    <color name="textcolor_dark">#BDBDBD</color>
+    <color name="white">@android:color/white</color>
+    <color name="green">#4caf50</color>
+    <color name="red">#f44336</color>
+    <color name="orange">#ffff8800</color>
 </resources>

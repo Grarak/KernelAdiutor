@@ -1,10 +1,6 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_fab_margin_right">16dp</dimen>
     <dimen name="nav_header_fab_margin_left">16dp</dimen>
     <dimen name="nav_header_fab_margin_bottom">16dp</dimen>
     <dimen name="nav_header_fab_margin_top">16dp</dimen>
-
-    <dimen name="sending_bar_fab_margin_right">16dp</dimen>
-    <dimen name="sending_bar_card_margin_top">20dp</dimen>
 </resources>

@@ -109,7 +109,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
         if (background != null) {
-            setBackground(background);
+            setBackgroundDrawable(background);
         }
 
         a.recycle();
@@ -211,7 +211,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             return;
         }
         final int count = mViewPager.getAdapter().getCount();
-        if (count == 0) {
+        if (count < 2) {
             return;
         }
 

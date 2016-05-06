@@ -1,0 +1,77 @@
+/*
+ * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ *
+ * This file is part of Kernel Adiutor.
+ *
+ * Kernel Adiutor is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Kernel Adiutor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+package com.grarak.kerneladiutor.utils.kernel.cpu;
+
+import android.content.Context;
+
+import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
+import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.root.Control;
+
+/**
+ * Created by willi on 02.05.16.
+ */
+public class MSMPerformance {
+
+    public static final String PARENT = "/sys/module/msm_performance";
+    public static final String MAX_CPUS = PARENT + "/parameters/max_cpus";
+    public static final String CPU_MAX_FREQ = PARENT + "/parameters/cpu_max_freq";
+    public static final String CPU_MIN_FREQ = PARENT + "/parameters/cpu_min_freq";
+
+    private static Boolean MAX_CPUS_SUPPORTED;
+    private static Boolean CPU_MAX_FREQ_SUPPORTED;
+    private static Boolean CPU_MIN_FREQ_SUPPORTED;
+
+    public static void setCpuMinFreq(int freq, int cpu, Context context) {
+        run(Control.write(cpu + ":" + freq, CPU_MIN_FREQ), CPU_MIN_FREQ + cpu, context);
+    }
+
+    public static boolean hasCpuMinFreq() {
+        if (CPU_MIN_FREQ_SUPPORTED != null) return CPU_MIN_FREQ_SUPPORTED;
+        return CPU_MIN_FREQ_SUPPORTED = Utils.existFile(CPU_MIN_FREQ);
+    }
+
+    public static void setCpuMaxFreq(int freq, int cpu, Context context) {
+        run(Control.write(cpu + ":" + freq, CPU_MAX_FREQ), CPU_MAX_FREQ + cpu, context);
+    }
+
+    public static boolean hasCpuMaxFreq() {
+        if (CPU_MAX_FREQ_SUPPORTED != null) return CPU_MAX_FREQ_SUPPORTED;
+        return CPU_MAX_FREQ_SUPPORTED = Utils.existFile(CPU_MAX_FREQ);
+    }
+
+    public static void setMaxCpus(int big, int little, Context context) {
+        run(Control.write(little + ":" + big, MAX_CPUS), MAX_CPUS, context);
+    }
+
+    public static boolean hasMaxCpus() {
+        if (MAX_CPUS_SUPPORTED != null) return MAX_CPUS_SUPPORTED;
+        return MAX_CPUS_SUPPORTED = Utils.existFile(MAX_CPUS);
+    }
+
+    public static boolean supported() {
+        return hasMaxCpus() || hasCpuMaxFreq() || hasCpuMinFreq();
+    }
+
+    private static void run(String command, String id, Context context) {
+        Control.runSetting(command, ApplyOnBootFragment.CPU, id, context);
+    }
+
+}

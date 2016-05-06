@@ -6,4 +6,11 @@
         <item>@string/no_picture</item>
     </string-array>
 
+    <!-- CPU -->
+    <string-array name="mc_power_saving_items">
+        <item>@string/disabled</item>
+        <item>@string/enabled</item>
+        <item>@string/aggressive</item>
+    </string-array>
+
 </resources>

@@ -2,45 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.grarak.kerneladiutordonate">
 
-    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation"
-            android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name="com.grarak.kerneladiutor.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.grarak.kerneladiutor.NavigationActivity" />
+        <activity android:name="com.grarak.kerneladiutor.TextActivity" />
         <activity
-            android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".TextActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".NavigationActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".elements.views.NavHeaderView$MainHeaderActivity"
+            android:name="com.grarak.kerneladiutor.views.NavHeaderView$MainHeaderActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".utils.GetPermission$PermissionActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings"
-            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver android:name="com.grarak.kerneladiutor.boot.Receiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.grarak.kerneladiutor.boot.Service" />
+        <receiver android:name="com.grarak.kerneladiutor.boot.Service$CancelReceiver" />
     </application>
 
 </manifest>
