@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ import java.util.List;
  */
 public class CardView extends RecyclerViewItem {
 
+    private Context mContext;
+
     private TextView mTitle;
     private LinearLayout mLayout;
 
@@ -43,6 +46,13 @@ public class CardView extends RecyclerViewItem {
 
     private List<RecyclerViewItem> mItems = new ArrayList<>();
     private HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
+
+    public CardView(Context context) {
+        if (context == null) {
+            throw new IllegalStateException("Context can't be null");
+        }
+        mContext = context;
+    }
 
     @Override
     public int getLayoutRes() {
@@ -54,19 +64,8 @@ public class CardView extends RecyclerViewItem {
         mTitle = (TextView) view.findViewById(R.id.card_title);
         mLayout = (LinearLayout) view.findViewById(R.id.card_layout);
 
-        setupLayout();
         super.onCreateView(view);
-    }
-
-    @Override
-    public void onCreateHolder(ViewGroup parent) {
-        super.onCreateHolder(parent);
-        for (RecyclerViewItem item : mItems) {
-            if (!mViews.containsKey(item)) {
-                mViews.put(item, LayoutInflater.from(parent.getContext())
-                        .inflate(item.getLayoutRes(), null, false));
-            }
-        }
+        setupLayout();
     }
 
     public void setTitle(CharSequence title) {
@@ -76,6 +75,7 @@ public class CardView extends RecyclerViewItem {
 
     public void addItem(RecyclerViewItem item) {
         mItems.add(item);
+        mViews.put(item, LayoutInflater.from(mContext).inflate(item.getLayoutRes(), null, false));
         setupLayout();
     }
 
@@ -87,33 +87,26 @@ public class CardView extends RecyclerViewItem {
         mItems.remove(item);
         if (mLayout != null) {
             mLayout.removeView(mViews.get(item));
-            mViews.remove(item);
         }
     }
 
     public void clearItems() {
         mItems.clear();
-        setupLayout();
+        if (mLayout != null) {
+            mLayout.removeAllViews();
+        }
     }
 
     private void setupLayout() {
         if (mLayout != null) {
-            mLayout.removeAllViews();
-            for (RecyclerViewItem item : mItems) {
-                View view;
-                if (mViews.containsKey(item)) {
-                    view = mViews.get(item);
-                } else {
-                    mViews.put(item, view = LayoutInflater.from(mLayout.getContext())
-                            .inflate(item.getLayoutRes(), null, false));
-                }
-                ViewGroup viewGroup = (ViewGroup) view.getParent();
+            for (final RecyclerViewItem item : mItems) {
+                ViewGroup viewGroup = (ViewGroup) mViews.get(item).getParent();
                 if (viewGroup != null) {
-                    viewGroup.removeView(view);
+                    viewGroup.removeView(mViews.get(item));
                 }
-                mLayout.addView(view);
                 item.setOnViewChangeListener(getOnViewChangeListener());
-                item.onCreateView(view);
+                item.onCreateView(mViews.get(item));
+                mLayout.addView(mViews.get(item));
             }
         }
     }

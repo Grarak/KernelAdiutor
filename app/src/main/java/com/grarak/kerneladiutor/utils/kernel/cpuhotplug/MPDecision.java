@@ -17,39 +17,43 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.utils.kernel.thermal;
+package com.grarak.kerneladiutor.utils.kernel.cpuhotplug;
 
 import android.content.Context;
 
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.Control;
 
 /**
- * Created by willi on 04.05.16.
+ * Created by willi on 07.05.16.
  */
-public class MSMThermal {
+public class MPDecision {
 
-    public static final String CORE_CONTROL = "/sys/module/msm_thermal/core_control/enabled";
+    public static final String HOTPLUG_MPDEC = "mpdecision";
 
-    public static void enableCoreControl(boolean enable, Context context) {
-        enableCoreControl(enable, ApplyOnBootFragment.CPU, context);
+    public static void enableMpdecision(boolean enable, Context context) {
+        if (enable) {
+            run(Control.startService(HOTPLUG_MPDEC), HOTPLUG_MPDEC, context);
+        } else {
+            run(Control.stopService(HOTPLUG_MPDEC), HOTPLUG_MPDEC, context);
+            for (int i = 0; i < CPUFreq.getCpuCount(); i++) {
+                CPUFreq.onlineCpu(i, true, ApplyOnBootFragment.CPU_HOTPLUG, context);
+            }
+        }
     }
 
-    public static void enableCoreControl(boolean enable, String category, Context context) {
-        Control.runSetting(Control.write(enable ? "1" : "0", CORE_CONTROL), category, CORE_CONTROL + enable, context);
-    }
-
-    public static boolean hasCoreControl() {
-        return Utils.existFile(CORE_CONTROL);
+    public static boolean isMpdecisionEnabled() {
+        return Utils.isPropActive(HOTPLUG_MPDEC);
     }
 
     public static boolean supported() {
-        return hasCoreControl();
+        return Utils.hasProp(HOTPLUG_MPDEC);
     }
 
     private static void run(String command, String id, Context context) {
-        Control.runSetting(command, ApplyOnBootFragment.CPU, id, context);
+        Control.runSetting(command, ApplyOnBootFragment.CPU_HOTPLUG, id, context);
     }
 
 }

@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.grarak.kerneladiutor.utils.root.RootFile;
+import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutordonate.R;
 
 import java.io.BufferedReader;
@@ -161,6 +162,22 @@ public class Utils {
 
     public static int getOrientation(Context context) {
         return context.getResources().getConfiguration().orientation;
+    }
+
+    public static boolean isPropActive(String key) {
+        try {
+            return RootUtils.runCommand("getprop | grep " + key).split("]:")[1].contains("running");
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
+    public static boolean hasProp(String key) {
+        try {
+            return RootUtils.runCommand("getprop | grep " + key).split("]:").length > 1;
+        } catch (Exception ignored) {
+            return false;
+        }
     }
 
     public static void writeFile(String path, String text, boolean append) {

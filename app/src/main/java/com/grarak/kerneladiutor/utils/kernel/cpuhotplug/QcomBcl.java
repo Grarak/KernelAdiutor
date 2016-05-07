@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.utils.kernel.hotplug;
+package com.grarak.kerneladiutor.utils.kernel.cpuhotplug;
 
 import android.content.Context;
 
@@ -37,6 +37,10 @@ public class QcomBcl {
     private static String DEFAULT_SOC_HOTPLUG_MASK;
 
     public static void online(boolean online, Context context) {
+        online(online, ApplyOnBootFragment.CPU, context);
+    }
+
+    public static void online(boolean online, String category, Context context) {
         run(Control.write(online ? "disable" : "enable", PARENT + "/mode"), PARENT + "/mode" + online, context);
         if (DEFAULT_HOTPLUG_MASK != null) {
             run(Control.write(online ? "0" : DEFAULT_HOTPLUG_MASK, PARENT + "/hotplug_mask"), PARENT +
@@ -46,7 +50,8 @@ public class QcomBcl {
             run(Control.write(online ? "0" : DEFAULT_SOC_HOTPLUG_MASK, PARENT + "/hotplug_soc_mask"), PARENT +
                     "/hotplug_soc_mask" + online, context);
         }
-        run(Control.write(online ? "enable" : "disable", PARENT + "/mode"), PARENT + "/mode" + online + "1", context);
+        Control.runSetting(Control.write(online ? "enable" : "disable", PARENT + "/mode"), category,
+                PARENT + "/mode" + online + "1", context);
     }
 
     public static boolean supported() {

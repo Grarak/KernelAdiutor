@@ -21,8 +21,10 @@ package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,6 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private final List<RecyclerViewItem> mItems;
     private final RecyclerViewItem.OnViewChangeListener mOnViewChangeListener;
+    private final HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
 
     public RecyclerViewAdapter(List<RecyclerViewItem> items,
                                RecyclerViewItem.OnViewChangeListener onViewChangeListener) {
@@ -52,9 +55,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        View view;
+        if (!mViews.containsKey(mItems.get(position))) {
+            mViews.put(mItems.get(position), view = LayoutInflater.from(parent.getContext()).inflate(
+                    mItems.get(position).getLayoutRes(), parent, false));
+        } else {
+            view = mViews.get(mItems.get(position));
+        }
+        ViewGroup viewGroup = (ViewGroup) view.getParent();
+        if (viewGroup != null) {
+            viewGroup.removeView(view);
+        }
         mItems.get(position).onCreateHolder(parent);
-        return new RecyclerView.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                mItems.get(position).getLayoutRes(), parent, false)) {
+        return new RecyclerView.ViewHolder(view) {
         };
     }
 

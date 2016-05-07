@@ -78,12 +78,12 @@ public class DeviceFragment extends BaseControlFragment {
                 {getString(R.string.kernel), Device.getKernelVersion()}
         };
 
-        CardView deviceCard = new CardView();
+        CardView deviceCard = new CardView(getContext());
         String vendor = Device.getVendor();
         vendor = vendor.substring(0, 1).toUpperCase() + vendor.substring(1);
         deviceCard.setTitle(vendor + " " + Device.getModel());
 
-        CardView boardCard = new CardView();
+        CardView boardCard = new CardView(getContext());
         boardCard.setTitle(Device.getBoard());
 
         for (String[] deviceInfo : deviceInfos) {

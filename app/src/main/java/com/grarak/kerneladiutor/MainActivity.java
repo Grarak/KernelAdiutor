@@ -38,8 +38,9 @@ import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpu.MSMPerformance;
 import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
-import com.grarak.kerneladiutor.utils.kernel.hotplug.QcomBcl;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutordonate.R;
@@ -122,6 +123,7 @@ public class MainActivity extends BaseActivity {
             Device.MemInfo.load();
             Device.ROMInfo.load();
             Device.TrustZone.supported();
+            Hotplug.supported();
             MSMPerformance.supported();
             MSMThermal.supported();
             QcomBcl.supported();

@@ -33,8 +33,34 @@ public class Control {
 
     private static final String TAG = Control.class.getSimpleName();
 
+    public static String startService(String prop) {
+        return "start " + prop;
+    }
+
+    public static String stopService(String prop) {
+        return "stop " + prop;
+    }
+
     public static String write(String text, String path) {
         return "echo '" + text + "' > " + path;
+    }
+
+    private static synchronized void apply(String command, String category, String id, Context context) {
+        RootUtils.runCommand(command);
+
+        if (context != null) {
+            Settings settings = new Settings(context);
+            List<Settings.SettingsItem> items = settings.getAllSettings();
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).getId().equals(id) && items.get(i).getCategory().equals(category)) {
+                    settings.delete(i);
+                }
+            }
+            settings.putSetting(category, command, id);
+            settings.commit();
+        }
+
+        Log.i(TAG, command);
     }
 
     public static void runSetting(final String command, final String category, final String id,
@@ -42,23 +68,7 @@ public class Control {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                synchronized (this) {
-                    RootUtils.runCommand(command);
-
-                    if (context != null) {
-                        Settings settings = new Settings(context);
-                        List<Settings.SettingsItem> items = settings.getAllSettings();
-                        for (int i = 0; i < items.size(); i++) {
-                            if (items.get(i).getId().equals(id)) {
-                                settings.delete(i);
-                            }
-                        }
-                        settings.putSetting(category, command, id);
-                        settings.commit();
-                    }
-
-                    Log.i(TAG, command);
-                }
+                apply(command, category, id, context);
             }
         }).start();
     }

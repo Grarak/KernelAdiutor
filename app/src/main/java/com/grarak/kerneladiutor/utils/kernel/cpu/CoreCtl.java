@@ -36,7 +36,11 @@ public class CoreCtl {
     private static Boolean MIN_CPUS_SUPPORTED;
 
     public static void setMinCpus(int min, int cpu, Context context) {
-        run(Control.write(String.valueOf(min), Utils.strFormat(MIN_CPUS, cpu)),
+        setMinCpus(min, cpu, ApplyOnBootFragment.CPU, context);
+    }
+
+    public static void setMinCpus(int min, int cpu, String category, Context context) {
+        Control.runSetting(Control.write(String.valueOf(min), Utils.strFormat(MIN_CPUS, cpu)), category,
                 Utils.strFormat(MIN_CPUS, cpu), context);
     }
 

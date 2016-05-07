@@ -36,6 +36,7 @@ import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SelectView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
+import com.grarak.kerneladiutor.views.recyclerview.TitleView;
 import com.grarak.kerneladiutordonate.R;
 
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class CPUFragment extends BaseControlFragment {
     }
 
     private void freqInit(List<RecyclerViewItem> items) {
-        CardView bigCard = new CardView();
+        CardView bigCard = new CardView(getContext());
         if (CPUFreq.isBigLITTLE()) {
             bigCard.setTitle(getString(R.string.cluster_big));
         }
@@ -191,7 +192,7 @@ public class CPUFragment extends BaseControlFragment {
         items.add(bigCard);
 
         if (CPUFreq.isBigLITTLE()) {
-            CardView LITTLECard = new CardView();
+            CardView LITTLECard = new CardView(getContext());
             LITTLECard.setTitle(getString(R.string.cluster_little));
 
             mCPUMaxLITTLE = new SelectView();
@@ -368,8 +369,10 @@ public class CPUFragment extends BaseControlFragment {
     }
 
     private void cpuBoostInit(List<RecyclerViewItem> items) {
-        final CardView cpuBoost = new CardView();
-        cpuBoost.setTitle(getString(R.string.cpu_boost));
+        List<RecyclerViewItem> cpuBoost = new ArrayList<>();
+
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.cpu_boost));
 
         if (CPUBoost.hasEnable()) {
             SwitchView enable = new SwitchView();
@@ -382,7 +385,7 @@ public class CPUFragment extends BaseControlFragment {
                 }
             });
 
-            cpuBoost.addItem(enable);
+            items.add(enable);
         }
 
         if (CPUBoost.hasCpuBoostDebugMask()) {
@@ -397,7 +400,7 @@ public class CPUFragment extends BaseControlFragment {
                 }
             });
 
-            cpuBoost.addItem(debugMask);
+            cpuBoost.add(debugMask);
         }
 
         if (CPUBoost.hasCpuBoostMs()) {
@@ -415,7 +418,7 @@ public class CPUFragment extends BaseControlFragment {
                 }
             });
 
-            cpuBoost.addItem(ms);
+            cpuBoost.add(ms);
         }
 
         if (CPUBoost.hasCpuBoostSyncThreshold() && CPUFreq.getFreqs() != null) {
@@ -436,7 +439,7 @@ public class CPUFragment extends BaseControlFragment {
                 }
             });
 
-            cpuBoost.addItem(syncThreshold);
+            cpuBoost.add(syncThreshold);
         }
 
         if (CPUBoost.hasCpuBoostInputMs()) {
@@ -454,7 +457,7 @@ public class CPUFragment extends BaseControlFragment {
                 }
             });
 
-            cpuBoost.addItem(inputMs);
+            cpuBoost.add(inputMs);
         }
 
         if (CPUBoost.hasCpuBoostInputFreq() && CPUFreq.getFreqs() != null) {
@@ -482,7 +485,7 @@ public class CPUFragment extends BaseControlFragment {
                                 core, getActivity());
                     }
                 });
-                cpuBoost.addItem(inputCard);
+                cpuBoost.add(inputCard);
             }
         }
 
@@ -498,7 +501,7 @@ public class CPUFragment extends BaseControlFragment {
                 }
             });
 
-            cpuBoost.addItem(wakeup);
+            cpuBoost.add(wakeup);
         }
 
         if (CPUBoost.hasCpuBoostHotplug()) {
@@ -513,11 +516,12 @@ public class CPUFragment extends BaseControlFragment {
                 }
             });
 
-            cpuBoost.addItem(hotplug);
+            cpuBoost.add(hotplug);
         }
 
         if (cpuBoost.size() > 0) {
-            items.add(cpuBoost);
+            items.add(title);
+            items.addAll(cpuBoost);
         }
     }
 

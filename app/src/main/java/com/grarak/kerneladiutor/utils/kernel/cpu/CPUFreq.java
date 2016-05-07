@@ -24,7 +24,7 @@ import android.util.Log;
 
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutor.utils.kernel.hotplug.QcomBcl;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.Control;
 import com.grarak.kerneladiutordonate.R;
@@ -317,20 +317,24 @@ public class CPUFreq {
     }
 
     public static void onlineCpu(int cpu, boolean online, Context context) {
+        onlineCpu(cpu, online, ApplyOnBootFragment.CPU, context);
+    }
+
+    public static void onlineCpu(int cpu, boolean online, String category, Context context) {
         if (MSMThermal.supported()) {
-            MSMThermal.enableCoreControl(!online, context);
+            MSMThermal.enableCoreControl(!online, category, context);
         }
         if (QcomBcl.supported()) {
-            QcomBcl.online(online, context);
+            QcomBcl.online(online, category, context);
         }
         if (CoreCtl.hasMinCpus() && getBigCpuRange().indexOf(cpu) != -1) {
-            CoreCtl.setMinCpus(online ? 4 : 0, cpu, context);
+            CoreCtl.setMinCpus(online ? 4 : 0, cpu, category, context);
         }
         if (MSMPerformance.hasMaxCpus()) {
-            MSMPerformance.setMaxCpus(online ? 4 : -1, online ? 4 : -1, context);
+            MSMPerformance.setMaxCpus(online ? 4 : -1, online ? 4 : -1, category, context);
         }
-        run(Control.write(online ? "1" : "0", Utils.strFormat(CPU_ONLINE, cpu)),
-                Utils.strFormat(CPU_ONLINE, cpu), context);
+        Control.runSetting(Control.write(online ? "1" : "0", Utils.strFormat(CPU_ONLINE, cpu)),
+                category, Utils.strFormat(CPU_ONLINE, cpu), context);
     }
 
     public static List<Integer> getLITTLECpuRange() {

@@ -305,7 +305,7 @@ public class BaseControlFragment extends BaseFragment {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            mScrollDistance = mRecyclerView.computeVerticalScrollOffset();
+            mScrollDistance = recyclerView.computeVerticalScrollOffset();
 
             if (mScrollDistance > mViewPagerParent.getHeight() - mAppBarLayout.getHeight()) {
                 mAppBarLayoutDistance += dy;

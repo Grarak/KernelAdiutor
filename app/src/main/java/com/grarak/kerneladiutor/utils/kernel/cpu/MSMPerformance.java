@@ -58,7 +58,11 @@ public class MSMPerformance {
     }
 
     public static void setMaxCpus(int big, int little, Context context) {
-        run(Control.write(little + ":" + big, MAX_CPUS), MAX_CPUS, context);
+        setMaxCpus(big, little, ApplyOnBootFragment.CPU, context);
+    }
+
+    public static void setMaxCpus(int big, int little, String category, Context context) {
+        Control.runSetting(Control.write(little + ":" + big, MAX_CPUS), category, MAX_CPUS, context);
     }
 
     public static boolean hasMaxCpus() {
