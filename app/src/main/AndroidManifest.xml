@@ -3,6 +3,7 @@
     package="com.grarak.kerneladiutordonate">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -33,6 +34,9 @@
         </receiver>
         <service android:name="com.grarak.kerneladiutor.boot.Service" />
         <receiver android:name="com.grarak.kerneladiutor.boot.Service$CancelReceiver" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d89b7ebb31b3bb0ca514a4171c6af37c7c9579c9" />
     </application>
 
 </manifest>

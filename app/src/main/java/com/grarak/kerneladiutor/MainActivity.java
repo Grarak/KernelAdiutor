@@ -28,9 +28,13 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
+import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpu.MSMPerformance;
 import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
@@ -39,6 +43,8 @@ import com.grarak.kerneladiutor.utils.kernel.hotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutordonate.R;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by willi on 14.04.16.
@@ -53,6 +59,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         View splashBackground = findViewById(R.id.splash_background);
@@ -120,6 +127,10 @@ public class MainActivity extends BaseActivity {
             QcomBcl.supported();
             Temperature.supported(MainActivity.this);
             Voltage.supported();
+
+            Answers.getInstance().logContentView(new ContentViewEvent()
+                    .putContentName(CPUFreq.isBigLITTLE() ? "big.LITTLE" : "not big.LITTLE")
+                    .putContentType(Device.getBoard()));
         }
 
         @Override
