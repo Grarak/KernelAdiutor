@@ -89,6 +89,9 @@ public class FrequencyButtonView extends RecyclerViewItem {
                 }
             }
         });
+
+        setFullSpan(true);
+        super.onCreateView(view);
     }
 
     public void setRefreshListener(View.OnClickListener onClickListener) {

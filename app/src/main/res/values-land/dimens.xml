@@ -1,4 +1,3 @@
 <resources>
-    <dimen name="basecontrol_padding">72dp</dimen>
     <dimen name="basecontrol_foreground_fragment_height">270dp</dimen>
 </resources>

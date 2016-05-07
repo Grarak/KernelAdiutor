@@ -95,6 +95,7 @@ public class OverallFragment extends BaseControlFragment {
 
     private void temperatureInit(List<RecyclerViewItem> parent) {
         CardView tempCard = new CardView();
+        tempCard.setFullSpan(true);
         tempCard.setTitle(getString(R.string.temperature));
 
         if (Temperature.hasCPU()) {
@@ -185,6 +186,8 @@ public class OverallFragment extends BaseControlFragment {
         mFreqBig = new CardView();
         if (CPUFreq.isBigLITTLE()) {
             mFreqBig.setTitle(getString(R.string.cluster_big));
+        } else {
+            mFreqBig.setFullSpan(true);
         }
         items.add(mFreqBig);
 

@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,6 +28,9 @@ import android.view.ViewGroup;
  * Created by willi on 24.04.16.
  */
 public abstract class RecyclerViewItem {
+
+    private boolean mFullspan;
+    private View mView;
 
     public interface OnViewChangeListener {
         void onViewChanged();
@@ -39,7 +43,10 @@ public abstract class RecyclerViewItem {
     private OnViewChangeListener mOnViewChangeListener;
     private OnItemClickListener mOnItemClickListener;
 
-    public abstract void onCreateView(View view);
+    public void onCreateView(View view) {
+        mView = view;
+        refresh();
+    }
 
     @LayoutRes
     public abstract int getLayoutRes();
@@ -68,6 +75,21 @@ public abstract class RecyclerViewItem {
 
     protected OnItemClickListener getOnItemClickListener() {
         return mOnItemClickListener;
+    }
+
+    public void setFullSpan(boolean fullspan) {
+        mFullspan = fullspan;
+        refresh();
+    }
+
+    protected void refresh() {
+        if (mFullspan && mView != null) {
+            StaggeredGridLayoutManager.LayoutParams layoutParams =
+                    new StaggeredGridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setFullSpan(true);
+            mView.setLayoutParams(layoutParams);
+        }
     }
 
 }

@@ -47,7 +47,7 @@ public class CircularText extends RecyclerViewItem {
         mCircle = (CircularTextView) view.findViewById(R.id.circle);
         mTitleView = (TextView) view.findViewById(R.id.title);
 
-        refresh();
+        super.onCreateView(view);
     }
 
     public void setMessage(String messageListener) {
@@ -65,7 +65,9 @@ public class CircularText extends RecyclerViewItem {
         refresh();
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mCircle != null && mMessage != null) {
             mCircle.setText(mMessage);
         }
@@ -76,5 +78,4 @@ public class CircularText extends RecyclerViewItem {
             mCircle.setColor(mColor);
         }
     }
-
 }

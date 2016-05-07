@@ -23,6 +23,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -34,8 +35,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class BaseControlFragment extends BaseFragment {
     private Handler mHandler = new Handler();
 
     private View mRootView;
-    private LinearLayoutManager mLinearLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private ViewPagerAdapter mViewPagerAdapter;
     private RecyclerViewAdapter mRecyclerViewAdapter;
@@ -92,7 +93,13 @@ public class BaseControlFragment extends BaseFragment {
 
         mScroller = new Scroller();
         mRecyclerView.clearOnScrollListeners();
-        mRecyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mRecyclerViewAdapter = new RecyclerViewAdapter(sItems, new RecyclerViewItem.OnViewChangeListener() {
+            @Override
+            public void onViewChanged() {
+                scroll();
+            }
+        }));
+        mRecyclerView.setLayoutManager(mLayoutManager = getLayoutManager());
 
         mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
         if (!showViewPager()) {
@@ -110,10 +117,6 @@ public class BaseControlFragment extends BaseFragment {
         viewPager.setAdapter(mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager()));
         circlePageIndicator.setViewPager(viewPager);
         setAppBarLayoutAlpha(0);
-
-        if (sItems.size() > 0) {
-            mRootView.findViewById(R.id.progress).setVisibility(View.GONE);
-        }
 
         BaseFragment foregroundFragmnet = getForegroundFragment();
         mForegroundVisible = false;
@@ -143,14 +146,10 @@ public class BaseControlFragment extends BaseFragment {
                 protected void onPostExecute(List<RecyclerViewItem> recyclerViewItems) {
                     super.onPostExecute(recyclerViewItems);
                     if (isCancelled()) return;
-                    sItems = recyclerViewItems;
+                    for (RecyclerViewItem item : recyclerViewItems) {
+                        addItem(item);
+                    }
                     mRootView.findViewById(R.id.progress).setVisibility(View.GONE);
-                    mRecyclerView.setAdapter(mRecyclerViewAdapter = new RecyclerViewAdapter(sItems, new RecyclerViewItem.OnViewChangeListener() {
-                        @Override
-                        public void onViewChanged() {
-                            scroll();
-                        }
-                    }));
                 }
             };
             mLoader.execute();
@@ -161,6 +160,7 @@ public class BaseControlFragment extends BaseFragment {
                     scroll();
                 }
             }));
+            mRootView.findViewById(R.id.progress).setVisibility(View.GONE);
         }
 
         return mRootView;
@@ -201,16 +201,24 @@ public class BaseControlFragment extends BaseFragment {
     public void onViewFinished() {
         super.onViewFinished();
         if (getSavedInstanceState() != null) {
-            mLinearLayoutManager.scrollToPosition(getSavedInstanceState().getInt("position"));
+            int position = getSavedInstanceState().getInt("position");
+            mLayoutManager.scrollToPosition(position >= 0 ? position : 0);
         } else {
-            mLinearLayoutManager.scrollToPosition(0);
+            mLayoutManager.scrollToPosition(0);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("position", mLinearLayoutManager.findFirstVisibleItemPosition());
+        try {
+            if (mLayoutManager instanceof StaggeredGridLayoutManager) {
+                outState.putInt("position", ((StaggeredGridLayoutManager) mLayoutManager)
+                        .findFirstVisibleItemPositions(null)[0]);
+            }
+        } catch (Exception ignored) {
+            outState.putInt("position", 0);
+        }
     }
 
     private void setAppBarLayoutAlpha(int alpha) {
@@ -226,8 +234,15 @@ public class BaseControlFragment extends BaseFragment {
     protected void addItem(RecyclerViewItem recyclerViewItem) {
         sItems.add(recyclerViewItem);
         if (mRecyclerViewAdapter != null) {
-            mRecyclerViewAdapter.notifyDataSetChanged();
+            mRecyclerViewAdapter.notifyItemInserted(sItems.size() - 1);
         }
+        if (mLayoutManager instanceof StaggeredGridLayoutManager) {
+            ((StaggeredGridLayoutManager) mLayoutManager).setSpanCount(getSpanCount());
+        }
+    }
+
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new StaggeredGridLayoutManager(getSpanCount(), StaggeredGridLayoutManager.VERTICAL);
     }
 
     protected void clearItems() {
@@ -235,6 +250,16 @@ public class BaseControlFragment extends BaseFragment {
         if (mRecyclerViewAdapter != null) {
             mRecyclerViewAdapter.notifyDataSetChanged();
         }
+    }
+
+    public int getSpanCount() {
+        int span = Utils.isTablet(getActivity()) ? Utils.getOrientation(getActivity()) ==
+                Configuration.ORIENTATION_LANDSCAPE ? 3 : 2 : Utils.getOrientation(getActivity()) ==
+                Configuration.ORIENTATION_LANDSCAPE ? 2 : 1;
+        if (sItems.size() != 0 && span > sItems.size()) {
+            span = sItems.size();
+        }
+        return span;
     }
 
     public int itemsSize() {

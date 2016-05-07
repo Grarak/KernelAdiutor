@@ -48,7 +48,9 @@ public class TitleView extends RecyclerViewItem {
         mTitle = (TextView) view.findViewById(R.id.title);
         mMoreView = view.findViewById(R.id.more_view);
 
-        refresh();
+        setFullSpan(true);
+
+        super.onCreateView(view);
     }
 
     public void setOnClickListener(View.OnClickListener onClickListener) {
@@ -61,7 +63,9 @@ public class TitleView extends RecyclerViewItem {
         refresh();
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mRootView != null) {
             if (mOnClickListener != null) {
                 mRootView.setClickable(true);
@@ -80,5 +84,4 @@ public class TitleView extends RecyclerViewItem {
             mTitle.setText(mTitleText);
         }
     }
-
 }

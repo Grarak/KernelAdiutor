@@ -27,6 +27,7 @@
     <string name="fahrenheit">ºF</string>
     <string name="mb">MB</string>
     <string name="ms">ms</string>
+    <string name="mv">mV</string>
 
     <!-- Special signs -->
     <string name="minus" translatable="false">-</string>
@@ -40,6 +41,7 @@
     <string name="overall">Overall</string>
     <string name="device">Device</string>
     <string name="cpu">CPU</string>
+    <string name="cpu_voltage">CPU Voltage</string>
     <string name="gpu">GPU</string>
     <string name="battery">Battery</string>
 
@@ -119,4 +121,9 @@
     <string name="hotplug_boost_summary">Hotplug Boost is similar to input boost but it occurs when CPUs go online.</string>
     <string name="touch_boost">Touch Boost</string>
     <string name="touch_boost_summary">This will boost your minimum CPU speed if you touch the screen or press a button.</string>
+
+    <!-- CPU Voltage -->
+    <string name="global_offset">Global Offset</string>
+    <string name="override_vmin">Override Minimum Voltage</string>
+    <string name="override_vmin_summary">Disable to remove manufacturer limits on undervolting</string>
 </resources>

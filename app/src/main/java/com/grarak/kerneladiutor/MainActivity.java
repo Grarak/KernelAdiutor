@@ -34,6 +34,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpu.MSMPerformance;
 import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
+import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.hotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -118,6 +119,7 @@ public class MainActivity extends BaseActivity {
             MSMThermal.supported();
             QcomBcl.supported();
             Temperature.supported(MainActivity.this);
+            Voltage.supported();
         }
 
         @Override

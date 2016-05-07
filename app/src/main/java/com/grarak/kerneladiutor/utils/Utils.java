@@ -21,6 +21,7 @@ package com.grarak.kerneladiutor.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -48,6 +49,11 @@ import java.math.RoundingMode;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
 
     public static String readAssetFile(Context context, String file) {
         InputStream input = null;

@@ -20,7 +20,6 @@
     <dimen name="circular_textview_width">50dp</dimen>
     <dimen name="circular_textview_textsize">15sp</dimen>
 
-    <dimen name="basecontrol_padding">0dp</dimen>
     <dimen name="basecontrol_foreground_fragment_height">550dp</dimen>
 
     <dimen name="rv_select_view_selector_height">40dp</dimen>

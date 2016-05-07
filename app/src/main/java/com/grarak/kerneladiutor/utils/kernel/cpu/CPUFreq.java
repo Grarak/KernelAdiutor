@@ -110,9 +110,8 @@ public class CPUFreq {
         boolean offline = forceRead && isOffline(cpu);
         if (offline) {
             onlineCpu(cpu, true, null);
-
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -134,10 +133,17 @@ public class CPUFreq {
             boolean offline = isOffline(0);
             if (offline) {
                 onlineCpu(0, true, null);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
             if (Utils.existFile(Utils.strFormat(CPU_AVAILABLE_GOVERNORS, 0))) {
                 sGovernors = Utils.readFile(Utils.strFormat(CPU_AVAILABLE_GOVERNORS, 0)).split(" ");
             }
+
             if (offline) {
                 onlineCpu(0, false, null);
             }
@@ -152,7 +158,7 @@ public class CPUFreq {
             onlineCpu(cpu, true, null);
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -52,7 +52,7 @@ public class FrequencyTableView extends RecyclerViewItem {
         mDuration = (TextView) view.findViewById(R.id.duration);
         mProgress = (ProgressBar) view.findViewById(R.id.progress);
 
-        refresh();
+        super.onCreateView(view);
     }
 
     public void setFrequency(CharSequence frequency) {
@@ -70,7 +70,9 @@ public class FrequencyTableView extends RecyclerViewItem {
         refresh();
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mFreqText != null && mFrequency != null) {
             mFrequency.setText(mFreqText);
         }
@@ -82,5 +84,4 @@ public class FrequencyTableView extends RecyclerViewItem {
             mProgress.setProgress(mUsage);
         }
     }
-
 }

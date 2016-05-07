@@ -56,7 +56,7 @@ public class SwitchView extends RecyclerViewItem {
         mSummary = (TextView) view.findViewById(R.id.summary);
         mSwitcher = (SwitchCompat) view.findViewById(R.id.switcher);
 
-        refresh();
+        super.onCreateView(view);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +94,9 @@ public class SwitchView extends RecyclerViewItem {
         mOnSwitchListener = onSwitchListener;
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mTitle != null) {
             if (mTitleText != null) {
                 mTitle.setText(mTitleText);
@@ -110,5 +112,4 @@ public class SwitchView extends RecyclerViewItem {
             mSwitcher.setChecked(mChecked);
         }
     }
-
 }

@@ -47,7 +47,7 @@ public class DescriptionView extends RecyclerViewItem {
         mTitleView = (TextView) view.findViewById(R.id.title);
         mSummaryView = (TextView) view.findViewById(R.id.summary);
 
-        refresh();
+        super.onCreateView(view);
     }
 
     public void setTitle(CharSequence title) {
@@ -60,7 +60,9 @@ public class DescriptionView extends RecyclerViewItem {
         refresh();
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mTitleView != null && mTitle != null) {
             mTitleView.setText(mTitle);
         }
@@ -78,5 +80,4 @@ public class DescriptionView extends RecyclerViewItem {
             });
         }
     }
-
 }

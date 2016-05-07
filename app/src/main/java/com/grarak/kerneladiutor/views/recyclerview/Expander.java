@@ -84,7 +84,7 @@ public abstract class Expander extends RecyclerViewItem {
 
         mRootView.setForeground(mSelectorVisible ? null : mForeground);
 
-        refresh();
+        super.onCreateView(view);
 
         view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +155,9 @@ public abstract class Expander extends RecyclerViewItem {
         refresh();
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mTitle != null) {
             if (mTitleText != null) {
                 mTitle.setText(mTitleText);

@@ -30,21 +30,13 @@ import android.widget.CompoundButton;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutordonate.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by willi on 03.05.16.
  */
 public class ApplyOnBootFragment extends BaseFragment {
 
     public static final String CPU = "cpu_onboot";
-
-    public static final List<String> sApplyOnBootList = new ArrayList<>();
-
-    static {
-        sApplyOnBootList.add(CPU);
-    }
+    public static final String CPU_VOLTAGE = "cpuvoltage_onboot";
 
     public static ApplyOnBootFragment newInstance(String category) {
         Bundle args = new Bundle();

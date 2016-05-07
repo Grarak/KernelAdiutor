@@ -38,10 +38,14 @@ public class QcomBcl {
 
     public static void online(boolean online, Context context) {
         run(Control.write(online ? "disable" : "enable", PARENT + "/mode"), PARENT + "/mode" + online, context);
-        run(Control.write(online ? "0" : DEFAULT_HOTPLUG_MASK, PARENT + "/hotplug_mask"), PARENT +
-                "/hotplug_mask" + online, context);
-        run(Control.write(online ? "0" : DEFAULT_SOC_HOTPLUG_MASK, PARENT + "/hotplug_soc_mask"), PARENT +
-                "/hotplug_soc_mask" + online, context);
+        if (DEFAULT_HOTPLUG_MASK != null) {
+            run(Control.write(online ? "0" : DEFAULT_HOTPLUG_MASK, PARENT + "/hotplug_mask"), PARENT +
+                    "/hotplug_mask" + online, context);
+        }
+        if (DEFAULT_SOC_HOTPLUG_MASK != null) {
+            run(Control.write(online ? "0" : DEFAULT_SOC_HOTPLUG_MASK, PARENT + "/hotplug_soc_mask"), PARENT +
+                    "/hotplug_soc_mask" + online, context);
+        }
         run(Control.write(online ? "enable" : "disable", PARENT + "/mode"), PARENT + "/mode" + online + "1", context);
     }
 
@@ -52,7 +56,7 @@ public class QcomBcl {
             if (Utils.existFile(PARENT + "/hotplug_mask")) {
                 DEFAULT_HOTPLUG_MASK = Utils.readFile(PARENT + "/hotplug_mask");
             }
-            if (Utils.existFile(PARENT = "/hotplug_soc_mask")) {
+            if (Utils.existFile(PARENT + "/hotplug_soc_mask")) {
                 DEFAULT_SOC_HOTPLUG_MASK = Utils.readFile(PARENT + "/hotplug_soc_mask");
             }
             return true;

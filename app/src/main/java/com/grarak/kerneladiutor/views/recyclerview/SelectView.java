@@ -74,7 +74,9 @@ public class SelectView extends Expander {
         refresh();
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mLayout != null && mItems != null) {
             mLayout.removeAllViews();
             for (int i = 0; i < mItems.size(); i++) {
@@ -97,5 +99,4 @@ public class SelectView extends Expander {
             mItems = null;
         }
     }
-
 }

@@ -74,7 +74,7 @@ public class RootFile {
     }
 
     public boolean exists() {
-        String output = RootUtils.runCommand("[ -e '" + file + "' ] && echo true");
+        String output = RootUtils.runCommand("[ -e " + file + " ] && echo true");
         return output != null && output.contains("true");
     }
 

@@ -22,6 +22,8 @@ package com.grarak.kerneladiutor.fragments.kernel;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
@@ -52,6 +54,11 @@ public class GovernorTunableFragment extends BaseControlFragment {
     @Override
     protected boolean retainInstance() {
         return false;
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new LinearLayoutManager(getActivity());
     }
 
     public void setPath(String path, int cpu) {

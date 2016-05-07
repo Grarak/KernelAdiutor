@@ -55,7 +55,7 @@ public class CardView extends RecyclerViewItem {
         mLayout = (LinearLayout) view.findViewById(R.id.card_layout);
 
         setupLayout();
-        refresh();
+        super.onCreateView(view);
     }
 
     @Override
@@ -118,7 +118,9 @@ public class CardView extends RecyclerViewItem {
         }
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mTitle != null) {
             if (mTitleText != null) {
                 mTitle.setText(mTitleText);

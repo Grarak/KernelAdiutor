@@ -109,7 +109,7 @@ public class SeekBarView extends RecyclerViewItem {
             }
         });
 
-        refresh();
+        super.onCreateView(view);
     }
 
     public void setTitle(CharSequence title) {
@@ -168,7 +168,9 @@ public class SeekBarView extends RecyclerViewItem {
         mOnSeekBarListener = onSeekBarListener;
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mTitle != null) {
             if (mTitleText != null) {
                 mTitle.setText(mTitleText);
@@ -197,5 +199,4 @@ public class SeekBarView extends RecyclerViewItem {
             }
         }
     }
-
 }

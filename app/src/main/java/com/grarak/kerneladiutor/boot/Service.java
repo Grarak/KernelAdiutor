@@ -32,10 +32,11 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.grarak.kerneladiutor.database.Settings;
-import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutordonate.R;
+
+import java.util.HashMap;
 
 /**
  * Created by willi on 03.05.16.
@@ -44,6 +45,8 @@ public class Service extends android.app.Service {
 
     private static final String TAG = Service.class.getSimpleName();
     private static boolean sCancel;
+
+    private HashMap<String, Boolean> mCategoryEnabled = new HashMap<>();
 
     @Nullable
     @Override
@@ -54,10 +57,13 @@ public class Service extends android.app.Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         boolean enabled = false;
-        for (String category : ApplyOnBootFragment.sApplyOnBootList) {
-            if (Prefs.getBoolean(category, false, this)) {
-                enabled = true;
-                break;
+        final Settings settings = new Settings(this);
+        for (Settings.SettingsItem item : settings.getAllSettings()) {
+            if (!mCategoryEnabled.containsKey(item.getCategory())) {
+                mCategoryEnabled.put(item.getCategory(), Prefs.getBoolean(item.getCategory(), false, this));
+                if (mCategoryEnabled.get(item.getCategory())) {
+                    enabled = true;
+                }
             }
         }
         if (!enabled) return super.onStartCommand(intent, flags, startId);
@@ -103,9 +109,12 @@ public class Service extends android.app.Service {
 
                 if (sCancel) return;
                 RootUtils.SU su = new RootUtils.SU(true);
-                for (String category : ApplyOnBootFragment.sApplyOnBootList) {
-                    if (Prefs.getBoolean(category, false, Service.this)) {
-                        applySettings(su, category);
+                for (Settings.SettingsItem item : settings.getAllSettings()) {
+                    if (mCategoryEnabled.get(item.getCategory())) {
+                        synchronized (this) {
+                            su.runCommand(item.getSetting());
+                            Log.i(TAG, item.getSetting());
+                        }
                     }
                 }
                 su.close();
@@ -113,16 +122,6 @@ public class Service extends android.app.Service {
         }).start();
 
         return super.onStartCommand(intent, flags, startId);
-    }
-
-    private synchronized void applySettings(RootUtils.SU su, String category) {
-        Settings settings = new Settings(this);
-        for (Settings.SettingsItem item : settings.getAllSettings()) {
-            if (item.getCategory().equals(category)) {
-                su.runCommand(item.getSetting());
-                Log.i(TAG, item.getSetting());
-            }
-        }
     }
 
     public static class CancelReceiver extends BroadcastReceiver {

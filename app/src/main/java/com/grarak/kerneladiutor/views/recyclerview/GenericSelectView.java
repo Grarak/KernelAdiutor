@@ -36,6 +36,7 @@ public class GenericSelectView extends Expander {
     private AppCompatEditText mEditText;
 
     private CharSequence mEditTextText;
+    private int mInputType = -1;
     private OnGenericValueListener mOnGenericValueListener;
 
     public GenericSelectView() {
@@ -52,7 +53,16 @@ public class GenericSelectView extends Expander {
     @Override
     public void setValue(CharSequence value) {
         super.setValue(value);
+        refresh();
+    }
+
+    public void setValueRaw(String value) {
         mEditTextText = value;
+        refresh();
+    }
+
+    public void setInputType(int type) {
+        mInputType = type;
         refresh();
     }
 
@@ -64,15 +74,19 @@ public class GenericSelectView extends Expander {
     protected void onCollapse() {
         super.onCollapse();
         if (mOnGenericValueListener != null && mEditText != null) {
-            setValue(mEditText.getText().toString());
+            setValueRaw(mEditText.getText().toString());
             mOnGenericValueListener.onGenericValueSelected(this, mEditText.getText().toString());
         }
     }
 
-    private void refresh() {
+    @Override
+    protected void refresh() {
+        super.refresh();
         if (mEditTextText != null && mEditText != null) {
             mEditText.setText(mEditTextText);
         }
+        if (mEditText != null && mInputType >= 0) {
+            mEditText.setInputType(mInputType);
+        }
     }
-
 }

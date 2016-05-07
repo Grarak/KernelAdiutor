@@ -35,9 +35,11 @@ import android.view.SubMenu;
 
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
+import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutordonate.R;
 
@@ -54,6 +56,9 @@ public class NavigationActivity extends BaseActivity
         sFragments.put(R.string.device, new DeviceFragment());
         sFragments.put(R.string.kernel, null);
         sFragments.put(R.string.cpu, new CPUFragment());
+        if (Voltage.supported()) {
+            sFragments.put(R.string.cpu_voltage, new CPUVoltage());
+        }
     }
 
     private Handler mHandler = new Handler();
