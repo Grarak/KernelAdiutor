@@ -150,7 +150,7 @@
     <string name="hysteresis">Hysteresis Value</string>
     <string name="hysteresis_summary">The lower it is, the faster response.</string>
     <string name="cpu_threshold">CPU Threshold</string>
-    <string name="cpu_threshold_summary">The lower, the less CPUs are used.</string>
+    <string name="cpu_threshold_summary">The higher, the less CPUs are used.</string>
     <string name="debug">Debug</string>
     <string name="debug_summary">Allows you to activate debug mask for operations.</string>
     <string name="suspend">Suspend</string>
