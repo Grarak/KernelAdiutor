@@ -51,27 +51,19 @@ public class Voltage {
         sVoltages.put(CPU_VOLTAGE, false);
         sVoltages.put(CPU_VDD_VOLTAGE, true);
         sVoltages.put(CPU_FAUX_VOLTAGE, true);
-    }
 
-    static {
         sOffset.put(CPU_VOLTAGE, 1);
         sOffset.put(CPU_VDD_VOLTAGE, 1);
         sOffset.put(CPU_FAUX_VOLTAGE, 1000);
-    }
 
-    static {
         sSplitNewline.put(CPU_VOLTAGE, "mV");
         sSplitNewline.put(CPU_VDD_VOLTAGE, "\\r?\\n");
         sSplitNewline.put(CPU_FAUX_VOLTAGE, "\\r?\\n");
-    }
 
-    static {
         sSplitLine.put(CPU_VOLTAGE, "mhz:");
         sSplitLine.put(CPU_VDD_VOLTAGE, ":");
         sSplitLine.put(CPU_FAUX_VOLTAGE, ":");
-    }
 
-    static {
         sAppend.put(CPU_VOLTAGE, true);
         sAppend.put(CPU_VDD_VOLTAGE, false);
         sAppend.put(CPU_FAUX_VOLTAGE, false);

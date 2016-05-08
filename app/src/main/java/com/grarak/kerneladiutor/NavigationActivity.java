@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -45,12 +46,14 @@ import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutordonate.R;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static LinkedHashMap<Integer, BaseFragment> sFragments = new LinkedHashMap<>();
+    private static HashMap<Integer, Class> sActivities = new HashMap<>();
 
     static {
         sFragments.put(R.string.statistics, null);
@@ -64,6 +67,10 @@ public class NavigationActivity extends BaseActivity
         if (Hotplug.supported()) {
             sFragments.put(R.string.cpu_hotplug, new CPUHotplug());
         }
+        sFragments.put(R.string.other, null);
+        sFragments.put(R.string.settings, null);
+
+        sActivities.put(R.string.settings, SettingsActivity.class);
     }
 
     private Handler mHandler = new Handler();
@@ -106,7 +113,7 @@ public class NavigationActivity extends BaseActivity
     private void appendFragments(Menu menu) {
         SubMenu lastSubMenu = null;
         for (int menuRes : sFragments.keySet()) {
-            if (sFragments.get(menuRes) == null) {
+            if (sFragments.get(menuRes) == null && !sActivities.containsKey(menuRes)) {
                 lastSubMenu = menu.addSubMenu(menuRes);
             } else {
                 MenuItem menuItem;
@@ -116,7 +123,7 @@ public class NavigationActivity extends BaseActivity
                     menuItem = lastSubMenu.add(0, menuRes, 0, menuRes);
                 }
                 menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_dots));
-                menuItem.setCheckable(true);
+                menuItem.setCheckable(!sActivities.containsKey(menuRes));
             }
         }
     }
@@ -156,12 +163,16 @@ public class NavigationActivity extends BaseActivity
     }
 
     private void onItemSelected(int res) {
-        getSupportActionBar().setTitle(getString(res));
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, getFragment(res),
-                res + "_key").commit();
-        mNavigationView.setCheckedItem(res);
-        mDrawer.closeDrawer(GravityCompat.START);
-        mSelection = res;
+        if (sActivities.containsKey(res)) {
+            startActivity(new Intent(this, sActivities.get(res)));
+        } else {
+            getSupportActionBar().setTitle(getString(res));
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, getFragment(res),
+                    res + "_key").commit();
+            mNavigationView.setCheckedItem(res);
+            mDrawer.closeDrawer(GravityCompat.START);
+            mSelection = res;
+        }
     }
 
     private Fragment getFragment(int res) {

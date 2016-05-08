@@ -21,12 +21,14 @@ package com.grarak.kerneladiutor.utils;
 
 import android.content.Context;
 
+import com.grarak.kerneladiutordonate.BuildConfig;
+
 /**
  * Created by willi on 01.01.16.
  */
 public class Prefs {
 
-    private static final String PREF_NAME = "prefs";
+    private static final String PREF_NAME = BuildConfig.APPLICATION_ID + "_preferences";
 
     public static int getInt(String name, int defaults, Context context) {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getInt(name, defaults);

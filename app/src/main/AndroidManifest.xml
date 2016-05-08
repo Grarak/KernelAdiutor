@@ -29,6 +29,7 @@
         <activity
             android:name="com.grarak.kerneladiutor.views.NavHeaderView$MainHeaderActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.grarak.kerneladiutor.SettingsActivity" />
 
         <receiver android:name="com.grarak.kerneladiutor.boot.Receiver">
             <intent-filter>

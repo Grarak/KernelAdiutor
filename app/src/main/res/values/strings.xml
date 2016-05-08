@@ -36,6 +36,7 @@
     <!-- Headers -->
     <string name="statistics">Statistics</string>
     <string name="kernel">Kernel</string>
+    <string name="other">Other</string>
 
     <!-- Menus -->
     <string name="overall">Overall</string>
@@ -45,6 +46,7 @@
     <string name="cpu_hotplug">CPU Hotplug</string>
     <string name="gpu">GPU</string>
     <string name="battery">Battery</string>
+    <string name="settings">Settings</string>
 
     <!-- Overall -->
     <string name="offline">Offline</string>
@@ -180,4 +182,8 @@
     <string name="up_timer_cnt_summary">Control timer for up CPUs.</string>
     <string name="down_timer_cnt">Down Timer Control</string>
     <string name="down_timer_cnt_summary">Control timer for down CPUs.</string>
+
+    <!-- Settings -->
+    <string name="fahrenheit_title">Fahrenheit</string>
+    <string name="fahrenheit_summary">Use fahrenheit to measure temperature.</string>
 </resources>
