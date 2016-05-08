@@ -22,6 +22,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.BluPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.IntelliPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MPDecision;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -53,6 +54,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (IntelliPlug.supported()) {
             intelliPlugInit(items);
+        }
+        if (BluPlug.supported()) {
+            bluPlugInit(items);
         }
         return items;
     }
@@ -376,6 +380,177 @@ public class CPUHotplug extends BaseControlFragment {
         if (intelliplug.size() > 0) {
             intelliplug.add(title);
             items.addAll(intelliplug);
+        }
+    }
+
+    private void bluPlugInit(List<RecyclerViewItem> items) {
+        final List<RecyclerViewItem> bluplug = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.blu_plug));
+
+        if (BluPlug.hasBluPlugEnable()) {
+            SwitchView enable = new SwitchView();
+            enable.setTitle(getString(R.string.blu_plug));
+            enable.setSummary(getString(R.string.blu_plug_summary));
+            enable.setChecked(BluPlug.isBluPlugEnabled());
+            enable.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    BluPlug.enableBluPlug(isChecked, getActivity());
+                }
+            });
+
+            bluplug.add(enable);
+        }
+
+        if (BluPlug.hasBluPlugPowersaverMode()) {
+            SwitchView powersaverMode = new SwitchView();
+            powersaverMode.setTitle(getString(R.string.powersaver_mode));
+            powersaverMode.setSummary(getString(R.string.powersaver_mode_summary));
+            powersaverMode.setChecked(BluPlug.isBluPlugPowersaverModeEnabled());
+            powersaverMode.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    BluPlug.enableBluPlugPowersaverMode(isChecked, getActivity());
+                }
+            });
+
+            bluplug.add(powersaverMode);
+        }
+
+        if (BluPlug.hasBluPlugMinOnline()) {
+            SeekBarView minOnline = new SeekBarView();
+            minOnline.setTitle(getString(R.string.min_cpu_online));
+            minOnline.setSummary(getString(R.string.min_cpu_online_summary));
+            minOnline.setMax(CPUFreq.getCpuCount());
+            minOnline.setMin(1);
+            minOnline.setProgress(BluPlug.getBluPlugMinOnline() - 1);
+            minOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    BluPlug.setBluPlugMinOnline(position + 1, getActivity());
+                }
+            });
+
+            bluplug.add(minOnline);
+        }
+
+        if (BluPlug.hasBluPlugMaxOnline()) {
+            SeekBarView maxOnline = new SeekBarView();
+            maxOnline.setTitle(getString(R.string.max_cpu_online));
+            maxOnline.setSummary(getString(R.string.max_cpu_online_summary));
+            maxOnline.setMax(CPUFreq.getCpuCount());
+            maxOnline.setMin(1);
+            maxOnline.setProgress(BluPlug.getBluPlugMaxOnline() - 1);
+            maxOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    BluPlug.setBluPlugMaxOnline(position + 1, getActivity());
+                }
+            });
+
+            bluplug.add(maxOnline);
+        }
+
+        if (BluPlug.hasBluPlugMaxCoresScreenOff()) {
+            SeekBarView maxCoresScreenOff = new SeekBarView();
+            maxCoresScreenOff.setTitle(getString(R.string.max_cpu_online_screen_off));
+            maxCoresScreenOff.setSummary(getString(R.string.max_cpu_online_screen_off_summary));
+            maxCoresScreenOff.setMax(CPUFreq.getCpuCount());
+            maxCoresScreenOff.setMin(1);
+            maxCoresScreenOff.setProgress(BluPlug.getBluPlugMaxCoresScreenOff() - 1);
+            maxCoresScreenOff.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    BluPlug.setBluPlugMaxCoresScreenOff(position + 1, getActivity());
+                }
+            });
+
+            bluplug.add(maxCoresScreenOff);
+        }
+
+        if (BluPlug.hasBluPlugMaxFreqScreenOff() && CPUFreq.getFreqs() != null) {
+            List<String> list = new ArrayList<>();
+            list.add(getString(R.string.disabled));
+            list.addAll(CPUFreq.getAdjustedFreq(getActivity()));
+
+            SeekBarView maxFreqScreenOff = new SeekBarView();
+            maxFreqScreenOff.setTitle(getString(R.string.cpu_max_screen_off_freq));
+            maxFreqScreenOff.setSummary(getString(R.string.cpu_max_screen_off_freq_summary));
+            maxFreqScreenOff.setItems(list);
+            maxFreqScreenOff.setProgress(BluPlug.getBluPlugMaxFreqScreenOff());
+            maxFreqScreenOff.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    BluPlug.setBluPlugMaxFreqScreenOff(position, getActivity());
+                }
+            });
+
+            bluplug.add(maxFreqScreenOff);
+        }
+
+        if (BluPlug.hasBluPlugUpThreshold()) {
+            SeekBarView upThreshold = new SeekBarView();
+            upThreshold.setTitle(getString(R.string.up_threshold));
+            upThreshold.setSummary(getString(R.string.up_threshold_summary));
+            upThreshold.setUnit("%");
+            upThreshold.setMax(100);
+            upThreshold.setProgress(BluPlug.getBluPlugUpThreshold());
+            upThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    BluPlug.setBluPlugUpThreshold(position, getActivity());
+                }
+            });
+
+            bluplug.add(upThreshold);
+        }
+
+        if (BluPlug.hasBluPlugUpTimerCnt()) {
+            List<String> list = new ArrayList<>();
+            for (float i = 0; i < 21; i++) {
+                list.add(String.valueOf(i * 0.5f).replace(".0", ""));
+            }
+
+            SeekBarView upTimerCnt = new SeekBarView();
+            upTimerCnt.setTitle(getString(R.string.up_timer_cnt));
+            upTimerCnt.setSummary(getString(R.string.up_timer_cnt_summary));
+            upTimerCnt.setItems(list);
+            upTimerCnt.setProgress(BluPlug.getBluPlugUpTimerCnt());
+            upTimerCnt.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    BluPlug.setBluPlugUpTimerCnt(position, getActivity());
+                }
+            });
+
+            bluplug.add(upTimerCnt);
+        }
+
+        if (BluPlug.hasBluPlugDownTimerCnt()) {
+            List<String> list = new ArrayList<>();
+            for (float i = 0; i < 21; i++) {
+                list.add(String.valueOf(i * 0.5f).replace(".0", ""));
+            }
+
+            SeekBarView downTimerCnt = new SeekBarView();
+            downTimerCnt.setTitle(getString(R.string.down_timer_cnt));
+            downTimerCnt.setSummary(getString(R.string.down_timer_cnt_summary));
+            downTimerCnt.setItems(list);
+            downTimerCnt.setProgress(BluPlug.getBluPlugDownTimerCnt());
+            downTimerCnt.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    BluPlug.setBluPlugDownTimerCnt(position, getActivity());
+                }
+            });
+
+            bluplug.add(downTimerCnt);
+        }
+
+        if (bluplug.size() > 0) {
+            items.add(title);
+            items.addAll(bluplug);
         }
     }
 
