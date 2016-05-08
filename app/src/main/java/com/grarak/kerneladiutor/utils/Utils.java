@@ -82,10 +82,6 @@ public class Utils {
         return null;
     }
 
-    public static void useFahrenheit(boolean use, Context context) {
-        Prefs.saveBoolean("useretardedmeasurement", use, context);
-    }
-
     public static boolean useFahrenheit(Context context) {
         return Prefs.getBoolean("useretardedmeasurement", false, context);
     }

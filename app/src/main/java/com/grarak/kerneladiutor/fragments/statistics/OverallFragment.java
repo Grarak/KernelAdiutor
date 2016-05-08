@@ -368,7 +368,7 @@ public class OverallFragment extends BaseControlFragment {
                     R.color.orange : R.color.red));
             boolean useFahrenheit = Utils.useFahrenheit(getActivity());
             if (useFahrenheit) temp = Utils.celsiusToFahrenheit(temp);
-            mBatteryTemp.setMessage(temp + getActivity().getString(useFahrenheit ?
+            mBatteryTemp.setMessage(Utils.roundTo2Decimals(temp) + getActivity().getString(useFahrenheit ?
                     R.string.fahrenheit : R.string.celsius));
         }
     }
