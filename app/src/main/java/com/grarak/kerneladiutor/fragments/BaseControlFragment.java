@@ -27,6 +27,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -69,6 +70,7 @@ public class BaseControlFragment extends BaseFragment {
     private Scroller mScroller;
     private View mViewPagerParent;
     private AppBarLayout mAppBarLayout;
+    private float mAppBarElevation;
     private Toolbar mToolBar;
     private Bundle mSavedInstanceState;
     private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
@@ -108,6 +110,10 @@ public class BaseControlFragment extends BaseFragment {
                     mRecyclerView.getPaddingBottom());
         }
         mAppBarLayout = ((NavigationActivity) getActivity()).getAppBarLayout();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mAppBarElevation = mAppBarLayout.getElevation();
+            mAppBarLayout.setElevation(0);
+        }
         mToolBar = ((NavigationActivity) getActivity()).getToolBar();
 
         if (showViewPager()) {
@@ -341,6 +347,14 @@ public class BaseControlFragment extends BaseFragment {
                 });
                 mAlphaAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            mAppBarLayout.setElevation(mFade ? 0 : mAppBarElevation);
+                        }
+                    }
+
+                    @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         mAlphaAnimator = null;
@@ -464,6 +478,9 @@ public class BaseControlFragment extends BaseFragment {
         super.onDestroy();
         sItems.clear();
         setAppBarLayoutAlpha(255);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mAppBarLayout.setElevation(mAppBarElevation);
+        }
         if (getSavedInstanceState() != null) {
             getSavedInstanceState().putInt("position", 0);
         }
