@@ -79,7 +79,8 @@ public class CPUHotplug extends BaseControlFragment {
                 @Override
                 public void onChanged(SwitchView switchView, boolean isChecked) {
                     for (SwitchView view : mEnableViews) {
-                        if (view != switchView && view.isChecked() && switchView.isChecked()) {
+                        if (!view.getTitle().equals(switchView.getTitle()) && view.isChecked()
+                                && switchView.isChecked()) {
                             mWarningDialog = ViewUtils.dialogBuilder(getString(R.string.hotplug_warning),
                                     null, new DialogInterface.OnClickListener() {
                                         @Override

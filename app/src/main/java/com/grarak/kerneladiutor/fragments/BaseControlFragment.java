@@ -229,7 +229,7 @@ public class BaseControlFragment extends BaseFragment {
 
     private void setAppBarLayoutAlpha(int alpha) {
         Activity activity;
-        if ((activity = getActivity()) != null) {
+        if ((activity = getActivity()) != null && mAppBarLayout != null && mToolBar != null) {
             int colorPrimary = Utils.getColorPrimaryColor(activity);
             mAppBarLayout.setBackgroundDrawable(new ColorDrawable(Color.argb(alpha, Color.red(colorPrimary),
                     Color.green(colorPrimary), Color.blue(colorPrimary))));

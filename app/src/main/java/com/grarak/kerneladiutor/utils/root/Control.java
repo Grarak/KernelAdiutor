@@ -24,7 +24,6 @@ import android.util.Log;
 
 import com.grarak.kerneladiutor.database.Settings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +32,7 @@ import java.util.List;
 public class Control {
 
     private static final String TAG = Control.class.getSimpleName();
-    private static final List<Thread> mTasks = new ArrayList<>();
+    private static final Control sControl = new Control();
 
     public static String startService(String prop) {
         return "start " + prop;
@@ -47,7 +46,7 @@ public class Control {
         return "echo '" + text + "' > " + path;
     }
 
-    private static void apply(String command, String category, String id, Context context) {
+    private void apply(String command, String category, String id, Context context) {
         if (context != null) {
             Settings settings = new Settings(context);
             List<Settings.SettingsItem> items = settings.getAllSettings();
@@ -66,30 +65,11 @@ public class Control {
 
     public static void runSetting(final String command, final String category, final String id,
                                   final Context context) {
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                apply(command, category, id, context);
-            }
-        });
-
-        // synchronized doesn't want to work here
-        // use this ugly hack
-        mTasks.add(thread);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    if (mTasks.get(0) == thread) {
-                        thread.start();
-                        try {
-                            thread.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        mTasks.remove(thread);
-                        break;
-                    }
+                synchronized (sControl) {
+                    sControl.apply(command, category, id, context);
                 }
             }
         }).start();

@@ -52,8 +52,8 @@ import java.util.LinkedHashMap;
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static LinkedHashMap<Integer, BaseFragment> sFragments = new LinkedHashMap<>();
-    private static HashMap<Integer, Class> sActivities = new HashMap<>();
+    private final static LinkedHashMap<Integer, BaseFragment> sFragments = new LinkedHashMap<>();
+    private final static HashMap<Integer, Class> sActivities = new HashMap<>();
 
     static {
         sFragments.put(R.string.statistics, null);
