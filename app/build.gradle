@@ -9,8 +9,8 @@ android {
         applicationId "com.grarak.kerneladiutordonate"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 127
-        versionName "0.9.11.2-1"
+        versionCode 128
+        versionName "0.9.11.3"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
