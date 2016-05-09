@@ -195,6 +195,19 @@
     <string name="offline_load_summary">Don\'t offline a CPU if it drops under the lower levels up threshold load.</string>
     <string name="io_is_busy">IO is Busy</string>
     <string name="io_is_busy_summary">Used to make the hotplug consider the I/O time as CPU load time.</string>
+    <string name="mako_hotplug">Mako Hotplug</string>
+    <string name="mako_hotplug_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by franciscofranco.</string>
+    <string name="cpus_on_touch">CPUs on touch</string>
+    <string name="cpus_on_touch_summary">Number of CPUs online when touching screen or pressing button.</string>
+    <string name="cpu_freq_unplug_limit">CPU Frequency Unplug Limit</string>
+    <string name="first_level">First Level</string>
+    <string name="first_level_summary">The threshold to online all CPUs.</string>
+    <string name="high_load_counter">High Load Counter</string>
+    <string name="load_threshold">Load Threshold</string>
+    <string name="load_threshold_summary">The threshold to online all CPUs.</string>
+    <string name="max_load_counter">Max Load Counter</string>
+    <string name="min_time_cpu_online">Min Time CPU Online</string>
+    <string name="timer">Timer</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

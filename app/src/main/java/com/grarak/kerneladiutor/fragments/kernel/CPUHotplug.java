@@ -30,6 +30,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.BluPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.IntelliPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MPDecision;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MSMHotplug;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MakoHotplug;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SelectView;
@@ -72,6 +73,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (MSMHotplug.supported()) {
             msmHotplugInit(items);
+        }
+        if (MakoHotplug.supported()) {
+            makoHotplugInit(items);
         }
 
         for (SwitchView view : mEnableViews) {
@@ -883,6 +887,187 @@ public class CPUHotplug extends BaseControlFragment {
         if (msmHotplug.size() > 0) {
             items.add(title);
             items.addAll(msmHotplug);
+        }
+    }
+
+    private void makoHotplugInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> makoHotplug = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.mako_hotplug));
+
+        if (MakoHotplug.hasMakoHotplugEnable()) {
+            SwitchView enable = new SwitchView();
+            enable.setTitle(getString(R.string.mako_hotplug));
+            enable.setSummary(getString(R.string.mako_hotplug_summary));
+            enable.setChecked(MakoHotplug.isMakoHotplugEnabled());
+            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    MakoHotplug.enableMakoHotplug(isChecked, getActivity());
+                }
+            });
+
+            makoHotplug.add(enable);
+            mEnableViews.add(enable);
+        }
+
+        if (MakoHotplug.hasMakoHotplugCoresOnTouch()) {
+            SeekBarView coresOnTouch = new SeekBarView();
+            coresOnTouch.setTitle(getString(R.string.cpus_on_touch));
+            coresOnTouch.setSummary(getString(R.string.cpus_on_touch_summary));
+            coresOnTouch.setMax(CPUFreq.getCpuCount());
+            coresOnTouch.setMin(1);
+            coresOnTouch.setProgress(MakoHotplug.getMakoHotplugCoresOnTouch() - 1);
+            coresOnTouch.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugCoresOnTouch(position + 1, getActivity());
+                }
+            });
+
+            makoHotplug.add(coresOnTouch);
+        }
+
+        if (MakoHotplug.hasMakoHotplugCpuFreqUnplugLimit() && CPUFreq.getFreqs() != null) {
+            SelectView cpufreqUnplugLimit = new SelectView();
+            cpufreqUnplugLimit.setSummary(getString(R.string.cpu_freq_unplug_limit));
+            cpufreqUnplugLimit.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+            cpufreqUnplugLimit.setItem((MakoHotplug.getMakoHotplugCpuFreqUnplugLimit() / 1000)
+                    + getString(R.string.mhz));
+            cpufreqUnplugLimit.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    MakoHotplug.setMakoHotplugCpuFreqUnplugLimit(CPUFreq.getFreqs().get(position), getActivity());
+                }
+            });
+
+            makoHotplug.add(cpufreqUnplugLimit);
+        }
+
+        if (MakoHotplug.hasMakoHotplugFirstLevel()) {
+            SeekBarView firstLevel = new SeekBarView();
+            firstLevel.setTitle(getString(R.string.first_level));
+            firstLevel.setSummary(getString(R.string.first_level_summary));
+            firstLevel.setUnit("%");
+            firstLevel.setProgress(MakoHotplug.getMakoHotplugFirstLevel());
+            firstLevel.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugFirstLevel(position, getActivity());
+                }
+            });
+
+            makoHotplug.add(firstLevel);
+        }
+
+        if (MakoHotplug.hasMakoHotplugHighLoadCounter()) {
+            SeekBarView highLoadCounter = new SeekBarView();
+            highLoadCounter.setTitle(getString(R.string.high_load_counter));
+            highLoadCounter.setProgress(MakoHotplug.getMakoHotplugHighLoadCounter());
+            highLoadCounter.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugHighLoadCounter(position, getActivity());
+                }
+            });
+
+            makoHotplug.add(highLoadCounter);
+        }
+
+        if (MakoHotplug.hasMakoHotplugLoadThreshold()) {
+            SeekBarView loadThreshold = new SeekBarView();
+            loadThreshold.setTitle(getString(R.string.load_threshold));
+            loadThreshold.setSummary(getString(R.string.load_threshold_summary));
+            loadThreshold.setUnit("%");
+            loadThreshold.setProgress(MakoHotplug.getMakoHotplugLoadThreshold());
+            loadThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugLoadThreshold(position, getActivity());
+                }
+            });
+
+            makoHotplug.add(loadThreshold);
+        }
+
+        if (MakoHotplug.hasMakoHotplugMaxLoadCounter()) {
+            SeekBarView maxLoadCounter = new SeekBarView();
+            maxLoadCounter.setTitle(getString(R.string.max_load_counter));
+            maxLoadCounter.setProgress(MakoHotplug.getMakoHotplugMaxLoadCounter());
+            maxLoadCounter.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugMaxLoadCounter(position, getActivity());
+                }
+            });
+
+            makoHotplug.add(maxLoadCounter);
+        }
+
+        if (MakoHotplug.hasMakoHotplugMinTimeCpuOnline()) {
+            SeekBarView minTimeCpuOnline = new SeekBarView();
+            minTimeCpuOnline.setTitle(getString(R.string.min_time_cpu_online));
+            minTimeCpuOnline.setProgress(MakoHotplug.getMakoHotplugMinTimeCpuOnline());
+            minTimeCpuOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugMinTimeCpuOnline(position, getActivity());
+                }
+            });
+
+            makoHotplug.add(minTimeCpuOnline);
+        }
+
+        if (MakoHotplug.hasMakoHotplugMinCoresOnline()) {
+            SeekBarView minCoresOnline = new SeekBarView();
+            minCoresOnline.setTitle(getString(R.string.min_cpu_online));
+            minCoresOnline.setSummary(getString(R.string.min_cpu_online_summary));
+            minCoresOnline.setMax(CPUFreq.getCpuCount());
+            minCoresOnline.setMin(1);
+            minCoresOnline.setProgress(MakoHotplug.getMakoHotplugMinCoresOnline() - 1);
+            minCoresOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugMinCoresOnline(position + 1, getActivity());
+                }
+            });
+
+            makoHotplug.add(minCoresOnline);
+        }
+
+        if (MakoHotplug.hasMakoHotplugTimer()) {
+            SeekBarView timer = new SeekBarView();
+            timer.setTitle(getString(R.string.timer));
+            timer.setProgress(MakoHotplug.getMakoHotplugTimer());
+            timer.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MakoHotplug.setMakoHotplugTimer(position, getActivity());
+                }
+            });
+
+            makoHotplug.add(timer);
+        }
+
+        if (MakoHotplug.hasMakoHotplugSuspendFreq() && CPUFreq.getFreqs() != null) {
+            SelectView suspendFreq = new SelectView();
+            suspendFreq.setTitle(getString(R.string.cpu_max_screen_off_freq));
+            suspendFreq.setSummary(getString(R.string.cpu_max_screen_off_freq_summary));
+            suspendFreq.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+            suspendFreq.setItem((MakoHotplug.getMakoHotplugSuspendFreq() / 1000) + getString(R.string.mhz));
+            suspendFreq.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    MakoHotplug.setMakoHotplugSuspendFreq(CPUFreq.getFreqs().get(position), getActivity());
+                }
+            });
+
+            makoHotplug.add(suspendFreq);
+        }
+
+        if (makoHotplug.size() > 0) {
+            items.add(title);
+            items.addAll(makoHotplug);
         }
     }
 

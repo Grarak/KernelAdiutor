@@ -94,7 +94,7 @@ public class BluPlug {
     }
 
     public static boolean hasBluPlugMaxFreqScreenOff() {
-        return !Utils.existFile(CPUFreq.CPU_MAX_SCREEN_OFF_FREQ)
+        return !CPUFreq.hasMaxScreenOffFreq()
                 && Utils.existFile(HOTPLUG_BLU_PLUG_MAX_FREQ_SCREEN_OFF);
     }
 
