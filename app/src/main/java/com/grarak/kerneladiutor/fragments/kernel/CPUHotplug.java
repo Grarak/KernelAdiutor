@@ -28,6 +28,7 @@ import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.BluPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.IntelliPlug;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MBHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MPDecision;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MSMHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MakoHotplug;
@@ -76,6 +77,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (MakoHotplug.supported()) {
             makoHotplugInit(items);
+        }
+        if (MBHotplug.supported()) {
+            mbHotplugInit(items);
         }
 
         for (SwitchView view : mEnableViews) {
@@ -1068,6 +1072,238 @@ public class CPUHotplug extends BaseControlFragment {
         if (makoHotplug.size() > 0) {
             items.add(title);
             items.addAll(makoHotplug);
+        }
+    }
+
+    private void mbHotplugInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> mbHotplug = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(MBHotplug.getMBName(getActivity()));
+
+        if (MBHotplug.hasMBGHotplugEnable()) {
+            SwitchView enable = new SwitchView();
+            enable.setTitle(MBHotplug.getMBName(getActivity()));
+            enable.setSummary(getString(R.string.mb_hotplug_summary));
+            enable.setChecked(MBHotplug.hasMBGHotplugEnable());
+            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    MBHotplug.enableMBHotplug(isChecked, getActivity());
+                }
+            });
+
+            mbHotplug.add(enable);
+            mEnableViews.add(enable);
+        }
+
+        if (MBHotplug.hasMBHotplugScroffSingleCore()) {
+            SwitchView scroffSingleCore = new SwitchView();
+            scroffSingleCore.setTitle(getString(R.string.screen_off_single_core));
+            scroffSingleCore.setSummary(getString(R.string.screen_off_single_core_summary));
+            scroffSingleCore.setChecked(MBHotplug.isMBHotplugScroffSingleCoreEnabled());
+            scroffSingleCore.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    MBHotplug.enableMBHotplugScroffSingleCore(isChecked, getActivity());
+                }
+            });
+
+            mbHotplug.add(scroffSingleCore);
+        }
+
+        if (MBHotplug.hasMBHotplugMinCpus()) {
+            SeekBarView minCpus = new SeekBarView();
+            minCpus.setTitle(getString(R.string.min_cpu_online));
+            minCpus.setSummary(getString(R.string.min_cpu_online_summary));
+            minCpus.setMax(CPUFreq.getCpuCount());
+            minCpus.setMin(1);
+            minCpus.setProgress(MBHotplug.getMBHotplugMinCpus() - 1);
+            minCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugMinCpus(position + 1, getActivity());
+                }
+            });
+
+            mbHotplug.add(minCpus);
+        }
+
+        if (MBHotplug.hasMBHotplugMaxCpus()) {
+            SeekBarView maxCpus = new SeekBarView();
+            maxCpus.setTitle(getString(R.string.max_cpu_online));
+            maxCpus.setSummary(getString(R.string.max_cpu_online_summary));
+            maxCpus.setMax(CPUFreq.getCpuCount());
+            maxCpus.setMin(1);
+            maxCpus.setProgress(MBHotplug.getMBHotplugMaxCpus() - 1);
+            maxCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugMaxCpus(position + 1, getActivity());
+                }
+            });
+
+            mbHotplug.add(maxCpus);
+        }
+
+        if (MBHotplug.hasMBHotplugMaxCpusOnlineSusp()) {
+            SeekBarView maxCpusOnlineSusp = new SeekBarView();
+            maxCpusOnlineSusp.setTitle(getString(R.string.max_cpu_online_screen_off));
+            maxCpusOnlineSusp.setSummary(getString(R.string.max_cpu_online_screen_off_summary));
+            maxCpusOnlineSusp.setMax(CPUFreq.getCpuCount());
+            maxCpusOnlineSusp.setMin(1);
+            maxCpusOnlineSusp.setProgress(MBHotplug.getMBHotplugMaxCpusOnlineSusp() - 1);
+            maxCpusOnlineSusp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugMaxCpusOnlineSusp(position + 1, getActivity());
+                }
+            });
+
+            mbHotplug.add(maxCpusOnlineSusp);
+        }
+
+        if (MBHotplug.hasMBHotplugIdleFreq() && CPUFreq.getFreqs() != null) {
+            SelectView idleFreq = new SelectView();
+            idleFreq.setTitle(getString(R.string.idle_frequency));
+            idleFreq.setSummary(getString(R.string.idle_frequency_summary));
+            idleFreq.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+            idleFreq.setItem((MBHotplug.getMBHotplugIdleFreq() / 1000) + getString(R.string.mhz));
+            idleFreq.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    MBHotplug.setMBHotplugIdleFreq(CPUFreq.getFreqs().get(position), getActivity());
+                }
+            });
+
+            mbHotplug.add(idleFreq);
+        }
+
+        if (MBHotplug.hasMBHotplugBoostEnable()) {
+            SwitchView boost = new SwitchView();
+            boost.setTitle(getString(R.string.touch_boost));
+            boost.setSummary(getString(R.string.touch_boost_summary));
+            boost.setChecked(MBHotplug.isMBHotplugBoostEnabled());
+            boost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    MBHotplug.enableMBHotplugBoost(isChecked, getActivity());
+                }
+            });
+
+            mbHotplug.add(boost);
+        }
+
+        if (MBHotplug.hasMBHotplugBoostTime()) {
+            SeekBarView boostTime = new SeekBarView();
+            boostTime.setTitle(getString(R.string.touch_boost_time));
+            boostTime.setSummary(getString(R.string.touch_boost_time_summary));
+            boostTime.setUnit(getString(R.string.ms));
+            boostTime.setMax(5000);
+            boostTime.setOffset(100);
+            boostTime.setProgress(MBHotplug.getMBHotplugBoostTime() / 100);
+            boostTime.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugBoostTime(position * 100, getActivity());
+                }
+            });
+
+            mbHotplug.add(boostTime);
+        }
+
+        if (MBHotplug.hasMBHotplugCpusBoosted()) {
+            SeekBarView cpusBoosted = new SeekBarView();
+            cpusBoosted.setTitle(getString(R.string.cpus_boosted));
+            cpusBoosted.setSummary(getString(R.string.cpus_boosted_summary));
+            cpusBoosted.setMax(CPUFreq.getCpuCount());
+            cpusBoosted.setMin(1);
+            cpusBoosted.setProgress(MBHotplug.getMBHotplugCpusBoosted());
+            cpusBoosted.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugCpusBoosted(position, getActivity());
+                }
+            });
+
+            mbHotplug.add(cpusBoosted);
+        }
+
+        if (MBHotplug.hasMBHotplugBoostFreqs() && CPUFreq.getFreqs() != null) {
+            List<Integer> freqs = MBHotplug.getMBHotplugBoostFreqs();
+
+            for (int i = 0; i < freqs.size(); i++) {
+                SelectView boostFreq = new SelectView();
+                boostFreq.setSummary(getString(R.string.boost_frequency_core, i));
+                boostFreq.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+                boostFreq.setItem((freqs.get(i) / 1000) + getString(R.string.mhz));
+                final int pos = i;
+                boostFreq.setOnItemSelected(new SelectView.OnItemSelected() {
+                    @Override
+                    public void onItemSelected(SelectView selectView, int position, String item) {
+                        MBHotplug.setMBHotplugBoostFreqs(pos, CPUFreq.getFreqs().get(position), getActivity());
+                    }
+                });
+
+                mbHotplug.add(boostFreq);
+            }
+        }
+
+        if (MBHotplug.hasMBHotplugStartDelay()) {
+            SeekBarView startDelay = new SeekBarView();
+            startDelay.setTitle(getString(R.string.start_delay));
+            startDelay.setSummary(getString(R.string.start_delay_summary));
+            startDelay.setUnit(getString(R.string.ms));
+            startDelay.setMax(5000);
+            startDelay.setOffset(1000);
+            startDelay.setProgress(MBHotplug.getMBHotplugStartDelay() / 1000);
+            startDelay.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugStartDelay(position * 1000, getActivity());
+                }
+            });
+
+            mbHotplug.add(startDelay);
+        }
+
+        if (MBHotplug.hasMBHotplugDelay()) {
+            SeekBarView delay = new SeekBarView();
+            delay.setTitle(getString(R.string.delay));
+            delay.setSummary(getString(R.string.delay_summary));
+            delay.setUnit(getString(R.string.ms));
+            delay.setMax(200);
+            delay.setProgress(MBHotplug.getMBHotplugDelay());
+            delay.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugDelay(position, getActivity());
+                }
+            });
+
+            mbHotplug.add(delay);
+        }
+
+        if (MBHotplug.hasMBHotplugPause()) {
+            SeekBarView pause = new SeekBarView();
+            pause.setTitle(getString(R.string.pause));
+            pause.setSummary(getString(R.string.pause_summary));
+            pause.setUnit(getString(R.string.ms));
+            pause.setMax(5000);
+            pause.setOffset(1000);
+            pause.setProgress(MBHotplug.getMBHotplugPause() / 1000);
+            pause.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MBHotplug.setMBHotplugPause(position * 1000, getActivity());
+                }
+            });
+
+            mbHotplug.add(pause);
+        }
+
+        if (mbHotplug.size() > 0) {
+            items.add(title);
+            items.addAll(mbHotplug);
         }
     }
 

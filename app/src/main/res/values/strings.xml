@@ -208,6 +208,22 @@
     <string name="max_load_counter">Max Load Counter</string>
     <string name="min_time_cpu_online">Min Time CPU Online</string>
     <string name="timer">Timer</string>
+    <string name="msm_mpdecision_hotplug">MSM MPDecision Hotplug</string>
+    <string name="bricked_hotplug">Bricked Hotplug</string>
+    <string name="mb_hotplug_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by show-p1984.</string>
+    <string name="screen_off_single_core">Screen off Single Core</string>
+    <string name="screen_off_single_core_summary">Use only one core when screen is off.</string>
+    <string name="idle_frequency">Idle Frequency</string>
+    <string name="idle_frequency_summary">If the first core is below this frequency, then don\'t plug the other cores.</string>
+    <string name="touch_boost_time">Touch Boost Time</string>
+    <string name="touch_boost_time_summary">How long the CPU should be boosted after touching the screen.</string>
+    <string name="boost_frequency_core">Boost Frequency Core %d</string>
+    <string name="start_delay">Start delay</string>
+    <string name="start_delay_summary">Time until Hotplug starts to work.</string>
+    <string name="delay">Delay</string>
+    <string name="delay_summary">Time between checks.</string>
+    <string name="pause">Pause</string>
+    <string name="pause_summary">If something else plugs in the CPU, fall asleep for this amount of time.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>
