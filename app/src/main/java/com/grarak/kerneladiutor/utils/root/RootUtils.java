@@ -75,7 +75,7 @@ public class RootUtils {
         su = null;
     }
 
-    public static String runCommand(String command) {
+    public static synchronized String runCommand(String command) {
         return getSU().runCommand(command);
     }
 

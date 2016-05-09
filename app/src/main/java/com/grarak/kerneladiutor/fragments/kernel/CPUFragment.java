@@ -310,7 +310,7 @@ public class CPUFragment extends BaseControlFragment {
         SwitchView powerSavingWq = new SwitchView();
         powerSavingWq.setSummary(getString(R.string.power_saving_wq));
         powerSavingWq.setChecked(Misc.isPowerSavingWqEnabled());
-        powerSavingWq.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+        powerSavingWq.addOnSwitchListener(new SwitchView.OnSwitchListener() {
             @Override
             public void onChanged(SwitchView switchView, boolean isChecked) {
                 Misc.enablePowerSavingWq(isChecked, getActivity());
@@ -342,7 +342,7 @@ public class CPUFragment extends BaseControlFragment {
             cpuQuietEnable.setTitle(getString(R.string.cpu_quiet));
             cpuQuietEnable.setSummary(getString(R.string.cpu_quiet_summary));
             cpuQuietEnable.setChecked(Misc.isCpuQuietEnabled());
-            cpuQuietEnable.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+            cpuQuietEnable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                 @Override
                 public void onChanged(SwitchView switchView, boolean isChecked) {
                     Misc.enableCpuQuiet(isChecked, getActivity());
@@ -378,7 +378,7 @@ public class CPUFragment extends BaseControlFragment {
             SwitchView enable = new SwitchView();
             enable.setSummary(getString(R.string.cpu_boost));
             enable.setChecked(CPUBoost.isEnabled());
-            enable.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                 @Override
                 public void onChanged(SwitchView switchView, boolean isChecked) {
                     CPUBoost.enableCpuBoost(isChecked, getActivity());
@@ -393,7 +393,7 @@ public class CPUFragment extends BaseControlFragment {
             debugMask.setTitle(getString(R.string.debug_mask));
             debugMask.setSummary(getString(R.string.debug_mask_summary));
             debugMask.setChecked(CPUBoost.isCpuBoostDebugMaskEnabled());
-            debugMask.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+            debugMask.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                 @Override
                 public void onChanged(SwitchView switchView, boolean isChecked) {
                     CPUBoost.enableCpuBoostDebugMask(isChecked, getActivity());
@@ -494,7 +494,7 @@ public class CPUFragment extends BaseControlFragment {
             wakeup.setTitle(getString(R.string.wakeup_boost));
             wakeup.setSummary(getString(R.string.wakeup_boost_summary));
             wakeup.setChecked(CPUBoost.isCpuBoostWakeupEnabled());
-            wakeup.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+            wakeup.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                 @Override
                 public void onChanged(SwitchView switchView, boolean isChecked) {
                     CPUBoost.enableCpuBoostWakeup(isChecked, getActivity());
@@ -509,7 +509,7 @@ public class CPUFragment extends BaseControlFragment {
             hotplug.setTitle(getString(R.string.hotplug_boost));
             hotplug.setSummary(getString(R.string.hotplug_boost_summary));
             hotplug.setChecked(CPUBoost.isCpuBoostHotplugEnabled());
-            hotplug.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+            hotplug.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                 @Override
                 public void onChanged(SwitchView switchView, boolean isChecked) {
                     CPUBoost.enableCpuBoostHotplug(isChecked, getActivity());
@@ -530,7 +530,7 @@ public class CPUFragment extends BaseControlFragment {
         touchBoost.setTitle(getString(R.string.touch_boost));
         touchBoost.setSummary(getString(R.string.touch_boost_summary));
         touchBoost.setChecked(Misc.isCpuTouchBoostEnabled());
-        touchBoost.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+        touchBoost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
             @Override
             public void onChanged(SwitchView switchView, boolean isChecked) {
                 Misc.enableCpuTouchBoost(isChecked, getActivity());

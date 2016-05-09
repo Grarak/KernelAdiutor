@@ -25,7 +25,8 @@ package com.grarak.kerneladiutor.utils.kernel.cpuhotplug;
 public class Hotplug {
 
     public static boolean supported() {
-        return MPDecision.supported() || IntelliPlug.supported() || BluPlug.supported();
+        return MPDecision.supported() || IntelliPlug.supported() || BluPlug.supported()
+                || MSMHotplug.supported();
     }
 
 }

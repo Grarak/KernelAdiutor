@@ -146,7 +146,8 @@ public class Device {
                 if (PARTITION == null) return "";
             }
             if (VERSION != null) return VERSION;
-            String raw = RootUtils.runCommand("strings " + PARTITION);
+            String raw = RootUtils.runCommand("strings " + PARTITION + " | grep "
+                    + PARTITIONS.get(PARTITION));
             for (String line : raw.split("\\r?\\n")) {
                 if (line.startsWith(PARTITIONS.get(PARTITION))) {
                     return VERSION = line.replace(PARTITIONS.get(PARTITION), "");

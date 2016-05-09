@@ -26,6 +26,9 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutordonate.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by willi on 05.05.16.
  */
@@ -43,7 +46,7 @@ public class SwitchView extends RecyclerViewItem {
     private CharSequence mSummaryText;
     private boolean mChecked;
 
-    private OnSwitchListener mOnSwitchListener;
+    private List<OnSwitchListener> mOnSwitchListeners = new ArrayList<>();
 
     @Override
     public int getLayoutRes() {
@@ -68,8 +71,12 @@ public class SwitchView extends RecyclerViewItem {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mChecked = isChecked;
-                if (mOnSwitchListener != null) {
-                    mOnSwitchListener.onChanged(SwitchView.this, isChecked);
+                List<OnSwitchListener> applied = new ArrayList<>();
+                for (OnSwitchListener onSwitchListener : mOnSwitchListeners) {
+                    if (applied.indexOf(onSwitchListener) == -1) {
+                        onSwitchListener.onChanged(SwitchView.this, isChecked);
+                        applied.add(onSwitchListener);
+                    }
                 }
             }
         });
@@ -90,8 +97,16 @@ public class SwitchView extends RecyclerViewItem {
         refresh();
     }
 
-    public void setOnSwitchListener(OnSwitchListener onSwitchListener) {
-        mOnSwitchListener = onSwitchListener;
+    public CharSequence getTitle() {
+        return mTitleText;
+    }
+
+    public boolean isChecked() {
+        return mChecked;
+    }
+
+    public void addOnSwitchListener(OnSwitchListener onSwitchListener) {
+        mOnSwitchListeners.add(onSwitchListener);
     }
 
     @Override

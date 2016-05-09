@@ -71,7 +71,7 @@ public class CPUVoltage extends BaseControlFragment {
             overrideVmin.setSummary(getString(R.string.override_vmin_summary));
             overrideVmin.setChecked(Voltage.isOverrideVminEnabled());
             overrideVmin.setFullSpan(true);
-            overrideVmin.setOnSwitchListener(new SwitchView.OnSwitchListener() {
+            overrideVmin.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                 @Override
                 public void onChanged(SwitchView switchView, boolean isChecked) {
                     Voltage.enableOverrideVmin(isChecked, getActivity());

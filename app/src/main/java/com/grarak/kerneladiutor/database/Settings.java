@@ -43,7 +43,7 @@ public class Settings extends Provider {
     public Settings(Context context) {
         super(context.getFilesDir() + "/settings.json", 1);
 
-        if (Utils.existFile(context.getFilesDir() + "/commands.json")) {
+        if (Utils.existFile(context.getFilesDir() + "/commands.json", false)) {
             new File(context.getFilesDir() + "/commands.json").delete();
         }
     }
