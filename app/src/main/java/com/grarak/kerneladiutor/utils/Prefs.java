@@ -20,38 +20,35 @@
 package com.grarak.kerneladiutor.utils;
 
 import android.content.Context;
-
-import com.grarak.kerneladiutordonate.BuildConfig;
+import android.preference.PreferenceManager;
 
 /**
  * Created by willi on 01.01.16.
  */
 public class Prefs {
 
-    private static final String PREF_NAME = BuildConfig.APPLICATION_ID + "_preferences";
-
     public static int getInt(String name, int defaults, Context context) {
-        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getInt(name, defaults);
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(name, defaults);
     }
 
     public static void saveInt(String name, int value, Context context) {
-        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().putInt(name, value).apply();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(name, value).apply();
     }
 
     public static boolean getBoolean(String name, boolean defaults, Context context) {
-        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getBoolean(name, defaults);
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
     }
 
     public static void saveBoolean(String name, boolean value, Context context) {
-        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().putBoolean(name, value).apply();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
     }
 
     public static String getString(String name, String defaults, Context context) {
-        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getString(name, defaults);
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(name, defaults);
     }
 
     public static void saveString(String name, String value, Context context) {
-        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().putString(name, value).apply();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(name, value).apply();
     }
 
 }

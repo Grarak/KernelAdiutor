@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.grarak.kerneladiutordonate">
+    package="com.grarak.kerneladiutor">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,7 +16,7 @@
             android:name="io.fabric.ApiKey"
             android:value="d89b7ebb31b3bb0ca514a4171c6af37c7c9579c9" />
 
-        <activity android:name="com.grarak.kerneladiutor.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,21 +24,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.grarak.kerneladiutor.NavigationActivity" />
-        <activity android:name="com.grarak.kerneladiutor.TextActivity" />
+        <activity android:name=".NavigationActivity" />
+        <activity android:name=".TextActivity" />
         <activity
-            android:name="com.grarak.kerneladiutor.views.NavHeaderView$MainHeaderActivity"
+            android:name=".views.NavHeaderView$MainHeaderActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name="com.grarak.kerneladiutor.SettingsActivity" />
+        <activity android:name=".SettingsActivity" />
 
-        <receiver android:name="com.grarak.kerneladiutor.boot.Receiver">
+        <receiver android:name=".boot.Receiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-        <service android:name="com.grarak.kerneladiutor.boot.Service" />
-        <receiver android:name="com.grarak.kerneladiutor.boot.Service$CancelReceiver" />
+        <service android:name=".boot.Service" />
+        <receiver android:name=".boot.Service$CancelReceiver" />
     </application>
 
 </manifest>

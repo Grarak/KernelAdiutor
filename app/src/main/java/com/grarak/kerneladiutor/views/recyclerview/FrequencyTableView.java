@@ -23,8 +23,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutordonate.R;
 
 /**
  * Created by willi on 29.04.16.

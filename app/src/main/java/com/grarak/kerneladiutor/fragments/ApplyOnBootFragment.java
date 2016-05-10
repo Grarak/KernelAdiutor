@@ -27,8 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Prefs;
-import com.grarak.kerneladiutordonate.R;
 
 /**
  * Created by willi on 03.05.16.

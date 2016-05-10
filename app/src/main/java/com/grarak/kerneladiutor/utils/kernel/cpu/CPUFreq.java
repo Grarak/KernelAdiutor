@@ -22,12 +22,12 @@ package com.grarak.kerneladiutor.utils.kernel.cpu;
 import android.content.Context;
 import android.util.Log;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.Control;
-import com.grarak.kerneladiutordonate.R;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

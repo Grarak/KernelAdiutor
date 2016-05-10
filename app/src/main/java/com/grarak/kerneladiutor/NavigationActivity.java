@@ -44,7 +44,6 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

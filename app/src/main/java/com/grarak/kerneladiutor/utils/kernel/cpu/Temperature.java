@@ -23,9 +23,9 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutordonate.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

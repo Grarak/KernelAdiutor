@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutordonate.R;
 
 /**
  * Created by willi on 14.04.16.

@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.bvalosek.cpuspy.CpuSpyApp;
 import com.bvalosek.cpuspy.CpuStateMonitor;
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -50,7 +51,6 @@ import com.grarak.kerneladiutor.views.recyclerview.FrequencyButtonView;
 import com.grarak.kerneladiutor.views.recyclerview.FrequencyTableView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.TitleView;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.ArrayList;
 import java.util.List;

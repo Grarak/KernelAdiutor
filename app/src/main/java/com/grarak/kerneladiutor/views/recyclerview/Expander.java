@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.grarak.kerneladiutordonate.R;
+import com.grarak.kerneladiutor.R;
 
 /**
  * Created by willi on 04.05.16.

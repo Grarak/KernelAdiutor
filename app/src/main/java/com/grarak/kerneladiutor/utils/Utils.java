@@ -29,9 +29,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
-import com.grarak.kerneladiutordonate.R;
 
 import java.io.BufferedReader;
 import java.io.File;

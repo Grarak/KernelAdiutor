@@ -22,6 +22,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
@@ -37,7 +38,6 @@ import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SelectView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
 import com.grarak.kerneladiutor.views.recyclerview.TitleView;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

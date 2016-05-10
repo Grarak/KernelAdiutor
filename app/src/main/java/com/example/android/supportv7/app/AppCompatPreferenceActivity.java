@@ -33,8 +33,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutordonate.R;
 
 /**
  * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls

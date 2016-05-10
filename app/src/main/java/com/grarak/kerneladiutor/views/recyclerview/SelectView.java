@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.grarak.kerneladiutordonate.R;
+import com.grarak.kerneladiutor.R;
 
 import java.util.List;
 

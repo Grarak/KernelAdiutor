@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.grarak.kerneladiutordonate.R;
+import com.grarak.kerneladiutor.R;
 
 /**
  * Created by willi on 16.04.16.

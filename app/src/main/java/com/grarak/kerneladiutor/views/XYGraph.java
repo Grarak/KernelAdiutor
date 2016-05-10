@@ -31,8 +31,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.ArrayList;
 

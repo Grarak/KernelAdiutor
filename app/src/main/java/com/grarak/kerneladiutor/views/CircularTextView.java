@@ -27,7 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.grarak.kerneladiutordonate.R;
+import com.grarak.kerneladiutor.R;
 
 /**
  * Created by willi on 21.04.16.

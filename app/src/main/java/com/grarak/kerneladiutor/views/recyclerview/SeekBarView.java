@@ -22,7 +22,7 @@ package com.grarak.kerneladiutor.views.recyclerview;
 import android.view.View;
 import android.widget.TextView;
 
-import com.grarak.kerneladiutordonate.R;
+import com.grarak.kerneladiutor.R;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 

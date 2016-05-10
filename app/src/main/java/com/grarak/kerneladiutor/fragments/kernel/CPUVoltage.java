@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
@@ -35,7 +36,6 @@ import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.views.recyclerview.GenericSelectView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.ArrayList;
 import java.util.List;

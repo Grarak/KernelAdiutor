@@ -22,7 +22,6 @@ package com.grarak.kerneladiutor;
 import android.os.Bundle;
 
 import com.example.android.supportv7.app.AppCompatPreferenceActivity;
-import com.grarak.kerneladiutordonate.R;
 
 /**
  * Created by willi on 08.05.16.

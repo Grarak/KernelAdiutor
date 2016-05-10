@@ -31,10 +31,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.Settings;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.HashMap;
 

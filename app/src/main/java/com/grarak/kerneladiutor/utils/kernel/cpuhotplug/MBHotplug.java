@@ -21,10 +21,10 @@ package com.grarak.kerneladiutor.utils.kernel.cpuhotplug;
 
 import android.content.Context;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.root.Control;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.ArrayList;
 import java.util.List;

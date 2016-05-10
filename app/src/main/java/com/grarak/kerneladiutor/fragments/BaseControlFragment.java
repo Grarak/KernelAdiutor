@@ -45,10 +45,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.NavigationActivity;
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewAdapter;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
-import com.grarak.kerneladiutordonate.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;

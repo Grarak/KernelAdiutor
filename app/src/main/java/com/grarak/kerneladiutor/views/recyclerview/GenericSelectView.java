@@ -22,7 +22,7 @@ package com.grarak.kerneladiutor.views.recyclerview;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 
-import com.grarak.kerneladiutordonate.R;
+import com.grarak.kerneladiutor.R;
 
 /**
  * Created by willi on 05.05.16.

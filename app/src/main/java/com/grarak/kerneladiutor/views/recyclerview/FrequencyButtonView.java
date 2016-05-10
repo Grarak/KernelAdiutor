@@ -28,7 +28,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
-import com.grarak.kerneladiutordonate.R;
+import com.grarak.kerneladiutor.R;
 
 /**
  * Created by willi on 30.04.16.

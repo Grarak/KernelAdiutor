@@ -19,13 +19,13 @@
  */
 package com.grarak.kerneladiutor.fragments.statistics;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
-import com.grarak.kerneladiutordonate.R;
 
 import java.util.List;
 

@@ -43,7 +43,6 @@ import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
-import com.grarak.kerneladiutordonate.R;
 
 import io.fabric.sdk.android.Fabric;
 
