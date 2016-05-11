@@ -28,6 +28,7 @@ import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.AlucardHotplug;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.AutoSmp;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.BluPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.IntelliPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MBHotplug;
@@ -93,6 +94,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (ZenDecision.supported()) {
             zenDecisionInit(items);
+        }
+        if (AutoSmp.supported()) {
+            autoSmpInit(items);
         }
 
         for (SwitchView view : mEnableViews) {
@@ -1111,8 +1115,8 @@ public class CPUHotplug extends BaseControlFragment {
 
         if (MBHotplug.hasMBHotplugScroffSingleCore()) {
             SwitchView scroffSingleCore = new SwitchView();
-            scroffSingleCore.setTitle(getString(R.string.screen_off_single_core));
-            scroffSingleCore.setSummary(getString(R.string.screen_off_single_core_summary));
+            scroffSingleCore.setTitle(getString(R.string.screen_off_single_cpu));
+            scroffSingleCore.setSummary(getString(R.string.screen_off_single_cpu_summary));
             scroffSingleCore.setChecked(MBHotplug.isMBHotplugScroffSingleCoreEnabled());
             scroffSingleCore.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                 @Override
@@ -1643,6 +1647,161 @@ public class CPUHotplug extends BaseControlFragment {
         if (zenDecision.size() > 0) {
             items.add(title);
             items.addAll(zenDecision);
+        }
+    }
+
+    private void autoSmpInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> autoSmp = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.autosmp));
+
+        if (AutoSmp.hasAutoSmpEnable()) {
+            SwitchView enable = new SwitchView();
+            enable.setTitle(getString(R.string.autosmp));
+            enable.setSummary(getString(R.string.autosmp_summary));
+            enable.setChecked(AutoSmp.isAutoSmpEnabled());
+            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    AutoSmp.enableAutoSmp(isChecked, getActivity());
+                }
+            });
+
+            autoSmp.add(enable);
+            mEnableViews.add(enable);
+        }
+
+        if (AutoSmp.hasAutoSmpCpufreqDown()) {
+            SeekBarView cpuFreqDown = new SeekBarView();
+            cpuFreqDown.setTitle(getString(R.string.downrate_limits));
+            cpuFreqDown.setUnit("%");
+            cpuFreqDown.setProgress(AutoSmp.getAutoSmpCpufreqDown());
+            cpuFreqDown.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AutoSmp.setAutoSmpCpufreqDown(position, getActivity());
+                }
+            });
+
+            autoSmp.add(cpuFreqDown);
+        }
+
+        if (AutoSmp.hasAutoSmpCpufreqUp()) {
+            SeekBarView cpuFreqUp = new SeekBarView();
+            cpuFreqUp.setTitle(getString(R.string.uprate_limits));
+            cpuFreqUp.setUnit("%");
+            cpuFreqUp.setProgress(AutoSmp.getAutoSmpCpufreqUp());
+            cpuFreqUp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AutoSmp.setAutoSmpCpufreqUp(position, getActivity());
+                }
+            });
+
+            autoSmp.add(cpuFreqUp);
+        }
+
+        if (AutoSmp.hasAutoSmpCycleDown()) {
+            SeekBarView cycleDown = new SeekBarView();
+            cycleDown.setTitle(getString(R.string.cycle_down));
+            cycleDown.setSummary(getString(R.string.cycle_down_summary));
+            cycleDown.setMax(CPUFreq.getCpuCount());
+            cycleDown.setProgress(AutoSmp.getAutoSmpCycleDown());
+            cycleDown.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AutoSmp.setAutoSmpCycleDown(position, getActivity());
+                }
+            });
+
+            autoSmp.add(cycleDown);
+        }
+
+        if (AutoSmp.hasAutoSmpCycleUp()) {
+            SeekBarView cycleUp = new SeekBarView();
+            cycleUp.setTitle(getString(R.string.cycle_up));
+            cycleUp.setSummary(getString(R.string.cycle_up_summary));
+            cycleUp.setMax(CPUFreq.getCpuCount());
+            cycleUp.setProgress(AutoSmp.getAutoSmpCycleUp());
+            cycleUp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AutoSmp.setAutoSmpCycleUp(position, getActivity());
+                }
+            });
+
+            autoSmp.add(cycleUp);
+        }
+
+        if (AutoSmp.hasAutoSmpDelay()) {
+            SeekBarView delay = new SeekBarView();
+            delay.setTitle(getString(R.string.delay));
+            delay.setSummary(getString(R.string.delay_summary));
+            delay.setUnit(getString(R.string.ms));
+            delay.setMax(500);
+            delay.setProgress(AutoSmp.getAutoSmpDelay());
+            delay.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AutoSmp.setAutoSmpDelay(position, getActivity());
+                }
+            });
+
+            autoSmp.add(delay);
+        }
+
+        if (AutoSmp.hasAutoSmpMaxCpus()) {
+            SeekBarView maxCpus = new SeekBarView();
+            maxCpus.setTitle(getString(R.string.max_cpu_online));
+            maxCpus.setSummary(getString(R.string.max_cpu_online_summary));
+            maxCpus.setMax(CPUFreq.getCpuCount());
+            maxCpus.setMin(1);
+            maxCpus.setProgress(AutoSmp.getAutoSmpMaxCpus() - 1);
+            maxCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AutoSmp.setAutoSmpMaxCpus(position + 1, getActivity());
+                }
+            });
+
+            autoSmp.add(maxCpus);
+        }
+
+        if (AutoSmp.hasAutoSmpMinCpus()) {
+            SeekBarView minCpus = new SeekBarView();
+            minCpus.setTitle(getString(R.string.min_cpu_online));
+            minCpus.setSummary(getString(R.string.min_cpu_online_summary));
+            minCpus.setMax(CPUFreq.getCpuCount());
+            minCpus.setMin(1);
+            minCpus.setProgress(AutoSmp.getAutoSmpMinCpus() - 1);
+            minCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AutoSmp.setAutoSmpMinCpus(position + 1, getActivity());
+                }
+            });
+
+            autoSmp.add(minCpus);
+        }
+
+        if (AutoSmp.hasAutoSmpScroffSingleCore()) {
+            SwitchView scroffSingleCore = new SwitchView();
+            scroffSingleCore.setTitle(getString(R.string.screen_off_single_cpu));
+            scroffSingleCore.setSummary(getString(R.string.screen_off_single_cpu_summary));
+            scroffSingleCore.setChecked(AutoSmp.isAutoSmpScroffSingleCoreEnabled());
+            scroffSingleCore.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    AutoSmp.enableAutoSmpScroffSingleCoreActive(isChecked, getActivity());
+                }
+            });
+
+            autoSmp.add(scroffSingleCore);
+        }
+
+        if (autoSmp.size() > 0) {
+            items.add(title);
+            items.addAll(autoSmp);
         }
     }
 

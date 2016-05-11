@@ -21,7 +21,9 @@
     <string name="apply_on_boot">Apply on boot</string>
     <string name="apply_on_boot_text">Applying settings in %d seconds.</string>
     <string name="apply_on_boot_complete">Applying settings completed.</string>
-    <string name="applu_on_boot_canceled">Applying settings canceled.</string>
+    <string name="apply_on_boot_canceled">Applying settings canceled.</string>
+
+    <string name="not_in_range">Not in range</string>
 
     <!-- Units -->
     <string name="mhz">MHz</string>
@@ -213,8 +215,8 @@
     <string name="msm_mpdecision_hotplug">MSM MPDecision Hotplug</string>
     <string name="bricked_hotplug">Bricked Hotplug</string>
     <string name="mb_hotplug_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by show-p1984.</string>
-    <string name="screen_off_single_core">Screen off Single Core</string>
-    <string name="screen_off_single_core_summary">Use only one core when screen is off.</string>
+    <string name="screen_off_single_cpu">Screen off Single CPU</string>
+    <string name="screen_off_single_cpu_summary">Use only one CPU when screen is off.</string>
     <string name="idle_frequency">Idle Frequency</string>
     <string name="idle_frequency_summary">If the first core is below this frequency, then don\'t plug the other cores.</string>
     <string name="touch_boost_time">Touch Boost Time</string>
@@ -245,6 +247,14 @@
     <string name="wake_wait_time_summary">How long to wait before turning on any CPUs.</string>
     <string name="bat_threshold_ignore">Battery Threshold Ignore</string>
     <string name="bat_threshold_ignore_summary">Don\'t turn on any cores when charge is below the selected capacity.</string>
+    <string name="autosmp">AutoSMP</string>
+    <string name="autosmp_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by mrg666.</string>
+    <string name="downrate_limits">Downrate Limits</string>
+    <string name="uprate_limits">Uprate Limits</string>
+    <string name="cycle_down">Cycle Down</string>
+    <string name="cycle_down_summary">Cycles to wait after the last hotplug event to unplug another core.</string>
+    <string name="cycle_up">Cycle Up</string>
+    <string name="cycle_up_summary">Cycles to wait after the last hotplug event to plug another core.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

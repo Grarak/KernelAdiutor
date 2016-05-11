@@ -103,7 +103,7 @@ public class Service extends android.app.Service {
                         e.printStackTrace();
                     }
                 }
-                builderComplete.setContentText(getString(sCancel ? R.string.applu_on_boot_canceled :
+                builderComplete.setContentText(getString(sCancel ? R.string.apply_on_boot_canceled :
                         R.string.apply_on_boot_complete));
                 notificationManager.notify(0, builderComplete.build());
 

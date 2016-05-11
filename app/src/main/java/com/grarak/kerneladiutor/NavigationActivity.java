@@ -21,6 +21,7 @@ package com.grarak.kerneladiutor;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -89,7 +90,7 @@ public class NavigationActivity extends BaseActivity
 
     @Override
     protected boolean setStatusBarColor() {
-        return false;
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M;
     }
 
     @Override
