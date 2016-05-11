@@ -35,6 +35,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MPDecision;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MSMHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MakoHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.ThunderPlug;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.ZenDecision;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SelectView;
@@ -89,6 +90,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (ThunderPlug.supported()) {
             thunderPlugInit(items);
+        }
+        if (ZenDecision.supported()) {
+            zenDecisionInit(items);
         }
 
         for (SwitchView view : mEnableViews) {
@@ -1577,6 +1581,68 @@ public class CPUHotplug extends BaseControlFragment {
         if (thunderPlug.size() > 0) {
             items.add(title);
             items.addAll(thunderPlug);
+        }
+    }
+
+    private void zenDecisionInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> zenDecision = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.zen_decision));
+
+        if (ZenDecision.hasZenDecisionEnable()) {
+            SwitchView enable = new SwitchView();
+            enable.setTitle(getString(R.string.zen_decision));
+            enable.setSummary(getString(R.string.zen_decision_summary));
+            enable.setChecked(ZenDecision.isZenDecisionEnabled());
+            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    ZenDecision.enableZenDecision(isChecked, getActivity());
+                }
+            });
+
+            zenDecision.add(enable);
+            mEnableViews.add(enable);
+        }
+
+        if (ZenDecision.hasZenDecisionWakeWaitTime()) {
+            SeekBarView wakeWaitTime = new SeekBarView();
+            wakeWaitTime.setTitle(getString(R.string.wake_wait_time));
+            wakeWaitTime.setSummary(getString(R.string.wake_wait_time_summary));
+            wakeWaitTime.setUnit(getString(R.string.ms));
+            wakeWaitTime.setMax(6000);
+            wakeWaitTime.setOffset(1000);
+            wakeWaitTime.setProgress(ZenDecision.getZenDecisionWakeWaitTime() / 1000);
+            wakeWaitTime.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    ZenDecision.setZenDecisionWakeWaitTime(position * 1000, getActivity());
+                }
+            });
+
+            zenDecision.add(wakeWaitTime);
+        }
+
+        if (ZenDecision.hasZenDecisionBatThresholdIgnore()) {
+            SeekBarView batThresholdIgnore = new SeekBarView();
+            batThresholdIgnore.setTitle(getString(R.string.bat_threshold_ignore));
+            batThresholdIgnore.setSummary(getString(R.string.bat_threshold_ignore_summary));
+            batThresholdIgnore.setUnit("%");
+            batThresholdIgnore.setMin(1);
+            batThresholdIgnore.setProgress(ZenDecision.getZenDecisionBatThresholdIgnore());
+            batThresholdIgnore.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    ZenDecision.setZenDecisionBatThresholdIgnore(position, getActivity());
+                }
+            });
+
+            zenDecision.add(batThresholdIgnore);
+        }
+
+        if (zenDecision.size() > 0) {
+            items.add(title);
+            items.addAll(zenDecision);
         }
     }
 
