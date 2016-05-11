@@ -15,13 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:textIsSelectable="true" />
 
     </LinearLayout>
 </FrameLayout>

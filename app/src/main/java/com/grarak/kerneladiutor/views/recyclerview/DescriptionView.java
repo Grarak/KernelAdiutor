@@ -69,7 +69,10 @@ public class DescriptionView extends RecyclerViewItem {
         if (mSummaryView != null && mSummary != null) {
             mSummaryView.setText(mSummary);
         }
-        if (mRootView != null && getOnItemClickListener() != null) {
+        if (mRootView != null && getOnItemClickListener() != null && mTitleView != null
+                && mSummaryView != null) {
+            mTitleView.setTextIsSelectable(false);
+            mSummaryView.setTextIsSelectable(false);
             mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
