@@ -226,6 +226,11 @@
     <string name="delay_summary">Time between checks.</string>
     <string name="pause">Pause</string>
     <string name="pause_summary">If something else plugs in the CPU, fall asleep for this amount of time.</string>
+    <string name="alucard_hotplug">Alucard Hotplug</string>
+    <string name="alucard_hotplug_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by Alucard.</string>
+    <string name="sampling_rate">Sampling Rate</string>
+    <string name="cpu_down_rate">CPU Down Rate</string>
+    <string name="cpu_up_rate">CPU Up Rate</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

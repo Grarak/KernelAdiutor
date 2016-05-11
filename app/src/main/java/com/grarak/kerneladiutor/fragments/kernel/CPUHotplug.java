@@ -27,6 +27,7 @@ import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.AlucardHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.BluPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.IntelliPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MBHotplug;
@@ -80,6 +81,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (MBHotplug.supported()) {
             mbHotplugInit(items);
+        }
+        if (AlucardHotplug.supported()) {
+            alucardHotplugInit(items);
         }
 
         for (SwitchView view : mEnableViews) {
@@ -1304,6 +1308,162 @@ public class CPUHotplug extends BaseControlFragment {
         if (mbHotplug.size() > 0) {
             items.add(title);
             items.addAll(mbHotplug);
+        }
+    }
+
+    private void alucardHotplugInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> alucardHotplug = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.alucard_hotplug));
+
+        if (AlucardHotplug.hasAlucardHotplugEnable()) {
+            SwitchView enable = new SwitchView();
+            enable.setTitle(getString(R.string.alucard_hotplug));
+            enable.setSummary(getString(R.string.alucard_hotplug_summary));
+            enable.setChecked(AlucardHotplug.isAlucardHotplugEnable());
+            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    AlucardHotplug.enableAlucardHotplug(isChecked, getActivity());
+                }
+            });
+
+            alucardHotplug.add(enable);
+            mEnableViews.add(enable);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugHpIoIsBusy()) {
+            SwitchView ioIsBusy = new SwitchView();
+            ioIsBusy.setTitle(getString(R.string.io_is_busy));
+            ioIsBusy.setSummary(getString(R.string.io_is_busy_summary));
+            ioIsBusy.setChecked(AlucardHotplug.isAlucardHotplugHpIoIsBusyEnable());
+            ioIsBusy.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    AlucardHotplug.enableAlucardHotplugHpIoIsBusy(isChecked, getActivity());
+                }
+            });
+
+            alucardHotplug.add(ioIsBusy);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugSamplingRate()) {
+            SeekBarView samplingRate = new SeekBarView();
+            samplingRate.setTitle(getString(R.string.sampling_rate));
+            samplingRate.setUnit("%");
+            samplingRate.setMin(1);
+            samplingRate.setProgress(AlucardHotplug.getAlucardHotplugSamplingRate() - 1);
+            samplingRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AlucardHotplug.setAlucardHotplugSamplingRate(position + 1, getActivity());
+                }
+            });
+
+            alucardHotplug.add(samplingRate);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugSuspend()) {
+            SwitchView suspend = new SwitchView();
+            suspend.setTitle(getString(R.string.suspend));
+            suspend.setSummary(getString(R.string.suspend_summary));
+            suspend.setChecked(AlucardHotplug.isAlucardHotplugSuspendEnabled());
+            suspend.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    AlucardHotplug.enableAlucardHotplugSuspend(isChecked, getActivity());
+                }
+            });
+
+            alucardHotplug.add(suspend);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugMinCpusOnline()) {
+            SeekBarView minCpusOnline = new SeekBarView();
+            minCpusOnline.setTitle(getString(R.string.min_cpu_online));
+            minCpusOnline.setSummary(getString(R.string.min_cpu_online_summary));
+            minCpusOnline.setMax(CPUFreq.getCpuCount());
+            minCpusOnline.setMin(1);
+            minCpusOnline.setProgress(AlucardHotplug.getAlucardHotplugMinCpusOnline() - 1);
+            minCpusOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AlucardHotplug.setAlucardHotplugMinCpusOnline(position + 1, getActivity());
+                }
+            });
+
+            alucardHotplug.add(minCpusOnline);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugMaxCoresLimit()) {
+            SeekBarView maxCoresLimit = new SeekBarView();
+            maxCoresLimit.setTitle(getString(R.string.max_cpu_online));
+            maxCoresLimit.setSummary(getString(R.string.max_cpu_online_summary));
+            maxCoresLimit.setMax(CPUFreq.getCpuCount());
+            maxCoresLimit.setMin(1);
+            maxCoresLimit.setProgress(AlucardHotplug.getAlucardHotplugMaxCoresLimit() - 1);
+            maxCoresLimit.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AlucardHotplug.setAlucardHotplugMaxCoresLimit(position + 1, getActivity());
+                }
+            });
+
+            alucardHotplug.add(maxCoresLimit);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugMaxCoresLimitSleep()) {
+            SeekBarView maxCoresLimitSleep = new SeekBarView();
+            maxCoresLimitSleep.setTitle(getString(R.string.max_cpu_online_screen_off));
+            maxCoresLimitSleep.setSummary(getString(R.string.max_cpu_online_screen_off_summary));
+            maxCoresLimitSleep.setMax(CPUFreq.getCpuCount());
+            maxCoresLimitSleep.setMin(1);
+            maxCoresLimitSleep.setProgress(AlucardHotplug.getAlucardHotplugMaxCoresLimitSleep() - 1);
+            maxCoresLimitSleep.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AlucardHotplug.setAlucardHotplugMaxCoresLimitSleep(position + 1, getActivity());
+                }
+            });
+
+            alucardHotplug.add(maxCoresLimitSleep);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugCpuDownRate()) {
+            SeekBarView cpuDownRate = new SeekBarView();
+            cpuDownRate.setTitle(getString(R.string.cpu_down_rate));
+            cpuDownRate.setUnit("%");
+            cpuDownRate.setMin(1);
+            cpuDownRate.setProgress(AlucardHotplug.getAlucardHotplugCpuDownRate() - 1);
+            cpuDownRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AlucardHotplug.setAlucardHotplugCpuDownRate(position + 1, getActivity());
+                }
+            });
+
+            alucardHotplug.add(cpuDownRate);
+        }
+
+        if (AlucardHotplug.hasAlucardHotplugCpuUpRate()) {
+            SeekBarView cpuUpRate = new SeekBarView();
+            cpuUpRate.setTitle(getString(R.string.cpu_up_rate));
+            cpuUpRate.setUnit("%");
+            cpuUpRate.setMin(1);
+            cpuUpRate.setProgress(AlucardHotplug.getAlucardHotplugCpuUpRate() - 1);
+            cpuUpRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    AlucardHotplug.setAlucardHotplugCpuUpRate(position + 1, getActivity());
+                }
+            });
+
+            alucardHotplug.add(cpuUpRate);
+        }
+
+        if (alucardHotplug.size() > 0) {
+            items.add(title);
+            items.addAll(alucardHotplug);
         }
     }
 
