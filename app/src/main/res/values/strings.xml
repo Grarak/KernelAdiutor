@@ -231,6 +231,14 @@
     <string name="sampling_rate">Sampling Rate</string>
     <string name="cpu_down_rate">CPU Down Rate</string>
     <string name="cpu_up_rate">CPU Up Rate</string>
+    <string name="thunderplug">ThunderPlug</string>
+    <string name="thunderplug_summary">An in-kernel replacement for Qualcomm\'s hotplugging. Developed by varunchitre15.</string>
+    <string name="min_cpu_online_screen_off">Minimum CPU Screen Off</string>
+    <string name="min_cpu_online_screen_off_summary">Minimum number of CPUs that will be online when the screen is off.</string>
+    <string name="endurance_level">Endurance Level</string>
+    <string name="endurance_level_summary">A power saving profile.</string>
+    <string name="quad_core_mode">Quad-Core mode</string>
+    <string name="dual_core_mode">Dual-Core mode</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

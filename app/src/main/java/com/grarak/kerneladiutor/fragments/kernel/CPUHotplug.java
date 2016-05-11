@@ -34,6 +34,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MBHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MPDecision;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MSMHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MakoHotplug;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.ThunderPlug;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SelectView;
@@ -41,6 +42,7 @@ import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
 import com.grarak.kerneladiutor.views.recyclerview.TitleView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -84,6 +86,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (AlucardHotplug.supported()) {
             alucardHotplugInit(items);
+        }
+        if (ThunderPlug.supported()) {
+            thunderPlugInit(items);
         }
 
         for (SwitchView view : mEnableViews) {
@@ -1464,6 +1469,114 @@ public class CPUHotplug extends BaseControlFragment {
         if (alucardHotplug.size() > 0) {
             items.add(title);
             items.addAll(alucardHotplug);
+        }
+    }
+
+    private void thunderPlugInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> thunderPlug = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.thunderplug));
+
+        if (ThunderPlug.hasThunderPlugEnable()) {
+            SwitchView enable = new SwitchView();
+            enable.setTitle(getString(R.string.thunderplug));
+            enable.setSummary(getString(R.string.thunderplug_summary));
+            enable.setChecked(ThunderPlug.isThunderPlugEnabled());
+            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    ThunderPlug.enableThunderPlug(isChecked, getActivity());
+                }
+            });
+
+            thunderPlug.add(enable);
+            mEnableViews.add(enable);
+        }
+
+        if (ThunderPlug.hasThunderPlugSuspendCpus()) {
+            SeekBarView suspendCpus = new SeekBarView();
+            suspendCpus.setTitle(getString(R.string.min_cpu_online_screen_off));
+            suspendCpus.setSummary(getString(R.string.min_cpu_online_screen_off_summary));
+            suspendCpus.setMax(CPUFreq.getCpuCount());
+            suspendCpus.setMin(1);
+            suspendCpus.setProgress(ThunderPlug.getThunderPlugSuspendCpus() - 1);
+            suspendCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    ThunderPlug.setThunderPlugSuspendCpus(position + 1, getActivity());
+                }
+            });
+
+            thunderPlug.add(suspendCpus);
+        }
+
+        if (ThunderPlug.hasThunderPlugEnduranceLevel()) {
+            SelectView enduranceLevel = new SelectView();
+            enduranceLevel.setTitle(getString(R.string.endurance_level));
+            enduranceLevel.setSummary(getString(R.string.endurance_level_summary));
+            enduranceLevel.setItems(Arrays.asList(getResources().getStringArray(R.array.endurance_level_items)));
+            enduranceLevel.setItem(ThunderPlug.getThunderPlugEnduranceLevel());
+            enduranceLevel.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    ThunderPlug.setThunderPlugEnduranceLevel(position, getActivity());
+                }
+            });
+
+            thunderPlug.add(enduranceLevel);
+        }
+
+        if (ThunderPlug.hasThunderPlugSamplingRate()) {
+            SeekBarView samplingRate = new SeekBarView();
+            samplingRate.setTitle(getString(R.string.sampling_rate));
+            samplingRate.setMax(2600);
+            samplingRate.setMin(100);
+            samplingRate.setOffset(50);
+            samplingRate.setProgress(ThunderPlug.getThunderPlugSamplingRate() / 50);
+            samplingRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    ThunderPlug.setThunderPlugSamplingRate(position * 50, getActivity());
+                }
+            });
+
+            thunderPlug.add(samplingRate);
+        }
+
+        if (ThunderPlug.hasThunderPlugLoadThreshold()) {
+            SeekBarView loadThreadshold = new SeekBarView();
+            loadThreadshold.setTitle(getString(R.string.load_threshold));
+            loadThreadshold.setSummary(getString(R.string.load_threshold_summary));
+            loadThreadshold.setMin(11);
+            loadThreadshold.setProgress(ThunderPlug.getThunderPlugLoadThreshold() - 11);
+            loadThreadshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    ThunderPlug.setThunderPlugLoadThreshold(position + 11, getActivity());
+                }
+            });
+
+            thunderPlug.add(loadThreadshold);
+        }
+
+        if (ThunderPlug.hasThunderPlugTouchBoost()) {
+            SwitchView touchBoost = new SwitchView();
+            touchBoost.setTitle(getString(R.string.touch_boost));
+            touchBoost.setSummary(getString(R.string.touch_boost_summary));
+            touchBoost.setChecked(ThunderPlug.isThunderPlugTouchBoostEnabled());
+            touchBoost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    ThunderPlug.enableThunderPlugTouchBoost(isChecked, getActivity());
+                }
+            });
+
+            thunderPlug.add(touchBoost);
+        }
+
+        if (thunderPlug.size() > 0) {
+            items.add(title);
+            items.addAll(thunderPlug);
         }
     }
 
