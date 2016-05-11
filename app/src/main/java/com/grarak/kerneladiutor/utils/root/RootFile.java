@@ -61,12 +61,37 @@ public class RootFile {
     public List<String> list() {
         List<String> list = new ArrayList<>();
         String files = RootUtils.runCommand("ls '" + file + "'");
-        if (files != null)
-            // Make sure the file exists
-            for (String file : files.split("\\r?\\n"))
-                if (file != null && !file.isEmpty() && Utils.existFile(this.file + "/" + file, true))
+        if (files != null) {
+            // Make sure the files exists
+            for (String file : files.split("\\r?\\n")) {
+                if (file != null && !file.isEmpty() && Utils.existFile(this.file + "/" + file)) {
                     list.add(file);
+                }
+            }
+        }
         return list;
+    }
+
+    public List<RootFile> listFiles() {
+        List<RootFile> list = new ArrayList<>();
+        String files = RootUtils.runCommand("ls '" + file + "'");
+        if (files != null) {
+            // Make sure the files exists
+            for (String file : files.split("\\r?\\n")) {
+                if (file != null && !file.isEmpty() && Utils.existFile(this.file + "/" + file)) {
+                    list.add(new RootFile(this.file + "/" + file));
+                }
+            }
+        }
+        return list;
+    }
+
+    public boolean isDirectory() {
+        return RootUtils.runCommand("[ -d " + file + " ] && echo true").equals("true");
+    }
+
+    public RootFile getParentFile() {
+        return new RootFile(RootUtils.runCommand("dirname \"" + file + "\""));
     }
 
     public boolean isEmpty() {

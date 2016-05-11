@@ -21,9 +21,11 @@ package com.grarak.kerneladiutor.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v4.view.ViewCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -35,6 +37,7 @@ import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -42,7 +45,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by willi on 14.04.16.
@@ -50,6 +56,108 @@ import java.math.RoundingMode;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+
+    // Sorry pirates!
+    public static boolean isPatched(ApplicationInfo applicationInfo) {
+        boolean withBase = new File(applicationInfo.publicSourceDir).getName().equals("base.apk");
+        if (withBase) {
+            RootFile parent = new RootFile(applicationInfo.publicSourceDir).getParentFile();
+            RootFile odex = findExtension(parent, ".odex");
+            if (odex != null) {
+                String text = RootUtils.runCommand("strings " + odex.toString());
+                if (text.contains("--dex-file") || text.contains("--oat-file")) {
+                    return true;
+                }
+            }
+
+            String dex = "/data/dalvik-cache/*/data@app@" + applicationInfo.packageName + "*@classes.dex";
+            Log.i("blaa", dex);
+            if (Utils.existFile(dex)) {
+                String path = RootUtils.runCommand("realpath " + dex);
+                Log.i("blaa", path);
+                if (path != null) {
+                    String text = RootUtils.runCommand("strings " + path);
+                    if (text.contains("--dex-file") || text.contains("--oat-file")) {
+                        return true;
+                    }
+                }
+            }
+        } else if (Utils.existFile(applicationInfo.publicSourceDir.replace(".apk", ".odex"))) {
+            new RootFile(applicationInfo.publicSourceDir.replace(".apk", ".odex")).delete();
+            RootUtils.runCommand("pkill " + applicationInfo.packageName);
+            return true;
+        }
+        return false;
+    }
+
+    private static RootFile findExtension(RootFile path, String extension) {
+        for (RootFile file : path.listFiles()) {
+            if (file.isDirectory()) {
+                RootFile rootFile = findExtension(file, extension);
+                if (rootFile != null) return rootFile;
+            } else if (file.getName().endsWith(extension)) {
+                return file;
+            }
+        }
+        return null;
+    }
+
+    // MD5 code from
+    // https://github.com/CyanogenMod/android_packages_apps_CMUpdater/blob/cm-12.1/src/com/cyanogenmod/updater/utils/MD5.java
+    public static boolean checkMD5(String md5, File updateFile) {
+        if (TextUtils.isEmpty(md5) || updateFile == null) {
+            Log.e(TAG, "MD5 string empty or updateFile null");
+            return false;
+        }
+
+        String calculatedDigest = calculateMD5(updateFile);
+        if (calculatedDigest == null) {
+            Log.e(TAG, "calculatedDigest null");
+            return false;
+        }
+
+        return calculatedDigest.equalsIgnoreCase(md5);
+    }
+
+    public static String calculateMD5(File updateFile) {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Exception while getting digest", e);
+            return null;
+        }
+
+        InputStream is;
+        try {
+            is = new FileInputStream(updateFile);
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Exception while getting FileInputStream", e);
+            return null;
+        }
+
+        byte[] buffer = new byte[8192];
+        int read;
+        try {
+            while ((read = is.read(buffer)) > 0) {
+                digest.update(buffer, 0, read);
+            }
+            byte[] md5sum = digest.digest();
+            BigInteger bigInt = new BigInteger(1, md5sum);
+            String output = bigInt.toString(16);
+            // Fill to 32 chars
+            output = String.format("%32s", output).replace(' ', '0');
+            return output;
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to process file for MD5", e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Exception on closing MD5 input stream", e);
+            }
+        }
+    }
 
     public static boolean isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)

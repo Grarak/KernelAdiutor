@@ -19,7 +19,11 @@
  */
 package com.grarak.kerneladiutor;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +36,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.grarak.kerneladiutor.utils.Device;
+import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
@@ -39,10 +44,12 @@ import com.grarak.kerneladiutor.utils.kernel.cpu.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpu.MSMPerformance;
 import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
-import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
+import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
+
+import java.io.File;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -63,7 +70,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         View splashBackground = findViewById(R.id.splash_background);
-
         mRootAccess = (TextView) findViewById(R.id.root_access_text);
         mBusybox = (TextView) findViewById(R.id.busybox_text);
         mCollectInfo = (TextView) findViewById(R.id.info_collect_text);
@@ -155,7 +161,6 @@ public class MainActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            mCheck = false;
 
             if (!mHasRoot || !mHasBusybox) {
                 Intent intent = new Intent(MainActivity.this, TextActivity.class);
@@ -166,13 +171,71 @@ public class MainActivity extends BaseActivity {
                                 "https://www.google.com/search?site=&source=hp&q=root+"
                                         + Device.getVendor() + "+" + Device.getModel());
                 startActivity(intent);
+                mCheck = false;
                 finish();
                 return;
             }
 
-            startActivity(new Intent(MainActivity.this, NavigationActivity.class));
-            finish();
+            new AsyncTask<Void, Void, Boolean>() {
+
+                private ApplicationInfo mApplicationInfo;
+                private PackageInfo mPackageInfo;
+                private boolean mPatched;
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    try {
+                        mApplicationInfo = getPackageManager().getApplicationInfo(
+                                "com.grarak.kerneladiutordonate", 0);
+                        mPackageInfo = getPackageManager().getPackageInfo(
+                                "com.grarak.kerneladiutordonate", 0);
+                    } catch (PackageManager.NameNotFoundException ignored) {
+                    }
+                }
+
+                @Override
+                protected Boolean doInBackground(Void... params) {
+                    if (mApplicationInfo != null && mPackageInfo != null && mPackageInfo.versionCode == 130) {
+                        mPatched = !Utils.checkMD5("5c7a92a5b2dcec409035e1114e815b00",
+                                new File(mApplicationInfo.publicSourceDir)) || Utils.isPatched(mApplicationInfo);
+                    }
+                    return mApplicationInfo != null && mPackageInfo != null && mPackageInfo.versionCode == 130
+                            && !mPatched;
+                }
+
+                @Override
+                protected void onPostExecute(Boolean aBoolean) {
+                    super.onPostExecute(aBoolean);
+                    mCheck = false;
+                    if (aBoolean) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.setComponent(new ComponentName("com.grarak.kerneladiutordonate",
+                                "com.grarak.kerneladiutordonate.MainActivity"));
+                        startActivityForResult(intent, 0);
+                    } else {
+                        launch(mPatched ? 3 : -1);
+                    }
+                }
+            }.execute();
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            launch(data.getIntExtra("result", -1));
+        }
+    }
+
+    private void launch(int code) {
+        Intent intent = new Intent(this, NavigationActivity.class);
+        intent.putExtra("result", code);
+        Prefs.saveInt("license", code, this);
+        startActivity(intent);
+        finish();
+    }
+
 }

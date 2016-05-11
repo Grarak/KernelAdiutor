@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,13 +35,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
 import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
+import com.grarak.kerneladiutor.utils.Device;
+import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -79,6 +85,7 @@ public class NavigationActivity extends BaseActivity
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolBar;
     private int mSelection = R.string.overall;
+    private boolean mShowPirateDialog = true;
 
     @Override
     protected boolean setStatusBarColor() {
@@ -107,6 +114,28 @@ public class NavigationActivity extends BaseActivity
         }
 
         onItemSelected(mSelection);
+
+        int result = Prefs.getInt("result", -1, this);
+        if (savedInstanceState != null) {
+            mShowPirateDialog = savedInstanceState.getBoolean("pirate");
+        }
+        if ((result != getIntent().getIntExtra("result", -1) || result == 3) && mShowPirateDialog) {
+            if (savedInstanceState == null) {
+                // See on what devices people pirate things
+                Answers.getInstance().logCustom(new CustomEvent("Pirate")
+                        .putCustomAttribute("Name", Device.getCodename()));
+            }
+            ViewUtils.dialogBuilder(getString(R.string.pirated), null, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }, new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    mShowPirateDialog = false;
+                }
+            }, this).show();
+        }
     }
 
     private void appendFragments(Menu menu) {
@@ -153,6 +182,7 @@ public class NavigationActivity extends BaseActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("selection", mSelection);
+        outState.putBoolean("pirate", mShowPirateDialog);
     }
 
     @Override

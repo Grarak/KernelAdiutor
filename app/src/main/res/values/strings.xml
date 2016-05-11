@@ -16,6 +16,8 @@
     <string name="ok">OK</string>
     <string name="unknown">Unknown</string>
 
+    <string name="pirated">Seems like the donation app wasn\'t purchased through Play Store! If you pirated it, then shame on you!</string>
+
     <string name="apply_on_boot">Apply on boot</string>
     <string name="apply_on_boot_text">Applying settings in %d seconds.</string>
     <string name="apply_on_boot_complete">Applying settings completed.</string>
