@@ -197,9 +197,9 @@ public class OverallFragment extends BaseControlFragment {
             items.add(mFreqLITTLE);
         }
 
-        mCpuSpyBig = new CpuSpyApp(CPUFreq.getBigCpu());
+        mCpuSpyBig = new CpuSpyApp(CPUFreq.getBigCpu(), getActivity());
         if (CPUFreq.isBigLITTLE()) {
-            mCpuSpyLITTLE = new CpuSpyApp(CPUFreq.getLITTLECpu());
+            mCpuSpyLITTLE = new CpuSpyApp(CPUFreq.getLITTLECpu(), getActivity());
         }
 
         updateFrequency();
@@ -464,6 +464,7 @@ public class OverallFragment extends BaseControlFragment {
                     usageOfflineText.setVisibility(View.VISIBLE);
                     usageLoadText.setVisibility(View.GONE);
                     usageFreqText.setVisibility(View.GONE);
+                    usageGraph.addPercentage(0);
                 } else {
                     usageOfflineText.setVisibility(View.GONE);
                     usageLoadText.setVisibility(View.VISIBLE);

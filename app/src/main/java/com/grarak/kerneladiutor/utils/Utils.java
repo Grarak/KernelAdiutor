@@ -25,7 +25,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v4.view.ViewCompat;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -105,7 +104,7 @@ public class Utils {
     // MD5 code from
     // https://github.com/CyanogenMod/android_packages_apps_CMUpdater/blob/cm-12.1/src/com/cyanogenmod/updater/utils/MD5.java
     public static boolean checkMD5(String md5, File updateFile) {
-        if (TextUtils.isEmpty(md5) || updateFile == null) {
+        if (md5.isEmpty() || updateFile == null) {
             Log.e(TAG, "MD5 string empty or updateFile null");
             return false;
         }

@@ -134,7 +134,7 @@ public class Temperature {
                 JSONArray tempArray = new JSONArray(Utils.readAssetFile(context, "temp.json"));
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject device = tempArray.getJSONObject(i);
-                    if (Device.getBoard().toLowerCase().equals(device.get("board"))) {
+                    if (Device.getBoard().equalsIgnoreCase(device.getString("board"))) {
                         mDeviceJson = device;
                         break;
                     }
