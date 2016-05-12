@@ -116,7 +116,8 @@ public class NavigationActivity extends BaseActivity
 
         onItemSelected(mSelection);
 
-        int result = Prefs.getInt("result", -1, this);
+        int result = Prefs.getInt("license", -1, this);
+        Prefs.saveInt("license", -1, this);
         if (savedInstanceState != null) {
             mShowPirateDialog = savedInstanceState.getBoolean("pirate");
         }

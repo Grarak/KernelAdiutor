@@ -70,10 +70,8 @@ public class Utils {
             }
 
             String dex = "/data/dalvik-cache/*/data@app@" + applicationInfo.packageName + "*@classes.dex";
-            Log.i("blaa", dex);
             if (Utils.existFile(dex)) {
                 String path = RootUtils.runCommand("realpath " + dex);
-                Log.i("blaa", path);
                 if (path != null) {
                     String text = RootUtils.runCommand("strings " + path);
                     if (text.contains("--dex-file") || text.contains("--oat-file")) {
@@ -84,7 +82,7 @@ public class Utils {
         } else if (Utils.existFile(applicationInfo.publicSourceDir.replace(".apk", ".odex"))) {
             new RootFile(applicationInfo.publicSourceDir.replace(".apk", ".odex")).delete();
             RootUtils.runCommand("pkill " + applicationInfo.packageName);
-            return true;
+            return false;
         }
         return false;
     }
