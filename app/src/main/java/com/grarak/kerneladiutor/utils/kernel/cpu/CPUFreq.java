@@ -27,7 +27,6 @@ import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
-import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
 import com.grarak.kerneladiutor.utils.root.Control;
 
 import java.io.FileNotFoundException;
@@ -322,9 +321,6 @@ public class CPUFreq {
     }
 
     public static void onlineCpu(int cpu, boolean online, String category, Context context) {
-        if (MSMThermal.supported()) {
-            MSMThermal.enableCoreControl(!online, category, context);
-        }
         if (QcomBcl.supported()) {
             QcomBcl.online(online, category, context);
         }

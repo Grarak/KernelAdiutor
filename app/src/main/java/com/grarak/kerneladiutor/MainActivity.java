@@ -45,7 +45,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
-import com.grarak.kerneladiutor.utils.kernel.thermal.MSMThermal;
+import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.io.File;
@@ -128,9 +128,9 @@ public class MainActivity extends BaseActivity {
             Device.TrustZone.supported();
             Hotplug.supported();
             MSMPerformance.supported();
-            MSMThermal.supported();
             QcomBcl.supported();
             Temperature.supported(MainActivity.this);
+            Thermal.supported();
             Voltage.supported();
 
             Answers.getInstance().logContentView(new ContentViewEvent()

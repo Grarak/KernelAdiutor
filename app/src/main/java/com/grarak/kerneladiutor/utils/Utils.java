@@ -265,7 +265,7 @@ public class Utils {
         return context.getResources().getConfiguration().orientation;
     }
 
-    public static boolean isPropActive(String key) {
+    public static boolean isPropRunning(String key) {
         try {
             return RootUtils.runCommand("getprop | grep " + key).split("]:")[1].contains("running");
         } catch (Exception ignored) {

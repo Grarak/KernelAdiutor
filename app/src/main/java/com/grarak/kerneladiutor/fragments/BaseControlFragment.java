@@ -478,7 +478,7 @@ public class BaseControlFragment extends BaseFragment {
         super.onDestroy();
         sItems.clear();
         setAppBarLayoutAlpha(255);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (mAppBarLayout != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mAppBarLayout.setElevation(mAppBarElevation);
         }
         if (getSavedInstanceState() != null) {

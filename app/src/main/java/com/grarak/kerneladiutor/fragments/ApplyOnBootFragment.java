@@ -38,6 +38,7 @@ public class ApplyOnBootFragment extends BaseFragment {
     public static final String CPU = "cpu_onboot";
     public static final String CPU_VOLTAGE = "cpuvoltage_onboot";
     public static final String CPU_HOTPLUG = "cpuhotplug_onboot";
+    public static final String THERMAL = "thermal_onboot";
 
     public static ApplyOnBootFragment newInstance(String category) {
         Bundle args = new Bundle();

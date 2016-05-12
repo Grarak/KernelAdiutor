@@ -42,6 +42,7 @@ import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
 import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
+import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.utils.Device;
@@ -50,6 +51,7 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
+import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.util.HashMap;
@@ -72,6 +74,9 @@ public class NavigationActivity extends BaseActivity
         }
         if (Hotplug.supported()) {
             sFragments.put(R.string.cpu_hotplug, new CPUHotplug());
+        }
+        if (Thermal.supported()) {
+            sFragments.put(R.string.thermal, new ThermalFragment());
         }
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);

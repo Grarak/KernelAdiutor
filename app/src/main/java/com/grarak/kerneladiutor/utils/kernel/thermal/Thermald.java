@@ -17,43 +17,39 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.utils.kernel.cpuhotplug;
+package com.grarak.kerneladiutor.utils.kernel.thermal;
 
 import android.content.Context;
 
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.Control;
 
 /**
- * Created by willi on 07.05.16.
+ * Created by willi on 12.05.16.
  */
-public class MPDecision {
+public class Thermald {
 
-    private static final String HOTPLUG_MPDEC = "mpdecision";
+    private static final String THERMALD = "thermald";
 
-    public static void enableMpdecision(boolean enable, Context context) {
+    public static void enableThermald(boolean enable, Context context) {
         if (enable) {
-            run(Control.startService(HOTPLUG_MPDEC), HOTPLUG_MPDEC, context);
+            run(Control.startService(THERMALD), THERMALD, context);
         } else {
-            run(Control.stopService(HOTPLUG_MPDEC), HOTPLUG_MPDEC, context);
-            for (int i = 0; i < CPUFreq.getCpuCount(); i++) {
-                CPUFreq.onlineCpu(i, true, ApplyOnBootFragment.CPU_HOTPLUG, context);
-            }
+            run(Control.stopService(THERMALD), THERMALD, context);
         }
     }
 
-    public static boolean isMpdecisionEnabled() {
-        return Utils.isPropRunning(HOTPLUG_MPDEC);
+    public static boolean isThermaldEnabled() {
+        return Utils.isPropRunning(THERMALD);
     }
 
     public static boolean supported() {
-        return Utils.hasProp(HOTPLUG_MPDEC);
+        return Utils.hasProp(THERMALD);
     }
 
     private static void run(String command, String id, Context context) {
-        Control.runSetting(command, ApplyOnBootFragment.CPU_HOTPLUG, id, context);
+        Control.runSetting(command, ApplyOnBootFragment.THERMAL, id, context);
     }
 
 }
