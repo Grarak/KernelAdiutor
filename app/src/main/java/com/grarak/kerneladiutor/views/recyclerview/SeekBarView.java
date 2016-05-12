@@ -189,7 +189,7 @@ public class SeekBarView extends RecyclerViewItem {
                     mSeekBar.setProgress(mProgress);
                     if (mUnit != null) text += mUnit;
                     mValue.setText(text);
-                } catch (ArrayIndexOutOfBoundsException ignored) {
+                } catch (IndexOutOfBoundsException ignored) {
                     mValue.setText(mValue.getResources().getString(R.string.not_in_range));
                 }
             }

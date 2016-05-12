@@ -34,8 +34,8 @@ import java.util.List;
  */
 public class MBHotplug {
 
-    public static final String MSM_MPDECISION_HOTPLUG = "/sys/kernel/msm_mpdecision/conf";
-    public static final String BRICKED_HOTPLUG = "/sys/kernel/bricked_hotplug/conf";
+    private static final String MSM_MPDECISION_HOTPLUG = "/sys/kernel/msm_mpdecision/conf";
+    private static final String BRICKED_HOTPLUG = "/sys/kernel/bricked_hotplug/conf";
     private static final String MB_ENABLED = "enabled";
     private static final String MB_SCROFF_SINGLE_CORE = "scroff_single_core";
     private static final String MB_MIN_CPUS = "min_cpus";

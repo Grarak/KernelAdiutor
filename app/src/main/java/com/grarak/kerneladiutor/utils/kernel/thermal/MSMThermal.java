@@ -30,7 +30,7 @@ import com.grarak.kerneladiutor.utils.root.Control;
  */
 public class MSMThermal {
 
-    public static final String CORE_CONTROL = "/sys/module/msm_thermal/core_control/enabled";
+    private static final String CORE_CONTROL = "/sys/module/msm_thermal/core_control/enabled";
 
     public static void enableCoreControl(boolean enable, Context context) {
         enableCoreControl(enable, ApplyOnBootFragment.CPU, context);

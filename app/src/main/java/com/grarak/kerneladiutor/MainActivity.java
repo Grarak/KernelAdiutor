@@ -40,7 +40,6 @@ import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
-import com.grarak.kerneladiutor.utils.kernel.cpu.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpu.MSMPerformance;
 import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
@@ -123,7 +122,6 @@ public class MainActivity extends BaseActivity {
 
         private void collectData() {
             CPUBoost.supported();
-            CoreCtl.supported();
             Device.CPUInfo.load();
             Device.MemInfo.load();
             Device.ROMInfo.load();

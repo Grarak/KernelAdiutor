@@ -30,10 +30,10 @@ import com.grarak.kerneladiutor.utils.root.Control;
  */
 public class ZenDecision {
 
-    public static final String HOTPLUG_ZEN_DECISION = "/sys/kernel/zen_decision";
-    public static final String HOTPLUG_ZEN_DECISION_ENABLE = HOTPLUG_ZEN_DECISION + "/enabled";
-    public static final String HOTPLUG_ZEN_DECISION_WAKE_WAIT_TIME = HOTPLUG_ZEN_DECISION + "/wake_wait_time";
-    public static final String HOTPLUG_ZEN_DECISION_BAT_THRESHOLD_IGNORE = HOTPLUG_ZEN_DECISION + "/bat_threshold_ignore";
+    private static final String HOTPLUG_ZEN_DECISION = "/sys/kernel/zen_decision";
+    private static final String HOTPLUG_ZEN_DECISION_ENABLE = HOTPLUG_ZEN_DECISION + "/enabled";
+    private static final String HOTPLUG_ZEN_DECISION_WAKE_WAIT_TIME = HOTPLUG_ZEN_DECISION + "/wake_wait_time";
+    private static final String HOTPLUG_ZEN_DECISION_BAT_THRESHOLD_IGNORE = HOTPLUG_ZEN_DECISION + "/bat_threshold_ignore";
 
     public static void setZenDecisionBatThresholdIgnore(int value, Context context) {
         run(Control.write(String.valueOf(value), HOTPLUG_ZEN_DECISION_BAT_THRESHOLD_IGNORE),

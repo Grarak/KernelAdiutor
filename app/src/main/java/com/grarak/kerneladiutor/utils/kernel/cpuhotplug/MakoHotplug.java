@@ -31,18 +31,18 @@ import com.grarak.kerneladiutor.utils.root.Control;
  */
 public class MakoHotplug {
 
-    public static final String MAKO_HOTPLUG = "/sys/class/misc/mako_hotplug_control";
-    public static final String MAKO_HOTPLUG_ENABLED = MAKO_HOTPLUG + "/enabled";
-    public static final String MAKO_HOTPLUG_CORES_ON_TOUCH = MAKO_HOTPLUG + "/cores_on_touch";
-    public static final String MAKO_HOTPLUG_CPUFREQ_UNPLUG_LIMIT = MAKO_HOTPLUG + "/cpufreq_unplug_limit";
-    public static final String MAKO_HOTPLUG_FIRST_LEVEL = MAKO_HOTPLUG + "/first_level";
-    public static final String MAKO_HOTPLUG_HIGH_LOAD_COUNTER = MAKO_HOTPLUG + "/high_load_counter";
-    public static final String MAKO_HOTPLUG_LOAD_THRESHOLD = MAKO_HOTPLUG + "/load_threshold";
-    public static final String MAKO_HOTPLUG_MAX_LOAD_COUNTER = MAKO_HOTPLUG + "/max_load_counter";
-    public static final String MAKO_HOTPLUG_MIN_TIME_CPU_ONLINE = MAKO_HOTPLUG + "/min_time_cpu_online";
-    public static final String MAKO_HOTPLUG_MIN_CORES_ONLINE = MAKO_HOTPLUG + "/min_cores_online";
-    public static final String MAKO_HOTPLUG_TIMER = MAKO_HOTPLUG + "/timer";
-    public static final String MAKO_HOTPLUG_SUSPEND_FREQ = MAKO_HOTPLUG + "/suspend_frequency";
+    private static final String MAKO_HOTPLUG = "/sys/class/misc/mako_hotplug_control";
+    private static final String MAKO_HOTPLUG_ENABLED = MAKO_HOTPLUG + "/enabled";
+    private static final String MAKO_HOTPLUG_CORES_ON_TOUCH = MAKO_HOTPLUG + "/cores_on_touch";
+    private static final String MAKO_HOTPLUG_CPUFREQ_UNPLUG_LIMIT = MAKO_HOTPLUG + "/cpufreq_unplug_limit";
+    private static final String MAKO_HOTPLUG_FIRST_LEVEL = MAKO_HOTPLUG + "/first_level";
+    private static final String MAKO_HOTPLUG_HIGH_LOAD_COUNTER = MAKO_HOTPLUG + "/high_load_counter";
+    private static final String MAKO_HOTPLUG_LOAD_THRESHOLD = MAKO_HOTPLUG + "/load_threshold";
+    private static final String MAKO_HOTPLUG_MAX_LOAD_COUNTER = MAKO_HOTPLUG + "/max_load_counter";
+    private static final String MAKO_HOTPLUG_MIN_TIME_CPU_ONLINE = MAKO_HOTPLUG + "/min_time_cpu_online";
+    private static final String MAKO_HOTPLUG_MIN_CORES_ONLINE = MAKO_HOTPLUG + "/min_cores_online";
+    private static final String MAKO_HOTPLUG_TIMER = MAKO_HOTPLUG + "/timer";
+    private static final String MAKO_HOTPLUG_SUSPEND_FREQ = MAKO_HOTPLUG + "/suspend_frequency";
 
     public static void setMakoHotplugSuspendFreq(int value, Context context) {
         run(Control.write(String.valueOf(value), MAKO_HOTPLUG_SUSPEND_FREQ), MAKO_HOTPLUG_SUSPEND_FREQ, context);

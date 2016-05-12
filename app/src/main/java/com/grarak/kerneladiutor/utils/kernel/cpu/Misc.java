@@ -34,17 +34,17 @@ import java.util.List;
  */
 public class Misc {
 
-    public static final String CPU_MC_POWER_SAVING = "/sys/devices/system/cpu/sched_mc_power_savings";
-    public static final String CPU_WQ_POWER_SAVING = "/sys/module/workqueue/parameters/power_efficient";
-    public static final String CPU_AVAILABLE_CFS_SCHEDULERS = "/sys/devices/system/cpu/sched_balance_policy/available_sched_balance_policy";
-    public static final String CPU_CURRENT_CFS_SCHEDULER = "/sys/devices/system/cpu/sched_balance_policy/current_sched_balance_policy";
+    private static final String CPU_MC_POWER_SAVING = "/sys/devices/system/cpu/sched_mc_power_savings";
+    private static final String CPU_WQ_POWER_SAVING = "/sys/module/workqueue/parameters/power_efficient";
+    private static final String CPU_AVAILABLE_CFS_SCHEDULERS = "/sys/devices/system/cpu/sched_balance_policy/available_sched_balance_policy";
+    private static final String CPU_CURRENT_CFS_SCHEDULER = "/sys/devices/system/cpu/sched_balance_policy/current_sched_balance_policy";
 
-    public static final String CPU_QUIET = "/sys/devices/system/cpu/cpuquiet";
-    public static final String CPU_QUIET_ENABLE = CPU_QUIET + "/cpuquiet_driver/enabled";
-    public static final String CPU_QUIET_AVAILABLE_GOVERNORS = CPU_QUIET + "/available_governors";
-    public static final String CPU_QUIET_CURRENT_GOVERNOR = CPU_QUIET + "/current_governor";
+    private static final String CPU_QUIET = "/sys/devices/system/cpu/cpuquiet";
+    private static final String CPU_QUIET_ENABLE = CPU_QUIET + "/cpuquiet_driver/enabled";
+    private static final String CPU_QUIET_AVAILABLE_GOVERNORS = CPU_QUIET + "/available_governors";
+    private static final String CPU_QUIET_CURRENT_GOVERNOR = CPU_QUIET + "/current_governor";
 
-    public static final String CPU_TOUCH_BOOST = "/sys/module/msm_performance/parameters/touchboost";
+    private static final String CPU_TOUCH_BOOST = "/sys/module/msm_performance/parameters/touchboost";
 
 
     private static String[] sAvailableCFSSchedulers;

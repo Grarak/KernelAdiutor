@@ -30,6 +30,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.AlucardHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.AutoSmp;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.BluPlug;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.IntelliPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MBHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MPDecision;
@@ -37,6 +38,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MSMHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MakoHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.ThunderPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.ZenDecision;
+import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SelectView;
@@ -97,6 +99,9 @@ public class CPUHotplug extends BaseControlFragment {
         }
         if (AutoSmp.supported()) {
             autoSmpInit(items);
+        }
+        if (CoreCtl.supported()) {
+            coreCtlInit(items);
         }
 
         for (SwitchView view : mEnableViews) {
@@ -1802,6 +1807,71 @@ public class CPUHotplug extends BaseControlFragment {
         if (autoSmp.size() > 0) {
             items.add(title);
             items.addAll(autoSmp);
+        }
+    }
+
+    private void coreCtlInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> coreCtl = new ArrayList<>();
+        TitleView title = new TitleView();
+        title.setText(getString(R.string.core_control));
+
+        if (CoreCtl.hasBusyDownThreshold()) {
+            SeekBarView busyDownThreshold = new SeekBarView();
+            busyDownThreshold.setTitle(getString(R.string.busy_down_threshold));
+            busyDownThreshold.setSummary(getString(R.string.busy_down_threshold_summary));
+            busyDownThreshold.setProgress(CoreCtl.getBusyDownThreshold());
+            busyDownThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    CoreCtl.setBusyDownThreshold(position, getActivity());
+                }
+            });
+
+            coreCtl.add(busyDownThreshold);
+        }
+
+        if (CoreCtl.hasBusyUpThreshold()) {
+            SeekBarView busyUpThreshold = new SeekBarView();
+            busyUpThreshold.setTitle(getString(R.string.busy_up_threshold));
+            busyUpThreshold.setSummary(getString(R.string.busy_up_threshold_summary));
+            busyUpThreshold.setProgress(CoreCtl.getBusyUpThreshold());
+            busyUpThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    CoreCtl.setBusyUpThreshold(position, getActivity());
+                }
+            });
+
+            coreCtl.add(busyUpThreshold);
+        }
+
+        if (CoreCtl.hasOfflineDelayMs()) {
+            SeekBarView offlineDelayMs = new SeekBarView();
+            offlineDelayMs.setTitle(getString(R.string.offline_delay));
+            offlineDelayMs.setSummary(getString(R.string.offline_delay_summary));
+            offlineDelayMs.setUnit(getString(R.string.ms));
+            offlineDelayMs.setMax(5000);
+            offlineDelayMs.setOffset(100);
+            offlineDelayMs.setProgress(CoreCtl.getOfflineDelayMs() / 100);
+            offlineDelayMs.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    CoreCtl.setOfflineDelayMs(position * 100, getActivity());
+                }
+            });
+
+            coreCtl.add(offlineDelayMs);
+        }
+
+        if (coreCtl.size() > 0) {
+            items.add(title);
+
+            DescriptionView description = new DescriptionView();
+            description.setTitle(getString(R.string.core_control));
+            description.setSummary(getString(R.string.core_control_summary));
+            items.add(description);
+
+            items.addAll(coreCtl);
         }
     }
 

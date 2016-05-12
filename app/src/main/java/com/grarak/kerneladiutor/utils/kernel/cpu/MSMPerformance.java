@@ -30,10 +30,10 @@ import com.grarak.kerneladiutor.utils.root.Control;
  */
 public class MSMPerformance {
 
-    public static final String PARENT = "/sys/module/msm_performance";
-    public static final String MAX_CPUS = PARENT + "/parameters/max_cpus";
-    public static final String CPU_MAX_FREQ = PARENT + "/parameters/cpu_max_freq";
-    public static final String CPU_MIN_FREQ = PARENT + "/parameters/cpu_min_freq";
+    private static final String PARENT = "/sys/module/msm_performance";
+    private static final String MAX_CPUS = PARENT + "/parameters/max_cpus";
+    private static final String CPU_MAX_FREQ = PARENT + "/parameters/cpu_max_freq";
+    private static final String CPU_MIN_FREQ = PARENT + "/parameters/cpu_min_freq";
 
     private static Boolean MAX_CPUS_SUPPORTED;
     private static Boolean CPU_MAX_FREQ_SUPPORTED;

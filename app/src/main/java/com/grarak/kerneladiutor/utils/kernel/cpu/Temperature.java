@@ -107,6 +107,12 @@ public class Temperature {
             if (Utils.existFile(node)) {
                 CPU_NODE = node;
                 CPU_OFFSET = CPU_NODES.get(CPU_NODE);
+                if (Utils.readFile(CPU_NODE).length() <= String.valueOf(CPU_OFFSET).length() + 1) {
+                    CPU_OFFSET = 1;
+                    for (int i = 0; i < Utils.readFile(CPU_NODE).length() - 2; i++) {
+                        CPU_OFFSET *= 10;
+                    }
+                }
                 return true;
             }
         }

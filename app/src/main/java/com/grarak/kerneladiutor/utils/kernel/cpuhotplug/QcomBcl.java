@@ -37,18 +37,19 @@ public class QcomBcl {
     private static String DEFAULT_SOC_HOTPLUG_MASK;
 
     public static void online(boolean online, Context context) {
-        online(online, ApplyOnBootFragment.CPU, context);
+        online(online, ApplyOnBootFragment.CPU_HOTPLUG, context);
     }
 
     public static void online(boolean online, String category, Context context) {
-        run(Control.write(online ? "disable" : "enable", PARENT + "/mode"), PARENT + "/mode" + online, context);
+        Control.runSetting(Control.write(online ? "disable" : "enable", PARENT + "/mode"), category,
+                PARENT + "/mode" + online, context);
         if (DEFAULT_HOTPLUG_MASK != null) {
-            run(Control.write(online ? "0" : DEFAULT_HOTPLUG_MASK, PARENT + "/hotplug_mask"), PARENT +
-                    "/hotplug_mask" + online, context);
+            Control.runSetting(Control.write(online ? "0" : DEFAULT_HOTPLUG_MASK, PARENT + "/hotplug_mask"),
+                    category, PARENT + "/hotplug_mask" + online, context);
         }
         if (DEFAULT_SOC_HOTPLUG_MASK != null) {
-            run(Control.write(online ? "0" : DEFAULT_SOC_HOTPLUG_MASK, PARENT + "/hotplug_soc_mask"), PARENT +
-                    "/hotplug_soc_mask" + online, context);
+            Control.runSetting(Control.write(online ? "0" : DEFAULT_SOC_HOTPLUG_MASK,
+                    PARENT + "/hotplug_soc_mask"), category, PARENT + "/hotplug_soc_mask" + online, context);
         }
         Control.runSetting(Control.write(online ? "enable" : "disable", PARENT + "/mode"), category,
                 PARENT + "/mode" + online + "1", context);
@@ -71,7 +72,7 @@ public class QcomBcl {
     }
 
     private static void run(String command, String id, Context context) {
-        Control.runSetting(command, ApplyOnBootFragment.CPU, id, context);
+        Control.runSetting(command, ApplyOnBootFragment.CPU_HOTPLUG, id, context);
     }
 
 }

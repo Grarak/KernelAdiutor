@@ -31,16 +31,16 @@ import com.grarak.kerneladiutor.utils.root.Control;
  */
 public class BluPlug {
 
-    public static final String HOTPLUG_BLU_PLUG = "/sys/module/blu_plug/parameters";
-    public static final String HOTPLUG_BLU_PLUG_ENABLE = HOTPLUG_BLU_PLUG + "/enabled";
-    public static final String HOTPLUG_BLU_PLUG_POWERSAVER_MODE = HOTPLUG_BLU_PLUG + "/powersaver_mode";
-    public static final String HOTPLUG_BLU_PLUG_MIN_ONLINE = HOTPLUG_BLU_PLUG + "/min_online";
-    public static final String HOTPLUG_BLU_PLUG_MAX_ONLINE = HOTPLUG_BLU_PLUG + "/max_online";
-    public static final String HOTPLUG_BLU_PLUG_MAX_CORES_SCREEN_OFF = HOTPLUG_BLU_PLUG + "/max_cores_screenoff";
-    public static final String HOTPLUG_BLU_PLUG_MAX_FREQ_SCREEN_OFF = HOTPLUG_BLU_PLUG + "/max_freq_screenoff";
-    public static final String HOTPLUG_BLU_PLUG_UP_THRESHOLD = HOTPLUG_BLU_PLUG + "/up_threshold";
-    public static final String HOTPLUG_BLU_PLUG_UP_TIMER_CNT = HOTPLUG_BLU_PLUG + "/up_timer_cnt";
-    public static final String HOTPLUG_BLU_PLUG_DOWN_TIMER_CNT = HOTPLUG_BLU_PLUG + "/down_timer_cnt";
+    private static final String HOTPLUG_BLU_PLUG = "/sys/module/blu_plug/parameters";
+    private static final String HOTPLUG_BLU_PLUG_ENABLE = HOTPLUG_BLU_PLUG + "/enabled";
+    private static final String HOTPLUG_BLU_PLUG_POWERSAVER_MODE = HOTPLUG_BLU_PLUG + "/powersaver_mode";
+    private static final String HOTPLUG_BLU_PLUG_MIN_ONLINE = HOTPLUG_BLU_PLUG + "/min_online";
+    private static final String HOTPLUG_BLU_PLUG_MAX_ONLINE = HOTPLUG_BLU_PLUG + "/max_online";
+    private static final String HOTPLUG_BLU_PLUG_MAX_CORES_SCREEN_OFF = HOTPLUG_BLU_PLUG + "/max_cores_screenoff";
+    private static final String HOTPLUG_BLU_PLUG_MAX_FREQ_SCREEN_OFF = HOTPLUG_BLU_PLUG + "/max_freq_screenoff";
+    private static final String HOTPLUG_BLU_PLUG_UP_THRESHOLD = HOTPLUG_BLU_PLUG + "/up_threshold";
+    private static final String HOTPLUG_BLU_PLUG_UP_TIMER_CNT = HOTPLUG_BLU_PLUG + "/up_timer_cnt";
+    private static final String HOTPLUG_BLU_PLUG_DOWN_TIMER_CNT = HOTPLUG_BLU_PLUG + "/down_timer_cnt";
 
     public static void setBluPlugDownTimerCnt(int value, Context context) {
         run(Control.write(String.valueOf(value), HOTPLUG_BLU_PLUG_DOWN_TIMER_CNT),
