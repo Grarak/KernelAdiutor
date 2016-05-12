@@ -103,8 +103,11 @@ public class SeekBarView extends RecyclerViewItem {
 
             @Override
             public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
-                if (mOnSeekBarListener != null) {
-                    mOnSeekBarListener.onStop(SeekBarView.this, mProgress, mItems.get(mProgress));
+                try {
+                    if (mOnSeekBarListener != null) {
+                        mOnSeekBarListener.onStop(SeekBarView.this, mProgress, mItems.get(mProgress));
+                    }
+                } catch (IndexOutOfBoundsException ignored) {
                 }
             }
         });

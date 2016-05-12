@@ -94,7 +94,7 @@ public class OverallFragment extends BaseControlFragment {
     }
 
     private void temperatureInit(List<RecyclerViewItem> parent) {
-        CardView tempCard = new CardView(getContext());
+        CardView tempCard = new CardView(getActivity());
         tempCard.setFullSpan(true);
         tempCard.setTitle(getString(R.string.temperature));
 
@@ -183,7 +183,7 @@ public class OverallFragment extends BaseControlFragment {
         });
         items.add(frequencyButtonView);
 
-        mFreqBig = new CardView(getContext());
+        mFreqBig = new CardView(getActivity());
         if (CPUFreq.isBigLITTLE()) {
             mFreqBig.setTitle(getString(R.string.cluster_big));
         } else {
@@ -192,7 +192,7 @@ public class OverallFragment extends BaseControlFragment {
         items.add(mFreqBig);
 
         if (CPUFreq.isBigLITTLE()) {
-            mFreqLITTLE = new CardView(getContext());
+            mFreqLITTLE = new CardView(getActivity());
             mFreqLITTLE.setTitle(getString(R.string.cluster_little));
             items.add(mFreqLITTLE);
         }

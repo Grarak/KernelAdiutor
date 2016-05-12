@@ -116,7 +116,7 @@ public class CPUFragment extends BaseControlFragment {
     }
 
     private void freqInit(List<RecyclerViewItem> items) {
-        CardView bigCard = new CardView(getContext());
+        CardView bigCard = new CardView(getActivity());
         if (CPUFreq.isBigLITTLE()) {
             bigCard.setTitle(getString(R.string.cluster_big));
         }
@@ -192,7 +192,7 @@ public class CPUFragment extends BaseControlFragment {
         items.add(bigCard);
 
         if (CPUFreq.isBigLITTLE()) {
-            CardView LITTLECard = new CardView(getContext());
+            CardView LITTLECard = new CardView(getActivity());
             LITTLECard.setTitle(getString(R.string.cluster_little));
 
             mCPUMaxLITTLE = new SelectView();

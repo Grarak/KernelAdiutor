@@ -19,7 +19,7 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class CardView extends RecyclerViewItem {
 
-    private Context mContext;
+    private Activity mActivity;
 
     private TextView mTitle;
     private LinearLayout mLayout;
@@ -47,11 +47,11 @@ public class CardView extends RecyclerViewItem {
     private List<RecyclerViewItem> mItems = new ArrayList<>();
     private HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
 
-    public CardView(Context context) {
-        if (context == null) {
-            throw new IllegalStateException("Context can't be null");
+    public CardView(Activity activity) {
+        if (activity == null) {
+            throw new IllegalStateException("Activity can't be null");
         }
-        mContext = context;
+        mActivity = activity;
     }
 
     @Override
@@ -73,10 +73,15 @@ public class CardView extends RecyclerViewItem {
         refresh();
     }
 
-    public void addItem(RecyclerViewItem item) {
-        mItems.add(item);
-        mViews.put(item, LayoutInflater.from(mContext).inflate(item.getLayoutRes(), null, false));
-        setupLayout();
+    public void addItem(final RecyclerViewItem item) {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mItems.add(item);
+                mViews.put(item, LayoutInflater.from(mActivity).inflate(item.getLayoutRes(), null, false));
+                setupLayout();
+            }
+        });
     }
 
     public int size() {
@@ -100,13 +105,20 @@ public class CardView extends RecyclerViewItem {
     private void setupLayout() {
         if (mLayout != null) {
             for (final RecyclerViewItem item : mItems) {
-                ViewGroup viewGroup = (ViewGroup) mViews.get(item).getParent();
+                View view;
+                if (mViews.containsKey(item)) {
+                    view = mViews.get(item);
+                } else {
+                    mViews.put(item, view = LayoutInflater.from(mActivity).inflate(item.getLayoutRes(),
+                            null, false));
+                }
+                ViewGroup viewGroup = (ViewGroup) view.getParent();
                 if (viewGroup != null) {
-                    viewGroup.removeView(mViews.get(item));
+                    viewGroup.removeView(view);
                 }
                 item.setOnViewChangeListener(getOnViewChangeListener());
-                item.onCreateView(mViews.get(item));
-                mLayout.addView(mViews.get(item));
+                item.onCreateView(view);
+                mLayout.addView(view);
             }
         }
     }

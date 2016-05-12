@@ -97,8 +97,10 @@ public class CPUVoltage extends BaseControlFragment {
     private void reload() {
         List<String> freqs = Voltage.getFreqs();
         List<String> voltages = Voltage.getVoltages();
-        for (int i = 0; i < mVoltages.size(); i++) {
-            initView(mVoltages.get(i), freqs.get(i), voltages.get(i));
+        if (freqs != null && voltages != null) {
+            for (int i = 0; i < mVoltages.size(); i++) {
+                initView(mVoltages.get(i), freqs.get(i), voltages.get(i));
+            }
         }
     }
 
