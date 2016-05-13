@@ -308,6 +308,34 @@
     <string name="check_interval">Check Interval</string>
     <string name="shutdown_temp">Shutdown Temperature</string>
 
+    <!-- GPU -->
+    <string name="gpu_2d_freq">GPU 2D Frequency</string>
+    <string name="gpu_freq">GPU Frequency</string>
+    <string name="gpu_2d_max_freq">GPU 2D Maximum Frequency</string>
+    <string name="gpu_2d_max_freq_summary">Set the maximum 2D frequency the GPU scales up to.</string>
+    <string name="gpu_max_freq">GPU Maximum Frequency</string>
+    <string name="gpu_max_freq_summary">Set the maximum frequency the GPU scales up to.</string>
+    <string name="gpu_min_freq">GPU Minimum Frequency</string>
+    <string name="gpu_min_freq_summary">Set the minimum frequency the GPU scales down to.</string>
+    <string name="gpu_2d_governor">GPU 2D Governor</string>
+    <string name="gpu_2d_governor_summary">Set the 2D governor of the GPU.</string>
+    <string name="gpu_governor">GPU Governor</string>
+    <string name="gpu_governor_summary">Set the governor of the GPU.</string>
+    <string name="simple_gpu_algorithm">Simple GPU Algorithm</string>
+    <string name="simple_gpu_algorithm_summary">An add-on for MSM Adreno TZ GPU Governor. Developed by faux123.</string>
+    <string name="laziness">Laziness</string>
+    <string name="laziness_summary">This increases the threshold to ramp up or down GPU frequencies. The lower it is, the more performance you get.</string>
+    <string name="ramp_thresold">Ramp Thresold</string>
+    <string name="ramp_thresold_summary">This increases the number of times the GPU governor ramp down requests. The higher it is, the more performance you get.</string>
+    <string name="adreno_idler">Adreno Idler</string>
+    <string name="adreno_idler_summary">An efficient workaround for msm-adreno-tz\'s overheads. Developed by arter97.</string>
+    <string name="down_differential">Down Differential</string>
+    <string name="down_differential_summary">Threshold for determining if the given workload is idle.</string>
+    <string name="idle_wait">Idle Wait</string>
+    <string name="idle_wait_summary">Number of events to wait before ramping down the frequency. The idlewait\'th events before current one must be all idle before Adreno idler ramps down the frequency. This implementation is to prevent micro-lags on scrolling or playing games. Adreno idler will more actively try to ramp down the frequency if this is set to a lower value.</string>
+    <string name="workload">Workload</string>
+    <string name="workload_summary">Adreno idler will more actively try to ramp down the frequency if this is set to a higher value.</string>
+
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>
     <string name="fahrenheit_summary">Use fahrenheit to measure temperature.</string>

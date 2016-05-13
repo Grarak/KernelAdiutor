@@ -89,7 +89,7 @@ public class SeekBarView extends RecyclerViewItem {
         mSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
             @Override
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
-                if (value < mItems.size()) {
+                if (value < mItems.size() && value >= 0) {
                     mProgress = value;
                     String text = mItems.get(value);
                     if (mUnit != null) text += mUnit;
@@ -107,7 +107,7 @@ public class SeekBarView extends RecyclerViewItem {
                     if (mOnSeekBarListener != null) {
                         mOnSeekBarListener.onStop(SeekBarView.this, mProgress, mItems.get(mProgress));
                     }
-                } catch (IndexOutOfBoundsException ignored) {
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -192,7 +192,7 @@ public class SeekBarView extends RecyclerViewItem {
                     mSeekBar.setProgress(mProgress);
                     if (mUnit != null) text += mUnit;
                     mValue.setText(text);
-                } catch (IndexOutOfBoundsException ignored) {
+                } catch (Exception ignored) {
                     mValue.setText(mValue.getResources().getString(R.string.not_in_range));
                 }
             }

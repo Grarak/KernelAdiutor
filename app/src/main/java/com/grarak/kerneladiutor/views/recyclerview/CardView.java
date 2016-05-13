@@ -74,11 +74,14 @@ public class CardView extends RecyclerViewItem {
     }
 
     public void addItem(final RecyclerViewItem item) {
+        mItems.add(item);
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mItems.add(item);
-                mViews.put(item, LayoutInflater.from(mActivity).inflate(item.getLayoutRes(), null, false));
+                if (!mViews.containsKey(item)) {
+                    mViews.put(item, LayoutInflater.from(mActivity).inflate(item.getLayoutRes(),
+                            null, false));
+                }
                 setupLayout();
             }
         });

@@ -42,6 +42,9 @@ import com.grarak.kerneladiutor.views.recyclerview.TitleView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by willi on 01.05.16.
@@ -69,6 +72,7 @@ public class CPUFragment extends BaseControlFragment {
     private GovernorTunableFragment mGovernorTunableFragment;
     private AlertDialog.Builder mGovernorTunableErrorDialog;
 
+    private ThreadPoolExecutor mPool;
     private Thread mRefreshThread;
 
     @Override
@@ -80,11 +84,16 @@ public class CPUFragment extends BaseControlFragment {
     protected void init() {
         super.init();
 
-        addViewPagerFragment(ApplyOnBootFragment.newInstance(ApplyOnBootFragment.CPU));
+        if (mPool == null) {
+            mPool = new ThreadPoolExecutor(CPUFreq.getCpuCount() << 1, Integer.MAX_VALUE, 1,
+                    TimeUnit.MINUTES, new SynchronousQueue<Runnable>());
+
+        }
         if (CPUFreq.getCpuCount() > 1) {
             addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.cores,
                     CPUFreq.getCpuCount()), null));
         }
+        addViewPagerFragment(ApplyOnBootFragment.newInstance(ApplyOnBootFragment.CPU));
 
         if (mGovernorTunableErrorDialog != null) {
             mGovernorTunableErrorDialog.show();
@@ -579,7 +588,7 @@ public class CPUFragment extends BaseControlFragment {
                     }
                 }
             });
-            mRefreshThread.start();
+            mPool.submit(mRefreshThread);
         }
         if (mCPUMaxBig != null && mCPUMaxFreqBig != 0) {
             mCPUMaxBig.setItem((mCPUMaxFreqBig / 1000) + getString(R.string.mhz));

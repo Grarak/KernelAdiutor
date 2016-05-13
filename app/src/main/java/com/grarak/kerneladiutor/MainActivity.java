@@ -45,6 +45,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
+import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
@@ -126,6 +127,7 @@ public class MainActivity extends BaseActivity {
             Device.MemInfo.load();
             Device.ROMInfo.load();
             Device.TrustZone.supported();
+            GPU.supported();
             Hotplug.supported();
             MSMPerformance.supported();
             QcomBcl.supported();

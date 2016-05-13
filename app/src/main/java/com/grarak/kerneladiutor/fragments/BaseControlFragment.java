@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -136,7 +137,7 @@ public class BaseControlFragment extends BaseFragment {
                 }
             });
             getFragmentManager().beginTransaction().replace(R.id.foreground_content, foregroundFragmnet).commit();
-            mForegroundHeight = getResources().getDimension(R.dimen.basecontrol_foreground_fragment_height);
+            mForegroundHeight = getResources().getDisplayMetrics().heightPixels;
         }
 
         init();
@@ -299,6 +300,9 @@ public class BaseControlFragment extends BaseFragment {
             notifyDataSetChanged();
         }
 
+        @Override
+        public void restoreState(Parcelable state, ClassLoader loader) {
+        }
     }
 
     private class Scroller extends RecyclerView.OnScrollListener {

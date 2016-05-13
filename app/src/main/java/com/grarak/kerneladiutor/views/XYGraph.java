@@ -105,6 +105,12 @@ public class XYGraph extends View {
         invalidate();
     }
 
+    public void clear() {
+        mPercentages.clear();
+        state = 1;
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

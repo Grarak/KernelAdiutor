@@ -247,8 +247,10 @@ public class CPUFreq {
 
     public static List<String> getAdjustedFreq(int cpu, Context context) {
         List<String> freqs = new ArrayList<>();
-        for (int freq : getFreqs(cpu)) {
-            freqs.add((freq / 1000) + context.getString(R.string.mhz));
+        if (getFreqs(cpu) != null) {
+            for (int freq : getFreqs(cpu)) {
+                freqs.add((freq / 1000) + context.getString(R.string.mhz));
+            }
         }
         return freqs;
     }

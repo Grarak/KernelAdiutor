@@ -41,7 +41,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/foreground_parent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/basecontrol_foreground_fragment_height"
+        android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
         android:visibility="gone"

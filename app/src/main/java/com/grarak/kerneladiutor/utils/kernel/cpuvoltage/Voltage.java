@@ -74,8 +74,10 @@ public class Voltage {
 
     public static void setGlobalOffset(int adjust, Context context) {
         String value = "";
+        List<String> voltages = getVoltages();
+        if (voltages == null) return;
         if (sAppend.get(PATH)) {
-            for (String volt : getVoltages()) {
+            for (String volt : voltages) {
                 if (!value.isEmpty()) {
                     value += " ";
                 }
