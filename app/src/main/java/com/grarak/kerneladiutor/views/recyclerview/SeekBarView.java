@@ -71,7 +71,7 @@ public class SeekBarView extends RecyclerViewItem {
             @Override
             public void onClick(View v) {
                 mSeekBar.setProgress(mSeekBar.getProgress() - 1);
-                if (mOnSeekBarListener != null) {
+                if (mOnSeekBarListener != null && mProgress < mItems.size() && mProgress >= 0) {
                     mOnSeekBarListener.onStop(SeekBarView.this, mProgress, mItems.get(mProgress));
                 }
             }
@@ -80,7 +80,7 @@ public class SeekBarView extends RecyclerViewItem {
             @Override
             public void onClick(View v) {
                 mSeekBar.setProgress(mSeekBar.getProgress() + 1);
-                if (mOnSeekBarListener != null) {
+                if (mOnSeekBarListener != null && mProgress < mItems.size() && mProgress >= 0) {
                     mOnSeekBarListener.onStop(SeekBarView.this, mProgress, mItems.get(mProgress));
                 }
             }

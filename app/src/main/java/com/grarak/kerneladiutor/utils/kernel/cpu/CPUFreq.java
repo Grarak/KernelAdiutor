@@ -430,8 +430,7 @@ public class CPUFreq {
                         }
                     }
 
-                    pers[i] = cpu > -1 ? cpu : 0;
-                    pers[i] = pers[i] < 101 ? pers[i] : 100;
+                    pers[i] = cpu < 0 ? 0 : cpu > 100 ? 100 : cpu;
                 }
                 return pers;
             }

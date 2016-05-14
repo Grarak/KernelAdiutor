@@ -389,7 +389,10 @@ public class OverallFragment extends BaseControlFragment {
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().unregisterReceiver(mBatteryReceiver);
+        try {
+            getActivity().unregisterReceiver(mBatteryReceiver);
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     @Override
