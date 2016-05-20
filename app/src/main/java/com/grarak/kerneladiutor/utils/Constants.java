@@ -47,6 +47,7 @@ public interface Constants {
     String CPU_CORE_ONLINE = "/sys/devices/system/cpu/cpu%d/online";
     String CPU_MAX_FREQ = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq";
     String CPU_MAX_FREQ_KT = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq_kt";
+    String CPU_MAX_FREQ_RENAMED = "/sys/devices/system/cpu/cpu%d/cpufreq/ren_max_freq";
     String CPU_ENABLE_OC = "/sys/devices/system/cpu/cpu%d/cpufreq/enable_oc";
     String CPU_MIN_FREQ = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_min_freq";
     String CPU_MAX_SCREEN_OFF_FREQ = "/sys/devices/system/cpu/cpu%d/cpufreq/screen_off_max_freq";
