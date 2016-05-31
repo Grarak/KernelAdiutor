@@ -36,8 +36,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
@@ -46,7 +44,6 @@ import com.grarak.kerneladiutor.fragments.kernel.GPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
-import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -132,11 +129,6 @@ public class NavigationActivity extends BaseActivity
             mShowPirateDialog = savedInstanceState.getBoolean("pirate");
         }
         if ((result != getIntent().getIntExtra("result", -1) || result == 3) && mShowPirateDialog) {
-            if (savedInstanceState == null) {
-                // See on what devices people pirate things
-                Answers.getInstance().logCustom(new CustomEvent("Pirate")
-                        .putCustomAttribute("Name", Device.getCodename()));
-            }
             ViewUtils.dialogBuilder(getString(R.string.pirated), null, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
