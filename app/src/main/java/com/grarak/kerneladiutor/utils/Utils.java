@@ -366,6 +366,8 @@ public class Utils implements Constants {
                 for (Object path : arrays)
                     if (path instanceof String)
                         applys.add((String) path);
+            for (Object[] arrays : VIBRATION_ARRAY)
+                applys.add((String) arrays[0]);
         } else if (mClass == ScreenFragment.class) for (String[] arrays : SCREEN_ARRAY)
             applys.addAll(new ArrayList<>(Arrays.asList(arrays)));
         else if (mClass == SoundFragment.class) for (String[] arrays : SOUND_ARRAY)
