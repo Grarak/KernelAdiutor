@@ -119,7 +119,7 @@ public class CardView extends RecyclerViewItem {
                 if (viewGroup != null) {
                     viewGroup.removeView(view);
                 }
-                item.setOnViewChangeListener(getOnViewChangeListener());
+                item.setOnViewChangeListener(getOnViewChangedListener());
                 item.onCreateView(view);
                 mLayout.addView(view);
             }

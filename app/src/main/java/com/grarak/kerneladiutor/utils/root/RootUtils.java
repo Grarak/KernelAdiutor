@@ -53,10 +53,17 @@ public class RootUtils {
     }
 
     private static boolean existBinary(String binary) {
-        for (String path : System.getenv("PATH").split(":")) {
+        String paths;
+        if (System.getenv("PATH") != null) {
+            paths = System.getenv("PATH");
+        } else {
+            paths = "/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin";
+        }
+        for (String path : paths.split(":")) {
             if (!path.endsWith("/")) path += "/";
-            if (Utils.existFile(path + binary, false) || Utils.existFile(path + binary))
+            if (Utils.existFile(path + binary, false) || Utils.existFile(path + binary)) {
                 return true;
+            }
         }
         return false;
     }
@@ -140,12 +147,8 @@ public class RootUtils {
                 return sb.toString().trim();
             } catch (IOException e) {
                 closed = true;
-                e.printStackTrace();
                 if (firstTry) denied = true;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                denied = true;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
                 denied = true;
             }
             return null;

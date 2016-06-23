@@ -19,74 +19,69 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
-import android.support.v7.widget.AppCompatEditText;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 
-import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.ViewUtils;
 
 /**
  * Created by willi on 05.05.16.
  */
-public class GenericSelectView extends Expander {
+public class GenericSelectView extends ValueView {
 
     public interface OnGenericValueListener {
         void onGenericValueSelected(GenericSelectView genericSelectView, String value);
     }
 
-    private AppCompatEditText mEditText;
-
-    private CharSequence mEditTextText;
-    private int mInputType = -1;
+    private String mValueRaw;
     private OnGenericValueListener mOnGenericValueListener;
-
-    public GenericSelectView() {
-        super(R.dimen.rv_generic_select_view_selector_height, R.layout.rv_generic_select_view);
-    }
+    private int mInputType = -1;
 
     @Override
-    protected void onCreateExpandView(View view) {
-        mEditText = (AppCompatEditText) view;
+    public void onCreateView(View view) {
 
-        refresh();
-    }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(v.getContext());
+            }
+        });
 
-    @Override
-    public void setValue(CharSequence value) {
-        super.setValue(value);
-        refresh();
+        super.onCreateView(view);
     }
 
     public void setValueRaw(String value) {
-        mEditTextText = value;
-        refresh();
-    }
-
-    public void setInputType(int type) {
-        mInputType = type;
-        refresh();
+        mValueRaw = value;
     }
 
     public void setOnGenericValueListener(OnGenericValueListener onGenericValueListener) {
         mOnGenericValueListener = onGenericValueListener;
     }
 
-    @Override
-    protected void onCollapse() {
-        super.onCollapse();
-        if (mOnGenericValueListener != null && mEditText != null) {
-            setValueRaw(mEditText.getText().toString());
-            mOnGenericValueListener.onGenericValueSelected(this, mEditText.getText().toString());
-        }
+    public void setInputType(int inputType) {
+        mInputType = inputType;
     }
 
-    @Override
-    protected void refresh() {
-        super.refresh();
-        if (mEditTextText != null && mEditText != null) {
-            mEditText.setText(mEditTextText);
+    private void showDialog(Context context) {
+        if (mValueRaw == null) {
+            mValueRaw = getValue();
         }
-        if (mEditText != null && mInputType >= 0) {
-            mEditText.setInputType(mInputType);
-        }
+        if (mValueRaw == null) return;
+
+        ViewUtils.dialogEditText(mValueRaw, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }, new ViewUtils.OnDialogEditTextListener() {
+            @Override
+            public void onClick(String text) {
+                setValueRaw(text);
+                if (mOnGenericValueListener != null) {
+                    mOnGenericValueListener.onGenericValueSelected(GenericSelectView.this, text);
+                }
+            }
+        }, mInputType, context).setTitle(getTitle()).show();
     }
+
 }

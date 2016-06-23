@@ -32,19 +32,23 @@ import java.util.List;
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<RecyclerViewItem> mItems;
-    private final RecyclerViewItem.OnViewChangeListener mOnViewChangeListener;
-    private final HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
+    public interface OnViewChangedListener {
+        void viewChanged();
+    }
 
-    public RecyclerViewAdapter(List<RecyclerViewItem> items,
-                               RecyclerViewItem.OnViewChangeListener onViewChangeListener) {
+    private final List<RecyclerViewItem> mItems;
+    private OnViewChangedListener mOnViewChangedListener;
+    private final HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
+    private View mFirstItem;
+
+    public RecyclerViewAdapter(List<RecyclerViewItem> items, OnViewChangedListener onViewChangedListener) {
         mItems = items;
-        mOnViewChangeListener = onViewChangeListener;
+        mOnViewChangedListener = onViewChangedListener;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        mItems.get(position).setOnViewChangeListener(mOnViewChangeListener);
+        mItems.get(position).setOnViewChangeListener(mOnViewChangedListener);
         mItems.get(position).onCreateView(holder.itemView);
     }
 
@@ -67,6 +71,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             viewGroup.removeView(view);
         }
         mItems.get(position).onCreateHolder(parent);
+        if (position == 0) {
+            mFirstItem = view;
+        }
         return new RecyclerView.ViewHolder(view) {
         };
     }
@@ -74,6 +81,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
         return position;
+    }
+
+    public View getFirstItem() {
+        return mFirstItem;
     }
 
 }

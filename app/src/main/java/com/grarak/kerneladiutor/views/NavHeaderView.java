@@ -58,7 +58,7 @@ public class NavHeaderView extends LinearLayout {
     private ImageView mImage;
 
     public NavHeaderView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public NavHeaderView(Context context, @Nullable AttributeSet attrs) {

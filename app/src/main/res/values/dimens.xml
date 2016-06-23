@@ -15,8 +15,10 @@
     <dimen name="circular_textview_width">50dp</dimen>
     <dimen name="circular_textview_textsize">15sp</dimen>
 
-    <dimen name="rv_select_view_selector_height">40dp</dimen>
-    <dimen name="rv_generic_select_view_selector_height">40dp</dimen>
-
     <dimen name="dialog_edittext_padding">30dp</dimen>
+
+    <dimen name="colortable_width">100dp</dimen>
+    <dimen name="colortable_height">50dp</dimen>
+
+    <dimen name="rv_drop_down_item_height">50dp</dimen>
 </resources>

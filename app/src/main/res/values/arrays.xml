@@ -20,4 +20,11 @@
         <item>@string/dual_core_mode</item>
     </string-array>
 
+    <!-- Screen -->
+    <string-array name="colors">
+        <item>@string/red</item>
+        <item>@string/green</item>
+        <item>@string/blue</item>
+    </string-array>
+
 </resources>

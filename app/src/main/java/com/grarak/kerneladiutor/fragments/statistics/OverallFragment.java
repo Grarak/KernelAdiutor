@@ -136,49 +136,59 @@ public class OverallFragment extends BaseControlFragment {
         frequencyButtonView.setResetListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CpuStateMonitor cpuStateMonitor = mCpuSpyBig.getCpuStateMonitor();
-                CpuStateMonitor cpuStateMonitorLITTLE = null;
-                if (mCpuSpyLITTLE != null) {
-                    cpuStateMonitorLITTLE = mCpuSpyLITTLE.getCpuStateMonitor();
-                }
-                try {
-                    cpuStateMonitor.setOffsets();
-                    if (cpuStateMonitorLITTLE != null) {
-                        cpuStateMonitorLITTLE.setOffsets();
+                scrollToTop();
+                getHandler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        CpuStateMonitor cpuStateMonitor = mCpuSpyBig.getCpuStateMonitor();
+                        CpuStateMonitor cpuStateMonitorLITTLE = null;
+                        if (mCpuSpyLITTLE != null) {
+                            cpuStateMonitorLITTLE = mCpuSpyLITTLE.getCpuStateMonitor();
+                        }
+                        try {
+                            cpuStateMonitor.setOffsets();
+                            if (cpuStateMonitorLITTLE != null) {
+                                cpuStateMonitorLITTLE.setOffsets();
+                            }
+                        } catch (CpuStateMonitor.CpuStateMonitorException ignored) {
+                        }
+                        mCpuSpyBig.saveOffsets(getActivity());
+                        if (mCpuSpyLITTLE != null) {
+                            mCpuSpyLITTLE.saveOffsets(getActivity());
+                        }
+                        updateView(cpuStateMonitor, mFreqBig);
+                        if (cpuStateMonitorLITTLE != null) {
+                            updateView(cpuStateMonitorLITTLE, mFreqLITTLE);
+                        }
                     }
-                } catch (CpuStateMonitor.CpuStateMonitorException ignored) {
-                }
-                mCpuSpyBig.saveOffsets(getActivity());
-                if (mCpuSpyLITTLE != null) {
-                    mCpuSpyLITTLE.saveOffsets(getActivity());
-                }
-                updateView(cpuStateMonitor, mFreqBig);
-                if (cpuStateMonitorLITTLE != null) {
-                    updateView(cpuStateMonitorLITTLE, mFreqLITTLE);
-                }
-                scroll(500);
+                }, 500);
             }
         });
         frequencyButtonView.setRestoreListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CpuStateMonitor cpuStateMonitor = mCpuSpyBig.getCpuStateMonitor();
-                CpuStateMonitor cpuStateMonitorLITTLE = null;
-                if (mCpuSpyLITTLE != null) {
-                    cpuStateMonitorLITTLE = mCpuSpyLITTLE.getCpuStateMonitor();
-                }
-                cpuStateMonitor.removeOffsets();
-                if (cpuStateMonitorLITTLE != null)
-                    cpuStateMonitorLITTLE.removeOffsets();
-                mCpuSpyBig.saveOffsets(getActivity());
-                if (mCpuSpyLITTLE != null) {
-                    mCpuSpyLITTLE.saveOffsets(getActivity());
-                }
-                updateView(cpuStateMonitor, mFreqBig);
-                if (mCpuSpyLITTLE != null) {
-                    updateView(cpuStateMonitorLITTLE, mFreqLITTLE);
-                }
-                scroll(500);
+                scrollToTop();
+                getHandler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        CpuStateMonitor cpuStateMonitor = mCpuSpyBig.getCpuStateMonitor();
+                        CpuStateMonitor cpuStateMonitorLITTLE = null;
+                        if (mCpuSpyLITTLE != null) {
+                            cpuStateMonitorLITTLE = mCpuSpyLITTLE.getCpuStateMonitor();
+                        }
+                        cpuStateMonitor.removeOffsets();
+                        if (cpuStateMonitorLITTLE != null)
+                            cpuStateMonitorLITTLE.removeOffsets();
+                        mCpuSpyBig.saveOffsets(getActivity());
+                        if (mCpuSpyLITTLE != null) {
+                            mCpuSpyLITTLE.saveOffsets(getActivity());
+                        }
+                        updateView(cpuStateMonitor, mFreqBig);
+                        if (mCpuSpyLITTLE != null) {
+                            updateView(cpuStateMonitorLITTLE, mFreqLITTLE);
+                        }
+                    }
+                }, 500);
             }
         });
         items.add(frequencyButtonView);
@@ -241,12 +251,17 @@ public class OverallFragment extends BaseControlFragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            updateView(mBigMonitor, mFreqBig);
-            if (CPUFreq.isBigLITTLE()) {
-                updateView(mLITTLEMonitor, mFreqLITTLE);
-            }
-            mUpdateFrequency = false;
-            scroll(500);
+            scrollToTop();
+            getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateView(mBigMonitor, mFreqBig);
+                    if (CPUFreq.isBigLITTLE()) {
+                        updateView(mLITTLEMonitor, mFreqLITTLE);
+                    }
+                    mUpdateFrequency = false;
+                }
+            }, 500);
         }
     }
 

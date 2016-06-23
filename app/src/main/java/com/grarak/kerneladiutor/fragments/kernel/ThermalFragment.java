@@ -165,6 +165,10 @@ public class ThermalFragment extends BaseControlFragment {
             limitTempDegC.setProgress(MSMThermal.getLimitTempDegC() - 50);
             limitTempDegC.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setLimitTempDegC(position + 50, getActivity());
                 }
@@ -188,6 +192,10 @@ public class ThermalFragment extends BaseControlFragment {
             coreLimitTempDegC.setProgress(MSMThermal.getCoreLimitTempDegC() - 50);
             coreLimitTempDegC.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setCoreLimitTempDegC(position + 50, getActivity());
                 }
@@ -210,6 +218,10 @@ public class ThermalFragment extends BaseControlFragment {
             coreTempHysteresisDegC.setProgress(MSMThermal.getCoreTempHysteresisDegC());
             coreTempHysteresisDegC.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setCoreTempHysteresisDegC(position, getActivity());
                 }
@@ -225,6 +237,10 @@ public class ThermalFragment extends BaseControlFragment {
             freqStep.setMin(1);
             freqStep.setProgress(MSMThermal.getFreqStep() - 1);
             freqStep.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setFreqStep(position + 1, getActivity());
@@ -257,6 +273,10 @@ public class ThermalFragment extends BaseControlFragment {
             pollMs.setProgress(MSMThermal.getPollMs() / 10);
             pollMs.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setPollMs(position * 10, getActivity());
                 }
@@ -279,6 +299,10 @@ public class ThermalFragment extends BaseControlFragment {
             tempHysteresisDegC.setProgress(MSMThermal.getTempHysteresisDegC());
             tempHysteresisDegC.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setTempHysteresisDegC(position, getActivity());
                 }
@@ -295,6 +319,10 @@ public class ThermalFragment extends BaseControlFragment {
             limitLow.setProgress(MSMThermal.getThermalLimitLow() - 1);
             limitLow.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setThermalLimitLow(position + 1, getActivity());
                 }
@@ -310,6 +338,10 @@ public class ThermalFragment extends BaseControlFragment {
             limitHigh.setMin(1);
             limitHigh.setProgress(MSMThermal.getThermalLimitHigh() - 1);
             limitHigh.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setThermalLimitHigh(position + 1, getActivity());
@@ -358,6 +390,10 @@ public class ThermalFragment extends BaseControlFragment {
             tempLimit.setItems(MSMThermal.getTempLimitList(fahrenheit));
             tempLimit.setProgress(MSMThermal.getCurTempLimit() - MSMThermal.getTempLimitMin());
             tempLimit.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setTempLimit(position + MSMThermal.getTempLimitMin(), getActivity());
@@ -412,6 +448,10 @@ public class ThermalFragment extends BaseControlFragment {
             allowedLowLow.setProgress(MSMThermal.getAllowedLowLow() - 40);
             allowedLowLow.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setAllowedLowLow(position + 40, getActivity());
                 }
@@ -433,6 +473,10 @@ public class ThermalFragment extends BaseControlFragment {
             allowedLowHigh.setItems(list);
             allowedLowHigh.setProgress(MSMThermal.getAllowedLowHigh() - 40);
             allowedLowHigh.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setAllowedLowHigh(position + 40, getActivity());
@@ -471,6 +515,10 @@ public class ThermalFragment extends BaseControlFragment {
             alloweMidLow.setProgress(MSMThermal.getAllowedMidLow() - 40);
             alloweMidLow.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setAllowedMidLow(position + 40, getActivity());
                 }
@@ -492,6 +540,10 @@ public class ThermalFragment extends BaseControlFragment {
             allowedMidHigh.setItems(list);
             allowedMidHigh.setProgress(MSMThermal.getAllowedMidHigh() - 40);
             allowedMidHigh.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setAllowedMidHigh(position + 40, getActivity());
@@ -530,6 +582,10 @@ public class ThermalFragment extends BaseControlFragment {
             alloweMaxLow.setProgress(MSMThermal.getAllowedMaxLow() - 40);
             alloweMaxLow.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setAllowedMaxLow(position + 40, getActivity());
                 }
@@ -551,6 +607,10 @@ public class ThermalFragment extends BaseControlFragment {
             allowedMaxHigh.setItems(list);
             allowedMaxHigh.setProgress(MSMThermal.getAllowedMaxHigh() - 40);
             allowedMaxHigh.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setAllowedMaxHigh(position + 40, getActivity());
@@ -584,6 +644,10 @@ public class ThermalFragment extends BaseControlFragment {
             checkIntervalMs.setProgress(MSMThermal.getCheckIntervalMs() / 50);
             checkIntervalMs.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setCheckIntervalMs(position * 50, getActivity());
                 }
@@ -605,6 +669,10 @@ public class ThermalFragment extends BaseControlFragment {
             shutDownTemp.setItems(list);
             shutDownTemp.setProgress(MSMThermal.getShutdownTemp() - 40);
             shutDownTemp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMThermal.setShutdownTemp(position + 40, getActivity());

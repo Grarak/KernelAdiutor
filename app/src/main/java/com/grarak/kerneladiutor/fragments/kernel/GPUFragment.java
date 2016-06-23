@@ -195,6 +195,10 @@ public class GPUFragment extends BaseControlFragment {
             laziness.setProgress(SimpleGPU.getSimpleGpuLaziness());
             laziness.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     SimpleGPU.setSimpleGpuLaziness(position, getActivity());
                 }
@@ -210,6 +214,10 @@ public class GPUFragment extends BaseControlFragment {
             rampThreshold.setMax(10);
             rampThreshold.setProgress(SimpleGPU.getSimpleGpuRampThreshold());
             rampThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     SimpleGPU.setSimpleGpuRampThreshold(position, getActivity());
@@ -253,6 +261,10 @@ public class GPUFragment extends BaseControlFragment {
             downDiff.setProgress(AdrenoIdler.getAdrenoIdlerDownDiff());
             downDiff.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AdrenoIdler.setAdrenoIdlerDownDiff(position, getActivity());
                 }
@@ -268,6 +280,10 @@ public class GPUFragment extends BaseControlFragment {
             idleWait.setMax(99);
             idleWait.setProgress(AdrenoIdler.getAdrenoIdlerIdleWait());
             idleWait.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AdrenoIdler.setAdrenoIdlerIdleWait(position, getActivity());
@@ -285,6 +301,10 @@ public class GPUFragment extends BaseControlFragment {
             idleWorkload.setMin(1);
             idleWorkload.setProgress(AdrenoIdler.getAdrenoIdlerIdleWorkload() - 1);
             idleWorkload.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AdrenoIdler.setAdrenoIdlerIdleWorkload(position + 1, getActivity());

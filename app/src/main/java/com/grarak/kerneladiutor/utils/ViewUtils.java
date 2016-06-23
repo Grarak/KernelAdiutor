@@ -19,7 +19,7 @@
  */
 package com.grarak.kerneladiutor.utils;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
@@ -39,31 +39,47 @@ public class ViewUtils {
         void onClick(String text);
     }
 
-    public static AlertDialog.Builder dialogEditText(String text, DialogInterface.OnClickListener negativeListener,
+    public static AlertDialog.Builder dialogEditText(String text, final DialogInterface.OnClickListener negativeListener,
                                                      final OnDialogEditTextListener onDialogEditTextListener,
-                                                     Activity activity) {
-        LinearLayout layout = new LinearLayout(activity);
-        int padding = (int) activity.getResources().getDimension(R.dimen.dialog_edittext_padding);
+                                                     Context context) {
+        return dialogEditText(text, negativeListener, onDialogEditTextListener, -1, context);
+    }
+
+    public static AlertDialog.Builder dialogEditText(String text, final DialogInterface.OnClickListener negativeListener,
+                                                     final OnDialogEditTextListener onDialogEditTextListener, int inputType,
+                                                     Context context) {
+        LinearLayout layout = new LinearLayout(context);
+        int padding = (int) context.getResources().getDimension(R.dimen.dialog_edittext_padding);
         layout.setPadding(padding, padding, padding, padding);
 
-        final EditText editText = new EditText(activity);
+        final EditText editText = new EditText(context);
         editText.setGravity(Gravity.CENTER);
         editText.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         editText.setText(text);
+        if (inputType >= 0) {
+            editText.setInputType(inputType);
+        }
 
         layout.addView(editText);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(layout);
         if (negativeListener != null) {
-            builder.setNegativeButton(activity.getString(R.string.cancel), negativeListener);
+            builder.setNegativeButton(context.getString(R.string.cancel), negativeListener);
         }
         if (onDialogEditTextListener != null) {
-            builder.setPositiveButton(activity.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     onDialogEditTextListener.onClick(editText.getText().toString());
+                }
+            }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (negativeListener != null) {
+                        negativeListener.onClick(dialog, 0);
+                    }
                 }
             });
         }
@@ -72,14 +88,14 @@ public class ViewUtils {
 
     public static AlertDialog.Builder dialogBuilder(CharSequence message, DialogInterface.OnClickListener negativeListener,
                                                     DialogInterface.OnClickListener positiveListener,
-                                                    DialogInterface.OnDismissListener dismissListener, Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                                                    DialogInterface.OnDismissListener dismissListener, Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
         if (negativeListener != null) {
-            builder.setNegativeButton(activity.getString(R.string.cancel), negativeListener);
+            builder.setNegativeButton(context.getString(R.string.cancel), negativeListener);
         }
         if (positiveListener != null) {
-            builder.setPositiveButton(activity.getString(R.string.ok), positiveListener);
+            builder.setPositiveButton(context.getString(R.string.ok), positiveListener);
         }
         if (dismissListener != null) {
             builder.setOnDismissListener(dismissListener);

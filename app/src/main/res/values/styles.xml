@@ -17,28 +17,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Widget">
-
-    </style>
-
-    <style name="Widget.ProgressBar">
-        <item name="android:indeterminateOnly">true</item>
-        <item name="android:indeterminateBehavior">repeat</item>
-        <item name="android:indeterminateDuration">3500</item>
-        <item name="android:minWidth">48dip</item>
-        <item name="android:maxWidth">48dip</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:maxHeight">48dip</item>
-    </style>
-
-    <style name="Widget.ProgressBar.Vertical">
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:progressDrawable">@drawable/vertical_progress_bar</item>
-        <item name="android:indeterminateDrawable">
-            @android:drawable/progress_indeterminate_horizontal
-        </item>
-        <item name="android:minWidth">1dip</item>
-        <item name="android:maxWidth">12dip</item>
-    </style>
-
 </resources>

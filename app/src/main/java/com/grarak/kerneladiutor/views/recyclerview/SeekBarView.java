@@ -36,6 +36,8 @@ public class SeekBarView extends RecyclerViewItem {
 
     public interface OnSeekBarListener {
         void onStop(SeekBarView seekBarView, int position, String value);
+
+        void onMove(SeekBarView seekBarView, int position, String value);
     }
 
     private TextView mTitle;
@@ -52,6 +54,7 @@ public class SeekBarView extends RecyclerViewItem {
     private String mUnit;
     private List<String> mItems;
     private int mOffset = 1;
+    private boolean mEnabled = true;
 
     private OnSeekBarListener mOnSeekBarListener;
 
@@ -94,6 +97,9 @@ public class SeekBarView extends RecyclerViewItem {
                     String text = mItems.get(value);
                     if (mUnit != null) text += mUnit;
                     mValue.setText(text);
+                    if (mOnSeekBarListener != null) {
+                        mOnSeekBarListener.onMove(SeekBarView.this, mProgress, mItems.get(mProgress));
+                    }
                 }
             }
 
@@ -159,6 +165,15 @@ public class SeekBarView extends RecyclerViewItem {
         refresh();
     }
 
+    public void setEnabled(boolean enable) {
+        mEnabled = enable;
+        refresh();
+    }
+
+    public int getProgress() {
+        return mProgress;
+    }
+
     public void setOnSeekBarListener(OnSeekBarListener onSeekBarListener) {
         mOnSeekBarListener = onSeekBarListener;
     }
@@ -186,6 +201,7 @@ public class SeekBarView extends RecyclerViewItem {
         if (mSeekBar != null) {
             mSeekBar.setMax(mItems.size() - 1);
             mSeekBar.setMin(0);
+            mSeekBar.setEnabled(mEnabled);
             if (mValue != null) {
                 try {
                     String text = mItems.get(mProgress);

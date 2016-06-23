@@ -422,6 +422,10 @@ public class CPUFragment extends BaseControlFragment {
             ms.setProgress(CPUBoost.getCpuBootMs() / 10);
             ms.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     CPUBoost.setCpuBoostMs(position * 10, getActivity());
                 }
@@ -460,6 +464,10 @@ public class CPUFragment extends BaseControlFragment {
             inputMs.setOffset(10);
             inputMs.setProgress(CPUBoost.getCpuBootInputMs() / 10);
             inputMs.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     CPUBoost.setCpuBoostInputMs(position * 10, getActivity());

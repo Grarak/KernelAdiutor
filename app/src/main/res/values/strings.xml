@@ -50,6 +50,7 @@
     <string name="cpu_hotplug">CPU Hotplug</string>
     <string name="thermal">Thermal</string>
     <string name="gpu">GPU</string>
+    <string name="screen">Screen</string>
     <string name="battery">Battery</string>
     <string name="settings">Settings</string>
 
@@ -335,6 +336,62 @@
     <string name="idle_wait_summary">Number of events to wait before ramping down the frequency. The idlewait\'th events before current one must be all idle before Adreno idler ramps down the frequency. This implementation is to prevent micro-lags on scrolling or playing games. Adreno idler will more actively try to ramp down the frequency if this is set to a lower value.</string>
     <string name="workload">Workload</string>
     <string name="workload_summary">Adreno idler will more actively try to ramp down the frequency if this is set to a higher value.</string>
+
+    <!-- Screen -->
+    <string name="screen_color">Screen Color</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="min_rgb">Minimum RGB Value</string>
+    <string name="invert_screen">Invert Screen</string>
+    <string name="saturation_intensity">Saturation Intensity</string>
+    <string name="grayscale_mode">Grayscale Mode</string>
+    <string name="screen_hue">Screen Hue</string>
+    <string name="screen_hue_summary">You might get problems with MSM8x26 SoC when setting a high value.</string>
+    <string name="screen_value">Screen Value</string>
+    <string name="screen_contrast">Screen Contrast</string>
+    <string name="high_brightness_mode">High Brightness Mode</string>
+    <string name="gamma">Gamma</string>
+    <string name="red_greys">Red Greys</string>
+    <string name="red_mids">Red Mids</string>
+    <string name="red_blacks">Red Blacks</string>
+    <string name="red_whites">Red Whites</string>
+    <string name="green_greys">Green Greys</string>
+    <string name="green_mids">Green Mids</string>
+    <string name="green_blacks">Green Blacks</string>
+    <string name="green_whites">Green Whites</string>
+    <string name="blue_greys">Blue Greys</string>
+    <string name="blue_mids">Blue Mids</string>
+    <string name="blue_blacks">Blue Blacks</string>
+    <string name="blue_whites">Blue Whites</string>
+    <string name="contrast">Contrast</string>
+    <string name="brightness">Brightness</string>
+    <string name="red_positive">Red Positive</string>
+    <string name="red_negative">Red Negative</string>
+    <string name="green_positive">Green Positive</string>
+    <string name="green_negative">Green Negative</string>
+    <string name="blue_positive">Blue Positive</string>
+    <string name="blue_negative">Blue Negative</string>
+    <string name="white_point">White Point</string>
+    <string name="lcd_backlight">LCD Backlight</string>
+    <string name="gamma_profiles_summary">After selecting a profile, please turn your screen off and on.</string>
+    <string name="brightness_mode">Use exponential backlight mode instead of linear mode.</string>
+    <string name="min_brightness">Minimum Brightness</string>
+    <string name="min_brightness_summary">Allows you to decrease the LCD screen brightness lower than it\'s possible on stock.</string>
+    <string name="max_brightness">Maximum Brightness</string>
+    <string name="max_brightness_summary">Allows you to increase the LCD screen brightness higher than it\'s possible on stock.</string>
+    <string name="backlight_dimmer">Backlight Dimmer</string>
+    <string name="threshold">Threshold Value</string>
+    <string name="offset">Offset</string>
+    <string name="negative_toggle">Negative Toggle</string>
+    <string name="negative_toggle_summary">Enable inverting the screen colors by quickly pressing MENU button 4 times.</string>
+    <string name="mdnie_global_controls">mDNIe global controls</string>
+    <string name="register_hook">Register Hook</string>
+    <string name="register_hook_summary">Register intercept acts like a hook and will enable catching scenario settings and modifying them through delta controls. If a scenario does not have a setting (register) in its base sequence, then it cannot be modified by the hook.</string>
+    <string name="master_sequence">Master Sequence</string>
+    <string name="master_sequence_summary">Enabling the master sequence will disable and ignore Samsung\'s profiles and scenarios, the ROM controls will be disabled.</string>
+    <string name="glove_mode">Glove Mode</string>
+    <string name="glove_mode_summary">Enabling this will let you use your phone even while wearing gloves.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

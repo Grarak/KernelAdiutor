@@ -32,16 +32,12 @@ public abstract class RecyclerViewItem {
     private boolean mFullspan;
     private View mView;
 
-    public interface OnViewChangeListener {
-        void onViewChanged();
-    }
-
     public interface OnItemClickListener {
         void onClick(RecyclerViewItem item);
     }
 
-    private OnViewChangeListener mOnViewChangeListener;
     private OnItemClickListener mOnItemClickListener;
+    private RecyclerViewAdapter.OnViewChangedListener mOnViewChangedListener;
 
     public void onCreateView(View view) {
         mView = view;
@@ -54,27 +50,26 @@ public abstract class RecyclerViewItem {
     public void onCreateHolder(ViewGroup parent) {
     }
 
-    public void setOnViewChangeListener(OnViewChangeListener onViewChangeListener) {
-        mOnViewChangeListener = onViewChangeListener;
-    }
-
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
-
     }
 
-    protected void viewChanged() {
-        if (mOnViewChangeListener != null) {
-            mOnViewChangeListener.onViewChanged();
-        }
-    }
-
-    protected OnViewChangeListener getOnViewChangeListener() {
-        return mOnViewChangeListener;
+    public void setOnViewChangeListener(RecyclerViewAdapter.OnViewChangedListener onViewChangeListener) {
+        mOnViewChangedListener = onViewChangeListener;
     }
 
     protected OnItemClickListener getOnItemClickListener() {
         return mOnItemClickListener;
+    }
+
+    protected RecyclerViewAdapter.OnViewChangedListener getOnViewChangedListener() {
+        return mOnViewChangedListener;
+    }
+
+    protected void viewChanged() {
+        if (mOnViewChangedListener != null) {
+            mOnViewChangedListener.viewChanged();
+        }
     }
 
     public void setFullSpan(boolean fullspan) {

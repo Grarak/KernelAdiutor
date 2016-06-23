@@ -19,43 +19,41 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
-import android.view.LayoutInflater;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.grarak.kerneladiutor.R;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by willi on 01.05.16.
  */
-public class SelectView extends Expander {
+public class SelectView extends ValueView {
 
     public interface OnItemSelected {
         void onItemSelected(SelectView selectView, int position, String item);
     }
 
-    private LinearLayout mLayout;
-    private List<String> mItems;
-    private List<String> mItemsTmp;
+    private View mView;
     private OnItemSelected mOnItemSelected;
+    private List<String> mItems = new ArrayList<>();
 
-    public SelectView() {
-        super(R.dimen.rv_select_view_selector_height, R.layout.rv_select_view);
+    @Override
+    public void onCreateView(View view) {
+        mView = view;
+        super.onCreateView(view);
     }
 
-    public void setItem(int index) {
-        if (mItems != null) {
-            setItem(mItems.get(index));
-        } else if (mItemsTmp != null) {
-            setItem(mItemsTmp.get(index));
+    public void setItem(String item) {
+        setValue(item);
+    }
+
+    public void setItem(int position) {
+        if (position >= 0 && position < mItems.size()) {
+            setValue(mItems.get(position));
         }
-    }
-
-    public void setItem(CharSequence text) {
-        setValue(text);
     }
 
     public void setItems(List<String> items) {
@@ -67,36 +65,36 @@ public class SelectView extends Expander {
         mOnItemSelected = onItemSelected;
     }
 
-    @Override
-    protected void onCreateExpandView(View view) {
-        mLayout = (LinearLayout) view.findViewById(R.id.scrolllayout);
+    private void showDialog(Context context) {
+        String[] items = mItems.toArray(new String[mItems.size()]);
 
-        refresh();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setItem(which);
+                if (mOnItemSelected != null) {
+                    mOnItemSelected.onItemSelected(SelectView.this, which, mItems.get(which));
+                }
+            }
+        });
+        if (getTitle() != null) {
+            dialog.setTitle(getTitle());
+        }
+        dialog.show();
     }
 
     @Override
     protected void refresh() {
         super.refresh();
-        if (mLayout != null && mItems != null) {
-            mLayout.removeAllViews();
-            for (int i = 0; i < mItems.size(); i++) {
-                final int position = i;
-                View view = LayoutInflater.from(mLayout.getContext()).inflate(R.layout.rv_select_view_child,
-                        mLayout, false);
-                ((TextView) view.findViewById(R.id.text)).setText(mItems.get(i));
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mOnItemSelected != null) {
-                            mOnItemSelected.onItemSelected(SelectView.this, position, mItemsTmp.get(position));
-                        }
-                        setItem(position);
-                    }
-                });
-                mLayout.addView(view);
-            }
-            mItemsTmp = mItems;
-            mItems = null;
+
+        if (mView != null && getValue() != null) {
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialog(v.getContext());
+                }
+            });
         }
     }
 }

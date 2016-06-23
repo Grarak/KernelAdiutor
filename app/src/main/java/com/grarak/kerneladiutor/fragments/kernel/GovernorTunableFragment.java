@@ -91,7 +91,7 @@ public class GovernorTunableFragment extends BaseControlFragment {
                             for (int i = 0; i < values.length; i++) {
                                 values[i] = String.valueOf(freqs.get(i));
                             }
-                            showArrayDialog(values, mPath + "/" + file);
+                            showArrayDialog(values, mPath + "/" + file, file);
                         } else {
                             ViewUtils.dialogEditText(value, new DialogInterface.OnClickListener() {
                                 @Override
@@ -122,7 +122,7 @@ public class GovernorTunableFragment extends BaseControlFragment {
         }
     }
 
-    private void showArrayDialog(final String[] values, final String path) {
+    private void showArrayDialog(final String[] values, final String path, String name) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setItems(values, new DialogInterface.OnClickListener() {
             @Override
@@ -135,7 +135,7 @@ public class GovernorTunableFragment extends BaseControlFragment {
                     }
                 }, 200);
             }
-        }).show();
+        }).setTitle(name).show();
     }
 
 }

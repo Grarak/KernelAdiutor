@@ -6,31 +6,36 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical|end"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingBottom="16dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingTop="16dp">
 
         <TextView
             android:id="@+id/frequency"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="13sp" />
 
         <TextView
             android:id="@+id/percentage"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/duration"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
             android:textSize="12sp" />
@@ -38,16 +43,20 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:padding="16dp">
+        android:paddingEnd="32dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="32dp"
+        android:paddingStart="16dp">
 
         <ProgressBar
             android:id="@+id/progress"
-            style="@style/Widget.ProgressBar.Vertical"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
             android:max="100" />
 
     </LinearLayout>

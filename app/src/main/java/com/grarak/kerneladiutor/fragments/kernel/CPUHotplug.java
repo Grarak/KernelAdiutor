@@ -223,6 +223,10 @@ public class CPUHotplug extends BaseControlFragment {
             hysteresis.setProgress(IntelliPlug.getIntelliPlugHysteresis());
             hysteresis.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugHysteresis(position, getActivity());
                 }
@@ -238,6 +242,10 @@ public class CPUHotplug extends BaseControlFragment {
             threshold.setMax(1000);
             threshold.setProgress(IntelliPlug.getIntelliPlugThresold());
             threshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugThresold(position, getActivity());
@@ -306,6 +314,10 @@ public class CPUHotplug extends BaseControlFragment {
             cpusBoosted.setProgress(IntelliPlug.getIntelliPlugCpusBoosted() - 1);
             cpusBoosted.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugCpusBoosted(position + 1, getActivity());
                 }
@@ -322,6 +334,10 @@ public class CPUHotplug extends BaseControlFragment {
             minCpusOnline.setMin(1);
             minCpusOnline.setProgress(IntelliPlug.getIntelliPlugMinCpusOnline() - 1);
             minCpusOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugMinCpusOnline(position + 1, getActivity());
@@ -340,6 +356,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCpusOnline.setProgress(IntelliPlug.getIntelliPlugMaxCpusOnline() - 1);
             maxCpusOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugMaxCpusOnline(position + 1, getActivity());
                 }
@@ -356,6 +376,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCpusOnlineSusp.setMin(1);
             maxCpusOnlineSusp.setProgress(IntelliPlug.getIntelliPlugMaxCpusOnlineSusp() - 1);
             maxCpusOnlineSusp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugMaxCpusOnlineSusp(position + 1, getActivity());
@@ -374,6 +398,10 @@ public class CPUHotplug extends BaseControlFragment {
             suspendDeferTime.setProgress(IntelliPlug.getIntelliPlugSuspendDeferTime() / 10);
             suspendDeferTime.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugSuspendDeferTime(position * 10, getActivity());
                 }
@@ -389,6 +417,10 @@ public class CPUHotplug extends BaseControlFragment {
             deferSampling.setMax(1000);
             deferSampling.setProgress(IntelliPlug.getIntelliPlugDeferSampling());
             deferSampling.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugDeferSampling(position, getActivity());
@@ -408,6 +440,10 @@ public class CPUHotplug extends BaseControlFragment {
             boostLockDuration.setProgress(IntelliPlug.getIntelliPlugBoostLockDuration() - 1);
             boostLockDuration.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugBoostLockDuration(position + 1, getActivity());
                 }
@@ -426,6 +462,10 @@ public class CPUHotplug extends BaseControlFragment {
             downLockDuration.setProgress(IntelliPlug.getIntelliPlugDownLockDuration() - 1);
             downLockDuration.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugDownLockDuration(position + 1, getActivity());
                 }
@@ -440,6 +480,10 @@ public class CPUHotplug extends BaseControlFragment {
             fShift.setMax(4);
             fShift.setProgress(IntelliPlug.getIntelliPlugFShift());
             fShift.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     IntelliPlug.setIntelliPlugFShift(position, getActivity());
@@ -500,6 +544,10 @@ public class CPUHotplug extends BaseControlFragment {
             minOnline.setProgress(BluPlug.getBluPlugMinOnline() - 1);
             minOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     BluPlug.setBluPlugMinOnline(position + 1, getActivity());
                 }
@@ -517,6 +565,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxOnline.setProgress(BluPlug.getBluPlugMaxOnline() - 1);
             maxOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     BluPlug.setBluPlugMaxOnline(position + 1, getActivity());
                 }
@@ -533,6 +585,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCoresScreenOff.setMin(1);
             maxCoresScreenOff.setProgress(BluPlug.getBluPlugMaxCoresScreenOff() - 1);
             maxCoresScreenOff.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     BluPlug.setBluPlugMaxCoresScreenOff(position + 1, getActivity());
@@ -554,6 +610,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxFreqScreenOff.setProgress(BluPlug.getBluPlugMaxFreqScreenOff());
             maxFreqScreenOff.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     BluPlug.setBluPlugMaxFreqScreenOff(position, getActivity());
                 }
@@ -570,6 +630,10 @@ public class CPUHotplug extends BaseControlFragment {
             upThreshold.setMax(100);
             upThreshold.setProgress(BluPlug.getBluPlugUpThreshold());
             upThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     BluPlug.setBluPlugUpThreshold(position, getActivity());
@@ -592,6 +656,10 @@ public class CPUHotplug extends BaseControlFragment {
             upTimerCnt.setProgress(BluPlug.getBluPlugUpTimerCnt());
             upTimerCnt.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     BluPlug.setBluPlugUpTimerCnt(position, getActivity());
                 }
@@ -612,6 +680,10 @@ public class CPUHotplug extends BaseControlFragment {
             downTimerCnt.setItems(list);
             downTimerCnt.setProgress(BluPlug.getBluPlugDownTimerCnt());
             downTimerCnt.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     BluPlug.setBluPlugDownTimerCnt(position, getActivity());
@@ -672,6 +744,10 @@ public class CPUHotplug extends BaseControlFragment {
             minCpusOnline.setProgress(MSMHotplug.getMsmHotplugMinCpusOnline() - 1);
             minCpusOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugMinCpusOnline(position + 1, getActivity());
                 }
@@ -688,6 +764,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCpusOnline.setMin(1);
             maxCpusOnline.setProgress(MSMHotplug.getMsmHotplugMaxCpusOnline() - 1);
             maxCpusOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugMaxCpusOnline(position + 1, getActivity());
@@ -706,6 +786,10 @@ public class CPUHotplug extends BaseControlFragment {
             cpusBoosted.setProgress(MSMHotplug.getMsmHotplugCpusBoosted());
             cpusBoosted.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugCpusBoosted(position, getActivity());
                 }
@@ -722,6 +806,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCpusOnlineSusp.setMin(1);
             maxCpusOnlineSusp.setProgress(MSMHotplug.getMsmHotplugMaxCpusOnlineSusp() - 1);
             maxCpusOnlineSusp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugMaxCpusOnlineSusp(position + 1, getActivity());
@@ -740,6 +828,10 @@ public class CPUHotplug extends BaseControlFragment {
             boostLockDuration.setProgress(MSMHotplug.getMsmHotplugBoostLockDuration() - 1);
             boostLockDuration.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugBoostLockDuration(position + 1, getActivity());
                 }
@@ -756,6 +848,10 @@ public class CPUHotplug extends BaseControlFragment {
             downLockDuration.setMin(1);
             downLockDuration.setProgress(MSMHotplug.getMsmHotplugDownLockDuration() - 1);
             downLockDuration.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugDownLockDuration(position + 1, getActivity());
@@ -774,6 +870,10 @@ public class CPUHotplug extends BaseControlFragment {
             historySize.setProgress(MSMHotplug.getMsmHotplugHistorySize() - 1);
             historySize.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugHistorySize(position + 1, getActivity());
                 }
@@ -790,6 +890,10 @@ public class CPUHotplug extends BaseControlFragment {
             updateRate.setProgress(MSMHotplug.getMsmHotplugUpdateRate());
             updateRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugUpdateRate(position, getActivity());
                 }
@@ -805,6 +909,10 @@ public class CPUHotplug extends BaseControlFragment {
             fastLaneLoad.setMax(400);
             fastLaneLoad.setProgress(MSMHotplug.getMsmHotplugFastLaneLoad());
             fastLaneLoad.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugFastLaneLoad(position, getActivity());
@@ -836,6 +944,10 @@ public class CPUHotplug extends BaseControlFragment {
             offlineLoad.setSummary(getString(R.string.offline_load_summary));
             offlineLoad.setProgress(MSMHotplug.getMsmHotplugOfflineLoad());
             offlineLoad.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugOfflineLoad(position, getActivity());
@@ -869,6 +981,10 @@ public class CPUHotplug extends BaseControlFragment {
             suspendMaxCpus.setProgress(MSMHotplug.getMsmHotplugSuspendMaxCpus());
             suspendMaxCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugSuspendMaxCpus(position, getActivity());
                 }
@@ -901,6 +1017,10 @@ public class CPUHotplug extends BaseControlFragment {
             suspendDeferTime.setOffset(10);
             suspendDeferTime.setProgress(MSMHotplug.getMsmHotplugSuspendDeferTime() / 10);
             suspendDeferTime.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MSMHotplug.setMsmHotplugSuspendDeferTime(position * 10, getActivity());
@@ -946,6 +1066,10 @@ public class CPUHotplug extends BaseControlFragment {
             coresOnTouch.setProgress(MakoHotplug.getMakoHotplugCoresOnTouch() - 1);
             coresOnTouch.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugCoresOnTouch(position + 1, getActivity());
                 }
@@ -978,6 +1102,10 @@ public class CPUHotplug extends BaseControlFragment {
             firstLevel.setProgress(MakoHotplug.getMakoHotplugFirstLevel());
             firstLevel.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugFirstLevel(position, getActivity());
                 }
@@ -991,6 +1119,10 @@ public class CPUHotplug extends BaseControlFragment {
             highLoadCounter.setTitle(getString(R.string.high_load_counter));
             highLoadCounter.setProgress(MakoHotplug.getMakoHotplugHighLoadCounter());
             highLoadCounter.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugHighLoadCounter(position, getActivity());
@@ -1008,6 +1140,10 @@ public class CPUHotplug extends BaseControlFragment {
             loadThreshold.setProgress(MakoHotplug.getMakoHotplugLoadThreshold());
             loadThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugLoadThreshold(position, getActivity());
                 }
@@ -1022,6 +1158,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxLoadCounter.setProgress(MakoHotplug.getMakoHotplugMaxLoadCounter());
             maxLoadCounter.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugMaxLoadCounter(position, getActivity());
                 }
@@ -1035,6 +1175,10 @@ public class CPUHotplug extends BaseControlFragment {
             minTimeCpuOnline.setTitle(getString(R.string.min_time_cpu_online));
             minTimeCpuOnline.setProgress(MakoHotplug.getMakoHotplugMinTimeCpuOnline());
             minTimeCpuOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugMinTimeCpuOnline(position, getActivity());
@@ -1053,6 +1197,10 @@ public class CPUHotplug extends BaseControlFragment {
             minCoresOnline.setProgress(MakoHotplug.getMakoHotplugMinCoresOnline() - 1);
             minCoresOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugMinCoresOnline(position + 1, getActivity());
                 }
@@ -1066,6 +1214,10 @@ public class CPUHotplug extends BaseControlFragment {
             timer.setTitle(getString(R.string.timer));
             timer.setProgress(MakoHotplug.getMakoHotplugTimer());
             timer.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MakoHotplug.setMakoHotplugTimer(position, getActivity());
@@ -1142,6 +1294,10 @@ public class CPUHotplug extends BaseControlFragment {
             minCpus.setProgress(MBHotplug.getMBHotplugMinCpus() - 1);
             minCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugMinCpus(position + 1, getActivity());
                 }
@@ -1159,6 +1315,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCpus.setProgress(MBHotplug.getMBHotplugMaxCpus() - 1);
             maxCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugMaxCpus(position + 1, getActivity());
                 }
@@ -1175,6 +1335,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCpusOnlineSusp.setMin(1);
             maxCpusOnlineSusp.setProgress(MBHotplug.getMBHotplugMaxCpusOnlineSusp() - 1);
             maxCpusOnlineSusp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugMaxCpusOnlineSusp(position + 1, getActivity());
@@ -1225,6 +1389,10 @@ public class CPUHotplug extends BaseControlFragment {
             boostTime.setProgress(MBHotplug.getMBHotplugBoostTime() / 100);
             boostTime.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugBoostTime(position * 100, getActivity());
                 }
@@ -1241,6 +1409,10 @@ public class CPUHotplug extends BaseControlFragment {
             cpusBoosted.setMin(1);
             cpusBoosted.setProgress(MBHotplug.getMBHotplugCpusBoosted());
             cpusBoosted.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugCpusBoosted(position, getActivity());
@@ -1280,6 +1452,10 @@ public class CPUHotplug extends BaseControlFragment {
             startDelay.setProgress(MBHotplug.getMBHotplugStartDelay() / 1000);
             startDelay.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugStartDelay(position * 1000, getActivity());
                 }
@@ -1296,6 +1472,10 @@ public class CPUHotplug extends BaseControlFragment {
             delay.setMax(200);
             delay.setProgress(MBHotplug.getMBHotplugDelay());
             delay.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugDelay(position, getActivity());
@@ -1314,6 +1494,10 @@ public class CPUHotplug extends BaseControlFragment {
             pause.setOffset(1000);
             pause.setProgress(MBHotplug.getMBHotplugPause() / 1000);
             pause.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     MBHotplug.setMBHotplugPause(position * 1000, getActivity());
@@ -1373,6 +1557,10 @@ public class CPUHotplug extends BaseControlFragment {
             samplingRate.setProgress(AlucardHotplug.getAlucardHotplugSamplingRate() - 1);
             samplingRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AlucardHotplug.setAlucardHotplugSamplingRate(position + 1, getActivity());
                 }
@@ -1405,6 +1593,10 @@ public class CPUHotplug extends BaseControlFragment {
             minCpusOnline.setProgress(AlucardHotplug.getAlucardHotplugMinCpusOnline() - 1);
             minCpusOnline.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AlucardHotplug.setAlucardHotplugMinCpusOnline(position + 1, getActivity());
                 }
@@ -1421,6 +1613,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCoresLimit.setMin(1);
             maxCoresLimit.setProgress(AlucardHotplug.getAlucardHotplugMaxCoresLimit() - 1);
             maxCoresLimit.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AlucardHotplug.setAlucardHotplugMaxCoresLimit(position + 1, getActivity());
@@ -1439,6 +1635,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCoresLimitSleep.setProgress(AlucardHotplug.getAlucardHotplugMaxCoresLimitSleep() - 1);
             maxCoresLimitSleep.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AlucardHotplug.setAlucardHotplugMaxCoresLimitSleep(position + 1, getActivity());
                 }
@@ -1455,6 +1655,10 @@ public class CPUHotplug extends BaseControlFragment {
             cpuDownRate.setProgress(AlucardHotplug.getAlucardHotplugCpuDownRate() - 1);
             cpuDownRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AlucardHotplug.setAlucardHotplugCpuDownRate(position + 1, getActivity());
                 }
@@ -1470,6 +1674,10 @@ public class CPUHotplug extends BaseControlFragment {
             cpuUpRate.setMin(1);
             cpuUpRate.setProgress(AlucardHotplug.getAlucardHotplugCpuUpRate() - 1);
             cpuUpRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AlucardHotplug.setAlucardHotplugCpuUpRate(position + 1, getActivity());
@@ -1515,6 +1723,10 @@ public class CPUHotplug extends BaseControlFragment {
             suspendCpus.setProgress(ThunderPlug.getThunderPlugSuspendCpus() - 1);
             suspendCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     ThunderPlug.setThunderPlugSuspendCpus(position + 1, getActivity());
                 }
@@ -1548,6 +1760,10 @@ public class CPUHotplug extends BaseControlFragment {
             samplingRate.setProgress(ThunderPlug.getThunderPlugSamplingRate() / 50);
             samplingRate.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     ThunderPlug.setThunderPlugSamplingRate(position * 50, getActivity());
                 }
@@ -1563,6 +1779,10 @@ public class CPUHotplug extends BaseControlFragment {
             loadThreadshold.setMin(11);
             loadThreadshold.setProgress(ThunderPlug.getThunderPlugLoadThreshold() - 11);
             loadThreadshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     ThunderPlug.setThunderPlugLoadThreshold(position + 11, getActivity());
@@ -1624,6 +1844,10 @@ public class CPUHotplug extends BaseControlFragment {
             wakeWaitTime.setProgress(ZenDecision.getZenDecisionWakeWaitTime() / 1000);
             wakeWaitTime.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     ZenDecision.setZenDecisionWakeWaitTime(position * 1000, getActivity());
                 }
@@ -1640,6 +1864,10 @@ public class CPUHotplug extends BaseControlFragment {
             batThresholdIgnore.setMin(1);
             batThresholdIgnore.setProgress(ZenDecision.getZenDecisionBatThresholdIgnore());
             batThresholdIgnore.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     ZenDecision.setZenDecisionBatThresholdIgnore(position, getActivity());
@@ -1683,6 +1911,10 @@ public class CPUHotplug extends BaseControlFragment {
             cpuFreqDown.setProgress(AutoSmp.getAutoSmpCpufreqDown());
             cpuFreqDown.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AutoSmp.setAutoSmpCpufreqDown(position, getActivity());
                 }
@@ -1697,6 +1929,10 @@ public class CPUHotplug extends BaseControlFragment {
             cpuFreqUp.setUnit("%");
             cpuFreqUp.setProgress(AutoSmp.getAutoSmpCpufreqUp());
             cpuFreqUp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AutoSmp.setAutoSmpCpufreqUp(position, getActivity());
@@ -1714,6 +1950,10 @@ public class CPUHotplug extends BaseControlFragment {
             cycleDown.setProgress(AutoSmp.getAutoSmpCycleDown());
             cycleDown.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AutoSmp.setAutoSmpCycleDown(position, getActivity());
                 }
@@ -1729,6 +1969,10 @@ public class CPUHotplug extends BaseControlFragment {
             cycleUp.setMax(CPUFreq.getCpuCount());
             cycleUp.setProgress(AutoSmp.getAutoSmpCycleUp());
             cycleUp.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AutoSmp.setAutoSmpCycleUp(position, getActivity());
@@ -1747,6 +1991,10 @@ public class CPUHotplug extends BaseControlFragment {
             delay.setProgress(AutoSmp.getAutoSmpDelay());
             delay.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AutoSmp.setAutoSmpDelay(position, getActivity());
                 }
@@ -1764,6 +2012,10 @@ public class CPUHotplug extends BaseControlFragment {
             maxCpus.setProgress(AutoSmp.getAutoSmpMaxCpus() - 1);
             maxCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AutoSmp.setAutoSmpMaxCpus(position + 1, getActivity());
                 }
@@ -1780,6 +2032,10 @@ public class CPUHotplug extends BaseControlFragment {
             minCpus.setMin(1);
             minCpus.setProgress(AutoSmp.getAutoSmpMinCpus() - 1);
             minCpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     AutoSmp.setAutoSmpMinCpus(position + 1, getActivity());
@@ -1822,6 +2078,10 @@ public class CPUHotplug extends BaseControlFragment {
             busyDownThreshold.setProgress(CoreCtl.getBusyDownThreshold());
             busyDownThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     CoreCtl.setBusyDownThreshold(position, getActivity());
                 }
@@ -1836,6 +2096,10 @@ public class CPUHotplug extends BaseControlFragment {
             busyUpThreshold.setSummary(getString(R.string.busy_up_threshold_summary));
             busyUpThreshold.setProgress(CoreCtl.getBusyUpThreshold());
             busyUpThreshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     CoreCtl.setBusyUpThreshold(position, getActivity());
@@ -1854,6 +2118,10 @@ public class CPUHotplug extends BaseControlFragment {
             offlineDelayMs.setOffset(100);
             offlineDelayMs.setProgress(CoreCtl.getOfflineDelayMs() / 100);
             offlineDelayMs.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
                     CoreCtl.setOfflineDelayMs(position * 100, getActivity());
