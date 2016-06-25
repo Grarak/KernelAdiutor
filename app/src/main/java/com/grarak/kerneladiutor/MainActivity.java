@@ -44,6 +44,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
 import com.grarak.kerneladiutor.utils.kernel.screen.Screen;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
+import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.io.File;
@@ -129,6 +130,7 @@ public class MainActivity extends BaseActivity {
             Temperature.supported(MainActivity.this);
             Thermal.supported();
             Voltage.supported();
+            Wake.supported();
         }
 
         @Override

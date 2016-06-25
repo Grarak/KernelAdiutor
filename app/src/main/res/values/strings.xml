@@ -32,6 +32,7 @@
     <string name="mb">MB</string>
     <string name="ms">ms</string>
     <string name="mv">mV</string>
+    <string name="min">min</string>
 
     <!-- Special signs -->
     <string name="minus" translatable="false">-</string>
@@ -51,6 +52,7 @@
     <string name="thermal">Thermal</string>
     <string name="gpu">GPU</string>
     <string name="screen">Screen</string>
+    <string name="wake">Wake</string>
     <string name="battery">Battery</string>
     <string name="settings">Settings</string>
 
@@ -392,6 +394,55 @@
     <string name="master_sequence_summary">Enabling the master sequence will disable and ignore Samsung\'s profiles and scenarios, the ROM controls will be disabled.</string>
     <string name="glove_mode">Glove Mode</string>
     <string name="glove_mode_summary">Enabling this will let you use your phone even while wearing gloves.</string>
+
+    <!-- Wake -->
+    <string name="dt2w">DoubleTap2Wake</string>
+    <string name="dt2w_summary">Wake up your device by double tapping the screen.</string>
+    <string name="center">Center</string>
+    <string name="full">Full</string>
+    <string name="bottom_half">Bottom half</string>
+    <string name="top_half">Top half</string>
+    <string name="half">Half</string>
+    <string name="s2w">Sweep2Wake</string>
+    <string name="s2w_summary">Wake up your device by swiping on the screen.</string>
+    <string name="s2w_s2s">Sweep2Wake + Sweep2Sleep</string>
+    <string name="s2s">Sweep2Sleep</string>
+    <string name="s2w_right">Sweep2Wake Right</string>
+    <string name="s2w_left">Sweep2Wake Left</string>
+    <string name="s2w_up">Sweep2Wake Up</string>
+    <string name="s2w_down">Sweep2Wake Down</string>
+    <string name="s2w_any">Sweep2Wake Any</string>
+    <string name="lenient">Sweep2Wake Leniency</string>
+    <string name="lenient_summary">Only require 1st and 4th button to trigger Sweep2Wake.</string>
+    <string name="t2w">Tap2Wake</string>
+    <string name="t2w_summary">Wake up your device by tapping the screen.</string>
+    <string name="dt2s">DoubleTap2Sleep</string>
+    <string name="dt2s_summary">Lock your device by double tapping on the top of the screen.</string>
+    <string name="s2w_charging">Sweep2Wake while charging</string>
+    <string name="dt2w_charging">DoubleTap2Wake while charging</string>
+    <string name="dt2w_s2w">DoubleTap2Wake + Sweep2Wake</string>
+    <string name="dt2w_s2w_charging">DoubleTap2Wake + Sweep2Wake while charging</string>
+    <string name="s2s_summary">Lock you device by swiping on the screen.</string>
+    <string name="s2s_right">Sweep Right</string>
+    <string name="s2s_left">Sweep Left</string>
+    <string name="s2s_any">Sweep Left or Right</string>
+    <string name="slide_up">Slide up</string>
+    <string name="slide_down">Slide down</string>
+    <string name="slide_left">Slide left</string>
+    <string name="slide_right">Slide right</string>
+    <string name="draw_e">Draw E</string>
+    <string name="draw_o">Draw O</string>
+    <string name="draw_w">Draw W</string>
+    <string name="draw_c">Draw C</string>
+    <string name="draw_m">Draw M</string>
+    <string name="camera_gesture">Camera Gesture</string>
+    <string name="camera_gesture_summary">Launch default camera by drawing a circle on the screen.</string>
+    <string name="pocket_mode">Pocket Mode</string>
+    <string name="pocket_mode_summary">Enabling this will turn off wake controls when the device is in a pocket.</string>
+    <string name="timeout">Timeout</string>
+    <string name="timeout_summary">Set a duration when the wake controls will be disabled after the screen goes off.</string>
+    <string name="power_key_suspend">Power Key Suspend</string>
+    <string name="power_key_suspend_summary">Enabling this will turn off wake controls when the screen is turned off by the power key.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

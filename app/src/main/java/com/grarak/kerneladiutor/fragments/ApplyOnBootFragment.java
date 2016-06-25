@@ -41,6 +41,7 @@ public class ApplyOnBootFragment extends BaseFragment {
     public static final String THERMAL = "thermal_onboot";
     public static final String GPU = "gpu_onboot";
     public static final String SCREEN = "screen_onboot";
+    public static final String WAKE = "wake_onboot";
 
     public static ApplyOnBootFragment newInstance(String category) {
         Bundle args = new Bundle();

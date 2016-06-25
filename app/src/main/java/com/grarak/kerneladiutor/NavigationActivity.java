@@ -43,6 +43,7 @@ import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
 import com.grarak.kerneladiutor.fragments.kernel.GPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ScreenFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
+import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
@@ -53,6 +54,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
 import com.grarak.kerneladiutor.utils.kernel.screen.Screen;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
+import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.util.HashMap;
@@ -84,6 +86,9 @@ public class NavigationActivity extends BaseActivity
         }
         if (Screen.supported()) {
             sFragments.put(R.string.screen, new ScreenFragment());
+        }
+        if (Wake.supported()) {
+            sFragments.put(R.string.wake, new WakeFrament());
         }
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
