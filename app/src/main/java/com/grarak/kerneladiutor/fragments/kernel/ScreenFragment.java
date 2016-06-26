@@ -91,7 +91,7 @@ public class ScreenFragment extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         screenColorInit(items);
         List<RecyclerViewItem> gammas = new ArrayList<>();
         if (Gamma.hasKGamma()) {
@@ -118,7 +118,6 @@ public class ScreenFragment extends BaseControlFragment {
         if (Misc.hasGloveMode()) {
             gloveModeInit(items);
         }
-        return items;
     }
 
     private void screenColorInit(List<RecyclerViewItem> items) {

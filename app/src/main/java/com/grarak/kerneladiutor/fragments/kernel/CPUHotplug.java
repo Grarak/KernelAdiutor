@@ -69,7 +69,7 @@ public class CPUHotplug extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         if (MPDecision.supported()) {
             mpdecisionInit(items);
         }
@@ -128,7 +128,6 @@ public class CPUHotplug extends BaseControlFragment {
                 }
             });
         }
-        return items;
     }
 
     private void mpdecisionInit(List<RecyclerViewItem> items) {

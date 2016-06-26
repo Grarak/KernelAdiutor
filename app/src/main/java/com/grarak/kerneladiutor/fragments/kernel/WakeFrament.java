@@ -50,7 +50,7 @@ public class WakeFrament extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         if (Dt2w.supported()) {
             dt2wInit(items);
         }
@@ -82,7 +82,6 @@ public class WakeFrament extends BaseControlFragment {
         if (Misc.hasPowerKeySuspend()) {
             powerKeySuspendInit(items);
         }
-        return items;
     }
 
     private void dt2wInit(List<RecyclerViewItem> items) {

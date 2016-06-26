@@ -58,7 +58,7 @@ public class DeviceFragment extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
 
         String[][] deviceInfos = {
                 {getString(R.string.android_version), Device.getVersion()},
@@ -108,8 +108,6 @@ public class DeviceFragment extends BaseControlFragment {
 
         items.add(deviceCard);
         items.add(boardCard);
-
-        return super.addItems(items);
     }
 
 }

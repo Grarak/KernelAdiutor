@@ -159,9 +159,7 @@ public class XYGraph extends View {
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
-            Bundle bundle = (Bundle) state;
-            mPercentages = bundle.getIntegerArrayList("arrayList");
-            state = bundle.getParcelable("instanceState");
+            mPercentages = ((Bundle) state).getIntegerArrayList("arrayList");
         }
         super.onRestoreInstanceState(state);
     }
@@ -169,9 +167,8 @@ public class XYGraph extends View {
     @Override
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("instanceState", super.onSaveInstanceState());
         bundle.putIntegerArrayList("arrayList", mPercentages);
-        return bundle;
+        return super.onSaveInstanceState();
     }
 
     @Override

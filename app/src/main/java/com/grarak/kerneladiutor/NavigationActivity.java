@@ -42,6 +42,7 @@ import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
 import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
 import com.grarak.kerneladiutor.fragments.kernel.GPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ScreenFragment;
+import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
@@ -53,6 +54,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
 import com.grarak.kerneladiutor.utils.kernel.screen.Screen;
+import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
 import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -89,6 +91,9 @@ public class NavigationActivity extends BaseActivity
         }
         if (Wake.supported()) {
             sFragments.put(R.string.wake, new WakeFrament());
+        }
+        if (Sound.supported()) {
+            sFragments.put(R.string.sound, new SoundFragment());
         }
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);

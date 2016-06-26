@@ -101,7 +101,7 @@ public class CPUFragment extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         freqInit(items);
         if (Misc.hasMcPowerSaving()) {
             mcPowerSavingInit(items);
@@ -121,7 +121,6 @@ public class CPUFragment extends BaseControlFragment {
         if (Misc.hasCpuTouchBoost()) {
             cpuTouchBoostInit(items);
         }
-        return items;
     }
 
     private void freqInit(List<RecyclerViewItem> items) {

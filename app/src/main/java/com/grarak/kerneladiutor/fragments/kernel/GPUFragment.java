@@ -52,7 +52,7 @@ public class GPUFragment extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         freqInit(items);
         governorInit(items);
         if (SimpleGPU.supported()) {
@@ -61,7 +61,6 @@ public class GPUFragment extends BaseControlFragment {
         if (AdrenoIdler.supported()) {
             adrenoIdlerInit(items);
         }
-        return items;
     }
 
     private void freqInit(List<RecyclerViewItem> items) {

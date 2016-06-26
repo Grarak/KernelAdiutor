@@ -87,10 +87,9 @@ public class OverallFragment extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         temperatureInit(items);
         frequenciesInit(items);
-        return items;
     }
 
     private void temperatureInit(List<RecyclerViewItem> parent) {

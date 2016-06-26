@@ -62,7 +62,7 @@ public class CPUVoltage extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         mVoltages.clear();
 
         if (Voltage.hasOverrideVmin()) {
@@ -90,8 +90,6 @@ public class CPUVoltage extends BaseControlFragment {
             }
         }
         items.addAll(mVoltages);
-
-        return items;
     }
 
     private void reload() {

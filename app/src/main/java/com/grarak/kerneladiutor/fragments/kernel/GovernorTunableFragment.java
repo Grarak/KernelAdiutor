@@ -61,6 +61,10 @@ public class GovernorTunableFragment extends BaseControlFragment {
         return new LinearLayoutManager(getActivity());
     }
 
+    @Override
+    protected void addItems(List<RecyclerViewItem> items) {
+    }
+
     public void setPath(String path, int cpu) {
         mPath = path;
         mCPU = cpu;

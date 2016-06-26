@@ -58,7 +58,7 @@ import java.util.List;
 /**
  * Created by willi on 16.04.16.
  */
-public class BaseControlFragment extends BaseFragment {
+public abstract class BaseControlFragment extends BaseFragment {
 
     private List<RecyclerViewItem> mItems = new ArrayList<>();
     private Handler mHandler = new Handler();
@@ -145,7 +145,9 @@ public class BaseControlFragment extends BaseFragment {
 
                 @Override
                 protected List<RecyclerViewItem> doInBackground(Void... params) {
-                    return addItems(new ArrayList<RecyclerViewItem>());
+                    List<RecyclerViewItem> items = new ArrayList<>();
+                    addItems(items);
+                    return items;
                 }
 
                 @Override
@@ -177,9 +179,7 @@ public class BaseControlFragment extends BaseFragment {
         return mSavedInstanceState;
     }
 
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
-        return items;
-    }
+    protected abstract void addItems(List<RecyclerViewItem> items);
 
     private void setAppBarLayoutAlpha(int alpha) {
         Activity activity;

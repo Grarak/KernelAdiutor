@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/white"
+            android:textIsSelectable="true"
             android:textSize="30sp" />
 
         <TextView
@@ -27,6 +28,7 @@
             android:fontFamily="sans-serif-thin"
             android:gravity="center"
             android:textColor="@color/white"
+            android:textIsSelectable="true"
             android:textSize="18sp" />
 
     </LinearLayout>

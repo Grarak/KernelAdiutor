@@ -50,15 +50,13 @@ public class ThermalFragment extends BaseControlFragment {
     }
 
     @Override
-    protected List<RecyclerViewItem> addItems(List<RecyclerViewItem> items) {
+    protected void addItems(List<RecyclerViewItem> items) {
         if (Thermald.supported()) {
             thermaldInit(items);
         }
         if (MSMThermal.supported()) {
             msmThermalInit(items);
         }
-
-        return items;
     }
 
     private void thermaldInit(List<RecyclerViewItem> items) {

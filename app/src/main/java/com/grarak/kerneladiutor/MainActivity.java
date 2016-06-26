@@ -43,6 +43,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
 import com.grarak.kerneladiutor.utils.kernel.screen.Screen;
+import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
 import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -127,6 +128,7 @@ public class MainActivity extends BaseActivity {
             MSMPerformance.supported();
             QcomBcl.supported();
             Screen.supported();
+            Sound.supported();
             Temperature.supported(MainActivity.this);
             Thermal.supported();
             Voltage.supported();

@@ -53,6 +53,7 @@
     <string name="gpu">GPU</string>
     <string name="screen">Screen</string>
     <string name="wake">Wake</string>
+    <string name="sound">Sound</string>
     <string name="battery">Battery</string>
     <string name="settings">Settings</string>
 
@@ -443,6 +444,17 @@
     <string name="timeout_summary">Set a duration when the wake controls will be disabled after the screen goes off.</string>
     <string name="power_key_suspend">Power Key Suspend</string>
     <string name="power_key_suspend_summary">Enabling this will turn off wake controls when the screen is turned off by the power key.</string>
+
+    <!-- Sound -->
+    <string name="sound_control">Sound Control</string>
+    <string name="headset_highperf_mode">Headset High Performance Mode</string>
+    <string name="headphone_gain">Headphone Gain</string>
+    <string name="handset_microphone_gain">Handset Microphone Gain</string>
+    <string name="cam_microphone_gain">Camcorder Microphone Gain</string>
+    <string name="speaker_gain">Speaker Gain</string>
+    <string name="headphone_poweramp_gain">Headphone PowerAmp Gain</string>
+    <string name="microphone_gain">Microphone Gain</string>
+    <string name="volume_gain">Volume Gain</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>
