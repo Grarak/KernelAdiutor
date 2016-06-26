@@ -33,6 +33,8 @@
     <string name="ms">ms</string>
     <string name="mv">mV</string>
     <string name="min">min</string>
+    <string name="mah">mAh</string>
+    <string name="ma">mA</string>
 
     <!-- Special signs -->
     <string name="minus" translatable="false">-</string>
@@ -455,6 +457,18 @@
     <string name="headphone_poweramp_gain">Headphone PowerAmp Gain</string>
     <string name="microphone_gain">Microphone Gain</string>
     <string name="volume_gain">Volume Gain</string>
+
+    <!-- Battery -->
+    <string name="level">Level</string>
+    <string name="voltage">Voltage</string>
+    <string name="capacity">Capacity</string>
+    <string name="usb_fast_charge">USB Fast Charge</string>
+    <string name="usb_fast_charge_summary">Device will charge faster when connected with USB. Replug your charger when changing this option.</string>
+    <string name="blx">Battery Life eXtender</string>
+    <string name="blx_summary">Set a limit for the capacity to which the battery will be charged by passing a value between 0 and 100.</string>
+    <string name="charge_rate">Charge Rate</string>
+    <string name="charging_current">Charging Current</string>
+    <string name="charging_current_summary">Set charging current. Caution: Exceeding 1250mA may damage your charging driver.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

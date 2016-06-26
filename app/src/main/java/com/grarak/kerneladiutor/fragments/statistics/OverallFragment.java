@@ -92,7 +92,7 @@ public class OverallFragment extends BaseControlFragment {
         frequenciesInit(items);
     }
 
-    private void temperatureInit(List<RecyclerViewItem> parent) {
+    private void temperatureInit(List<RecyclerViewItem> items) {
         CardView tempCard = new CardView(getActivity());
         tempCard.setFullSpan(true);
         tempCard.setTitle(getString(R.string.temperature));
@@ -117,7 +117,7 @@ public class OverallFragment extends BaseControlFragment {
         mBatteryTemp.setTitle(getString(R.string.battery));
         tempCard.addItem(mBatteryTemp);
 
-        parent.add(tempCard);
+        items.add(tempCard);
     }
 
     private void frequenciesInit(List<RecyclerViewItem> items) {

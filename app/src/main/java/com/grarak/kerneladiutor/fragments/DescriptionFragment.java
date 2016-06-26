@@ -42,35 +42,57 @@ public class DescriptionFragment extends BaseFragment {
         return fragment;
     }
 
+    private TextView mTitleView;
+    private TextView mSummaryView;
+
+    private CharSequence mTitle;
+    private CharSequence mSummary;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_description, container, false);
 
-        TextView title = (TextView) rootView.findViewById(R.id.title);
-        TextView summary = (TextView) rootView.findViewById(R.id.summary);
-        summary.setSelected(true);
+        mTitleView = (TextView) rootView.findViewById(R.id.title);
+        mSummaryView = (TextView) rootView.findViewById(R.id.summary);
+        mSummaryView.setSelected(true);
 
-        String titleText = getArguments().getString("title");
-        if (titleText != null) {
-            title.setText(titleText);
-        } else {
-            title.setVisibility(View.GONE);
-        }
+        mTitle = getArguments().getString("title");
+        mSummary = getArguments().getString("summary");
 
-        String summaryText = getArguments().getString("summary");
-        if (summaryText != null) {
-            summary.setText(summaryText);
-        } else {
-            summary.setVisibility(View.GONE);
-        }
-
+        refresh();
         return rootView;
     }
 
     @Override
     protected boolean retainInstance() {
         return false;
+    }
+
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        refresh();
+    }
+
+    public void setSummary(CharSequence summary) {
+        mSummary = summary;
+        refresh();
+    }
+
+    private void refresh() {
+        if (mTitle != null) {
+            mTitleView.setText(mTitle);
+            mTitleView.setVisibility(View.VISIBLE);
+        } else {
+            mTitleView.setVisibility(View.GONE);
+        }
+
+        if (mSummary != null) {
+            mSummaryView.setText(mSummary);
+            mSummaryView.setVisibility(View.VISIBLE);
+        } else {
+            mSummaryView.setVisibility(View.GONE);
+        }
     }
 }

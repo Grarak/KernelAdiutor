@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.kernel.battery.Battery;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
 import com.grarak.kerneladiutor.utils.kernel.cpu.MSMPerformance;
 import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
@@ -117,7 +118,9 @@ public class MainActivity extends BaseActivity {
             return null;
         }
 
+        // For caching
         private void collectData() {
+            Battery.supported(MainActivity.this);
             CPUBoost.supported();
             Device.CPUInfo.load();
             Device.MemInfo.load();

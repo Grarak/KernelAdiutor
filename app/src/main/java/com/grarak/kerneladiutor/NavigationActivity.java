@@ -37,6 +37,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 
 import com.grarak.kerneladiutor.fragments.BaseFragment;
+import com.grarak.kerneladiutor.fragments.kernel.BatteryFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
 import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
@@ -95,6 +96,7 @@ public class NavigationActivity extends BaseActivity
         if (Sound.supported()) {
             sFragments.put(R.string.sound, new SoundFragment());
         }
+        sFragments.put(R.string.battery, new BatteryFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 

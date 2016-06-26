@@ -139,9 +139,14 @@ public abstract class BaseControlFragment extends BaseFragment {
             mForegroundHeight = getResources().getDisplayMetrics().heightPixels;
         }
 
-        init();
         if (savedInstanceState == null) {
             mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    init();
+                }
 
                 @Override
                 protected List<RecyclerViewItem> doInBackground(Void... params) {
@@ -158,17 +163,23 @@ public abstract class BaseControlFragment extends BaseFragment {
                         addItem(item);
                     }
                     mRootView.findViewById(R.id.progress).setVisibility(View.GONE);
+                    postInit();
                 }
             };
             mLoader.execute();
         } else {
+            init();
             mRootView.findViewById(R.id.progress).setVisibility(View.GONE);
+            postInit();
         }
 
         return mRootView;
     }
 
     protected void init() {
+    }
+
+    protected void postInit() {
     }
 
     protected void scrollToTop() {
