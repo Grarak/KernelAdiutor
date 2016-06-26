@@ -46,6 +46,7 @@ public class CPUFreq {
     private static final String AVAILABLE_FREQS = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_available_frequencies";
     public static final String TIME_STATE = "/sys/devices/system/cpu/cpufreq/stats/cpu%d/time_in_state";
     public static final String TIME_STATE_2 = "/sys/devices/system/cpu/cpu%d/cpufreq/stats/time_in_state";
+    public static final String OPP_TABLE = "/sys/devices/system/cpu/cpu%d/opp_table";
 
     private static final String CPU_MAX_FREQ = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq";
     private static final String CPU_MAX_FREQ_KT = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq_kt";
@@ -263,10 +264,13 @@ public class CPUFreq {
         if (sFreqs == null) sFreqs = new Integer[getCpuCount()][];
         if (sFreqs[cpu] == null) {
             if (Utils.existFile(Utils.strFormat(TIME_STATE, cpu))
+                    || Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))
                     || Utils.existFile(Utils.strFormat(TIME_STATE_2, 0))) {
                 String file;
                 if (Utils.existFile(Utils.strFormat(TIME_STATE, cpu))) {
                     file = Utils.strFormat(TIME_STATE, cpu);
+                } else if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))) {
+                    file = Utils.strFormat(OPP_TABLE, cpu);
                 } else {
                     file = Utils.strFormat(TIME_STATE_2, 0);
                 }
@@ -276,6 +280,9 @@ public class CPUFreq {
                     sFreqs[cpu] = new Integer[valueArray.length];
                     for (int i = 0; i < sFreqs[cpu].length; i++) {
                         sFreqs[cpu][i] = Utils.strToInt(valueArray[i].split(" ")[0]);
+                        if (file.endsWith("opp_table")) {
+                            sFreqs[cpu][i] /= 1000;
+                        }
                     }
                 }
             } else if (Utils.existFile(Utils.strFormat(AVAILABLE_FREQS, 0))) {
@@ -327,10 +334,11 @@ public class CPUFreq {
             QcomBcl.online(online, category, context);
         }
         if (CoreCtl.hasMinCpus() && getBigCpuRange().indexOf(cpu) != -1) {
-            CoreCtl.setMinCpus(online ? 4 : 0, cpu, category, context);
+            CoreCtl.setMinCpus(online ? getBigCpuRange().size() : 0, cpu, category, context);
         }
         if (MSMPerformance.hasMaxCpus()) {
-            MSMPerformance.setMaxCpus(online ? 4 : -1, online ? 4 : -1, category, context);
+            MSMPerformance.setMaxCpus(online ? getLITTLECpuRange().size() : -1, online ?
+                    getBigCpuRange().size() : -1, category, context);
         }
         Control.runSetting(Control.write(online ? "1" : "0", Utils.strFormat(CPU_ONLINE, cpu)),
                 category, Utils.strFormat(CPU_ONLINE, cpu), context);

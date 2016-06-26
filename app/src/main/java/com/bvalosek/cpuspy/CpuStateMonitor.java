@@ -167,13 +167,12 @@ public class CpuStateMonitor {
             if (Utils.existFile(Utils.strFormat(CPUFreq.TIME_STATE, core))) {
                 file = Utils.strFormat(CPUFreq.TIME_STATE, core);
             } else {
-                if (core > 0) {
-                    CPUFreq.onlineCpu(core, true, null);
-                    file = Utils.strFormat(CPUFreq.TIME_STATE_2, core);
-                } else file = Utils.strFormat(CPUFreq.TIME_STATE_2, 0);
+                CPUFreq.onlineCpu(core, true, null);
+                file = Utils.strFormat(CPUFreq.TIME_STATE_2, core);
             }
-            if (file == null)
+            if (file == null) {
                 throw new CpuStateMonitorException("Problem opening time-in-states file");
+            }
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             readInStates(bufferedReader);
