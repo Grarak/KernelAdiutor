@@ -20,7 +20,6 @@
 package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
@@ -30,11 +29,8 @@ import com.grarak.kerneladiutor.R;
  */
 public class TitleView extends RecyclerViewItem {
 
-    private FrameLayout mRootView;
     private TextView mTitle;
-    private View mMoreView;
 
-    private View.OnClickListener mOnClickListener;
     private CharSequence mTitleText;
 
     @Override
@@ -44,18 +40,11 @@ public class TitleView extends RecyclerViewItem {
 
     @Override
     public void onCreateView(View view) {
-        mRootView = (FrameLayout) view;
         mTitle = (TextView) view.findViewById(R.id.title);
-        mMoreView = view.findViewById(R.id.more_view);
 
         setFullSpan(true);
 
         super.onCreateView(view);
-    }
-
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        mOnClickListener = onClickListener;
-        refresh();
     }
 
     public void setText(CharSequence text) {
@@ -66,20 +55,6 @@ public class TitleView extends RecyclerViewItem {
     @Override
     protected void refresh() {
         super.refresh();
-        if (mRootView != null) {
-            if (mOnClickListener != null) {
-                mRootView.setClickable(true);
-                mRootView.setOnClickListener(mOnClickListener);
-                if (mMoreView != null) {
-                    mMoreView.setVisibility(View.VISIBLE);
-                }
-            } else {
-                mRootView.setClickable(false);
-                if (mMoreView != null) {
-                    mMoreView.setVisibility(View.GONE);
-                }
-            }
-        }
         if (mTitle != null && mTitleText != null) {
             mTitle.setText(mTitleText);
         }

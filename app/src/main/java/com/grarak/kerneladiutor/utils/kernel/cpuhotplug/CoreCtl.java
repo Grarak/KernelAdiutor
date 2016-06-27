@@ -26,18 +26,30 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.Control;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by willi on 03.05.16.
  */
 public class CoreCtl {
 
     private static final String CORE_CTL = "/sys/devices/system/cpu/cpu%d/core_ctl";
+    private static final String HCUBE = "/sys/devices/system/cpu/cpu%d/hcube";
     private static String PARENT;
+    private static final String ENABLE = "/hc_on";
     private static final String IS_BIG_CLUSTER = "/is_big_cluster";
     private static final String MIN_CPUS = "/min_cpus";
     private static final String BUSY_DOWN_THRESHOLD = "/busy_down_thres";
     private static final String BUSY_UP_THRESHOLD = "/busy_up_thres";
     private static final String OFFLINE_DELAY_MS = "/offline_delay_ms";
+
+    private static final List<String> sFiles = new ArrayList<>();
+
+    static {
+        sFiles.add(CORE_CTL);
+        sFiles.add(HCUBE);
+    }
 
     public static void setOfflineDelayMs(int value, Context context) {
         run(Control.write(String.valueOf(value), PARENT + OFFLINE_DELAY_MS), PARENT + OFFLINE_DELAY_MS, context);
@@ -98,15 +110,37 @@ public class CoreCtl {
         return Utils.existFile(Utils.strFormat(PARENT + MIN_CPUS, 0));
     }
 
+    public static void enable(boolean enable, Context context) {
+        run(Control.write(enable ? "1" : "0", PARENT + ENABLE), PARENT + ENABLE, context);
+    }
+
+    public static boolean isEnabled() {
+        return Utils.readFile(PARENT + ENABLE).equals("1");
+    }
+
+    public static boolean hasEnable() {
+        return Utils.existFile(PARENT + ENABLE);
+    }
+
     public static boolean supported() {
         if (PARENT != null) return true;
-        if (Utils.existFile(Utils.strFormat(CORE_CTL, CPUFreq.getBigCpu()))) {
-            PARENT = Utils.strFormat(CORE_CTL, CPUFreq.getBigCpu());
-            if (Utils.existFile(PARENT + IS_BIG_CLUSTER)) {
-                PARENT = Utils.readFile(PARENT + IS_BIG_CLUSTER).equals("1") ? PARENT : null;
+        String parent = null;
+        for (String file : sFiles) {
+            if (Utils.existFile(Utils.strFormat(file, 0))) {
+                parent = file;
+                break;
             }
         }
-        return PARENT != null;
+        if (parent == null) return false;
+
+        if (Utils.existFile(Utils.strFormat(parent, CPUFreq.getBigCpu()))) {
+            PARENT = Utils.strFormat(parent, CPUFreq.getBigCpu());
+            if (Utils.existFile(PARENT + IS_BIG_CLUSTER)) {
+                PARENT = Utils.readFile(PARENT + IS_BIG_CLUSTER).equals("1") ? PARENT : null;
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void run(String command, String id, Context context) {

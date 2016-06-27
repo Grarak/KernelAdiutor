@@ -2068,7 +2068,7 @@ public class CPUHotplug extends BaseControlFragment {
     private void coreCtlInit(List<RecyclerViewItem> items) {
         List<RecyclerViewItem> coreCtl = new ArrayList<>();
         TitleView title = new TitleView();
-        title.setText(getString(R.string.core_control));
+        title.setText(getString(CoreCtl.hasEnable() ? R.string.hcube : R.string.core_control));
 
         if (CoreCtl.hasBusyDownThreshold()) {
             SeekBarView busyDownThreshold = new SeekBarView();
@@ -2133,10 +2133,26 @@ public class CPUHotplug extends BaseControlFragment {
         if (coreCtl.size() > 0) {
             items.add(title);
 
-            DescriptionView description = new DescriptionView();
-            description.setTitle(getString(R.string.core_control));
-            description.setSummary(getString(R.string.core_control_summary));
-            items.add(description);
+            if (CoreCtl.hasEnable()) {
+                SwitchView enable = new SwitchView();
+                enable.setTitle(getString(R.string.hcube));
+                enable.setSummary(getString(R.string.hcube_summary));
+                enable.setChecked(CoreCtl.isEnabled());
+                enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                    @Override
+                    public void onChanged(SwitchView switchView, boolean isChecked) {
+                        CoreCtl.enable(isChecked, getActivity());
+                    }
+                });
+
+                items.add(enable);
+                mEnableViews.add(enable);
+            } else {
+                DescriptionView description = new DescriptionView();
+                description.setTitle(getString(R.string.core_control));
+                description.setSummary(getString(R.string.core_control_summary));
+                items.add(description);
+            }
 
             items.addAll(coreCtl);
         }
