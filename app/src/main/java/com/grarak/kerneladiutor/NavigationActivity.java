@@ -223,11 +223,11 @@ public class NavigationActivity extends BaseActivity
         if (sActivities.containsKey(res)) {
             startActivity(new Intent(this, sActivities.get(res)));
         } else {
+            mDrawer.closeDrawer(GravityCompat.START);
             getSupportActionBar().setTitle(getString(res));
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, getFragment(res),
                     res + "_key").commit();
             mNavigationView.setCheckedItem(res);
-            mDrawer.closeDrawer(GravityCompat.START);
             mSelection = res;
         }
     }

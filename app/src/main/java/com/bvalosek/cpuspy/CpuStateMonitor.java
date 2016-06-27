@@ -14,9 +14,6 @@ import android.support.annotation.NonNull;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,13 +27,13 @@ import java.util.Map;
  */
 public class CpuStateMonitor {
 
-    private final int core;
+    private final int mCore;
 
     private final List<CpuState> _states = new ArrayList<>();
     private Map<Integer, Long> _offsets = new HashMap<>();
 
     public CpuStateMonitor(int core) {
-        this.core = core;
+        mCore = core;
     }
 
     /**
@@ -164,20 +161,17 @@ public class CpuStateMonitor {
         _states.clear();
         try {
             String file;
-            if (Utils.existFile(Utils.strFormat(CPUFreq.TIME_STATE, core))) {
-                file = Utils.strFormat(CPUFreq.TIME_STATE, core);
+            if (Utils.existFile(Utils.strFormat(CPUFreq.TIME_STATE, mCore))) {
+                file = Utils.strFormat(CPUFreq.TIME_STATE, mCore);
             } else {
-                CPUFreq.onlineCpu(core, true, null);
-                file = Utils.strFormat(CPUFreq.TIME_STATE_2, core);
+                file = Utils.strFormat(CPUFreq.TIME_STATE_2, mCore);
             }
-            if (file == null) {
+            CPUFreq.onlineCpu(mCore, true, null);
+            String states = Utils.readFile(file);
+            if (states.isEmpty()) {
                 throw new CpuStateMonitorException("Problem opening time-in-states file");
             }
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            readInStates(bufferedReader);
-            fileReader.close();
-            bufferedReader.close();
+            readInStates(states.split("\\r?\\n"));
         } catch (Exception e) {
             throw new CpuStateMonitorException("Problem opening time-in-states file");
         }
@@ -196,15 +190,14 @@ public class CpuStateMonitor {
      * read from a provided BufferedReader the state lines into the States
      * member field
      */
-    private void readInStates(BufferedReader bufferedReader) throws CpuStateMonitorException {
+    private void readInStates(String[] states) throws CpuStateMonitorException {
         try {
-            String line;
             // split open line and convert to Integers
-            while ((line = bufferedReader.readLine()) != null) {
+            for (String line : states) {
                 String[] nums = line.split(" ");
                 _states.add(new CpuState(Utils.strToInt(nums[0]), Utils.strToLong(nums[1])));
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new CpuStateMonitorException("Problem processing time-in-states file");
         }
     }

@@ -170,7 +170,7 @@ public class IOFragment extends BaseControlFragment {
     private void showTunables(String scheduler, String path) {
         setForegroundText(scheduler);
         mIOTunableFragment.setError(getString(R.string.tunables_error, scheduler));
-        mIOTunableFragment.setPath(path, 0);
+        mIOTunableFragment.setPath(path, ApplyOnBootFragment.IO);
         showForeground();
     }
 

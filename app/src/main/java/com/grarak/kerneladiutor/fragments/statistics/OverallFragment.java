@@ -238,11 +238,15 @@ public class OverallFragment extends BaseControlFragment {
             }
             try {
                 mBigMonitor.updateStates();
-                if (CPUFreq.isBigLITTLE()) {
-                    mLITTLEMonitor.updateStates();
-                }
-            } catch (CpuStateMonitor.CpuStateMonitorException e) {
+            } catch (CpuStateMonitor.CpuStateMonitorException ignored) {
                 Log.e(TAG, "Problem getting CPU states");
+            }
+            if (CPUFreq.isBigLITTLE()) {
+                try {
+                    mLITTLEMonitor.updateStates();
+                } catch (CpuStateMonitor.CpuStateMonitorException ignored) {
+                    Log.e(TAG, "Problem getting CPU states");
+                }
             }
             return null;
         }

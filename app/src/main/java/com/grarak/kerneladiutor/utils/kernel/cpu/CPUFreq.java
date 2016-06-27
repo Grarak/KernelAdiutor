@@ -24,6 +24,7 @@ import android.util.Log;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
+import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
@@ -34,7 +35,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class CPUFreq {
     private static int sCpuCount;
     private static int sBigCpu = -1;
     private static int sLITTLECpu = -1;
-    private static Integer[][] sFreqs;
+    private static HashMap<Integer, List<Integer>> sFreqs = new HashMap<>();
     private static String[] sGovernors;
 
     private static final String TAG = CPUFreq.class.getSimpleName();
@@ -97,6 +98,14 @@ public class CPUFreq {
                 onlineCpu(i, false, context);
             }
         }
+    }
+
+    public static int getBigCpuGovernorTunable() {
+        return getBigCpu();
+    }
+
+    public static int getLITTLECpuGovernorTunable() {
+        return is8996() ? 1 : getLITTLECpu();
     }
 
     public static void setGovernor(String governor, int min, int max, Context context) {
@@ -261,30 +270,28 @@ public class CPUFreq {
     }
 
     public static List<Integer> getFreqs(int cpu) {
-        if (sFreqs == null) sFreqs = new Integer[getCpuCount()][];
-        if (sFreqs[cpu] == null) {
-            if (Utils.existFile(Utils.strFormat(TIME_STATE, cpu))
-                    || Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))
+        if (!sFreqs.containsKey(cpu)) {
+            if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))
+                    || Utils.existFile(Utils.strFormat(TIME_STATE, cpu))
                     || Utils.existFile(Utils.strFormat(TIME_STATE_2, 0))) {
                 String file;
-                if (Utils.existFile(Utils.strFormat(TIME_STATE, cpu))) {
-                    file = Utils.strFormat(TIME_STATE, cpu);
-                } else if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))) {
+                if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))) {
                     file = Utils.strFormat(OPP_TABLE, cpu);
+                } else if (Utils.existFile(Utils.strFormat(TIME_STATE, cpu))) {
+                    file = Utils.strFormat(TIME_STATE, cpu);
                 } else {
                     file = Utils.strFormat(TIME_STATE_2, 0);
                 }
-                String values;
-                if ((values = Utils.readFile(file)) != null) {
-                    String[] valueArray = values.split("\\r?\\n");
-                    sFreqs[cpu] = new Integer[valueArray.length];
-                    for (int i = 0; i < sFreqs[cpu].length; i++) {
-                        sFreqs[cpu][i] = Utils.strToInt(valueArray[i].split(" ")[0]);
-                        if (file.endsWith("opp_table")) {
-                            sFreqs[cpu][i] /= 1000;
-                        }
+                String[] valueArray = Utils.readFile(file).trim().split("\\r?\\n");
+                List<Integer> freqs = new ArrayList<>();
+                for (String freq : valueArray) {
+                    long freqInt = Utils.strToLong(freq.split(" ")[0]);
+                    if (file.endsWith("opp_table")) {
+                        freqInt /= 1000;
                     }
+                    freqs.add((int) freqInt);
                 }
+                sFreqs.put(cpu, freqs);
             } else if (Utils.existFile(Utils.strFormat(AVAILABLE_FREQS, 0))) {
                 int readcpu = cpu;
                 boolean offline = isOffline(cpu);
@@ -297,22 +304,21 @@ public class CPUFreq {
                 String values;
                 if ((values = Utils.readFile(Utils.strFormat(AVAILABLE_FREQS, readcpu))) != null) {
                     String[] valueArray = values.split(" ");
-                    sFreqs[cpu] = new Integer[valueArray.length];
-                    for (int i = 0; i < sFreqs[cpu].length; i++) {
-                        sFreqs[cpu][i] = Utils.strToInt(valueArray[i]);
+                    List<Integer> freqs = new ArrayList<>();
+                    for (String freq : valueArray) {
+                        freqs.add(Utils.strToInt(freq));
                     }
+                    sFreqs.put(cpu, freqs);
                 }
                 if (offline) {
                     onlineCpu(cpu, false, null);
                 }
             }
         }
-        if (sFreqs[cpu] == null) {
+        if (!sFreqs.containsKey(cpu)) {
             return null;
         }
-        List<Integer> freqs = Arrays.asList(sFreqs[cpu]);
-        Collections.sort(freqs);
-        return freqs;
+        return sFreqs.get(cpu);
     }
 
     public static int getCurFreq(int cpu) {
@@ -392,23 +398,32 @@ public class CPUFreq {
 
     public static boolean isBigLITTLE() {
         boolean bigLITTLE = getCpuCount() > 4;
-        if (!bigLITTLE) return false;
+        if (!bigLITTLE && !is8996()) return false;
 
         if (sBigCpu == -1 || sLITTLECpu == -1) {
-            List<Integer> cpu0Freqs = getFreqs(0);
-            List<Integer> cpu4Freqs = getFreqs(4);
-            if (cpu0Freqs != null && cpu4Freqs != null) {
-                if (cpu0Freqs.size() > cpu4Freqs.size()) {
-                    sBigCpu = 0;
-                    sLITTLECpu = 4;
-                } else {
-                    sBigCpu = 4;
-                    sLITTLECpu = 0;
+            if (is8996()) {
+                sBigCpu = 2;
+                sLITTLECpu = 0;
+            } else {
+                List<Integer> cpu1Freqs = getFreqs(0);
+                List<Integer> cpu2Freqs = getFreqs(4);
+                if (cpu1Freqs != null && cpu2Freqs != null) {
+                    if (cpu1Freqs.size() > cpu2Freqs.size()) {
+                        sBigCpu = 0;
+                        sLITTLECpu = 4;
+                    } else {
+                        sBigCpu = 4;
+                        sLITTLECpu = 0;
+                    }
                 }
             }
         }
 
         return sBigCpu != -1 && sLITTLECpu != -1;
+    }
+
+    private static boolean is8996() {
+        return Device.getBoard().equalsIgnoreCase("msm8996");
     }
 
     public static int getCpuCount() {

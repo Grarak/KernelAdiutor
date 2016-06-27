@@ -112,6 +112,9 @@ public class Device {
         }
 
         private static String getString(String prefix) {
+            if (CPUINFO == null) {
+                load();
+            }
             try {
                 for (String line : CPUINFO.split("\\r?\\n")) {
                     if (line.startsWith(prefix)) {
@@ -214,6 +217,17 @@ public class Device {
     }
 
     public static String getBoard() {
+        try {
+            String hardware = CPUInfo.getVendor().toLowerCase();
+            if (hardware.contains("msm")) {
+                String boardname = hardware.split("msm")[1].trim();
+                try {
+                    return "msm" + Integer.parseInt(boardname);
+                } catch (NumberFormatException ignored) {
+                }
+            }
+        } catch (Exception ignored) {
+        }
         return Build.BOARD;
     }
 

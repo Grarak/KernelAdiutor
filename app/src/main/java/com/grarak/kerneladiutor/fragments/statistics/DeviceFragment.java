@@ -84,7 +84,7 @@ public class DeviceFragment extends BaseControlFragment {
         deviceCard.setTitle(vendor + " " + Device.getModel());
 
         CardView boardCard = new CardView(getActivity());
-        boardCard.setTitle(Device.getBoard());
+        boardCard.setTitle(Device.getBoard().toUpperCase());
 
         for (String[] deviceInfo : deviceInfos) {
             if (deviceInfo[1] != null && deviceInfo[1].isEmpty()) {

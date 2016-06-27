@@ -25,7 +25,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseControlFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -45,6 +44,7 @@ public class PathReaderFragment extends BaseControlFragment {
     private String mPath;
     private int mCPU;
     private String mError;
+    private String mCategory;
 
     @Override
     protected boolean showViewPager() {
@@ -65,9 +65,14 @@ public class PathReaderFragment extends BaseControlFragment {
     protected void addItems(List<RecyclerViewItem> items) {
     }
 
-    public void setPath(String path, int cpu) {
+    public void setPath(String path, String category) {
+        setPath(path, -1, category);
+    }
+
+    public void setPath(String path, int cpu, String category) {
         mPath = path;
         mCPU = cpu;
+        mCategory = category;
         reload();
     }
 
@@ -104,8 +109,11 @@ public class PathReaderFragment extends BaseControlFragment {
                             }, new ViewUtils.OnDialogEditTextListener() {
                                 @Override
                                 public void onClick(String text) {
+                                    if (mCPU >= 0) {
+                                        CPUFreq.onlineCpu(mCPU, true, null);
+                                    }
                                     Control.runSetting(Control.write(text, mPath + "/" + file),
-                                            ApplyOnBootFragment.CPU, mPath + "/" + file, getActivity());
+                                            mCategory, mPath + "/" + file, getActivity());
                                     getHandler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -131,7 +139,10 @@ public class PathReaderFragment extends BaseControlFragment {
         builder.setItems(values, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Control.runSetting(Control.write(values[which], path), ApplyOnBootFragment.CPU, path, getActivity());
+                if (mCPU >= 0) {
+                    CPUFreq.onlineCpu(mCPU, true, null);
+                }
+                Control.runSetting(Control.write(values[which], path), mCategory, path, getActivity());
                 getHandler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

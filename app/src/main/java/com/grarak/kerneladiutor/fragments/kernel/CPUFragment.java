@@ -192,7 +192,7 @@ public class CPUFragment extends BaseControlFragment {
         governorTunablesBig.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                showGovernorTunables(CPUFreq.getBigCpu());
+                showGovernorTunables(CPUFreq.getBigCpuGovernorTunable());
             }
         });
         bigCard.addItem(governorTunablesBig);
@@ -266,7 +266,7 @@ public class CPUFragment extends BaseControlFragment {
             governorTunablesLITTLE.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    showGovernorTunables(CPUFreq.getLITTLECpu());
+                    showGovernorTunables(CPUFreq.getLITTLECpuGovernorTunable());
                 }
             });
             LITTLECard.addItem(governorTunablesLITTLE);
@@ -276,6 +276,7 @@ public class CPUFragment extends BaseControlFragment {
     }
 
     private void showGovernorTunables(int cpu) {
+        CPUFreq.onlineCpu(cpu, true, null);
         String governor = CPUFreq.getGovernor(cpu, false);
         if (governor.isEmpty()) {
             mGovernorTunableErrorDialog = ViewUtils.dialogBuilder(getString(R.string.cpu_governor_tunables_read_error),
@@ -293,7 +294,8 @@ public class CPUFragment extends BaseControlFragment {
         } else {
             setForegroundText(governor);
             mGovernorTunableFragment.setError(getString(R.string.tunables_error, governor));
-            mGovernorTunableFragment.setPath(CPUFreq.getGovernorTunablesPath(cpu, governor), cpu);
+            mGovernorTunableFragment.setPath(CPUFreq.getGovernorTunablesPath(cpu, governor), cpu,
+                    ApplyOnBootFragment.CPU);
             showForeground();
         }
     }
@@ -477,12 +479,12 @@ public class CPUFragment extends BaseControlFragment {
         }
 
         if (CPUBoost.hasCpuBoostInputFreq() && CPUFreq.getFreqs() != null) {
-            List<String> list = new ArrayList<>();
-            list.add(getString(R.string.disabled));
-            list.addAll(CPUFreq.getAdjustedFreq(getActivity()));
-
             List<Integer> freqs = CPUBoost.getCpuBootInputFreq();
             for (int i = 0; i < freqs.size(); i++) {
+                List<String> list = new ArrayList<>();
+                list.add(getString(R.string.disabled));
+                list.addAll(CPUFreq.getAdjustedFreq(i, getActivity()));
+
                 SelectView inputCard = new SelectView();
                 if (freqs.size() > 1) {
                     inputCard.setTitle(getString(R.string.input_boost_freq_core, i + 1));
