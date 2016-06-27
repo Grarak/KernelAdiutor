@@ -77,7 +77,7 @@ public class CPUFreq {
         }
     }
 
-    private static boolean isOffline(int cpu) {
+    public static boolean isOffline(int cpu) {
         return getCurFreq(cpu) == 0 || MSMPerformance.supported() || CoreCtl.supported() || QcomBcl.supported();
     }
 

@@ -276,7 +276,10 @@ public class CPUFragment extends BaseControlFragment {
     }
 
     private void showGovernorTunables(int cpu) {
-        CPUFreq.onlineCpu(cpu, true, null);
+        boolean offline = CPUFreq.isOffline(cpu);
+        if (offline) {
+            CPUFreq.onlineCpu(cpu, true, null);
+        }
         String governor = CPUFreq.getGovernor(cpu, false);
         if (governor.isEmpty()) {
             mGovernorTunableErrorDialog = ViewUtils.dialogBuilder(getString(R.string.cpu_governor_tunables_read_error),
@@ -297,6 +300,9 @@ public class CPUFragment extends BaseControlFragment {
             mGovernorTunableFragment.setPath(CPUFreq.getGovernorTunablesPath(cpu, governor), cpu,
                     ApplyOnBootFragment.CPU);
             showForeground();
+        }
+        if (offline) {
+            CPUFreq.onlineCpu(cpu, false, null);
         }
     }
 

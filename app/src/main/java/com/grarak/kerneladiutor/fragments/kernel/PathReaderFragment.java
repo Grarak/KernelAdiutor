@@ -109,11 +109,7 @@ public class PathReaderFragment extends BaseControlFragment {
                             }, new ViewUtils.OnDialogEditTextListener() {
                                 @Override
                                 public void onClick(String text) {
-                                    if (mCPU >= 0) {
-                                        CPUFreq.onlineCpu(mCPU, true, null);
-                                    }
-                                    Control.runSetting(Control.write(text, mPath + "/" + file),
-                                            mCategory, mPath + "/" + file, getActivity());
+                                    run(Control.write(text, mPath + "/" + file), mPath + "/" + file);
                                     getHandler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -139,10 +135,7 @@ public class PathReaderFragment extends BaseControlFragment {
         builder.setItems(values, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (mCPU >= 0) {
-                    CPUFreq.onlineCpu(mCPU, true, null);
-                }
-                Control.runSetting(Control.write(values[which], path), mCategory, path, getActivity());
+                run(Control.write(values[which], path), path);
                 getHandler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -151,6 +144,17 @@ public class PathReaderFragment extends BaseControlFragment {
                 }, 200);
             }
         }).setTitle(name).show();
+    }
+
+    private void run(String command, String id) {
+        boolean offline = CPUFreq.isOffline(mCPU);
+        if (offline) {
+            CPUFreq.onlineCpu(mCPU, true, null);
+        }
+        Control.runSetting(command, mCategory, id, getActivity());
+        if (offline) {
+            CPUFreq.onlineCpu(mCPU, false, null);
+        }
     }
 
 }
