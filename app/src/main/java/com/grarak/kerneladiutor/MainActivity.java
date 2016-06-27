@@ -43,6 +43,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.QcomBcl;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
+import com.grarak.kerneladiutor.utils.kernel.io.IO;
 import com.grarak.kerneladiutor.utils.kernel.screen.Screen;
 import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
@@ -128,6 +129,7 @@ public class MainActivity extends BaseActivity {
             Device.TrustZone.supported();
             GPU.supported();
             Hotplug.supported();
+            IO.supported();
             MSMPerformance.supported();
             QcomBcl.supported();
             Screen.supported();

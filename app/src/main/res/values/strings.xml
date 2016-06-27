@@ -35,6 +35,7 @@
     <string name="min">min</string>
     <string name="mah">mAh</string>
     <string name="ma">mA</string>
+    <string name="kb">kB</string>
 
     <!-- Special signs -->
     <string name="minus" translatable="false">-</string>
@@ -57,6 +58,7 @@
     <string name="wake">Wake</string>
     <string name="sound">Sound</string>
     <string name="battery">Battery</string>
+    <string name="io_scheduler">I/O Scheduler</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -105,7 +107,7 @@
     <string name="cpu_governor_tunables">CPU Governor Tunables</string>
     <string name="cpu_governor_tunables_summary">The various configuration items which are Governor-dependent.</string>
     <string name="cpu_governor_tunables_read_error">Failed to read current governor of CPU.\n\nIf you are using a QCOM big.LITTLE device this is a known problem. The system forces the CPU to turn off cores making it extremely hard to read out CPU specific stats.</string>
-    <string name="cpu_governor_tunables_error">%s is not tuneable</string>
+    <string name="tunables_error">%s is not tuneable</string>
     <string name="mc_power_saving">Multicore Power Saving</string>
     <string name="mc_power_saving_summary">Try to group tasks into the least cores possible.</string>
     <string name="disabled">Disabled</string>
@@ -469,6 +471,16 @@
     <string name="charge_rate">Charge Rate</string>
     <string name="charging_current">Charging Current</string>
     <string name="charging_current_summary">Set charging current. Caution: Exceeding 1250mA may damage your charging driver.</string>
+
+    <!-- I/O Scheduler -->
+    <string name="internal_storage">Internal Storage</string>
+    <string name="external_storage">External Storage</string>
+    <string name="scheduler">Scheduler</string>
+    <string name="scheduler_summary">Set the active I/O elevator algorithm. The Scheduler decides how to handle I/O requests.</string>
+    <string name="scheduler_tunable">Scheduler Tunable</string>
+    <string name="scheduler_tunable_summary">The various configuration items which are Scheduler-dependent.</string>
+    <string name="read_ahead">Read-ahead</string>
+    <string name="read_ahead_summary">The Read-ahead value on the phone memory.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

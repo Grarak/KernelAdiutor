@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Created by willi on 04.05.16.
  */
-public class GovernorTunableFragment extends BaseControlFragment {
+public class PathReaderFragment extends BaseControlFragment {
 
     private String mPath;
     private int mCPU;

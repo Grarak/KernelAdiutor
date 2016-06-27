@@ -69,7 +69,7 @@ public class CPUFragment extends BaseControlFragment {
     private int mCPUMaxScreenOffFreqLITTLE;
     private String mCPUGovernorStrLITTLE;
 
-    private GovernorTunableFragment mGovernorTunableFragment;
+    private PathReaderFragment mGovernorTunableFragment;
     private AlertDialog.Builder mGovernorTunableErrorDialog;
 
     private ThreadPoolExecutor mPool;
@@ -77,7 +77,7 @@ public class CPUFragment extends BaseControlFragment {
 
     @Override
     protected BaseFragment getForegroundFragment() {
-        return mGovernorTunableFragment = new GovernorTunableFragment();
+        return mGovernorTunableFragment = new PathReaderFragment();
     }
 
     @Override
@@ -292,7 +292,7 @@ public class CPUFragment extends BaseControlFragment {
             mGovernorTunableErrorDialog.show();
         } else {
             setForegroundText(governor);
-            mGovernorTunableFragment.setError(getString(R.string.cpu_governor_tunables_error, governor));
+            mGovernorTunableFragment.setError(getString(R.string.tunables_error, governor));
             mGovernorTunableFragment.setPath(CPUFreq.getGovernorTunablesPath(cpu, governor), cpu);
             showForeground();
         }

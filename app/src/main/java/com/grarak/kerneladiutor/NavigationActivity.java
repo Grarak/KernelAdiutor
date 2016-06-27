@@ -42,6 +42,7 @@ import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
 import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
 import com.grarak.kerneladiutor.fragments.kernel.GPUFragment;
+import com.grarak.kerneladiutor.fragments.kernel.IOFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ScreenFragment;
 import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
@@ -54,6 +55,7 @@ import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
+import com.grarak.kerneladiutor.utils.kernel.io.IO;
 import com.grarak.kerneladiutor.utils.kernel.screen.Screen;
 import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
@@ -97,6 +99,9 @@ public class NavigationActivity extends BaseActivity
             sFragments.put(R.string.sound, new SoundFragment());
         }
         sFragments.put(R.string.battery, new BatteryFragment());
+        if (IO.supported()) {
+            sFragments.put(R.string.io_scheduler, new IOFragment());
+        }
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 
