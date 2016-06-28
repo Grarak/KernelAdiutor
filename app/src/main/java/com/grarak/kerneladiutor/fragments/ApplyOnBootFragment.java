@@ -45,6 +45,7 @@ public class ApplyOnBootFragment extends BaseFragment {
     public static final String SOUND = "sound_onboot";
     public static final String BATTERY = "battery_onboot";
     public static final String IO = "io_onboot";
+    public static final String KSM = "ksm_ioboot";
 
     public static ApplyOnBootFragment newInstance(String category) {
         Bundle args = new Bundle();

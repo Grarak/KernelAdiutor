@@ -111,19 +111,14 @@ public abstract class BaseControlFragment extends BaseFragment {
             mAppBarElevation = mAppBarLayout.getElevation();
             mAppBarLayout.setElevation(0);
         }
-        setAppBarLayoutAlpha(showViewPager() ? 0 : 255);
 
         mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
-        if (showViewPager()) {
-            mRecyclerView.addOnScrollListener(mScroller);
-        }
-
         viewPager.setAdapter(mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager()));
         circlePageIndicator.setViewPager(viewPager);
 
-        BaseFragment foregroundFragmnet = getForegroundFragment();
+        BaseFragment foregroundFragment = getForegroundFragment();
         mForegroundVisible = false;
-        if (foregroundFragmnet != null) {
+        if (foregroundFragment != null) {
             mForegroundParent = mRootView.findViewById(R.id.foreground_parent);
             mForegroundText = (TextView) mRootView.findViewById(R.id.foreground_text);
             mForegroundText.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +127,15 @@ public abstract class BaseControlFragment extends BaseFragment {
                     dismissForeground();
                 }
             });
-            getFragmentManager().beginTransaction().replace(R.id.foreground_content, foregroundFragmnet).commit();
+            getFragmentManager().beginTransaction().replace(R.id.foreground_content, foregroundFragment).commit();
             mForegroundHeight = getResources().getDisplayMetrics().heightPixels;
+        }
+
+        if (showViewPager()) {
+            mRecyclerView.addOnScrollListener(mScroller);
+            setAppBarLayoutAlpha(0);
+        } else {
+            setAppBarLayoutAlpha(255);
         }
 
         if (savedInstanceState == null) {
@@ -178,8 +180,8 @@ public abstract class BaseControlFragment extends BaseFragment {
         super.onViewFinished();
         if (!showViewPager()) {
             mViewPagerParent.setVisibility(View.GONE);
-            mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), mToolBar.getHeight(), mRecyclerView.getPaddingRight(),
-                    mRecyclerView.getPaddingBottom());
+            mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), isForeground() ? 0 : mToolBar.getHeight(),
+                    mRecyclerView.getPaddingRight(), mRecyclerView.getPaddingBottom());
         }
     }
 
@@ -200,6 +202,7 @@ public abstract class BaseControlFragment extends BaseFragment {
     protected abstract void addItems(List<RecyclerViewItem> items);
 
     private void setAppBarLayoutAlpha(int alpha) {
+        if (isForeground()) return;
         Activity activity;
         if ((activity = getActivity()) != null && mAppBarLayout != null && mToolBar != null) {
             int colorPrimary = Utils.getColorPrimaryColor(activity);
@@ -361,6 +364,10 @@ public abstract class BaseControlFragment extends BaseFragment {
         }
     }
 
+    protected boolean isForeground() {
+        return false;
+    }
+
     protected BaseFragment getForegroundFragment() {
         return null;
     }
@@ -453,6 +460,9 @@ public abstract class BaseControlFragment extends BaseFragment {
         super.onDestroy();
         mItems.clear();
         setAppBarLayoutAlpha(255);
+        if (!isForeground()) {
+            mAppBarLayout.setTranslationY(0);
+        }
         if (mAppBarLayout != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mAppBarLayout.setElevation(mAppBarElevation);
         }

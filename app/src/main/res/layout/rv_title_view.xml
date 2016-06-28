@@ -4,7 +4,6 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:ellipsize="middle"
     android:fontFamily="sans-serif-thin"
     android:minHeight="45dp"
     android:paddingEnd="16dp"
@@ -12,5 +11,5 @@
     android:paddingRight="16dp"
     android:paddingStart="16dp"
     android:paddingTop="16dp"
-    android:singleLine="true"
+    android:textIsSelectable="true"
     android:textSize="23sp" />

@@ -60,6 +60,7 @@
     <string name="sound">Sound</string>
     <string name="battery">Battery</string>
     <string name="io_scheduler">I/O Scheduler</string>
+    <string name="ksm">Kernel Samepage Merging</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -114,7 +115,7 @@
     <string name="cpu_governor_summary">The CPU governor determines how the CPU behaves in response to changes in workload. Changing the governor will impact how the CPU scales through the frequency steps available to your CPU.</string>
     <string name="cpu_governor_tunables">CPU Governor Tunables</string>
     <string name="cpu_governor_tunables_summary">The various configuration items which are Governor-dependent.</string>
-    <string name="cpu_governor_tunables_read_error">Failed to read current governor of CPU.\n\nIf you are using a QCOM big.LITTLE device this is a known problem. The system forces the CPU to turn off cores making it extremely hard to read out CPU specific stats.</string>
+    <string name="cpu_governor_tunables_read_error">Failed to read current governor of CPU.\n\nIf you are using a QCOM big.LITTLE device this is a known problem. The system forces the CPU to turn off cores making it extremely hard to read out CPU specific stats. Try to select this option again. The CPU sometimes refuses to turn on a core.</string>
     <string name="tunables_error">%s is not tuneable</string>
     <string name="mc_power_saving">Multicore Power Saving</string>
     <string name="mc_power_saving_summary">Try to group tasks into the least cores possible.</string>
@@ -491,6 +492,18 @@
     <string name="scheduler_tunable_summary">The various configuration items which are Scheduler-dependent.</string>
     <string name="read_ahead">Read-ahead</string>
     <string name="read_ahead_summary">The Read-ahead value on the phone memory.</string>
+
+    <!-- Kernel Samepage Merging -->
+    <string name="full_scans">Full scans</string>
+    <string name="pages_shared">Pages shared</string>
+    <string name="pages_sharing">Pages sharing</string>
+    <string name="pages_unshared">Pages unshared</string>
+    <string name="pages_volatile">Pages volatile</string>
+    <string name="ksm_summary">Reduces memory usage but has an impact on the CPU usage.</string>
+    <string name="pages_to_scan">Pages to scan</string>
+    <string name="sleep_milliseconds">Sleep between scans</string>
+    <string name="deferred_timer">Deferred timer</string>
+    <string name="deferred_timer_summary">Reduces some CPU usage in return for less memory savings.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

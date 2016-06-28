@@ -105,7 +105,7 @@ public class CPUFreq {
     }
 
     public static int getLITTLECpuGovernorTunable() {
-        return is8996() ? 1 : getLITTLECpu();
+        return getLITTLECpu();
     }
 
     public static void setGovernor(String governor, int min, int max, Context context) {

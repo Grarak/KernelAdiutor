@@ -87,7 +87,6 @@ public class CPUFragment extends BaseControlFragment {
         if (mPool == null) {
             mPool = new ThreadPoolExecutor(CPUFreq.getCpuCount() << 1, Integer.MAX_VALUE, 1,
                     TimeUnit.MINUTES, new SynchronousQueue<Runnable>());
-
         }
         if (CPUFreq.getCpuCount() > 1) {
             addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.cores,

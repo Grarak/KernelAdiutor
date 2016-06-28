@@ -7,6 +7,13 @@
     "gpu-offset": 1
   },
   {
+    "board": "msm8228",
+    "cpu": "/sys/class/thermal/thermal_zone0/temp",
+    "gpu": "/sys/class/thermal/thermal_zone2/temp",
+    "cpu-offset": 1,
+    "gpu-offset": 1
+  },
+  {
     "board": "msm8610",
     "cpu": "/sys/class/thermal/thermal_zone5/temp",
     "cpu-offset": 1

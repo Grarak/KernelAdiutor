@@ -57,6 +57,11 @@ public class PathReaderFragment extends BaseControlFragment {
     }
 
     @Override
+    protected boolean isForeground() {
+        return true;
+    }
+
+    @Override
     protected RecyclerView.LayoutManager getLayoutManager() {
         return new LinearLayoutManager(getActivity());
     }
