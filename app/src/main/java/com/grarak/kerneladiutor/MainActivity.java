@@ -124,6 +124,7 @@ public class MainActivity extends BaseActivity {
             Battery.supported(MainActivity.this);
             CPUBoost.supported();
             Device.CPUInfo.load();
+            Device.Input.supported();
             Device.MemInfo.load();
             Device.ROMInfo.load();
             Device.TrustZone.supported();

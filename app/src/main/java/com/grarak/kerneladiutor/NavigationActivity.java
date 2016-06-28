@@ -48,6 +48,7 @@ import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
+import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -75,6 +76,7 @@ public class NavigationActivity extends BaseActivity
         sFragments.put(R.string.statistics, null);
         sFragments.put(R.string.overall, new OverallFragment());
         sFragments.put(R.string.device, new DeviceFragment());
+        sFragments.put(R.string.inputs, new InputsFragment());
         sFragments.put(R.string.kernel, null);
         sFragments.put(R.string.cpu, new CPUFragment());
         if (Voltage.supported()) {

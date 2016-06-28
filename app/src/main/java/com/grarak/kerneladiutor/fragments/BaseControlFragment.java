@@ -105,24 +105,21 @@ public abstract class BaseControlFragment extends BaseFragment {
         }) : mRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager = getLayoutManager());
 
-        mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
-        if (!showViewPager()) {
-            mViewPagerParent.setVisibility(View.GONE);
-            mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), 0, mRecyclerView.getPaddingRight(),
-                    mRecyclerView.getPaddingBottom());
-        } else {
-            mRecyclerView.addOnScrollListener(mScroller);
-        }
         mAppBarLayout = ((NavigationActivity) getActivity()).getAppBarLayout();
+        mToolBar = ((NavigationActivity) getActivity()).getToolBar();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mAppBarElevation = mAppBarLayout.getElevation();
             mAppBarLayout.setElevation(0);
         }
-        mToolBar = ((NavigationActivity) getActivity()).getToolBar();
+        setAppBarLayoutAlpha(showViewPager() ? 0 : 255);
+
+        mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
+        if (showViewPager()) {
+            mRecyclerView.addOnScrollListener(mScroller);
+        }
 
         viewPager.setAdapter(mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager()));
         circlePageIndicator.setViewPager(viewPager);
-        setAppBarLayoutAlpha(0);
 
         BaseFragment foregroundFragmnet = getForegroundFragment();
         mForegroundVisible = false;
@@ -174,6 +171,16 @@ public abstract class BaseControlFragment extends BaseFragment {
         }
 
         return mRootView;
+    }
+
+    @Override
+    public void onViewFinished() {
+        super.onViewFinished();
+        if (!showViewPager()) {
+            mViewPagerParent.setVisibility(View.GONE);
+            mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), mToolBar.getHeight(), mRecyclerView.getPaddingRight(),
+                    mRecyclerView.getPaddingBottom());
+        }
     }
 
     protected void init() {

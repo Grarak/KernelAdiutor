@@ -24,12 +24,115 @@ import android.os.Build;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by willi on 31.12.15.
  */
 public class Device {
+
+    public static class Input {
+
+        private static final String BUS_INPUT = "/proc/bus/input/devices";
+        private static List<Item> mItems;
+
+        public static List<Item> getItems() {
+            if (mItems != null) {
+                return mItems;
+            }
+
+            String value = Utils.readFile(BUS_INPUT);
+            mItems = new ArrayList<>();
+            List<String> input = new ArrayList<>();
+            for (String line : value.split("\\r?\\n")) {
+                if (line.isEmpty()) {
+                    mItems.add(new Item(input));
+                    input = new ArrayList<>();
+                } else {
+                    input.add(line);
+                }
+            }
+
+            return mItems;
+        }
+
+        public static void supported() {
+            getItems();
+        }
+
+        public static class Item {
+
+            private String mBus;
+            private String mVendor;
+            private String mProduct;
+            private String mVersion;
+            private String mName;
+            private String mSysfs;
+            private String mHandlers;
+
+            public Item(List<String> input) {
+                for (String line : input) {
+                    if (line.startsWith("I:")) {
+                        line = line.replace("I:", "").trim();
+                        try {
+                            mBus = line.split("Bus=")[1].split(" ")[0];
+                        } catch (Exception ignored) {
+                        }
+                        try {
+                            mVendor = line.split("Vendor=")[1].split(" ")[0];
+                        } catch (Exception ignored) {
+                        }
+                        try {
+                            mProduct = line.split("Product=")[1].split(" ")[0];
+                        } catch (Exception ignored) {
+                        }
+                        try {
+                            mVersion = line.split("Version=")[1].split(" ")[0];
+                        } catch (Exception ignored) {
+                        }
+                    } else if (line.startsWith("N:")) {
+                        mName = line.replace("N:", "").trim().replace("Name=", "").replace("\"", "");
+                    } else if (line.startsWith("S:")) {
+                        mSysfs = line.replace("S:", "").trim().replace("Sysfs=", "").replace("\"", "");
+                    } else if (line.startsWith("H:")) {
+                        mHandlers = line.replace("H:", "").trim().replace("Handlers=", "").replace("\"", "");
+                    }
+                }
+            }
+
+            public String getBus() {
+                return mBus;
+            }
+
+            public String getVendor() {
+                return mVendor;
+            }
+
+            public String getProduct() {
+                return mProduct;
+            }
+
+            public String getVersion() {
+                return mVersion;
+            }
+
+            public String getName() {
+                return mName;
+            }
+
+            public String getSysfs() {
+                return mSysfs;
+            }
+
+            public String getHandlers() {
+                return mHandlers;
+            }
+
+        }
+
+    }
 
     public static class ROMInfo {
 

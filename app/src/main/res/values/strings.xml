@@ -49,6 +49,7 @@
     <!-- Menus -->
     <string name="overall">Overall</string>
     <string name="device">Device</string>
+    <string name="inputs">Inputs</string>
     <string name="cpu">CPU</string>
     <string name="cpu_voltage">CPU Voltage</string>
     <string name="cpu_hotplug">CPU Hotplug</string>
@@ -93,6 +94,13 @@
     <string name="trustzone" translatable="false">TrustZone</string>
     <string name="hardware">Hardware</string>
     <string name="architecture">Architecture</string>
+
+    <!-- Inputs -->
+    <string name="bus">Bus</string>
+    <string name="product">Product</string>
+    <string name="version">Version</string>
+    <string name="sysfs" translatable="false">Sysfs</string>
+    <string name="handlers">Handlers</string>
 
     <!-- CPU -->
     <string name="cores">%d cores</string>
