@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by willi on 02.05.16.
  */
-public class Control extends Thread {
+public class Control {
 
     private static final String TAG = Control.class.getSimpleName();
 
