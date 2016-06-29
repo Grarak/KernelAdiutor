@@ -62,6 +62,7 @@
     <string name="io_scheduler">I/O Scheduler</string>
     <string name="ksm">Kernel Samepage Merging</string>
     <string name="lmk">Low Memory Killer</string>
+    <string name="virtual_memory">Virtual Memory</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->

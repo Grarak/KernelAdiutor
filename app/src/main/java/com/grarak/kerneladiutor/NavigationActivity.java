@@ -48,6 +48,7 @@ import com.grarak.kerneladiutor.fragments.kernel.LMKFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ScreenFragment;
 import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
+import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
@@ -114,6 +115,7 @@ public class NavigationActivity extends BaseActivity
         if (LMK.supported()) {
             sFragments.put(R.string.lmk, new LMKFragment());
         }
+        sFragments.put(R.string.virtual_memory, new VMFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 
