@@ -61,8 +61,8 @@ public class Gestures {
         list.add(context.getString(R.string.draw_e));
         list.add(context.getString(R.string.draw_o));
         list.add(context.getString(R.string.draw_w));
-        list.add(context.getString(R.string.draw_m));
         list.add(context.getString(R.string.draw_c));
+        list.add(context.getString(R.string.draw_m));
         list.add(context.getString(R.string.dt2w));
         return list;
     }
