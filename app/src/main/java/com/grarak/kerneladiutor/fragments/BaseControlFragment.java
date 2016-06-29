@@ -138,7 +138,7 @@ public abstract class BaseControlFragment extends BaseFragment {
             setAppBarLayoutAlpha(255);
         }
 
-        if (savedInstanceState == null) {
+        if (itemsSize() == 0) {
             mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
 
                 @Override

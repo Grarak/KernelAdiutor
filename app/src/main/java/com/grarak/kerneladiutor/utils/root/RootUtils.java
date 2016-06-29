@@ -68,6 +68,10 @@ public class RootUtils {
         return false;
     }
 
+    public static void chmod(String file, String permission) {
+        runCommand("chmod " + permission + " " + file);
+    }
+
     public static String getProp(String prop) {
         return runCommand("getprop " + prop);
     }

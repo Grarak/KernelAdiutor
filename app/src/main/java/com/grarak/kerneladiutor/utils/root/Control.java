@@ -24,15 +24,20 @@ import android.util.Log;
 
 import com.grarak.kerneladiutor.database.Settings;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by willi on 02.05.16.
  */
-public class Control {
+public class Control extends Thread {
 
     private static final String TAG = Control.class.getSimpleName();
-    private static final Control sControl = new Control();
+
+    private static Control sControl;
+
+    private Thread mSyncThread;
+    private List<Thread> mThreads = new ArrayList<>();
 
     public static String startService(String prop) {
         return "start " + prop;
@@ -46,7 +51,11 @@ public class Control {
         return "echo '" + text + "' > " + path;
     }
 
-    private void apply(String command, String category, String id, Context context) {
+    public static String chmod(String permission, String file) {
+        return "chmod " + permission + " " + file;
+    }
+
+    private synchronized void apply(String command, String category, String id, Context context) {
         if (context != null) {
             Settings settings = new Settings(context);
             List<Settings.SettingsItem> items = settings.getAllSettings();
@@ -63,16 +72,45 @@ public class Control {
         Log.i(TAG, command);
     }
 
-    public static void runSetting(final String command, final String category, final String id,
-                                  final Context context) {
-        new Thread(new Runnable() {
+    private void run(final String command, final String category, final String id,
+                     final Context context) {
+        final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                synchronized (sControl) {
-                    sControl.apply(command, category, id, context);
-                }
+                apply(command, category, id, context);
             }
-        }).start();
+        });
+        mThreads.add(thread);
+
+        if (mSyncThread == null) {
+            mSyncThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (mThreads.size() != 0) {
+                        try {
+                            mThreads.get(0).start();
+                            mThreads.get(0).join();
+                        } catch (InterruptedException ignored) {
+                        }
+                        mThreads.remove(0);
+                    }
+                    mSyncThread = null;
+                }
+            });
+            mSyncThread.start();
+        }
+    }
+
+    private static Control getInstance() {
+        if (sControl == null) {
+            sControl = new Control();
+        }
+        return sControl;
+    }
+
+    public static void runSetting(final String command, final String category, final String id,
+                                  final Context context) {
+        getInstance().run(command, category, id, context);
     }
 
 }

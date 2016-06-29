@@ -60,6 +60,10 @@ public class DescriptionView extends RecyclerViewItem {
         refresh();
     }
 
+    public CharSequence getSummary() {
+        return mSummary;
+    }
+
     @Override
     protected void refresh() {
         super.refresh();
