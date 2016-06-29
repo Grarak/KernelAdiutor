@@ -41,6 +41,7 @@ import com.grarak.kerneladiutor.fragments.kernel.BatteryFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
 import com.grarak.kerneladiutor.fragments.kernel.CPUVoltage;
+import com.grarak.kerneladiutor.fragments.kernel.EntropyFragment;
 import com.grarak.kerneladiutor.fragments.kernel.GPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.IOFragment;
 import com.grarak.kerneladiutor.fragments.kernel.KSMFragment;
@@ -58,6 +59,7 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
+import com.grarak.kerneladiutor.utils.kernel.entropy.Entropy;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
 import com.grarak.kerneladiutor.utils.kernel.io.IO;
 import com.grarak.kerneladiutor.utils.kernel.ksm.KSM;
@@ -116,6 +118,9 @@ public class NavigationActivity extends BaseActivity
             sFragments.put(R.string.lmk, new LMKFragment());
         }
         sFragments.put(R.string.virtual_memory, new VMFragment());
+        if (Entropy.supported()) {
+            sFragments.put(R.string.entropy, new EntropyFragment());
+        }
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 

@@ -63,6 +63,7 @@
     <string name="ksm">Kernel Samepage Merging</string>
     <string name="lmk">Low Memory Killer</string>
     <string name="virtual_memory">Virtual Memory</string>
+    <string name="entropy">Entropy</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -520,6 +521,12 @@
     <string name="light">Light</string>
     <string name="medium">Medium</string>
     <string name="very_aggressive">Very Aggressive</string>
+
+    <!-- Entropy -->
+    <string name="available">Available</string>
+    <string name="poolsize">Poolsize</string>
+    <string name="read">Read</string>
+    <string name="write">Write</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>
