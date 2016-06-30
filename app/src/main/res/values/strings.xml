@@ -64,6 +64,7 @@
     <string name="lmk">Low Memory Killer</string>
     <string name="virtual_memory">Virtual Memory</string>
     <string name="entropy">Entropy</string>
+    <string name="misc">Misc</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -527,6 +528,45 @@
     <string name="poolsize">Poolsize</string>
     <string name="read">Read</string>
     <string name="write">Write</string>
+
+    <!-- Misc -->
+    <string name="vibration_strength">Vibration Strength</string>
+    <string name="android_logger">Android logging</string>
+    <string name="crc">Software CRC control</string>
+    <string name="crc_summary">CRC is a mechanism aiming to prevent data corruption when enabled. Data blocks can lose up to 30% of their performance.</string>
+    <string name="fsync">Fsync</string>
+    <string name="fsync_summary">Disable for better file system performance at the risk of data loss in case of a system crash.</string>
+    <string name="dynamic_fsync">Dynamic Fsync</string>
+    <string name="dynamic_fsync_summary">When enabled and screen is on, fsync operation is asynchronous. When screen is off, this operation is done synchronously.</string>
+    <string name="gentlefairsleepers">Gentle Fair Sleepers</string>
+    <string name="gentlefairsleepers_summary">Only give sleepers 50% of their service deficit. Disabling this can save a little battery power.</string>
+    <string name="power_suspend_mode">Power Suspend Mode</string>
+    <string name="power_suspend_mode_summary">Kernel Mode, LCD Hooks and Highest Level Hook are automatically managed by the kernel. To manually enable or disable the Power Suspend State choose User Mode.</string>
+    <string name="autosleep">Autosleep</string>
+    <string name="userspace">Userspace</string>
+    <string name="lcd_panel">LCD Panel</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="power_suspend_state">Power Suspend State</string>
+    <string name="power_suspend_state_summary">Kernel power management driver when screen is off. Better battery savings if enabled. Note: You can only change this setting if Power Suspend Mode is in User Mode.</string>
+    <string name="network">Network</string>
+    <string name="tcp">TCP Congestion Algorithm</string>
+    <string name="tcp_summary">The Transmission Control Protocol is one of the core protocols of the Internet protocol suite (IP), and is so common that the entire suite is often called TCP/IP.</string>
+    <string name="hostname">Hostname</string>
+    <string name="wakelock">Wakelock</string>
+    <string name="smb135x_wakelock">smb135x Wakelock</string>
+    <string name="smb135x_wakelock_summary">Prevent wakelock when power disconnected.</string>
+    <string name="sensor_ind_wakelock">sensor_ind Wakelock</string>
+    <string name="sensor_ind_wakelock_summary">Prevent wakelock when Ambient Display disabled.</string>
+    <string name="msm_hsic_host_wakelock">msm_hsic_host Wakelock</string>
+    <string name="msm_hsic_host_wakelock_summary">Prevent msm_hsic_host wakelock.</string>
+    <string name="wlan_rx_wakelock">wlan_rx Wakelock</string>
+    <string name="wlan_rx_wakelock_summary">Prevent wlan_rx wakelock.</string>
+    <string name="wlan_ctrl_wakelock">wlan_ctrl Wakelock</string>
+    <string name="wlan_ctrl_wakelock_summary">Prevent wlan_ctrl wakelock.</string>
+    <string name="wlan_wakelock">wlan Wakelock</string>
+    <string name="wlan_wakelock_summary">Prevent wlan wakelock.</string>
+    <string name="wlan_rx_wakelock_divider">wlan_rx Wakelock Divider</string>
+    <string name="msm_hsic_wakelock_divider">msm_hsic Wakelock Divider</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

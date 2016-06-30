@@ -46,6 +46,7 @@ import com.grarak.kerneladiutor.fragments.kernel.GPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.IOFragment;
 import com.grarak.kerneladiutor.fragments.kernel.KSMFragment;
 import com.grarak.kerneladiutor.fragments.kernel.LMKFragment;
+import com.grarak.kerneladiutor.fragments.kernel.MiscFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ScreenFragment;
 import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
@@ -121,6 +122,7 @@ public class NavigationActivity extends BaseActivity
         if (Entropy.supported()) {
             sFragments.put(R.string.entropy, new EntropyFragment());
         }
+        sFragments.put(R.string.misc, new MiscFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 

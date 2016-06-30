@@ -39,6 +39,10 @@ public class Control {
     private Thread mSyncThread;
     private List<Thread> mThreads = new ArrayList<>();
 
+    public static String setProp(String prop, String value) {
+        return "setprop " + prop + " " + value;
+    }
+
     public static String startService(String prop) {
         return "start " + prop;
     }

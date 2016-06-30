@@ -37,4 +37,12 @@
         <item>@string/empty_app</item>
     </string-array>
 
+    <!-- Misc -->
+    <string-array name="powersuspend_items">
+        <item>@string/autosleep</item>
+        <item>@string/userspace</item>
+        <item>@string/lcd_panel</item>
+        <item>@string/hybrid</item>
+    </string-array>
+
 </resources>

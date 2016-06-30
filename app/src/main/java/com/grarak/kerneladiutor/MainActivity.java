@@ -45,6 +45,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPU;
 import com.grarak.kerneladiutor.utils.kernel.io.IO;
 import com.grarak.kerneladiutor.utils.kernel.ksm.KSM;
+import com.grarak.kerneladiutor.utils.kernel.misc.Vibration;
 import com.grarak.kerneladiutor.utils.kernel.screen.Screen;
 import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
@@ -139,6 +140,7 @@ public class MainActivity extends BaseActivity {
             Sound.supported();
             Temperature.supported(MainActivity.this);
             Thermal.supported();
+            Vibration.supported();
             Voltage.supported();
             Wake.supported();
         }

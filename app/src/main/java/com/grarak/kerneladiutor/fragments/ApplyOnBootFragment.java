@@ -49,6 +49,7 @@ public class ApplyOnBootFragment extends BaseFragment {
     public static final String LMK = "lmk_onboot";
     public static final String VM = "vm_onboot";
     public static final String ENTROPY = "entropy_onboot";
+    public static final String MISC = "misc_onboot";
 
     public static ApplyOnBootFragment newInstance(String category) {
         Bundle args = new Bundle();

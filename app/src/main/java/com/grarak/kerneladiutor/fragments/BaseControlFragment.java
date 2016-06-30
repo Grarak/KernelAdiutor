@@ -100,7 +100,7 @@ public abstract class BaseControlFragment extends BaseFragment {
                 = new RecyclerViewAdapter(mItems, new RecyclerViewAdapter.OnViewChangedListener() {
             @Override
             public void viewChanged() {
-                mScroller.onScrolled(mRecyclerView, 0, 0);
+                adjustScrollPosition();
             }
         }) : mRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager = getLayoutManager());
@@ -191,8 +191,8 @@ public abstract class BaseControlFragment extends BaseFragment {
     protected void postInit() {
     }
 
-    protected void scrollToTop() {
-        mRecyclerView.smoothScrollToPosition(0);
+    protected void adjustScrollPosition() {
+        mScroller.onScrolled(mRecyclerView, 0, 0);
     }
 
     protected Bundle getSavedInstanceState() {
@@ -289,7 +289,10 @@ public abstract class BaseControlFragment extends BaseFragment {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            mScrollDistance = -mRecyclerViewAdapter.getFirstItem().getTop() + mRecyclerView.getPaddingTop();
+            View firstItem = mRecyclerViewAdapter.getFirstItem();
+            if (firstItem == null) return;
+
+            mScrollDistance = -firstItem.getTop() + mRecyclerView.getPaddingTop();
 
             if (mScrollDistance > mViewPagerParent.getHeight() - mAppBarLayout.getHeight()) {
                 mAppBarLayoutDistance += dy;
