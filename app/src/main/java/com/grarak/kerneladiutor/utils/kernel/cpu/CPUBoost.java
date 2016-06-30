@@ -88,17 +88,21 @@ public class CPUBoost {
                     CPU_BOOST_INPUT_BOOST_FREQ + core, context);
         } else {
             run(Control.write(String.valueOf(value), CPU_BOOST_INPUT_BOOST_FREQ),
-                    CPU_BOOST_INPUT_BOOST_FREQ + core, context);
+                    CPU_BOOST_INPUT_BOOST_FREQ, context);
         }
     }
 
     public static List<Integer> getCpuBootInputFreq() {
         List<Integer> list = new ArrayList<>();
         String value = Utils.readFile(CPU_BOOST_INPUT_BOOST_FREQ);
-        for (String core : value.split(" ")) {
-            if (core.contains(":")) core = core.split(":")[1];
-            if (core.equals("0")) list.add(0);
-            else list.add(CPUFreq.getFreqs().indexOf(Utils.strToInt(core)) + 1);
+        if (value.contains(":")) {
+            for (String line : value.split(" ")) {
+                int core = Utils.strToInt(line.split(":")[0]);
+                String freq = line.split(":")[1];
+                list.add(freq.equals("0") ? 0 : CPUFreq.getFreqs(core).indexOf(Utils.strToInt(freq)) + 1);
+            }
+        } else {
+            list.add(value.equals("0") ? 0 : CPUFreq.getFreqs().indexOf(Utils.strToInt(value)) + 1);
         }
         return list;
     }

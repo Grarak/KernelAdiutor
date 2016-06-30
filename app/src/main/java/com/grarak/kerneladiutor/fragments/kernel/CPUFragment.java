@@ -21,6 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
@@ -483,7 +484,7 @@ public class CPUFragment extends BaseControlFragment {
             cpuBoost.add(inputMs);
         }
 
-        if (CPUBoost.hasCpuBoostInputFreq() && CPUFreq.getFreqs() != null) {
+        if (CPUBoost.hasCpuBoostInputFreq()) {
             List<Integer> freqs = CPUBoost.getCpuBootInputFreq();
             for (int i = 0; i < freqs.size(); i++) {
                 List<String> list = new ArrayList<>();
@@ -504,10 +505,11 @@ public class CPUFragment extends BaseControlFragment {
                 inputCard.setOnItemSelected(new SelectView.OnItemSelected() {
                     @Override
                     public void onItemSelected(SelectView selectView, int position, String item) {
-                        CPUBoost.setCpuBoostInputFreq(position == 0 ? 0 : CPUFreq.getFreqs().get(position - 1),
+                        CPUBoost.setCpuBoostInputFreq(position == 0 ? 0 : CPUFreq.getFreqs(core).get(position - 1),
                                 core, getActivity());
                     }
                 });
+
                 cpuBoost.add(inputCard);
             }
         }

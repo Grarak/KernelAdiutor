@@ -398,7 +398,7 @@ public class CPUFreq {
 
     public static boolean isBigLITTLE() {
         boolean bigLITTLE = getCpuCount() > 4;
-        if (!bigLITTLE && !is8996() && (Device.getBoard().startsWith("mt6"))) return false;
+        if (!bigLITTLE && !is8996() || Device.getBoard().startsWith("mt6")) return false;
 
         if (sBigCpu == -1 || sLITTLECpu == -1) {
             if (is8996()) {
