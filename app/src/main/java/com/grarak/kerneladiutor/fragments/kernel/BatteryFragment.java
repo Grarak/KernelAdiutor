@@ -108,7 +108,7 @@ public class BatteryFragment extends RecyclerViewFragment implements
 
     private void blxInit() {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 101; i++) list.add(String.valueOf(i));
+        for (int i = 0; i <= 101; i++) list.add(String.valueOf(i));
 
         mBlxCard = new SeekBarCardView.DSeekBarCard(list);
         mBlxCard.setTitle(getString(R.string.blx));
