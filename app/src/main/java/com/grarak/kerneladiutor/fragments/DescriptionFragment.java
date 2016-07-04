@@ -21,6 +21,7 @@ package com.grarak.kerneladiutor.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +34,11 @@ import com.grarak.kerneladiutor.R;
  */
 public class DescriptionFragment extends BaseFragment {
 
-    public static DescriptionFragment newInstance(String title, String summary) {
+    public static DescriptionFragment newInstance(CharSequence title, CharSequence summary) {
         Bundle args = new Bundle();
         DescriptionFragment fragment = new DescriptionFragment();
-        args.putString("title", title);
-        args.putString("summary", summary);
+        args.putCharSequence("title", title);
+        args.putCharSequence("summary", summary);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,9 +58,10 @@ public class DescriptionFragment extends BaseFragment {
         mTitleView = (TextView) rootView.findViewById(R.id.title);
         mSummaryView = (TextView) rootView.findViewById(R.id.summary);
         mSummaryView.setSelected(true);
+        mSummaryView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        mTitle = getArguments().getString("title");
-        mSummary = getArguments().getString("summary");
+        mTitle = getArguments().getCharSequence("title");
+        mSummary = getArguments().getCharSequence("summary");
 
         refresh();
         return rootView;
@@ -81,18 +83,22 @@ public class DescriptionFragment extends BaseFragment {
     }
 
     private void refresh() {
-        if (mTitle != null) {
-            mTitleView.setText(mTitle);
-            mTitleView.setVisibility(View.VISIBLE);
-        } else {
-            mTitleView.setVisibility(View.GONE);
+        if (mTitleView != null) {
+            if (mTitle != null) {
+                mTitleView.setText(mTitle);
+                mTitleView.setVisibility(View.VISIBLE);
+            } else {
+                mTitleView.setVisibility(View.GONE);
+            }
         }
 
-        if (mSummary != null) {
-            mSummaryView.setText(mSummary);
-            mSummaryView.setVisibility(View.VISIBLE);
-        } else {
-            mSummaryView.setVisibility(View.GONE);
+        if (mSummaryView != null) {
+            if (mSummary != null) {
+                mSummaryView.setText(mSummary);
+                mSummaryView.setVisibility(View.VISIBLE);
+            } else {
+                mSummaryView.setVisibility(View.GONE);
+            }
         }
     }
 }

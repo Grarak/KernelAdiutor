@@ -36,13 +36,15 @@ public abstract class Provider {
     /**
      * JSON Objects
      */
-    private JSONObject databaseMain;
-    private JSONArray databaseItems;
+    private JSONObject mDatabaseMain;
+    private JSONArray mDatabaseItems;
 
     /**
      * JSON file location
      */
-    private final String path;
+    private final String mPath;
+
+    private int mVersion;
 
     /**
      * JSON Database is used to store large amount of datasets
@@ -51,24 +53,25 @@ public abstract class Provider {
      * @param version If version doesn't match with the dataset, remove all saved datas
      */
     public Provider(String path, int version) {
-        this.path = path;
+        mPath = path;
+        mVersion = version;
         try {
             String json = Utils.readFile(path, false);
             if (json != null) {
-                databaseMain = new JSONObject(json);
-                if (databaseMain.getInt("version") == version) {
-                    databaseItems = databaseMain.getJSONArray("database");
+                mDatabaseMain = new JSONObject(json);
+                if (mDatabaseMain.getInt("version") == version) {
+                    mDatabaseItems = mDatabaseMain.getJSONArray("database");
                 }
             }
         } catch (JSONException ignored) {
         }
 
-        if (databaseItems == null) {
-            databaseItems = new JSONArray();
+        if (mDatabaseItems == null) {
+            mDatabaseItems = new JSONArray();
         }
         try {
-            databaseMain = new JSONObject();
-            databaseMain.put("version", version);
+            mDatabaseMain = new JSONObject();
+            mDatabaseMain.put("version", version);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,7 +83,7 @@ public abstract class Provider {
      * @param items the dataset will put into the JSONArray
      */
     public void putItem(JSONObject items) {
-        databaseItems.put(items);
+        mDatabaseItems.put(items);
     }
 
     /**
@@ -92,7 +95,7 @@ public abstract class Provider {
         List<DBJsonItem> items = new ArrayList<>();
         try {
             for (int i = 0; i < length(); i++) {
-                items.add(getItem(databaseItems.getJSONObject(i)));
+                items.add(getItem(mDatabaseItems.getJSONObject(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -107,17 +110,21 @@ public abstract class Provider {
         try {
             for (int i = 0; i < length(); i++) {
                 if (i != position) {
-                    jsonArray.put(databaseItems.getJSONObject(i));
+                    jsonArray.put(mDatabaseItems.getJSONObject(i));
                 }
             }
-            databaseItems = jsonArray;
+            mDatabaseItems = jsonArray;
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     public int length() {
-        return databaseItems.length();
+        return mDatabaseItems.length();
+    }
+
+    public int getVersion() {
+        return mVersion;
     }
 
     /**
@@ -125,8 +132,8 @@ public abstract class Provider {
      */
     public void commit() {
         try {
-            databaseMain.put("database", databaseItems);
-            Utils.writeFile(path, databaseMain.toString(), false, false);
+            mDatabaseMain.put("database", mDatabaseItems);
+            Utils.writeFile(mPath, mDatabaseMain.toString(), false, false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -142,6 +149,22 @@ public abstract class Provider {
 
         public JSONObject getItem() {
             return item;
+        }
+
+        public int getInt(String name) {
+            try {
+                return getItem().getInt(name);
+            } catch (JSONException ignored) {
+                return 0;
+            }
+        }
+
+        public String getString(String name) {
+            try {
+                return getItem().getString(name);
+            } catch (JSONException ignored) {
+                return null;
+            }
         }
 
     }

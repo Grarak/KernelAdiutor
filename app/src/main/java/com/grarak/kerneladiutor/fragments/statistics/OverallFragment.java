@@ -38,7 +38,7 @@ import android.widget.TextView;
 import com.bvalosek.cpuspy.CpuSpyApp;
 import com.bvalosek.cpuspy.CpuStateMonitor;
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
@@ -58,7 +58,7 @@ import java.util.List;
 /**
  * Created by willi on 19.04.16.
  */
-public class OverallFragment extends BaseControlFragment {
+public class OverallFragment extends RecyclerViewFragment {
 
     private static final String TAG = OverallFragment.class.getSimpleName();
 

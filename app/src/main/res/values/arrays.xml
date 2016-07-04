@@ -45,4 +45,15 @@
         <item>@string/hybrid</item>
     </string-array>
 
+    <!-- Custom Controls -->
+    <string-array name="custom_controls_options">
+        <item>@string/create</item>
+        <item>@string/control_import</item>
+    </string-array>
+    <string-array name="custom_controls_items">
+        <item>@string/control_switch</item>
+        <item>@string/control_seekbar</item>
+        <item>@string/control_generic</item>
+    </string-array>
+
 </resources>

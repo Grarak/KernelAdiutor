@@ -17,6 +17,10 @@
     <string name="unknown">Unknown</string>
 
     <string name="pirated">Seems like the donation app wasn\'t purchased through Play Store! If you pirated it, then shame on you!</string>
+    <string name="donate">Donate</string>
+    <string name="donate_summary">This feature is only available when the donation app is installed! Don\'t worry though. Because this app is open source you can easily build it yourself and remove this check. But I hope you support developers anyway. Thanks for using Kernel Adiutor! Once you bought the donation app you have to restart Kernel Adiutor in order to enable all features.</string>
+    <string name="donate_nope">I won\'t fall for this scam!</string>
+    <string name="donate_yes">I love this app. Must donate!</string>
 
     <string name="apply_on_boot">Apply on boot</string>
     <string name="apply_on_boot_text">Applying settings in %d seconds.</string>
@@ -24,6 +28,17 @@
     <string name="apply_on_boot_canceled">Applying settings canceled.</string>
 
     <string name="not_in_range">Not in range</string>
+
+    <!-- Permissions Denied -->
+    <string name="permission_denied_write_storage">Permission denied for writing to storage!</string>
+
+    <!-- Editor -->
+    <string name="save">Save</string>
+
+    <!-- File Picker -->
+    <string name="loading">Loading</string>
+    <string name="select_question">Select %s?</string>
+    <string name="wrong_extension">Please select a file with %s extension.</string>
 
     <!-- Units -->
     <string name="mhz">MHz</string>
@@ -44,6 +59,7 @@
     <!-- Headers -->
     <string name="statistics">Statistics</string>
     <string name="kernel">Kernel</string>
+    <string name="tools">Tools</string>
     <string name="other">Other</string>
 
     <!-- Menus -->
@@ -65,6 +81,7 @@
     <string name="virtual_memory">Virtual Memory</string>
     <string name="entropy">Entropy</string>
     <string name="misc">Misc</string>
+    <string name="custom_controls">Custom Controls</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -567,6 +584,44 @@
     <string name="wlan_wakelock_summary">Prevent wlan wakelock.</string>
     <string name="wlan_rx_wakelock_divider">wlan_rx Wakelock Divider</string>
     <string name="msm_hsic_wakelock_divider">msm_hsic Wakelock Divider</string>
+
+    <!-- Custom Controls -->
+    <string name="welcome">Welcome</string>
+    <string name="custom_controls_summary">In this section you can create or import custom controls, which don\'t exist in the app (yet).</string>
+    <string name="example">Examples</string>
+    <string name="custom_controls_example_summary">Need example? Click &lt;a href="https://github.com/Grarak/KernelAdiutor/wiki/Custom-Controls">here&lt;a>.</string>
+    <string name="create">Create</string>
+    <string name="control_import">Import</string>
+    <string name="control_switch">Switch</string>
+    <string name="control_seekbar">Seekbar</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="applying">Applying</string>
+    <string name="switch_enabled_summary">Whether the switch is enabled. Return 1 for enabled and 0 for disabled.</string>
+    <string name="switch_apply_summary">The switch will return either 1 (enabled) or 0 (disabled) as argument to your shell script.</string>
+    <string name="seekbar_min">Min</string>
+    <string name="seekbar_max">Max</string>
+    <string name="seekbar_progress">Progress</string>
+    <string name="seekbar_progress_summary">Current state of the seekbar. By defining min and max an integer array gets created. For example: Min is 50 and Max is 100 and progress is 0, that would mean 50 is the current state of the seekbar.</string>
+    <string name="seekbar_apply_summary">Seekbar will return its current progress. For example your Min is 50 and Max 100 and the seekbar is at 70, it will return 20 as progress.</string>
+    <string name="control_generic">Generic</string>
+    <string name="generic_value">Value</string>
+    <string name="generic_value_summary">Current value of the editor. Can be basically anything.</string>
+    <string name="generic_apply_summary">Editor will return whatever was entered.</string>
+    <string name="required">required</string>
+    <string name="test">Test</string>
+    <string name="output">Output</string>
+    <string name="edit">Edit</string>
+    <string name="on_boot">On Boot</string>
+    <string name="export">Export</string>
+    <string name="delete">Delete</string>
+    <string name="sure_question">Are you sure?</string>
+    <string name="name">Name</string>
+    <string name="already_exists">%s already exists!</string>
+    <string name="exported_item">%1$s has been exported to %2$s</string>
+    <string name="name_empty">Name is empty!</string>
+    <string name="import_malformed">Import file is malformed!</string>
+    <string name="import_wrong_version">Version of import file is too old!</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

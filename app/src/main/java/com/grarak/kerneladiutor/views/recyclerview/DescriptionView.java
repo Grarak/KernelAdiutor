@@ -19,7 +19,9 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
@@ -30,9 +32,11 @@ import com.grarak.kerneladiutor.R;
 public class DescriptionView extends RecyclerViewItem {
 
     private View mRootView;
+    private ImageView mImageView;
     private TextView mTitleView;
     private TextView mSummaryView;
 
+    private Drawable mImage;
     private CharSequence mTitle;
     private CharSequence mSummary;
 
@@ -44,10 +48,16 @@ public class DescriptionView extends RecyclerViewItem {
     @Override
     public void onCreateView(View view) {
         mRootView = view;
+        mImageView = (ImageView) view.findViewById(R.id.image);
         mTitleView = (TextView) view.findViewById(R.id.title);
         mSummaryView = (TextView) view.findViewById(R.id.summary);
 
         super.onCreateView(view);
+    }
+
+    public void setDrawable(Drawable drawable) {
+        mImage = drawable;
+        refresh();
     }
 
     public void setTitle(CharSequence title) {
@@ -67,8 +77,17 @@ public class DescriptionView extends RecyclerViewItem {
     @Override
     protected void refresh() {
         super.refresh();
-        if (mTitleView != null && mTitle != null) {
-            mTitleView.setText(mTitle);
+        if (mImageView != null && mImage != null) {
+            mImageView.setImageDrawable(mImage);
+            mImageView.setVisibility(View.VISIBLE);
+        }
+        if (mTitleView != null) {
+            if (mTitle != null) {
+                mTitleView.setText(mTitle);
+                mTitleView.setVisibility(View.VISIBLE);
+            } else {
+                mTitleView.setVisibility(View.GONE);
+            }
         }
         if (mSummaryView != null && mSummary != null) {
             mSummaryView.setText(mSummary);

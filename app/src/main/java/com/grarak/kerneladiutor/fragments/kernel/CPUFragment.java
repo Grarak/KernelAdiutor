@@ -21,11 +21,10 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -50,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by willi on 01.05.16.
  */
-public class CPUFragment extends BaseControlFragment {
+public class CPUFragment extends RecyclerViewFragment {
 
     private SelectView mCPUMaxBig;
     private SelectView mCPUMinBig;

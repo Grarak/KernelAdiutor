@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -49,7 +49,7 @@ import java.util.List;
 /**
  * Created by willi on 31.05.16.
  */
-public class ScreenFragment extends BaseControlFragment {
+public class ScreenFragment extends RecyclerViewFragment {
 
     private SeekBarView mColors[];
     private SeekBarView mMinColor;

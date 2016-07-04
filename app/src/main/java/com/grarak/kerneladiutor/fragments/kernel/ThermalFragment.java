@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Created by willi on 12.05.16.
  */
-public class ThermalFragment extends BaseControlFragment {
+public class ThermalFragment extends RecyclerViewFragment {
 
     @Override
     protected void init() {
@@ -266,7 +266,7 @@ public class ThermalFragment extends BaseControlFragment {
             SeekBarView pollMs = new SeekBarView();
             pollMs.setTitle(getString(R.string.poll));
             pollMs.setUnit(getString(R.string.ms));
-            pollMs.setMin(3000);
+            pollMs.setMax(3000);
             pollMs.setOffset(10);
             pollMs.setProgress(MSMThermal.getPollMs() / 10);
             pollMs.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {

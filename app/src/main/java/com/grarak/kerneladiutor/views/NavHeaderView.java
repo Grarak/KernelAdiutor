@@ -23,13 +23,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
@@ -169,14 +167,16 @@ public class NavHeaderView extends LinearLayout {
     public void setImage(Uri uri) throws IOException, NullPointerException {
         String selectedImagePath = null;
         try {
-            selectedImagePath = getPath(uri, mImage.getContext());
+            selectedImagePath = Utils.getPath(uri, mImage.getContext());
         } catch (Exception ignored) {
         }
         Bitmap bitmap;
         if ((bitmap = selectedImagePath != null ? BitmapFactory.decodeFile(selectedImagePath) :
-                uriToBitmap(uri, mImage.getContext())) != null)
+                uriToBitmap(uri, mImage.getContext())) != null) {
             mImage.setImageBitmap(ViewUtils.scaleDownBitmap(bitmap, 1024, 1024));
-        else throw new NullPointerException("Getting Bitmap failed");
+        } else {
+            throw new NullPointerException("Getting Bitmap failed");
+        }
     }
 
     private static Bitmap uriToBitmap(Uri uri, Context context) throws IOException {
@@ -189,18 +189,6 @@ public class NavHeaderView extends LinearLayout {
             return bitmap;
         }
         throw new IOException();
-    }
-
-    private static String getPath(Uri uri, Context context) {
-        Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA},
-                null, null, null);
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            String path = cursor.getString(column_index);
-            cursor.close();
-            return path;
-        } else return null;
     }
 
 }

@@ -17,14 +17,13 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor;
+package com.grarak.kerneladiutor.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -36,6 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.kernel.BatteryFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
@@ -55,6 +55,7 @@ import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
+import com.grarak.kerneladiutor.fragments.tools.customcontrols.MainFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -123,6 +124,8 @@ public class NavigationActivity extends BaseActivity
             sFragments.put(R.string.entropy, new EntropyFragment());
         }
         sFragments.put(R.string.misc, new MiscFragment());
+        sFragments.put(R.string.tools, null);
+        sFragments.put(R.string.custom_controls, new MainFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 
@@ -133,8 +136,7 @@ public class NavigationActivity extends BaseActivity
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
     private boolean mExit;
-    private AppBarLayout mAppBarLayout;
-    private Toolbar mToolBar;
+
     private int mSelection = R.string.overall;
     private boolean mShowPirateDialog = true;
 
@@ -147,15 +149,14 @@ public class NavigationActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolBar);
+        Toolbar toolbar = getToolBar();
+        setSupportActionBar(toolbar);
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolBar, 0, 0);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, 0, 0);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbarlayout);
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         appendFragments(mNavigationView.getMenu());
@@ -167,11 +168,12 @@ public class NavigationActivity extends BaseActivity
         onItemSelected(mSelection);
 
         int result = Prefs.getInt("license", -1, this);
+        int intentResult = getIntent().getIntExtra("result", -1);
         Prefs.saveInt("license", -1, this);
         if (savedInstanceState != null) {
             mShowPirateDialog = savedInstanceState.getBoolean("pirate");
         }
-        if ((result != getIntent().getIntExtra("result", -1) || result == 3) && mShowPirateDialog) {
+        if ((result != intentResult || result == 3) && mShowPirateDialog) {
             ViewUtils.dialogBuilder(getString(R.string.pirated), null, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -184,6 +186,9 @@ public class NavigationActivity extends BaseActivity
             }, this).show();
         } else {
             mShowPirateDialog = false;
+            if (result == 0) {
+                Utils.DONATED = true;
+            }
         }
     }
 
@@ -212,7 +217,6 @@ public class NavigationActivity extends BaseActivity
         } else if (!sFragments.get(mSelection).onBackPressed()) {
             if (mExit) {
                 mExit = false;
-                RootUtils.closeSU();
                 super.onBackPressed();
             } else {
                 Utils.toast(R.string.press_back_again_exit, this);
@@ -225,6 +229,12 @@ public class NavigationActivity extends BaseActivity
                 }, 2000);
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        RootUtils.closeSU();
     }
 
     @Override
@@ -255,16 +265,10 @@ public class NavigationActivity extends BaseActivity
 
     private Fragment getFragment(int res) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(res + "_key");
-        if (fragment == null) return sFragments.get(res);
+        if (fragment == null) {
+            return sFragments.get(res);
+        }
         return fragment;
-    }
-
-    public AppBarLayout getAppBarLayout() {
-        return mAppBarLayout;
-    }
-
-    public Toolbar getToolBar() {
-        return mToolBar;
     }
 
 }

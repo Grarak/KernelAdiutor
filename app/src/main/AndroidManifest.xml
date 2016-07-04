@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,12 +24,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NavigationActivity" />
-        <activity android:name=".TextActivity" />
+        <activity android:name=".activities.NavigationActivity" />
+        <activity android:name=".activities.TextActivity" />
         <activity
             android:name=".views.NavHeaderView$MainHeaderActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.tools.CustomControlsActivity" />
+        <activity android:name=".activities.EditorActivity" />
+        <activity android:name=".activities.FilePickerActivity" />
 
         <receiver android:name=".boot.Receiver">
             <intent-filter>

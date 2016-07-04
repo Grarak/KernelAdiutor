@@ -17,21 +17,44 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor;
+package com.grarak.kerneladiutor.views.recyclerview;
 
-import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
-import com.example.android.supportv7.app.AppCompatPreferenceActivity;
+import com.grarak.kerneladiutor.R;
 
 /**
- * Created by willi on 08.05.16.
+ * Created by willi on 02.07.16.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class ErrorView extends RecyclerViewItem {
+
+    private TextView mText;
+    private Exception mError;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings);
+    public int getLayoutRes() {
+        return R.layout.rv_error_view;
     }
 
+    @Override
+    public void onCreateView(View view) {
+        mText = (TextView) view.findViewById(R.id.text);
+
+        super.onCreateView(view);
+    }
+
+    public void setException(Exception error) {
+        mError = error;
+        refresh();
+    }
+
+    @Override
+    protected void refresh() {
+        super.refresh();
+
+        if (mText != null && mError != null) {
+            mText.setText(mError.getMessage());
+        }
+    }
 }

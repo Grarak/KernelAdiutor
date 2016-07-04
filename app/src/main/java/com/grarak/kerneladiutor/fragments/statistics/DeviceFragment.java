@@ -20,7 +20,7 @@
 package com.grarak.kerneladiutor.fragments.statistics;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by willi on 28.04.16.
  */
-public class DeviceFragment extends BaseControlFragment {
+public class DeviceFragment extends RecyclerViewFragment {
 
     @Override
     protected void init() {

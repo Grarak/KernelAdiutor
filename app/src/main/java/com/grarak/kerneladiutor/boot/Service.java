@@ -29,11 +29,12 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.Settings;
+import com.grarak.kerneladiutor.database.customcontrols.Controls;
 import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.util.HashMap;
@@ -47,6 +48,7 @@ public class Service extends android.app.Service {
     private static boolean sCancel;
 
     private HashMap<String, Boolean> mCategoryEnabled = new HashMap<>();
+    private HashMap<String, String> mCustomControls = new HashMap<>();
 
     @Nullable
     @Override
@@ -58,14 +60,27 @@ public class Service extends android.app.Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         boolean enabled = false;
         final Settings settings = new Settings(this);
+        final Controls controls = new Controls(this);
         for (Settings.SettingsItem item : settings.getAllSettings()) {
             if (!mCategoryEnabled.containsKey(item.getCategory())) {
                 mCategoryEnabled.put(item.getCategory(), Prefs.getBoolean(item.getCategory(), false, this));
-                if (mCategoryEnabled.get(item.getCategory())) {
-                    enabled = true;
+            }
+        }
+        for (String key : mCategoryEnabled.keySet()) {
+            if (mCategoryEnabled.get(key)) {
+                enabled = true;
+                break;
+            }
+        }
+        for (Controls.ControlItem item : controls.getAllControls()) {
+            if (Prefs.getBoolean(item.getUniqueId() + "_onboot", false, this)) {
+                String args;
+                if (!(args = Prefs.getString(item.getUniqueId() + "_onboot_args", "", this)).isEmpty()) {
+                    mCustomControls.put(item.getApply(), args);
                 }
             }
         }
+        enabled = enabled || mCustomControls.size() > 0;
         if (!enabled) return super.onStartCommand(intent, flags, startId);
 
         final int seconds = 10;
@@ -108,14 +123,20 @@ public class Service extends android.app.Service {
                 notificationManager.notify(0, builderComplete.build());
 
                 if (sCancel) return;
-                RootUtils.SU su = new RootUtils.SU(true);
+                RootUtils.SU su = new RootUtils.SU(true, TAG);
                 for (Settings.SettingsItem item : settings.getAllSettings()) {
                     if (mCategoryEnabled.get(item.getCategory())) {
                         synchronized (this) {
                             su.runCommand(item.getSetting());
-                            Log.i(TAG, item.getSetting());
                         }
                     }
+                }
+
+                for (String script : mCustomControls.keySet()) {
+                    RootFile file = new RootFile("/data/local/tmp/kerneladiutortmp.sh", su);
+                    file.mkdir();
+                    file.write(script, false);
+                    file.execute(mCustomControls.get(script));
                 }
                 su.close();
             }

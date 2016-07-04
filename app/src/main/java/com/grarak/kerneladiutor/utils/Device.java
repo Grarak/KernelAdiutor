@@ -320,18 +320,13 @@ public class Device {
     }
 
     public static String getBoard() {
-        try {
-            String hardware = CPUInfo.getVendor().toLowerCase();
-            if (hardware.contains("msm")) {
-                String boardname = hardware.split("msm")[1].trim();
-                try {
-                    return "msm" + Integer.parseInt(boardname);
-                } catch (NumberFormatException ignored) {
-                }
-            }
-        } catch (Exception ignored) {
+        String hardware = CPUInfo.getVendor().toLowerCase();
+        if (hardware.matches(".*msm\\d*")) {
+            return "msm" + hardware.split("msm")[1].trim();
+        } else if (hardware.matches("mt\\d*.")) {
+            return "mt" + hardware.split("mt")[1].trim();
         }
-        return Build.BOARD;
+        return Build.BOARD.toLowerCase();
     }
 
     public static String getBuildDisplayId() {

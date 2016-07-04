@@ -25,7 +25,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Created by willi on 04.05.16.
  */
-public class PathReaderFragment extends BaseControlFragment {
+public class PathReaderFragment extends RecyclerViewFragment {
 
     private String mPath;
     private int mCPU;

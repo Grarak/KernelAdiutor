@@ -39,6 +39,22 @@ public class ViewUtils {
         void onClick(String text);
     }
 
+    public static AlertDialog.Builder dialogDonate(final Context context) {
+        return new AlertDialog.Builder(context).setTitle(context.getString(R.string.donate))
+                .setMessage(context.getString(R.string.donate_summary)).setNegativeButton(
+                        context.getString(R.string.donate_nope), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).setPositiveButton(context.getString(R.string.donate_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Utils.launchUrl(
+                                "https://play.google.com/store/apps/details?id=com.grarak.kerneladiutordonate", context);
+                    }
+                });
+    }
+
     public static AlertDialog.Builder dialogEditText(String text, final DialogInterface.OnClickListener negativeListener,
                                                      final OnDialogEditTextListener onDialogEditTextListener,
                                                      Context context) {
@@ -57,6 +73,7 @@ public class ViewUtils {
         editText.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         editText.setText(text);
+        editText.setSingleLine(true);
         if (inputType >= 0) {
             editText.setInputType(inputType);
         }

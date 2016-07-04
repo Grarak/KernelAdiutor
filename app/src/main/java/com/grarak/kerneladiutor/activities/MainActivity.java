@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor;
+package com.grarak.kerneladiutor.activities;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -32,6 +32,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;

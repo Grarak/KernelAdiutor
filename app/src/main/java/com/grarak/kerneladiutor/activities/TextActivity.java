@@ -17,36 +17,41 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor;
+package com.grarak.kerneladiutor.activities;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.View;
+import android.widget.TextView;
 
+import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
 
 /**
  * Created by willi on 14.04.16.
  */
-public class BaseActivity extends AppCompatActivity {
+public class TextActivity extends BaseActivity {
+
+    public static final String MESSAGE_INTENT = "message_intent";
+    public static final String SUMMARY_INTENT = "summary_intent";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_text);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && setStatusBarColor()) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Utils.getColorPrimaryDarkColor(this));
-        }
-    }
+        String message = getIntent().getStringExtra(MESSAGE_INTENT);
+        final String url = getIntent().getStringExtra(SUMMARY_INTENT);
 
-    protected boolean setStatusBarColor() {
-        return true;
+        if (message != null)
+            ((TextView) findViewById(R.id.message_text)).setText(message);
+        if (url != null)
+            findViewById(R.id.help_fab).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utils.launchUrl(url, TextActivity.this);
+                }
+            });
     }
 
 }

@@ -24,7 +24,7 @@ import android.os.Vibrator;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.misc.Misc;
 import com.grarak.kerneladiutor.utils.kernel.misc.PowerSuspend;
 import com.grarak.kerneladiutor.utils.kernel.misc.Vibration;
@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * Created by willi on 29.06.16.
  */
-public class MiscFragment extends BaseControlFragment {
+public class MiscFragment extends RecyclerViewFragment {
 
     @Override
     protected void init() {

@@ -23,13 +23,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
+import com.grarak.kerneladiutor.BuildConfig;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -55,6 +59,26 @@ import java.security.NoSuchAlgorithmException;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+    public static boolean DONATED = BuildConfig.DEBUG;
+
+    public static String getPath(Uri uri, Context context) {
+        String path = null;
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, filePathColumn, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                path = cursor.getString(columnIndex);
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
+    public static String getInternalStorage() {
+        return Environment.getExternalStorageDirectory().toString() + "/Android/data/" +
+                BuildConfig.APPLICATION_ID;
+    }
 
     // Sorry pirates!
     public static boolean isPatched(ApplicationInfo applicationInfo) {

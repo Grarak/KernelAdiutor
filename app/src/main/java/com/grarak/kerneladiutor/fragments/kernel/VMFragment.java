@@ -22,7 +22,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 import android.text.InputType;
 
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.vm.VM;
 import com.grarak.kerneladiutor.views.recyclerview.GenericSelectView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * Created by willi on 29.06.16.
  */
-public class VMFragment extends BaseControlFragment {
+public class VMFragment extends RecyclerViewFragment {
 
     private HashMap<Integer, GenericSelectView> mVMs = new HashMap<>();
 

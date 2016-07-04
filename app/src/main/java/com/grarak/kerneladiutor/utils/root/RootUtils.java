@@ -69,7 +69,11 @@ public class RootUtils {
     }
 
     public static void chmod(String file, String permission) {
-        runCommand("chmod " + permission + " " + file);
+        chmod(file, permission, getSU());
+    }
+
+    public static void chmod(String file, String permission, SU su) {
+        su.runCommand("chmod " + permission + " " + file);
     }
 
     public static String getProp(String prop) {
@@ -81,18 +85,23 @@ public class RootUtils {
                 "mount -o remount,ro " + mountpoint + " " + mountpoint);
     }
 
+    public static String runScript(String text, String... arguments) {
+        RootFile script = new RootFile("/data/local/tmp/kerneladiutortmp.sh");
+        script.mkdir();
+        script.write(text, false);
+        return script.execute(arguments);
+    }
+
     public static void closeSU() {
         if (su != null) su.close();
         su = null;
     }
 
     public static String runCommand(String command) {
-        synchronized (getSU()) {
-            return getSU().runCommand(command);
-        }
+        return getSU().runCommand(command);
     }
 
-    private static SU getSU() {
+    public static SU getSU() {
         if (su == null) su = new SU();
         else if (su.closed || su.denied) su = new SU();
         return su;
@@ -108,16 +117,18 @@ public class RootUtils {
         private BufferedWriter bufferedWriter;
         private BufferedReader bufferedReader;
         private final boolean root;
+        private final String mTag;
         private boolean closed;
         private boolean denied;
         private boolean firstTry;
 
         public SU() {
-            this(true);
+            this(true, null);
         }
 
-        public SU(boolean root) {
+        public SU(boolean root, String tag) {
             this.root = root;
+            mTag = tag;
             try {
                 Log.i(TAG, root ? "SU initialized" : "SH initialized");
                 firstTry = true;
@@ -132,30 +143,36 @@ public class RootUtils {
         }
 
         public synchronized String runCommand(final String command) {
-            try {
-                StringBuilder sb = new StringBuilder();
-                String callback = "/shellCallback/";
-                bufferedWriter.write(command + "\necho " + callback + "\n");
-                bufferedWriter.flush();
+            synchronized (this) {
+                try {
+                    StringBuilder sb = new StringBuilder();
+                    String callback = "/shellCallback/";
+                    bufferedWriter.write(command + "\necho " + callback + "\n");
+                    bufferedWriter.flush();
 
-                int i;
-                char[] buffer = new char[256];
-                while (true) {
-                    sb.append(buffer, 0, bufferedReader.read(buffer));
-                    if ((i = sb.indexOf(callback)) > -1) {
-                        sb.delete(i, i + callback.length());
-                        break;
+                    int i;
+                    char[] buffer = new char[256];
+                    while (true) {
+                        sb.append(buffer, 0, bufferedReader.read(buffer));
+                        if ((i = sb.indexOf(callback)) > -1) {
+                            sb.delete(i, i + callback.length());
+                            break;
+                        }
                     }
+                    firstTry = false;
+                    if (mTag != null) {
+                        Log.i(mTag, "run: " + command + " output: " + sb.toString().trim());
+                    }
+                    return sb.toString().trim();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    closed = true;
+                    if (firstTry) denied = true;
+                } catch (Exception e) {
+                    denied = true;
                 }
-                firstTry = false;
-                return sb.toString().trim();
-            } catch (IOException e) {
-                closed = true;
-                if (firstTry) denied = true;
-            } catch (Exception ignored) {
-                denied = true;
+                return null;
             }
-            return null;
         }
 
         public void close() {

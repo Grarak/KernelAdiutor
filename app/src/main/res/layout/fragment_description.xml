@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
             android:gravity="center"
+            android:linksClickable="true"
             android:textColor="@color/white"
             android:textIsSelectable="true"
             android:textSize="18sp" />

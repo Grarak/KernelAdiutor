@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.entropy.Entropy;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Created by willi on 29.06.16.
  */
-public class EntropyFragment extends BaseControlFragment {
+public class EntropyFragment extends RecyclerViewFragment {
 
     private DescriptionView mAvailable;
     private DescriptionView mPoolSize;

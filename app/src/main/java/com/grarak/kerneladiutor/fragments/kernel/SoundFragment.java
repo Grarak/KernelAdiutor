@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by willi on 26.06.16.
  */
-public class SoundFragment extends BaseControlFragment {
+public class SoundFragment extends RecyclerViewFragment {
 
     @Override
     protected void init() {

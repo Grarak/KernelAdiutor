@@ -94,7 +94,7 @@ public class Control {
                         try {
                             mThreads.get(0).start();
                             mThreads.get(0).join();
-                        } catch (InterruptedException ignored) {
+                        } catch (Exception ignored) {
                         }
                         mThreads.remove(0);
                     }

@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.BaseControlFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.ksm.KSM;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Created by willi on 28.06.16.
  */
-public class KSMFragment extends BaseControlFragment {
+public class KSMFragment extends RecyclerViewFragment {
 
     private HashMap<Integer, DescriptionView> mInfos = new HashMap<>();
 

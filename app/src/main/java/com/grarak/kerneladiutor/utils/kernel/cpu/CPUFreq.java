@@ -87,13 +87,11 @@ public class CPUFreq {
                 run(Control.write("1", Utils.strFormat(CPU_ENABLE_OC, i)), Utils.strFormat(CPU_ENABLE_OC, i),
                         context);
             }
-            boolean offline = getCurFreq(i) == 0 || CoreCtl.supported() || MSMPerformance.supported();
+            boolean offline = isOffline(i);
             if (offline) {
                 onlineCpu(i, true, context);
             }
-
             run(Control.write(value, Utils.strFormat(path, i)), Utils.strFormat(path, i), context);
-
             if (offline) {
                 onlineCpu(i, false, context);
             }
@@ -398,7 +396,8 @@ public class CPUFreq {
 
     public static boolean isBigLITTLE() {
         boolean bigLITTLE = getCpuCount() > 4;
-        if (!bigLITTLE && !is8996() || Device.getBoard().startsWith("mt6")) return false;
+        if (!bigLITTLE && !is8996() || (Device.getBoard().startsWith("mt6") && !Device.getBoard()
+                .startsWith("mt6595"))) return false;
 
         if (sBigCpu == -1 || sLITTLECpu == -1) {
             if (is8996()) {

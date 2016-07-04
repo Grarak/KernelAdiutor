@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.app.Activity;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +38,19 @@ import java.util.List;
  */
 public class CardView extends RecyclerViewItem {
 
+    public interface OnMenuListener {
+        void onMenuReady(CardView cardView, PopupMenu popupMenu);
+    }
+
     private Activity mActivity;
 
     private TextView mTitle;
     private LinearLayout mLayout;
+    private View mMenuButton;
 
     private CharSequence mTitleText;
+    private PopupMenu mPopupMenu;
+    private OnMenuListener mOnMenuListener;
 
     private List<RecyclerViewItem> mItems = new ArrayList<>();
     private HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
@@ -63,6 +71,17 @@ public class CardView extends RecyclerViewItem {
     public void onCreateView(View view) {
         mTitle = (TextView) view.findViewById(R.id.card_title);
         mLayout = (LinearLayout) view.findViewById(R.id.card_layout);
+        mMenuButton = view.findViewById(R.id.menu_button);
+
+        mMenuButton.setRotation(90);
+        mMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopupMenu != null) {
+                    mPopupMenu.show();
+                }
+            }
+        });
 
         super.onCreateView(view);
         setupLayout();
@@ -87,6 +106,11 @@ public class CardView extends RecyclerViewItem {
         });
     }
 
+    public void setOnMenuListener(OnMenuListener onMenuListener) {
+        mOnMenuListener = onMenuListener;
+        refresh();
+    }
+
     public int size() {
         return mItems.size();
     }
@@ -107,6 +131,7 @@ public class CardView extends RecyclerViewItem {
 
     private void setupLayout() {
         if (mLayout != null) {
+            mLayout.removeAllViews();
             for (final RecyclerViewItem item : mItems) {
                 View view;
                 if (mViews.containsKey(item)) {
@@ -136,6 +161,11 @@ public class CardView extends RecyclerViewItem {
             } else {
                 mTitle.setVisibility(View.GONE);
             }
+        }
+        if (mMenuButton != null && mOnMenuListener != null) {
+            mMenuButton.setVisibility(View.VISIBLE);
+            mPopupMenu = new PopupMenu(mMenuButton.getContext(), mMenuButton);
+            mOnMenuListener.onMenuReady(this, mPopupMenu);
         }
     }
 }

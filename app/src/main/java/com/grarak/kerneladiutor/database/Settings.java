@@ -91,15 +91,6 @@ public class Settings extends Provider {
             return getString("id");
         }
 
-        private String getString(String name) {
-            try {
-                return getItem().getString(name);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
     }
 
 }
