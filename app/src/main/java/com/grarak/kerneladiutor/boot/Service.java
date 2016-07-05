@@ -57,7 +57,9 @@ public class Service extends android.app.Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+
         boolean enabled = false;
         final Settings settings = new Settings(this);
         final Controls controls = new Controls(this);
@@ -81,7 +83,10 @@ public class Service extends android.app.Service {
             }
         }
         enabled = enabled || mCustomControls.size() > 0;
-        if (!enabled) return super.onStartCommand(intent, flags, startId);
+        if (!enabled) {
+            stopSelf();
+            return;
+        }
 
         final int seconds = 10;
         PendingIntent cancelIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, CancelReceiver.class), 0);
@@ -122,7 +127,11 @@ public class Service extends android.app.Service {
                         R.string.apply_on_boot_complete));
                 notificationManager.notify(0, builderComplete.build());
 
-                if (sCancel) return;
+                if (sCancel) {
+                    sCancel = false;
+                    stopSelf();
+                    return;
+                }
                 RootUtils.SU su = new RootUtils.SU(true, TAG);
                 for (Settings.SettingsItem item : settings.getAllSettings()) {
                     if (mCategoryEnabled.get(item.getCategory())) {
@@ -139,10 +148,9 @@ public class Service extends android.app.Service {
                     file.execute(mCustomControls.get(script));
                 }
                 su.close();
+                stopSelf();
             }
         }).start();
-
-        return super.onStartCommand(intent, flags, startId);
     }
 
     public static class CancelReceiver extends BroadcastReceiver {
