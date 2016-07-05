@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -234,6 +235,14 @@ public class NavigationActivity extends BaseActivity
     @Override
     public void finish() {
         super.finish();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        for (int key : sFragments.keySet()) {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(key + "_key");
+            if (fragment != null) {
+                fragmentTransaction.remove(fragment);
+            }
+        }
+        fragmentTransaction.commit();
         RootUtils.closeSU();
     }
 

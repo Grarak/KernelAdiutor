@@ -117,7 +117,9 @@ public class MainFragment extends RecyclerViewFragment {
                 mOptionsDialog = null;
             }
         });
-        mOptionsDialog.show();
+        if (!getActivity().isFinishing()) {
+            mOptionsDialog.show();
+        }
     }
 
     private void showControls() {

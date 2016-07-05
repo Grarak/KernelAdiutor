@@ -83,7 +83,7 @@ public class CPUVoltage extends RecyclerViewFragment {
 
         List<String> freqs = Voltage.getFreqs();
         List<String> voltages = Voltage.getVoltages();
-        if (freqs != null) {
+        if (freqs != null && voltages != null && freqs.size() == voltages.size()) {
             for (int i = 0; i < freqs.size(); i++) {
                 GenericSelectView view = initView(new GenericSelectView(), freqs.get(i), voltages.get(i));
                 mVoltages.add(view);

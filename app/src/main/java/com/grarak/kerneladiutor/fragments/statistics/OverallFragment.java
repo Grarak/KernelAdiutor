@@ -254,6 +254,7 @@ public class OverallFragment extends RecyclerViewFragment {
     }
 
     private void updateView(CpuStateMonitor monitor, CardView card) {
+        if (!isAdded()) return;
         card.clearItems();
 
         // update the total state time

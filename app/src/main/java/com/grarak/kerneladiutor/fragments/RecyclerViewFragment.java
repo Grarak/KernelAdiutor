@@ -192,6 +192,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                     }
                     hideProgress();
                     postInit();
+                    mScroller.onScrolled(mRecyclerView, 0, 0);
                 }
             };
             mLoader.execute();
@@ -200,6 +201,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             init();
             hideProgress();
             postInit();
+            mScroller.onScrolled(mRecyclerView, 0, 0);
         }
 
         return mRootView;
@@ -223,6 +225,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         if (showBottomFab()) {
             mBottomFab.show();
         }
+        mScroller.onScrolled(mRecyclerView, 0, 0);
     }
 
     protected void init() {
@@ -563,11 +566,13 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         super.onDestroy();
         mItems.clear();
         setAppBarLayoutAlpha(255);
-        if (!isForeground()) {
-            mAppBarLayout.setTranslationY(0);
-        }
-        if (mAppBarLayout != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mAppBarLayout.setElevation(mAppBarElevation);
+        if (mAppBarLayout != null) {
+            if (!isForeground()) {
+                mAppBarLayout.setTranslationY(0);
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mAppBarLayout.setElevation(mAppBarElevation);
+            }
         }
         if (mLoader != null) {
             mLoader.cancel(true);

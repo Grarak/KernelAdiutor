@@ -108,7 +108,7 @@ public class RootFile {
     }
 
     public boolean isDirectory() {
-        return mSU.runCommand("[ -d " + mFile + " ] && echo true").equals("true");
+        return "true".equals(mSU.runCommand("[ -d " + mFile + " ] && echo true"));
     }
 
     public RootFile getParentFile() {
@@ -116,7 +116,7 @@ public class RootFile {
     }
 
     public boolean isEmpty() {
-        return mSU.runCommand("find '" + mFile + "' -mindepth 1 | read || echo false").equals("false");
+        return "false".equals(mSU.runCommand("find '" + mFile + "' -mindepth 1 | read || echo false"));
     }
 
     public boolean exists() {

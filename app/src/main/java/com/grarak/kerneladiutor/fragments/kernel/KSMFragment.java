@@ -28,6 +28,7 @@ import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -120,6 +121,7 @@ public class KSMFragment extends RecyclerViewFragment {
     }
 
     private void infoInit(List<RecyclerViewItem> items) {
+        mInfos.clear();
         for (int i = 0; i < KSM.getInfosSize(); i++) {
             if (KSM.hasInfo(i)) {
                 DescriptionView info = new DescriptionView();
@@ -136,7 +138,11 @@ public class KSMFragment extends RecyclerViewFragment {
         super.refresh();
 
         for (int position : mInfos.keySet()) {
-            mInfos.get(position).setSummary(KSM.getInfo(position));
+            try {
+                mInfos.get(position).setSummary(KSM.getInfo(position));
+            } catch (ConcurrentModificationException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

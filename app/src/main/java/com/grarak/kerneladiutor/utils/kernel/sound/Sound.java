@@ -198,7 +198,8 @@ public class Sound {
     }
 
     public static String getHeadphoneGain() {
-        return Utils.readFile(HEADPHONE_GAIN).split(" ")[0];
+        String value = Utils.readFile(HEADPHONE_GAIN);
+        return value.contains(" ") ? value.split(" ")[0] : value;
     }
 
     public static List<String> getHeadphoneGainLimits() {
