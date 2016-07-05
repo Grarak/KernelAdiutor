@@ -28,7 +28,6 @@ import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,19 +61,16 @@ public class EntropyFragment extends RecyclerViewFragment {
 
         items.add(mPoolSize);
 
-        List<String> list = new ArrayList<>();
-        for (int i = 64; i < ps; i *= 2) {
-            list.add(String.valueOf(i));
-        }
-
         SeekBarView read = new SeekBarView();
         read.setTitle(getString(R.string.read));
-        read.setItems(list);
-        read.setProgress(list.indexOf(String.valueOf(Entropy.getRead())));
+        read.setMax(2048);
+        read.setMin(64);
+        read.setOffset(64);
+        read.setProgress(Entropy.getRead() / 64 - 1);
         read.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                Entropy.setRead(Utils.strToInt(value), getActivity());
+                Entropy.setRead((position + 1) * 64, getActivity());
             }
 
             @Override
@@ -86,12 +82,14 @@ public class EntropyFragment extends RecyclerViewFragment {
 
         SeekBarView write = new SeekBarView();
         write.setTitle(getString(R.string.write));
-        write.setItems(list);
-        write.setProgress(list.indexOf(String.valueOf(Entropy.getWrite())));
+        write.setMax(2048);
+        write.setMin(64);
+        write.setOffset(64);
+        write.setProgress(Entropy.getWrite() / 64 - 1);
         write.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                Entropy.setWrite(Utils.strToInt(value), getActivity());
+                Entropy.setWrite((position + 1) * 64, getActivity());
             }
 
             @Override
