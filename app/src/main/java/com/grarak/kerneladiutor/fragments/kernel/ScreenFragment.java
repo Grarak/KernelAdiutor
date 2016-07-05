@@ -322,6 +322,20 @@ public class ScreenFragment extends RecyclerViewFragment {
 
             items.add(screenHBM);
         }
+
+        if (Calibration.hasSRGB()) {
+            SwitchView sRGB = new SwitchView();
+            sRGB.setSummary(getString(R.string.srgb));
+            sRGB.setChecked(Calibration.isSRGBEnabled());
+            sRGB.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    Calibration.enableSRGB(isChecked, getActivity());
+                }
+            });
+
+            items.add(sRGB);
+        }
     }
 
     private void kgammaInit(List<RecyclerViewItem> items) {

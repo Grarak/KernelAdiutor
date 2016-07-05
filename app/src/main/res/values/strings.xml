@@ -390,6 +390,7 @@
     <string name="screen_value">Screen Value</string>
     <string name="screen_contrast">Screen Contrast</string>
     <string name="high_brightness_mode">High Brightness Mode</string>
+    <string name="srgb">sRGB</string>
     <string name="gamma">Gamma</string>
     <string name="red_greys">Red Greys</string>
     <string name="red_mids">Red Mids</string>
