@@ -28,7 +28,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -76,7 +75,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     private FloatingActionButton mTopFab;
     private FloatingActionButton mBottomFab;
     private AppBarLayout mAppBarLayout;
-    private float mAppBarElevation;
     private Toolbar mToolBar;
     private Bundle mSavedInstanceState;
     private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
@@ -112,10 +110,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
         mAppBarLayout = ((BaseActivity) getActivity()).getAppBarLayout();
         mToolBar = ((BaseActivity) getActivity()).getToolBar();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mAppBarElevation = mAppBarLayout.getElevation();
-            mAppBarLayout.setElevation(0);
-        }
 
         mProgress = mRootView.findViewById(R.id.progress);
 
@@ -383,14 +377,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 });
                 mAlphaAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
-                    public void onAnimationStart(Animator animation) {
-                        super.onAnimationStart(animation);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            mAppBarLayout.setElevation(mFade ? 0 : mAppBarElevation);
-                        }
-                    }
-
-                    @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         mAlphaAnimator = null;
@@ -569,9 +555,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         if (mAppBarLayout != null) {
             if (!isForeground()) {
                 mAppBarLayout.setTranslationY(0);
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mAppBarLayout.setElevation(mAppBarElevation);
             }
         }
         if (mLoader != null) {
