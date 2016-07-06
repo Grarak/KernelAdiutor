@@ -218,7 +218,7 @@ public class Sound {
 
     public static String getHeadphoneGain() {
         String value = Utils.readFile(HEADPHONE_GAIN);
-        int gain;
+        int gain = 0;
         if (value.contains(" "))
             gain = Number.parseInt(value.split("")[0]);
         else
