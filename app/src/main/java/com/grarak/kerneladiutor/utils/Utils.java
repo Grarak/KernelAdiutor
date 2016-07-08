@@ -24,19 +24,26 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
+import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.grarak.kerneladiutor.BuildConfig;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,6 +59,8 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by willi on 14.04.16.
@@ -60,6 +69,73 @@ public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
     public static boolean DONATED = BuildConfig.DEBUG;
+
+    private static final Set<CustomTarget> mProtectedFromGarbageCollectorTargets = new HashSet<>();
+
+    public static CharSequence htmlFrom(String text) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(text);
+        }
+    }
+
+    public static void loadImagefromUrl(String url, ImageView imageView, int maxWidth, int maxHeight) {
+        CustomTarget target = new CustomTarget(imageView, maxWidth, maxHeight);
+        mProtectedFromGarbageCollectorTargets.add(target);
+        Picasso.with(imageView.getContext()).load(url).into(target);
+    }
+
+    private static class CustomTarget implements Target {
+        private ImageView mImageView;
+        private int mMaxWidth;
+        private int mMaxHeight;
+
+        public CustomTarget(ImageView imageView, int maxWidth, int maxHeight) {
+            mImageView = imageView;
+            mMaxWidth = maxWidth;
+            mMaxHeight = maxHeight;
+        }
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            mImageView.setImageBitmap(scaleDownBitmap(bitmap, mMaxWidth, mMaxHeight));
+            mProtectedFromGarbageCollectorTargets.remove(this);
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+            mProtectedFromGarbageCollectorTargets.remove(this);
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+        }
+    }
+
+    public static Bitmap scaleDownBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        int newWidth = width;
+        int newHeight = height;
+
+        if (maxWidth != 0 && newWidth > maxWidth) {
+            newHeight = Math.round((float) maxWidth / newWidth * newHeight);
+            newWidth = maxWidth;
+        }
+
+        if (maxHeight != 0 && newHeight > maxHeight) {
+            newWidth = Math.round((float) maxHeight / newHeight * newWidth);
+            newHeight = maxHeight;
+        }
+
+        return width != newWidth || height != newHeight ? resizeBitmap(bitmap, newWidth, newHeight) : bitmap;
+    }
+
+    public static Bitmap resizeBitmap(Bitmap bitmap, int newWidth, int newHeight) {
+        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);
+    }
 
     public static String getPath(Uri uri, Context context) {
         String path = null;
@@ -75,7 +151,23 @@ public class Utils {
         return path;
     }
 
+    public static String getExternalStorage() {
+        String path = RootUtils.runCommand("echo ${SECONDARY_STORAGE%%:*}");
+        return path.contains("/") ? path : null;
+    }
+
     public static String getInternalStorage() {
+        String dataPath = existFile("/data/media/0", true) ? "/data/media/0" : "/data/media";
+        if (!new RootFile(dataPath).isEmpty()) {
+            return dataPath;
+        }
+        if (existFile("/sdcard", true)) {
+            return "/sdcard";
+        }
+        return Environment.getExternalStorageDirectory().getPath();
+    }
+
+    public static String getInternalDataStorage() {
         return Environment.getExternalStorageDirectory().toString() + "/Android/data/" +
                 BuildConfig.APPLICATION_ID;
     }

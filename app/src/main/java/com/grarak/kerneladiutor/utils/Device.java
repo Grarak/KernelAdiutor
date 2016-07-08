@@ -345,6 +345,10 @@ public class Device {
         return Build.MANUFACTURER;
     }
 
+    public static String getDeviceName() {
+        return Build.DEVICE;
+    }
+
     public static String getModel() {
         return Build.MODEL;
     }

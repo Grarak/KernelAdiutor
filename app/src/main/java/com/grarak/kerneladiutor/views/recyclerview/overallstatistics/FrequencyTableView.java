@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.views.recyclerview;
+package com.grarak.kerneladiutor.views.recyclerview.overallstatistics;
 
 import android.view.View;
 import android.widget.ProgressBar;
@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
 /**
  * Created by willi on 29.04.16.

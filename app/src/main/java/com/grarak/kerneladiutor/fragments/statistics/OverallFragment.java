@@ -38,8 +38,8 @@ import android.widget.TextView;
 import com.bvalosek.cpuspy.CpuSpyApp;
 import com.bvalosek.cpuspy.CpuStateMonitor;
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.cpu.Temperature;
@@ -47,10 +47,10 @@ import com.grarak.kerneladiutor.views.XYGraph;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.CircularText;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
-import com.grarak.kerneladiutor.views.recyclerview.FrequencyButtonView;
-import com.grarak.kerneladiutor.views.recyclerview.FrequencyTableView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.TitleView;
+import com.grarak.kerneladiutor.views.recyclerview.overallstatistics.FrequencyButtonView;
+import com.grarak.kerneladiutor.views.recyclerview.overallstatistics.FrequencyTableView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,15 +75,17 @@ public class OverallFragment extends RecyclerViewFragment {
 
     private double mBatteryRaw;
 
-    private boolean mUpdateFrequency;
+    private FrequencyTask mFrequencyTask;
 
     @Override
     protected void init() {
         super.init();
-        addViewPagerFragment(mCPUUsageFragment = new CPUUsageFragment());
-        if (getSavedInstanceState() != null) {
-            mUpdateFrequency = getSavedInstanceState().getBoolean("updateFrequency");
+
+        if (mCPUUsageFragment != null) {
+            getChildFragmentManager().beginTransaction().detach(mCPUUsageFragment).commit();
         }
+        getChildFragmentManager().beginTransaction().attach(mCPUUsageFragment = new CPUUsageFragment()).commit();
+        addViewPagerFragment(mCPUUsageFragment);
     }
 
     @Override
@@ -205,20 +207,15 @@ public class OverallFragment extends RecyclerViewFragment {
     }
 
     private void updateFrequency() {
-        if (!mUpdateFrequency) {
-            new FrequencyTask().execute();
+        if (mFrequencyTask == null) {
+            mFrequencyTask = new FrequencyTask();
+            mFrequencyTask.execute();
         }
     }
 
     private class FrequencyTask extends AsyncTask<Void, Void, Void> {
         private CpuStateMonitor mBigMonitor;
         private CpuStateMonitor mLITTLEMonitor;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mUpdateFrequency = true;
-        }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -248,8 +245,8 @@ public class OverallFragment extends RecyclerViewFragment {
             if (CPUFreq.isBigLITTLE()) {
                 updateView(mLITTLEMonitor, mFreqLITTLE);
             }
-            mUpdateFrequency = false;
             adjustScrollPosition();
+            mFrequencyTask = null;
         }
     }
 
@@ -355,7 +352,6 @@ public class OverallFragment extends RecyclerViewFragment {
     @Override
     protected void refresh() {
         super.refresh();
-        mCPUUsageFragment.refresh();
 
         if (mCPUTemp != null) {
             mCPUTemp.setMessage(Temperature.getCPU(getActivity()));
@@ -374,6 +370,10 @@ public class OverallFragment extends RecyclerViewFragment {
             if (useFahrenheit) temp = Utils.celsiusToFahrenheit(temp);
             mBatteryTemp.setMessage(Utils.roundTo2Decimals(temp) + getActivity().getString(useFahrenheit ?
                     R.string.fahrenheit : R.string.celsius));
+        }
+
+        if (mCPUUsageFragment != null) {
+            mCPUUsageFragment.refresh();
         }
     }
 
@@ -399,17 +399,11 @@ public class OverallFragment extends RecyclerViewFragment {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("updateFrequency", mUpdateFrequency);
-    }
-
     public static class CPUUsageFragment extends BaseFragment {
 
-        private List<View> mUsages = new ArrayList<>();
-        private float[] mCPUUsages;
-        private int[] mFreqs;
+        private static List<View> mUsages = new ArrayList<>();
+        private static float[] mCPUUsages;
+        private static int[] mFreqs;
 
         @Nullable
         @Override
@@ -418,6 +412,7 @@ public class OverallFragment extends RecyclerViewFragment {
             LinearLayout rootView = new LinearLayout(getActivity());
             rootView.setOrientation(LinearLayout.VERTICAL);
 
+            mUsages.clear();
             int cpus = CPUFreq.getCpuCount();
             LinearLayout[] subViews = new LinearLayout[cpus > 1 ? CPUFreq.getCpuCount() / 2 : 1];
             for (int i = 0; i < subViews.length; i++) {
@@ -445,22 +440,20 @@ public class OverallFragment extends RecyclerViewFragment {
             return rootView;
         }
 
-        private Runnable mCPUUsageRun = new Runnable() {
-            @Override
-            public void run() {
-                mCPUUsages = CPUFreq.getCpuUsage();
-                if (mFreqs == null) {
-                    mFreqs = new int[CPUFreq.getCpuCount()];
-                }
-                for (int i = 0; i < mFreqs.length; i++) {
-                    mFreqs[i] = CPUFreq.getCurFreq(i);
-                }
-            }
-        };
-
         public void refresh() {
-            new Thread(mCPUUsageRun).start();
-            if (mFreqs == null || mCPUUsages == null) return;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mCPUUsages = CPUFreq.getCpuUsage();
+                    if (mFreqs == null) {
+                        mFreqs = new int[CPUFreq.getCpuCount()];
+                    }
+                    for (int i = 0; i < mFreqs.length; i++) {
+                        mFreqs[i] = CPUFreq.getCurFreq(i);
+                    }
+                }
+            }).start();
+            if (mFreqs == null || mCPUUsages == null || mUsages == null) return;
             for (int i = 0; i < mUsages.size(); i++) {
                 View usageView = mUsages.get(i);
                 TextView usageOfflineText = (TextView) usageView.findViewById(R.id.usage_offline_text);

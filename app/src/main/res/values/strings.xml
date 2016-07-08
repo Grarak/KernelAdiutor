@@ -82,6 +82,7 @@
     <string name="entropy">Entropy</string>
     <string name="misc">Misc</string>
     <string name="custom_controls">Custom Controls</string>
+    <string name="downloads">Downloads</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -623,6 +624,19 @@
     <string name="name_empty">Name is empty!</string>
     <string name="import_malformed">Import file is malformed!</string>
     <string name="import_wrong_version">Version of import file is too old!</string>
+
+    <!-- Downloads -->
+    <string name="downloads_error">Couldn\'t find any supported kernels! Please check your internet access.</string>
+    <string name="about">About</string>
+    <string name="download_error">Failed to download %s.</string>
+    <string name="downloading_counting">%1$s/%2$s</string>
+    <string name="check_md5">Checking md5</string>
+    <string name="md5_mismatch">The downloaded file has a different MD5. This has following reasons:\n\n\u2022 The downloaded file is corrupted\n\u2022 The developer has declared a wrong MD5\n\nTry to download the file again. If you still get this error, please contact the developer of this kernel.</string>
+    <string name="install">Install</string>
+    <string name="cwm_recovery">CWM Recovery</string>
+    <string name="twrp">TWRP</string>
+    <string name="manual_flashing">I will use my hands</string>
+    <string name="file_location">Downloaded file is in %s</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

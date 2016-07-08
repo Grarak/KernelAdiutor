@@ -1,0 +1,78 @@
+/*
+ * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ *
+ * This file is part of Kernel Adiutor.
+ *
+ * Kernel Adiutor is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Kernel Adiutor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+package com.grarak.kerneladiutor.views.recyclerview.downloads;
+
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
+
+import java.util.regex.Pattern;
+
+/**
+ * Created by willi on 06.07.16.
+ */
+public class KernelItemView extends RecyclerViewItem {
+
+    private final Support.KernelContent mKernelContent;
+
+    public KernelItemView(Support.KernelContent content) {
+        mKernelContent = content;
+    }
+
+    @Override
+    public int getLayoutRes() {
+        return R.layout.rv_kernel_item_view;
+    }
+
+    @Override
+    public void onCreateView(View view) {
+        super.onCreateView(view);
+
+        final ImageView icon = (ImageView) view.findViewById(R.id.icon);
+        TextView title = (TextView) view.findViewById(R.id.title);
+        TextView summary = (TextView) view.findViewById(R.id.summary);
+
+        Utils.loadImagefromUrl(mKernelContent.getLogo(), icon, 300, 300);
+        String titletext = mKernelContent.getName();
+
+        Pattern colorPattern = Pattern.compile(".*<font color=\"#ffffff\">.*?</font>.*", Pattern.CASE_INSENSITIVE);
+        if (colorPattern.matcher(titletext).matches()) {
+            titletext = titletext.replaceAll("(?i)color=\"#ffffff\">", "color=\"#000000\">");
+        }
+
+        title.setText(Utils.htmlFrom(titletext));
+        summary.setText(Utils.htmlFrom(mKernelContent.getShortDescription()));
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getOnItemClickListener() != null) {
+                    getOnItemClickListener().onClick(KernelItemView.this);
+                }
+            }
+        });
+    }
+
+}

@@ -22,8 +22,6 @@ package com.grarak.kerneladiutor.fragments.kernel;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -59,11 +57,6 @@ public class PathReaderFragment extends RecyclerViewFragment {
     @Override
     protected boolean isForeground() {
         return true;
-    }
-
-    @Override
-    protected RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(getActivity());
     }
 
     @Override

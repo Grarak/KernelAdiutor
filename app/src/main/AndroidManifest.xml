@@ -33,6 +33,7 @@
         <activity android:name=".activities.tools.CustomControlsActivity" />
         <activity android:name=".activities.EditorActivity" />
         <activity android:name=".activities.FilePickerActivity" />
+        <activity android:name=".activities.downloads.DownloadsActivity" />
 
         <receiver android:name=".boot.Receiver">
             <intent-filter>

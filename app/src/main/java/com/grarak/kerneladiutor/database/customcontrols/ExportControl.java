@@ -45,7 +45,7 @@ public class ExportControl {
 
     public boolean export(String name) {
         if (!name.endsWith(".json")) name += ".json";
-        File exportFiles = new File(Utils.getInternalStorage() + "/controls");
+        File exportFiles = new File(Utils.getInternalDataStorage() + "/controls");
         File file = new File(exportFiles.toString() + "/" + name);
         if (file.exists()) return false;
         exportFiles.mkdirs();

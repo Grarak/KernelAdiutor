@@ -28,7 +28,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -47,11 +46,11 @@ import com.grarak.kerneladiutor.utils.tools.customcontrols.CustomControlExceptio
 import com.grarak.kerneladiutor.utils.tools.customcontrols.Items;
 import com.grarak.kerneladiutor.utils.tools.customcontrols.Values;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
-import com.grarak.kerneladiutor.views.recyclerview.ErrorView;
 import com.grarak.kerneladiutor.views.recyclerview.GenericSelectView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
+import com.grarak.kerneladiutor.views.recyclerview.customcontrols.ErrorView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +59,7 @@ import java.util.List;
 /**
  * Created by willi on 30.06.16.
  */
-public class MainFragment extends RecyclerViewFragment {
+public class CustomControlsFragment extends RecyclerViewFragment {
 
     private AlertDialog.Builder mOptionsDialog;
     private AlertDialog.Builder mItemsDialog;
@@ -163,7 +162,7 @@ public class MainFragment extends RecyclerViewFragment {
         addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.welcome),
                 getString(R.string.custom_controls_summary)));
         addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.example),
-                Html.fromHtml(getString(R.string.custom_controls_example_summary))));
+                Utils.htmlFrom(getString(R.string.custom_controls_example_summary))));
     }
 
     @Override
@@ -409,7 +408,7 @@ public class MainFragment extends RecyclerViewFragment {
                     return;
                 }
                 if (new ExportControl(mExportItem, mControlsProvider.getVersion()).export(text)) {
-                    Utils.toast(getString(R.string.exported_item, text, Utils.getInternalStorage()
+                    Utils.toast(getString(R.string.exported_item, text, Utils.getInternalDataStorage()
                             + "/controls"), getActivity());
                 } else {
                     Utils.toast(getString(R.string.already_exists, text), getActivity());

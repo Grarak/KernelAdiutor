@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.views.recyclerview;
+package com.grarak.kerneladiutor.views.recyclerview.overallstatistics;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewPropertyAnimator;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
 /**
  * Created by willi on 30.04.16.

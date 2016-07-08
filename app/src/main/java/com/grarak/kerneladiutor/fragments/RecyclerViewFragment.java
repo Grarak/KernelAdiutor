@@ -30,7 +30,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -61,22 +60,30 @@ import java.util.List;
  */
 public abstract class RecyclerViewFragment extends BaseFragment {
 
-    private List<RecyclerViewItem> mItems = new ArrayList<>();
-    private Handler mHandler = new Handler();
+    private Handler mHandler;
 
     private View mRootView;
+
+    private List<RecyclerViewItem> mItems = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ViewPagerAdapter mViewPagerAdapter;
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private Scroller mScroller;
+
     private View mProgress;
+
+    private List<BaseFragment> mViewPagerFragments = new ArrayList<>();
+    private ViewPagerAdapter mViewPagerAdapter;
     private View mViewPagerParent;
+    private ViewPager mViewPager;
+    private CirclePageIndicator mCirclePageIndicator;
+
     private FloatingActionButton mTopFab;
     private FloatingActionButton mBottomFab;
+
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolBar;
-    private Bundle mSavedInstanceState;
+
     private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
 
     private ValueAnimator mForegroundAnimator;
@@ -90,12 +97,24 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mSavedInstanceState = savedInstanceState;
         mRootView = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerview);
-        ViewPager viewPager = (ViewPager) mRootView.findViewById(R.id.viewpager);
-        CirclePageIndicator circlePageIndicator = (CirclePageIndicator) mRootView.findViewById(R.id.indicator);
+
+        mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
+        mViewPager = (ViewPager) mRootView.findViewById(R.id.viewpager);
+        mCirclePageIndicator = (CirclePageIndicator) mRootView.findViewById(R.id.indicator);
+
+        mProgress = mRootView.findViewById(R.id.progress);
+
+        mAppBarLayout = ((BaseActivity) getActivity()).getAppBarLayout();
+        mToolBar = ((BaseActivity) getActivity()).getToolBar();
+
+        mTopFab = (FloatingActionButton) mRootView.findViewById(R.id.top_fab);
+        mBottomFab = (FloatingActionButton) mRootView.findViewById(R.id.bottom_fab);
 
         mScroller = new Scroller();
         mRecyclerView.clearOnScrollListeners();
@@ -108,16 +127,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         }) : mRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager = getLayoutManager());
 
-        mAppBarLayout = ((BaseActivity) getActivity()).getAppBarLayout();
-        mToolBar = ((BaseActivity) getActivity()).getToolBar();
-
-        mProgress = mRootView.findViewById(R.id.progress);
-
-        mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
-        viewPager.setAdapter(mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager()));
-        circlePageIndicator.setViewPager(viewPager);
-
-        mTopFab = (FloatingActionButton) mRootView.findViewById(R.id.top_fab);
         mTopFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +140,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             }
         }
 
-        mBottomFab = (FloatingActionButton) mRootView.findViewById(R.id.bottom_fab);
         mBottomFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +168,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             mForegroundHeight = getResources().getDisplayMetrics().heightPixels;
         }
 
+        mViewPagerFragments.clear();
         if (itemsSize() == 0) {
             mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
 
@@ -186,7 +195,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                     }
                     hideProgress();
                     postInit();
-                    mScroller.onScrolled(mRecyclerView, 0, 0);
+                    mLoader = null;
                 }
             };
             mLoader.execute();
@@ -195,7 +204,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             init();
             hideProgress();
             postInit();
-            mScroller.onScrolled(mRecyclerView, 0, 0);
         }
 
         return mRootView;
@@ -213,7 +221,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         } else {
             mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), isForeground() ? 0 : mToolBar.getHeight(),
                     mRecyclerView.getPaddingRight(), mRecyclerView.getPaddingBottom());
-            mViewPagerParent.setVisibility(View.GONE);
+            mRecyclerView.setClipToPadding(true);
+            ViewGroup.LayoutParams layoutParams = mViewPagerParent.getLayoutParams();
+            layoutParams.height = 0;
+            mViewPagerParent.requestLayout();
             setAppBarLayoutAlpha(255);
         }
         if (showBottomFab()) {
@@ -226,14 +237,18 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     }
 
     protected void postInit() {
+        if (showViewPager()) {
+            mScroller.onScrolled(mRecyclerView, 0, 0);
+            mViewPagerParent.setTranslationY(0);
+        }
+        if (mViewPager != null) {
+            mViewPager.setAdapter(mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), mViewPagerFragments));
+            mCirclePageIndicator.setViewPager(mViewPager);
+        }
     }
 
     protected void adjustScrollPosition() {
         mScroller.onScrolled(mRecyclerView, 0, 0);
-    }
-
-    protected Bundle getSavedInstanceState() {
-        return mSavedInstanceState;
     }
 
     protected abstract void addItems(List<RecyclerViewItem> items);
@@ -289,16 +304,20 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         return mItems.size();
     }
 
-    protected void addViewPagerFragment(Fragment fragment) {
-        mViewPagerAdapter.addFragment(fragment);
+    protected void addViewPagerFragment(BaseFragment fragment) {
+        mViewPagerFragments.add(fragment);
+        if (mViewPagerAdapter != null) {
+            mViewPagerAdapter.notifyDataSetChanged();
+        }
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private List<Fragment> mFragments = new ArrayList<>();
+        private final List<BaseFragment> mFragments;
 
-        public ViewPagerAdapter(FragmentManager fragmentManager) {
+        public ViewPagerAdapter(FragmentManager fragmentManager, List<BaseFragment> fragments) {
             super(fragmentManager);
+            mFragments = fragments;
         }
 
         @Override
@@ -309,15 +328,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         @Override
         public int getCount() {
             return mFragments.size();
-        }
-
-        public void addFragment(Fragment fragment) {
-            mFragments.add(fragment);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void restoreState(Parcelable state, ClassLoader loader) {
         }
     }
 
@@ -336,7 +346,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
             mScrollDistance = -firstItem.getTop() + mRecyclerView.getPaddingTop();
 
-            if (mScrollDistance > mViewPagerParent.getHeight() - mAppBarLayout.getHeight()) {
+            if (mScrollDistance > mViewPagerParent.getHeight() - mAppBarLayout.getHeight() && dy != 0) {
                 mAppBarLayoutDistance += dy;
                 fadeAppBarLayout(false);
                 if (showTopFab()) {
@@ -368,11 +378,11 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                     mAlphaAnimator.cancel();
                 }
 
-                mAlphaAnimator = ValueAnimator.ofInt(fade ? 255 : 0, fade ? 0 : 255);
+                mAlphaAnimator = ValueAnimator.ofFloat(fade ? 1f : 0f, fade ? 0f : 1f);
                 mAlphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
-                        setAppBarLayoutAlpha((int) animation.getAnimatedValue());
+                        setAppBarLayoutAlpha(Math.round(255 * (float) animation.getAnimatedValue()));
                     }
                 });
                 mAlphaAnimator.addListener(new AnimatorListenerAdapter() {

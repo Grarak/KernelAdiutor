@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.graphics.drawable.Drawable;
+import android.text.method.MovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ public class DescriptionView extends RecyclerViewItem {
     private Drawable mImage;
     private CharSequence mTitle;
     private CharSequence mSummary;
+    private MovementMethod mLinkMovementMethod;
 
     @Override
     public int getLayoutRes() {
@@ -70,6 +72,11 @@ public class DescriptionView extends RecyclerViewItem {
         refresh();
     }
 
+    public void setMovementMethod(MovementMethod movementMethod) {
+        mLinkMovementMethod = movementMethod;
+        refresh();
+    }
+
     public CharSequence getSummary() {
         return mSummary;
     }
@@ -91,6 +98,9 @@ public class DescriptionView extends RecyclerViewItem {
         }
         if (mSummaryView != null && mSummary != null) {
             mSummaryView.setText(mSummary);
+            if (mLinkMovementMethod != null) {
+                mSummaryView.setMovementMethod(mLinkMovementMethod);
+            }
         }
         if (mRootView != null && getOnItemClickListener() != null && mTitleView != null
                 && mSummaryView != null) {

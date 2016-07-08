@@ -56,4 +56,11 @@
         <item>@string/control_generic</item>
     </string-array>
 
+    <!-- Downloads -->
+    <string-array name="downloads_recovery">
+        <item>@string/cwm_recovery</item>
+        <item>@string/twrp</item>
+        <item>@string/manual_flashing</item>
+    </string-array>
+
 </resources>

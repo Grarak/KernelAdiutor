@@ -56,7 +56,8 @@ import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
-import com.grarak.kerneladiutor.fragments.tools.customcontrols.MainFragment;
+import com.grarak.kerneladiutor.fragments.tools.customcontrols.CustomControlsFragment;
+import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadsFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -72,6 +73,7 @@ import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
 import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
+import com.grarak.kerneladiutor.utils.tools.downloads.Support;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -126,7 +128,8 @@ public class NavigationActivity extends BaseActivity
         }
         sFragments.put(R.string.misc, new MiscFragment());
         sFragments.put(R.string.tools, null);
-        sFragments.put(R.string.custom_controls, new MainFragment());
+        sFragments.put(R.string.custom_controls, new CustomControlsFragment());
+        sFragments.put(R.string.downloads, null);
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 
@@ -152,6 +155,13 @@ public class NavigationActivity extends BaseActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = getToolBar();
         setSupportActionBar(toolbar);
+
+        Support support = new Support(this);
+        if (support.getLink() != null) {
+            sFragments.put(R.string.downloads, DownloadsFragment.newInstance(support));
+        } else {
+            sFragments.remove(R.string.downloads);
+        }
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, 0, 0);
