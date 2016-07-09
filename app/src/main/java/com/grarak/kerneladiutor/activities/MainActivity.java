@@ -54,6 +54,9 @@ import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by willi on 14.04.16.
@@ -187,6 +190,7 @@ public class MainActivity extends BaseActivity {
                 private ApplicationInfo mApplicationInfo;
                 private PackageInfo mPackageInfo;
                 private boolean mPatched;
+                private boolean mInternetAvailable;
 
                 @Override
                 protected void onPreExecute() {
@@ -205,6 +209,20 @@ public class MainActivity extends BaseActivity {
                     if (mApplicationInfo != null && mPackageInfo != null && mPackageInfo.versionCode == 130) {
                         mPatched = !Utils.checkMD5("5c7a92a5b2dcec409035e1114e815b00",
                                 new File(mApplicationInfo.publicSourceDir)) || Utils.isPatched(mApplicationInfo);
+
+                        try {
+                            HttpURLConnection urlc = (HttpURLConnection)
+                                    (new URL("http://clients3.google.com/generate_204")
+                                            .openConnection());
+                            urlc.setRequestProperty("User-Agent", "Android");
+                            urlc.setRequestProperty("Connection", "close");
+                            urlc.setConnectTimeout(1500);
+                            urlc.connect();
+                            mInternetAvailable = (urlc.getResponseCode() == 204 &&
+                                    urlc.getContentLength() == 0);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     return mApplicationInfo != null && mPackageInfo != null && mPackageInfo.versionCode == 130
                             && !mPatched;
@@ -218,7 +236,7 @@ public class MainActivity extends BaseActivity {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.setComponent(new ComponentName("com.grarak.kerneladiutordonate",
                                 "com.grarak.kerneladiutordonate.MainActivity"));
-                        startActivityForResult(intent, 0);
+                        startActivityForResult(intent, mInternetAvailable ? 0 : 1);
                     } else {
                         launch(mPatched ? 3 : -1);
                     }
@@ -233,6 +251,8 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             launch(data.getIntExtra("result", -1));
+        } else if (requestCode == 1) {
+            launch(0);
         }
     }
 
