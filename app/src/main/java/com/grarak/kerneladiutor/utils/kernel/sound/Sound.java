@@ -104,7 +104,8 @@ public class Sound {
     }
 
     public static String getHeadphonePowerAmpGain() {
-        return Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ")[0];
+        int gain = 38 - Integer.parseInt(Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ")[0]);
+        return String.valueOf(gain);
     }
 
     public static List<String> getHeadphonePowerAmpGainLimits() {
@@ -133,7 +134,13 @@ public class Sound {
     public static String getSpeakerGain() {
         switch (SPEAKER_GAIN_FILE) {
             case SPEAKER_GAIN:
-                return Utils.readFile(SPEAKER_GAIN).split(" ")[0];
+                int gain = Integer.parseInt(Utils.readFile(SPEAKER_GAIN).split(" ")[0]);
+                if (gain >= 0 && gain <= 20) { // Zero / Positive gain range (1 to 20)
+                    return String.valueOf(gain);
+                else if (gain >= 226 && gain <= 255) { // Negative gain range (-1 to -30)
+                    return String.valueOf(gain - 256);
+                }
+                break;
             case SPEAKER_BOOST:
                 return Utils.readFile(SPEAKER_BOOST);
         }
@@ -166,7 +173,13 @@ public class Sound {
     }
 
     public static String getCamMicrophoneGain() {
-        return Utils.readFile(CAM_MICROPHONE_GAIN);
+        int gain = Integer.parseInt(Utils.readFile(CAM_MICROPHONE_GAIN));
+        if (gain >= 0 && gain <= 20) { // Zero / Positive gain range (1 to 20)
+            gain += 0; // Don't do anything
+        else if (gain >= 226 && gain <= 255) { // Negative gain range (-1 to -30)
+            gain -= 256; // Subtract from 256 to get the proper value 
+        }
+        return String.valueOf(gain);
     }
 
     public static List<String> getCamMicrophoneGainLimits() {
@@ -182,7 +195,13 @@ public class Sound {
     }
 
     public static String getHandsetMicrophoneGain() {
-        return Utils.readFile(HANDSET_MICROPONE_GAIN);
+        int gain = Integer.parseInt(Utils.readFile(HANDSET_MICROPHONE_GAIN));
+        if (gain >= 0 && gain <= 20) { // Zero / Positive gain range (1 to 20)
+            gain += 0; // Don't do anything
+        else if (gain >= 226 && gain <= 255) { // Negative gain range (-1 to -30)
+            gain -= 256; // Subtract from 256 to get the proper value 
+        }
+        return String.valueOf(gain);
     }
 
     public static List<String> getHandsetMicrophoneGainLimits() {
@@ -199,7 +218,17 @@ public class Sound {
 
     public static String getHeadphoneGain() {
         String value = Utils.readFile(HEADPHONE_GAIN);
-        return value.contains(" ") ? value.split(" ")[0] : value;
+        int gain = 0;
+        if (value.contains(" "))
+            gain = Number.parseInt(value.split("")[0]);
+        else
+            gain = Number.parseInt(value);
+        if (gain >= 0 && gain <= 20) { // Zero / Positive gain range (1 to 20)
+            gain += 0; // Don't do anything
+        else if (gain >= 226 && gain <= 255) { // Negative gain range (-1 to -30)
+            gain -= 256; // Subtract from 256 to get the proper value 
+        }            
+        return String.valueOf(gain);
     }
 
     public static List<String> getHeadphoneGainLimits() {
