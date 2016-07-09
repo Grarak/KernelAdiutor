@@ -36,7 +36,7 @@ public class Sound {
     private static final String SOUND_CONTROL_ENABLE = "/sys/module/snd_soc_wcd9320/parameters/enable_fs";
     private static final String HIGHPERF_MODE_ENABLE = "/sys/devices/virtual/misc/soundcontrol/highperf_enabled";
     private static final String HEADPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_headphone_gain";
-    private static final String HANDSET_MICROPONE_GAIN = "/sys/kernel/sound_control_3/gpl_mic_gain";
+    private static final String HANDSET_MICROPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_mic_gain";
     private static final String CAM_MICROPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_cam_mic_gain";
     private static final String SPEAKER_BOOST = "/sys/devices/virtual/misc/soundcontrol/speaker_boost";
     private static final String HEADPHONE_POWERAMP_GAIN = "/sys/kernel/sound_control_3/gpl_headphone_pa_gain";
@@ -100,11 +100,13 @@ public class Sound {
     }
 
     public static void setHeadphonePowerAmpGain(String value, Context context) {
+        int newGain = 38 - Utils.strToInt(value);
+        value = String.valueOf(newGain);
         run(Control.write(value + " " + value, HEADPHONE_POWERAMP_GAIN), HEADPHONE_POWERAMP_GAIN, context);
     }
 
     public static String getHeadphonePowerAmpGain() {
-        return Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ")[0];
+        return String.valueOf(38 - Utils.strToInt(Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ")[0]));
     }
 
     public static List<String> getHeadphonePowerAmpGainLimits() {
@@ -122,7 +124,13 @@ public class Sound {
     public static void setSpeakerGain(String value, Context context) {
         switch (SPEAKER_GAIN_FILE) {
             case SPEAKER_GAIN:
-                fauxRun(value + " " + value, SPEAKER_GAIN, SPEAKER_GAIN, context);
+                int newGain = Utils.strToInt(value);
+                if (newGain >= 0 && newGain <= 20) { // Zero / 1 to 20 (positive gain range)
+                    fauxRun(value + " " + value, SPEAKER_GAIN, SPEAKER_GAIN, context);
+                } else if (newGain <= -1 && newGain >= -30) { // -1 to -30 (negative gain range)
+                    value = String.valueOf(newGain + 256);
+                    fauxRun(value + " " + value, SPEAKER_GAIN, SPEAKER_GAIN, context);
+                }
                 break;
             case SPEAKER_BOOST:
                 run(Control.write(value, SPEAKER_BOOST), SPEAKER_BOOST, context);
@@ -133,7 +141,13 @@ public class Sound {
     public static String getSpeakerGain() {
         switch (SPEAKER_GAIN_FILE) {
             case SPEAKER_GAIN:
-                return Utils.readFile(SPEAKER_GAIN).split(" ")[0];
+                int gain = Utils.strToInt(Utils.readFile(SPEAKER_GAIN).split(" ")[0]);
+                if (gain >= 0 && gain <= 20) {
+                    return String.valueOf(gain);
+                } else if (gain >= 226 && gain <= 255) {
+                    return String.valueOf(gain - 256);   
+                }
+                break;
             case SPEAKER_BOOST:
                 return Utils.readFile(SPEAKER_BOOST);
         }
@@ -162,11 +176,24 @@ public class Sound {
     }
 
     public static void setCamMicrophoneGain(String value, Context context) {
-        fauxRun(value, CAM_MICROPHONE_GAIN, CAM_MICROPHONE_GAIN, context);
+        int newGain = Utils.strToInt(value);
+        if (newGain >= 0 && newGain <= 20) {
+            fauxRun(value, CAM_MICROPHONE_GAIN, CAM_MICROPHONE_GAIN, context);
+        } else if (newGain <= -1 && newGain >= -30) {
+            value = String.valueOf(newGain + 256);
+            fauxRun(value, CAM_MICROPHONE_GAIN, CAM_MICROPHONE_GAIN, context);
+        }
     }
 
     public static String getCamMicrophoneGain() {
-        return Utils.readFile(CAM_MICROPHONE_GAIN);
+        int gain = Utils.strToInt(Utils.readFile(CAM_MICROPHONE_GAIN));
+        if (gain >= 0 && gain <= 20) {
+            return String.valueOf(gain);
+        } else if (gain >= 226 && gain <= 255) {
+            return String.valueOf(gain - 256);
+        }
+
+        return null;
     }
 
     public static List<String> getCamMicrophoneGainLimits() {
@@ -178,11 +205,24 @@ public class Sound {
     }
 
     public static void setHandsetMicrophoneGain(String value, Context context) {
-        fauxRun(value, HANDSET_MICROPONE_GAIN, HANDSET_MICROPONE_GAIN, context);
+        int newGain = Utils.strToInt(value);
+        if (newGain >= 0 && newGain <= 20) {
+            fauxRun(value, HANDSET_MICROPHONE_GAIN, HANDSET_MICROPHONE_GAIN, context);
+        } else if (newGain <= -1 && newGain >= -30) {
+            value = String.valueOf(newGain + 256);
+            fauxRun(value, HANDSET_MICROPHONE_GAIN, HANDSET_MICROPHONE_GAIN, context);
+        }
     }
 
     public static String getHandsetMicrophoneGain() {
-        return Utils.readFile(HANDSET_MICROPONE_GAIN);
+        int gain = Utils.strToInt(Utils.readFile(HANDSET_MICROPHONE_GAIN));
+        if (gain >= 0 && gain <= 20) {
+            return String.valueOf(gain);
+        } else if (gain >= 226 && gain <= 255) {
+            return String.valueOf(gain - 256);
+        }
+
+        return null;
     }
 
     public static List<String> getHandsetMicrophoneGainLimits() {
@@ -190,16 +230,34 @@ public class Sound {
     }
 
     public static boolean hasHandsetMicrophoneGain() {
-        return Utils.existFile(HANDSET_MICROPONE_GAIN);
+        return Utils.existFile(HANDSET_MICROPHONE_GAIN);
     }
 
     public static void setHeadphoneGain(String value, Context context) {
-        fauxRun(value + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+        int newGain = Utils.strToInt(value);
+        if (newGain >= 0 && newGain <= 20) {
+            fauxRun(value + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+        } else if (newGain <= -1 && newGain >= -30) {
+            value = String.valueOf(newGain + 256);
+            fauxRun(value + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+        }
     }
 
     public static String getHeadphoneGain() {
         String value = Utils.readFile(HEADPHONE_GAIN);
-        return value.contains(" ") ? value.split(" ")[0] : value;
+        String strGain = null;
+        if (value.contains(" "))
+            strGain = value.split(" ")[0];
+        else
+            strGain = value;
+        int gain = Utils.strToInt(strGain);
+        if (gain >= 0 && gain <= 20) {
+            return String.valueOf(gain);
+        } else if (gain >= 226 && gain <= 255) {
+            return String.valueOf(gain - 256);   
+        }
+
+        return null;
     }
 
     public static List<String> getHeadphoneGainLimits() {
