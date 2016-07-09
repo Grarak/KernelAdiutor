@@ -44,8 +44,10 @@ import java.util.List;
 public class BatteryFragment extends RecyclerViewFragment {
 
     private DescriptionFragment mLevel;
-
     private DescriptionView mVoltage;
+
+    private static int sBatteryLevel;
+    private static int sBatteryVoltage;
 
     @Override
     protected void init() {
@@ -176,17 +178,21 @@ public class BatteryFragment extends RecyclerViewFragment {
     private BroadcastReceiver mBatteryReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-            int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0);
-
-            if (mLevel != null) {
-                mLevel.setSummary(level + "%");
-            }
-            if (mVoltage != null) {
-                mVoltage.setSummary(voltage + getString(R.string.mv));
-            }
+            sBatteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+            sBatteryVoltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0);
         }
     };
+
+    @Override
+    protected void refresh() {
+        super.refresh();
+        if (mLevel != null) {
+            mLevel.setSummary(sBatteryLevel + "%");
+        }
+        if (mVoltage != null) {
+            mVoltage.setSummary(sBatteryVoltage + getString(R.string.mv));
+        }
+    }
 
     @Override
     public void onResume() {

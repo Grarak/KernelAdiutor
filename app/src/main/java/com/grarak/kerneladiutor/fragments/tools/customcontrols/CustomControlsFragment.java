@@ -71,6 +71,8 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     private Controls mControlsProvider;
     private Controls.ControlItem mExportItem;
 
+    private boolean mLoaded;
+
     @Override
     protected boolean showTopFab() {
         return true;
@@ -167,7 +169,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        load(items);
+        if (!mLoaded) {
+            mLoaded = true;
+            load(items);
+        }
     }
 
     private void reload() {
@@ -513,5 +518,11 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                 importing(data.getStringExtra(FilePickerActivity.RESULT_INTENT));
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mLoaded = false;
     }
 }

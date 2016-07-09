@@ -63,4 +63,14 @@
         <item>@string/manual_flashing</item>
     </string-array>
 
+    <!-- Backup -->
+    <string-array name="backup_options">
+        <item>@string/backup</item>
+        <item>@string/flash</item>
+    </string-array>
+    <string-array name="backup_item_options">
+        <item>@string/restore</item>
+        <item>@string/delete</item>
+    </string-array>
+
 </resources>

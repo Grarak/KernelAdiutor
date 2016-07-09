@@ -83,6 +83,7 @@
     <string name="misc">Misc</string>
     <string name="custom_controls">Custom Controls</string>
     <string name="downloads">Downloads</string>
+    <string name="backup">Backup</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -637,6 +638,15 @@
     <string name="twrp">TWRP</string>
     <string name="manual_flashing">I will use my hands</string>
     <string name="file_location">Downloaded file is in %s</string>
+    <string name="backing_up">Backing up</string>
+    <string name="flashing">Flashing</string>
+    <string name="restoring">Restoring</string>
+
+    <!-- Backup -->
+    <string name="boot_partition">Boot partition</string>
+    <string name="recovery_partition">Recovery partition</string>
+    <string name="fota_partition">Fota partition</string>
+    <string name="flash">Flash</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

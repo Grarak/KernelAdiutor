@@ -419,14 +419,21 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     }
 
     protected void showProgress() {
-        mProgress.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.INVISIBLE);
-        if (showTopFab()) {
-            mTopFab.hide();
-        }
-        if (showBottomFab()) {
-            mBottomFab.hide();
-        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (isAdded()) {
+                    mProgress.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    if (showTopFab()) {
+                        mTopFab.hide();
+                    }
+                    if (showBottomFab()) {
+                        mBottomFab.hide();
+                    }
+                }
+            }
+        });
     }
 
     protected void hideProgress() {

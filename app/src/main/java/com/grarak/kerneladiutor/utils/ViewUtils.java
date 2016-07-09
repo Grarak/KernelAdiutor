@@ -72,7 +72,9 @@ public class ViewUtils {
         editText.setGravity(Gravity.CENTER);
         editText.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        editText.setText(text);
+        if (text != null) {
+            editText.setText(text);
+        }
         editText.setSingleLine(true);
         if (inputType >= 0) {
             editText.setInputType(inputType);
