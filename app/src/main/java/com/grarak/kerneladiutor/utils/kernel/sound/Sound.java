@@ -245,11 +245,7 @@ public class Sound {
 
     public static String getHeadphoneGain() {
         String value = Utils.readFile(HEADPHONE_GAIN);
-        String strGain = null;
-        if (value.contains(" "))
-            strGain = value.split(" ")[0];
-        else
-            strGain = value;
+        String strGain = (value.contains(" ") ? value.split(" ")[0] : value);
         int gain = Utils.strToInt(strGain);
         if (gain >= 0 && gain <= 20) {
             return String.valueOf(gain);
