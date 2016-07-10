@@ -57,6 +57,7 @@ import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.fragments.tools.BackupFragment;
+import com.grarak.kerneladiutor.fragments.tools.BuildpropFragment;
 import com.grarak.kerneladiutor.fragments.tools.customcontrols.CustomControlsFragment;
 import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadsFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
@@ -74,8 +75,8 @@ import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
 import com.grarak.kerneladiutor.utils.kernel.thermal.Thermal;
 import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
-import com.grarak.kerneladiutor.utils.tools.backup.Backup;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.Backup;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -135,6 +136,7 @@ public class NavigationActivity extends BaseActivity
         if (Backup.hasBackup()) {
             sFragments.put(R.string.backup, new BackupFragment());
         }
+        sFragments.put(R.string.build_prop_editor, new BuildpropFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 
@@ -161,7 +163,7 @@ public class NavigationActivity extends BaseActivity
         Toolbar toolbar = getToolBar();
         setSupportActionBar(toolbar);
 
-        Support support = new Support(this);
+        SupportedDownloads support = new SupportedDownloads(this);
         if (support.getLink() != null) {
             sFragments.put(R.string.downloads, DownloadsFragment.newInstance(support));
         } else {

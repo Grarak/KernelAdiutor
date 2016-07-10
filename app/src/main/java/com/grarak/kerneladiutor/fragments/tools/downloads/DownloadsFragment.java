@@ -28,7 +28,7 @@ import com.grarak.kerneladiutor.activities.downloads.DownloadsActivity;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.WebpageReader;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.downloads.KernelItemView;
 
@@ -40,18 +40,18 @@ import java.util.List;
  */
 public class DownloadsFragment extends RecyclerViewFragment {
 
-    public static DownloadsFragment newInstance(Support support) {
+    public static DownloadsFragment newInstance(SupportedDownloads support) {
         DownloadsFragment fragment = new DownloadsFragment();
         fragment.mSupport = support;
         return fragment;
     }
 
-    private Support mSupport;
+    private SupportedDownloads mSupport;
     private WebpageReader mWebpageReader;
     private final List<WebpageReader> mKernelWebpageReader = new ArrayList<>();
     private Snackbar mErrorBar;
 
-    private Support.KernelContent mKernelContent;
+    private SupportedDownloads.KernelContent mKernelContent;
 
     @Override
     protected boolean showViewPager() {
@@ -83,10 +83,10 @@ public class DownloadsFragment extends RecyclerViewFragment {
                 public void onCallback(String raw, CharSequence html) {
                     if (!isAdded()) return;
                     hideProgress();
-                    final Support.Kernels kernels = new Support.Kernels(raw);
+                    final SupportedDownloads.Kernels kernels = new SupportedDownloads.Kernels(raw);
                     mKernelWebpageReader.clear();
 
-                    final List<Support.KernelContent> contents = new ArrayList<>();
+                    final List<SupportedDownloads.KernelContent> contents = new ArrayList<>();
                     if (kernels.readable()) {
                         for (int i = 0; i < kernels.length(); i++) {
                             WebpageReader reader = new WebpageReader(new WebpageReader.WebpageCallback() {
@@ -94,7 +94,7 @@ public class DownloadsFragment extends RecyclerViewFragment {
                                 public void onCallback(String raw, CharSequence html) {
                                     if (!isAdded()) return;
                                     mKernelCount++;
-                                    Support.KernelContent content = new Support.KernelContent(raw);
+                                    SupportedDownloads.KernelContent content = new SupportedDownloads.KernelContent(raw);
                                     if (content.readable()) {
                                         contents.add(content);
                                     }
@@ -111,9 +111,9 @@ public class DownloadsFragment extends RecyclerViewFragment {
                     }
                 }
 
-                private void addViews(List<Support.KernelContent> contents) {
+                private void addViews(List<SupportedDownloads.KernelContent> contents) {
                     if (contents.size() > 0) {
-                        for (final Support.KernelContent content : contents) {
+                        for (final SupportedDownloads.KernelContent content : contents) {
                             String n = content.getName();
                             if (n != null && content.getLogo() != null
                                     && content.getShortDescription() != null

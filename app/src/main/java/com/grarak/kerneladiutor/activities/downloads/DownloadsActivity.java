@@ -33,7 +33,7 @@ import com.grarak.kerneladiutor.fragments.tools.downloads.AboutFragment;
 import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadKernelFragment;
 import com.grarak.kerneladiutor.fragments.tools.downloads.FeaturesFragment;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,7 +52,7 @@ public class DownloadsActivity extends BaseActivity {
 
         initToolBar();
 
-        Support.KernelContent content = new Support.KernelContent(getIntent().getStringExtra(JSON_INTENT));
+        SupportedDownloads.KernelContent content = new SupportedDownloads.KernelContent(getIntent().getStringExtra(JSON_INTENT));
         getSupportActionBar().setTitle(Utils.htmlFrom(content.getName()).toString());
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -62,8 +62,8 @@ public class DownloadsActivity extends BaseActivity {
 
         LinkedHashMap<String, Fragment> items = new LinkedHashMap<>();
 
-        List<Support.KernelContent.Feature> features = content.getFeatures();
-        List<Support.KernelContent.Download> downloads = content.getDownloads();
+        List<SupportedDownloads.KernelContent.Feature> features = content.getFeatures();
+        List<SupportedDownloads.KernelContent.Download> downloads = content.getDownloads();
 
         if (content.getShortDescription() != null && content.getLongDescription() != null) {
             items.put(getString(R.string.about), AboutFragment.newInstance(content));

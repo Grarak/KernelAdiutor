@@ -73,4 +73,10 @@
         <item>@string/delete</item>
     </string-array>
 
+    <!-- Build prop Editor -->
+    <string-array name="build_prop_item_options">
+        <item>@string/edit</item>
+        <item>@string/delete</item>
+    </string-array>
+
 </resources>

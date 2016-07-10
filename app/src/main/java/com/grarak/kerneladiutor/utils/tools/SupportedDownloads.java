@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.utils.tools.downloads;
+package com.grarak.kerneladiutor.utils.tools;
 
 import android.content.Context;
 
@@ -34,11 +34,11 @@ import java.util.List;
 /**
  * Created by willi on 06.07.16.
  */
-public class Support {
+public class SupportedDownloads {
 
     private String mLink;
 
-    public Support(Context context) {
+    public SupportedDownloads(Context context) {
         try {
             String json = Utils.existFile(context.getFilesDir() + "/downloads.json") ?
                     Utils.readFile(context.getFilesDir() + "/downloads.json", false) :

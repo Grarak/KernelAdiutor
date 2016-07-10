@@ -23,9 +23,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.grarak.kerneladiutor.R;
@@ -37,6 +37,10 @@ public class ViewUtils {
 
     public interface OnDialogEditTextListener {
         void onClick(String text);
+    }
+
+    public interface onDialogEditTextsListener {
+        void onClick(String text, String text2);
     }
 
     public static AlertDialog.Builder dialogDonate(final Context context) {
@@ -55,6 +59,63 @@ public class ViewUtils {
                 });
     }
 
+    public static AlertDialog.Builder dialogEditTexts(String text, String text2, String hint, String hint2,
+                                                      final DialogInterface.OnClickListener negativeListener,
+                                                      final onDialogEditTextsListener onDialogEditTextListener,
+                                                      Context context) {
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        int padding = (int) context.getResources().getDimension(R.dimen.dialog_edittext_padding);
+        layout.setPadding(padding, padding, padding, padding);
+
+        final AppCompatEditText editText = new AppCompatEditText(context);
+        editText.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if (text != null) {
+            editText.setText(text);
+        }
+        if (hint != null) {
+            editText.setHint(hint);
+        }
+        editText.setSingleLine(true);
+
+        final AppCompatEditText editText2 = new AppCompatEditText(context);
+        editText2.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        if (text2 != null) {
+            editText2.setText(text2);
+        }
+        if (hint2 != null) {
+            editText2.setHint(hint2);
+        }
+        editText2.setSingleLine(true);
+
+        layout.addView(editText);
+        layout.addView(editText2);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(layout);
+        if (negativeListener != null) {
+            builder.setNegativeButton(context.getString(R.string.cancel), negativeListener);
+        }
+        if (onDialogEditTextListener != null) {
+            builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    onDialogEditTextListener.onClick(editText.getText().toString(), editText2.getText().toString());
+                }
+            }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (negativeListener != null) {
+                        negativeListener.onClick(dialog, 0);
+                    }
+                }
+            });
+        }
+        return builder;
+    }
+
     public static AlertDialog.Builder dialogEditText(String text, final DialogInterface.OnClickListener negativeListener,
                                                      final OnDialogEditTextListener onDialogEditTextListener,
                                                      Context context) {
@@ -68,7 +129,7 @@ public class ViewUtils {
         int padding = (int) context.getResources().getDimension(R.dimen.dialog_edittext_padding);
         layout.setPadding(padding, padding, padding, padding);
 
-        final EditText editText = new EditText(context);
+        final AppCompatEditText editText = new AppCompatEditText(context);
         editText.setGravity(Gravity.CENTER);
         editText.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.utils.tools.backup;
+package com.grarak.kerneladiutor.utils.tools;
 
 import android.os.Environment;
 import android.util.Log;

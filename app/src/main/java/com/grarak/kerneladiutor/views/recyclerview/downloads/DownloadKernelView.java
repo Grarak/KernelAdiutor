@@ -37,8 +37,8 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
-import com.grarak.kerneladiutor.utils.tools.recovery.Recovery;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
+import com.grarak.kerneladiutor.utils.tools.Recovery;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
 import java.io.File;
@@ -50,7 +50,7 @@ import java.util.List;
 public class DownloadKernelView extends RecyclerViewItem {
 
     private final Activity mActvity;
-    private final Support.KernelContent.Download mDownload;
+    private final SupportedDownloads.KernelContent.Download mDownload;
 
     private Drawable mDownloadDrawable;
     private Drawable mCancelDrawable;
@@ -66,7 +66,7 @@ public class DownloadKernelView extends RecyclerViewItem {
     private View mMismatchMD5;
     private View mInstallButton;
 
-    public DownloadKernelView(Activity activity, Support.KernelContent.Download download) {
+    public DownloadKernelView(Activity activity, SupportedDownloads.KernelContent.Download download) {
         mActvity = activity;
         mDownload = download;
     }

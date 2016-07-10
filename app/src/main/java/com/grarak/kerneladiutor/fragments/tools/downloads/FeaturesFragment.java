@@ -23,7 +23,7 @@ import android.text.method.LinkMovementMethod;
 
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
@@ -34,13 +34,13 @@ import java.util.List;
  */
 public class FeaturesFragment extends RecyclerViewFragment {
 
-    public static FeaturesFragment newInstance(List<Support.KernelContent.Feature> features) {
+    public static FeaturesFragment newInstance(List<SupportedDownloads.KernelContent.Feature> features) {
         FeaturesFragment fragment = new FeaturesFragment();
         fragment.mFeatures = features;
         return fragment;
     }
 
-    private List<Support.KernelContent.Feature> mFeatures;
+    private List<SupportedDownloads.KernelContent.Feature> mFeatures;
 
     @Override
     protected boolean showViewPager() {
@@ -54,7 +54,7 @@ public class FeaturesFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        for (Support.KernelContent.Feature feature : mFeatures) {
+        for (SupportedDownloads.KernelContent.Feature feature : mFeatures) {
             DescriptionView descriptionView = new DescriptionView();
 
             if (feature.hasItems()) {

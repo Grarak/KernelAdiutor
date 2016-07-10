@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
 import java.util.regex.Pattern;
@@ -35,9 +35,9 @@ import java.util.regex.Pattern;
  */
 public class KernelItemView extends RecyclerViewItem {
 
-    private final Support.KernelContent mKernelContent;
+    private final SupportedDownloads.KernelContent mKernelContent;
 
-    public KernelItemView(Support.KernelContent content) {
+    public KernelItemView(SupportedDownloads.KernelContent content) {
         mKernelContent = content;
     }
 

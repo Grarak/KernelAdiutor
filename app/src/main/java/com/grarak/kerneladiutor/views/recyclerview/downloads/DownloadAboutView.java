@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
 /**
@@ -33,9 +33,9 @@ import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
  */
 public class DownloadAboutView extends RecyclerViewItem {
 
-    private final Support.KernelContent mKernelContent;
+    private final SupportedDownloads.KernelContent mKernelContent;
 
-    public DownloadAboutView(Support.KernelContent kernelContent) {
+    public DownloadAboutView(SupportedDownloads.KernelContent kernelContent) {
         mKernelContent = kernelContent;
     }
 

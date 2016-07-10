@@ -84,6 +84,7 @@
     <string name="custom_controls">Custom Controls</string>
     <string name="downloads">Downloads</string>
     <string name="backup">Backup</string>
+    <string name="build_prop_editor">Build prop Editor</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -647,6 +648,12 @@
     <string name="recovery_partition">Recovery partition</string>
     <string name="fota_partition">Fota partition</string>
     <string name="flash">Flash</string>
+
+    <!-- Build prop Editor -->
+    <string name="search">Search</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+    <string name="key_empty">Key can\'t be empty!</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>
