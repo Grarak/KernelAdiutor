@@ -20,7 +20,7 @@
 package com.grarak.kerneladiutor.fragments.tools.downloads;
 
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.downloads.DownloadKernelView;
 
@@ -32,13 +32,13 @@ import java.util.List;
  */
 public class DownloadKernelFragment extends RecyclerViewFragment {
 
-    public static DownloadKernelFragment newInstance(List<Support.KernelContent.Download> downloads) {
+    public static DownloadKernelFragment newInstance(List<SupportedDownloads.KernelContent.Download> downloads) {
         DownloadKernelFragment fragment = new DownloadKernelFragment();
         fragment.mDownloads = downloads;
         return fragment;
     }
 
-    private List<Support.KernelContent.Download> mDownloads;
+    private List<SupportedDownloads.KernelContent.Download> mDownloads;
     private List<DownloadKernelView> mViews = new ArrayList<>();
 
     @Override
@@ -53,7 +53,7 @@ public class DownloadKernelFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        for (Support.KernelContent.Download download : mDownloads) {
+        for (SupportedDownloads.KernelContent.Download download : mDownloads) {
             DownloadKernelView downloadKernelView = new DownloadKernelView(getActivity(), download);
             mViews.add(downloadKernelView);
             items.add(downloadKernelView);

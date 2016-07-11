@@ -20,7 +20,7 @@
 package com.grarak.kerneladiutor.fragments.tools.downloads;
 
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.tools.downloads.Support;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.downloads.DownloadAboutView;
 
@@ -31,13 +31,13 @@ import java.util.List;
  */
 public class AboutFragment extends RecyclerViewFragment {
 
-    public static AboutFragment newInstance(Support.KernelContent kernelContent) {
+    public static AboutFragment newInstance(SupportedDownloads.KernelContent kernelContent) {
         AboutFragment fragment = new AboutFragment();
         fragment.mKernelContent = kernelContent;
         return fragment;
     }
 
-    private Support.KernelContent mKernelContent;
+    private SupportedDownloads.KernelContent mKernelContent;
 
     @Override
     protected boolean showViewPager() {

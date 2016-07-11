@@ -401,9 +401,9 @@ public class OverallFragment extends RecyclerViewFragment {
 
     public static class CPUUsageFragment extends BaseFragment {
 
-        private static List<View> mUsages = new ArrayList<>();
-        private static float[] mCPUUsages;
-        private static int[] mFreqs;
+        private static List<View> sUsages = new ArrayList<>();
+        private static float[] sCPUUsages;
+        private static int[] sFreqs;
 
         @Nullable
         @Override
@@ -412,7 +412,7 @@ public class OverallFragment extends RecyclerViewFragment {
             LinearLayout rootView = new LinearLayout(getActivity());
             rootView.setOrientation(LinearLayout.VERTICAL);
 
-            mUsages.clear();
+            sUsages.clear();
             int cpus = CPUFreq.getCpuCount();
             LinearLayout[] subViews = new LinearLayout[cpus > 1 ? CPUFreq.getCpuCount() / 2 : 1];
             for (int i = 0; i < subViews.length; i++) {
@@ -434,7 +434,7 @@ public class OverallFragment extends RecyclerViewFragment {
                 params.weight = 1;
                 view.setLayoutParams(params);
                 ((TextView) view.findViewById(R.id.usage_core_text)).setText(getString(R.string.core, i + 1));
-                mUsages.add(view);
+                sUsages.add(view);
             }
 
             return rootView;
@@ -444,23 +444,23 @@ public class OverallFragment extends RecyclerViewFragment {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    mCPUUsages = CPUFreq.getCpuUsage();
-                    if (mFreqs == null) {
-                        mFreqs = new int[CPUFreq.getCpuCount()];
+                    sCPUUsages = CPUFreq.getCpuUsage();
+                    if (sFreqs == null) {
+                        sFreqs = new int[CPUFreq.getCpuCount()];
                     }
-                    for (int i = 0; i < mFreqs.length; i++) {
-                        mFreqs[i] = CPUFreq.getCurFreq(i);
+                    for (int i = 0; i < sFreqs.length; i++) {
+                        sFreqs[i] = CPUFreq.getCurFreq(i);
                     }
                 }
             }).start();
-            if (mFreqs == null || mCPUUsages == null || mUsages == null) return;
-            for (int i = 0; i < mUsages.size(); i++) {
-                View usageView = mUsages.get(i);
+            if (sFreqs == null || sCPUUsages == null || sUsages == null) return;
+            for (int i = 0; i < sUsages.size(); i++) {
+                View usageView = sUsages.get(i);
                 TextView usageOfflineText = (TextView) usageView.findViewById(R.id.usage_offline_text);
                 TextView usageLoadText = (TextView) usageView.findViewById(R.id.usage_load_text);
                 TextView usageFreqText = (TextView) usageView.findViewById(R.id.usage_freq_text);
                 XYGraph usageGraph = (XYGraph) usageView.findViewById(R.id.usage_graph);
-                if (mFreqs[i] == 0) {
+                if (sFreqs[i] == 0) {
                     usageOfflineText.setVisibility(View.VISIBLE);
                     usageLoadText.setVisibility(View.GONE);
                     usageFreqText.setVisibility(View.GONE);
@@ -469,9 +469,9 @@ public class OverallFragment extends RecyclerViewFragment {
                     usageOfflineText.setVisibility(View.GONE);
                     usageLoadText.setVisibility(View.VISIBLE);
                     usageFreqText.setVisibility(View.VISIBLE);
-                    usageFreqText.setText(Utils.strFormat("%d" + getString(R.string.mhz), mFreqs[i] / 1000));
-                    usageLoadText.setText(Utils.strFormat("%d%%", Math.round(mCPUUsages[i + 1])));
-                    usageGraph.addPercentage(Math.round(mCPUUsages[i + 1]));
+                    usageFreqText.setText(Utils.strFormat("%d" + getString(R.string.mhz), sFreqs[i] / 1000));
+                    usageLoadText.setText(Utils.strFormat("%d%%", Math.round(sCPUUsages[i + 1])));
+                    usageGraph.addPercentage(Math.round(sCPUUsages[i + 1]));
                 }
             }
         }
