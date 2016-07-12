@@ -32,12 +32,15 @@ import android.support.v7.app.NotificationCompat;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.Settings;
-import com.grarak.kerneladiutor.database.customcontrols.Controls;
+import com.grarak.kerneladiutor.database.tools.Profiles;
+import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by willi on 03.05.16.
@@ -49,6 +52,7 @@ public class Service extends android.app.Service {
 
     private HashMap<String, Boolean> mCategoryEnabled = new HashMap<>();
     private HashMap<String, String> mCustomControls = new HashMap<>();
+    private List<String> mProfiles = new ArrayList<>();
 
     @Nullable
     @Override
@@ -62,7 +66,9 @@ public class Service extends android.app.Service {
 
         boolean enabled = false;
         final Settings settings = new Settings(this);
-        final Controls controls = new Controls(this);
+        Controls controls = new Controls(this);
+        Profiles profiles = new Profiles(this);
+
         for (Settings.SettingsItem item : settings.getAllSettings()) {
             if (!mCategoryEnabled.containsKey(item.getCategory())) {
                 mCategoryEnabled.put(item.getCategory(), Prefs.getBoolean(item.getCategory(), false, this));
@@ -82,7 +88,15 @@ public class Service extends android.app.Service {
                 }
             }
         }
-        enabled = enabled || mCustomControls.size() > 0;
+        for (Profiles.ProfileItem profileItem : profiles.getAllProfiles()) {
+            if (profileItem.isOnBootEnabled()) {
+                for (String commad : profileItem.getCommands()) {
+                    mProfiles.add(commad);
+                }
+            }
+        }
+
+        enabled = enabled || mCustomControls.size() > 0 || mProfiles.size() > 0;
         if (!enabled) {
             stopSelf();
             return;
@@ -146,6 +160,12 @@ public class Service extends android.app.Service {
                     file.mkdir();
                     file.write(script, false);
                     file.execute(mCustomControls.get(script));
+                }
+
+                for (String command : mProfiles) {
+                    synchronized (this) {
+                        su.runCommand(command);
+                    }
                 }
                 su.close();
                 stopSelf();

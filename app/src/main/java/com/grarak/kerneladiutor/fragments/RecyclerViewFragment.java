@@ -164,7 +164,8 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                     dismissForeground();
                 }
             });
-            getFragmentManager().beginTransaction().replace(R.id.foreground_content, foregroundFragment).commit();
+            getChildFragmentManager().beginTransaction().replace(R.id.foreground_content,
+                    foregroundFragment).commit();
             mForegroundHeight = getResources().getDisplayMetrics().heightPixels;
         }
 
@@ -346,7 +347,11 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
             mScrollDistance = -firstItem.getTop() + mRecyclerView.getPaddingTop();
 
-            if (mScrollDistance > mViewPagerParent.getHeight() - mAppBarLayout.getHeight() && dy != 0) {
+            int appBarHeight = 0;
+            if (mAppBarLayout != null) {
+                appBarHeight = mAppBarLayout.getHeight();
+            }
+            if (mScrollDistance > mViewPagerParent.getHeight() - appBarHeight && dy != 0) {
                 mAppBarLayoutDistance += dy;
                 fadeAppBarLayout(false);
                 if (showTopFab()) {
@@ -359,15 +364,17 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 }
             }
 
-            if (mAppBarLayoutDistance > mAppBarLayout.getHeight()) {
-                mAppBarLayoutDistance = mAppBarLayout.getHeight();
-            } else if (mAppBarLayoutDistance < 0) {
-                mAppBarLayoutDistance = 0;
+            if (mAppBarLayout != null) {
+                if (mAppBarLayoutDistance > mAppBarLayout.getHeight()) {
+                    mAppBarLayoutDistance = mAppBarLayout.getHeight();
+                } else if (mAppBarLayoutDistance < 0) {
+                    mAppBarLayoutDistance = 0;
+                }
+                mAppBarLayout.setTranslationY(-mAppBarLayoutDistance);
             }
 
             mViewPagerParent.setTranslationY(-mScrollDistance);
             mTopFab.setTranslationY(-mScrollDistance);
-            mAppBarLayout.setTranslationY(-mAppBarLayoutDistance);
         }
 
         private void fadeAppBarLayout(boolean fade) {
@@ -399,7 +406,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState != 0 || mAppBarLayoutDistance == 0
+            if (mAppBarLayout == null || newState != 0 || mAppBarLayoutDistance == 0
                     || mAppBarLayoutDistance == mAppBarLayout.getHeight()) {
                 return;
             }

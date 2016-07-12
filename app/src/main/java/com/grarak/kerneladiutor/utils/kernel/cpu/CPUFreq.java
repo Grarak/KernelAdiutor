@@ -271,14 +271,14 @@ public class CPUFreq {
         if (!sFreqs.containsKey(cpu)) {
             if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))
                     || Utils.existFile(Utils.strFormat(TIME_STATE, cpu))
-                    || Utils.existFile(Utils.strFormat(TIME_STATE_2, 0))) {
+                    || Utils.existFile(Utils.strFormat(TIME_STATE_2, cpu))) {
                 String file;
                 if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))) {
                     file = Utils.strFormat(OPP_TABLE, cpu);
                 } else if (Utils.existFile(Utils.strFormat(TIME_STATE, cpu))) {
                     file = Utils.strFormat(TIME_STATE, cpu);
                 } else {
-                    file = Utils.strFormat(TIME_STATE_2, 0);
+                    file = Utils.strFormat(TIME_STATE_2, cpu);
                 }
                 String[] valueArray = Utils.readFile(file).trim().split("\\r?\\n");
                 List<Integer> freqs = new ArrayList<>();
@@ -290,7 +290,7 @@ public class CPUFreq {
                     freqs.add((int) freqInt);
                 }
                 sFreqs.put(cpu, freqs);
-            } else if (Utils.existFile(Utils.strFormat(AVAILABLE_FREQS, 0))) {
+            } else if (Utils.existFile(Utils.strFormat(AVAILABLE_FREQS, cpu))) {
                 int readcpu = cpu;
                 boolean offline = isOffline(cpu);
                 if (offline) {

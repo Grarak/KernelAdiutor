@@ -25,6 +25,7 @@ import android.util.Log;
 import com.grarak.kerneladiutor.database.Settings;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -35,6 +36,9 @@ public class Control {
     private static final String TAG = Control.class.getSimpleName();
 
     private static Control sControl;
+
+    private boolean mProfileMode;
+    private LinkedHashMap<String, String> mProfileCommands = new LinkedHashMap<>();
 
     private Thread mSyncThread;
     private List<Thread> mThreads = new ArrayList<>();
@@ -61,15 +65,24 @@ public class Control {
 
     private synchronized void apply(String command, String category, String id, Context context) {
         if (context != null) {
-            Settings settings = new Settings(context);
-            List<Settings.SettingsItem> items = settings.getAllSettings();
-            for (int i = 0; i < items.size(); i++) {
-                if (items.get(i).getId().equals(id) && items.get(i).getCategory().equals(category)) {
-                    settings.delete(i);
+            if (mProfileMode) {
+                if (mProfileCommands.containsKey(id)) {
+                    mProfileCommands.remove(id);
                 }
+
+                mProfileCommands.put(id, command);
+            } else {
+                Settings settings = new Settings(context);
+                List<Settings.SettingsItem> items = settings.getAllSettings();
+                for (int i = 0; i < items.size(); i++) {
+                    if (items.get(i).getId().equals(id) && items.get(i).getCategory().equals(category)) {
+                        settings.delete(i);
+                    }
+                }
+                settings.putSetting(category, command, id);
+                settings.commit();
+                Log.i(TAG, "saved " + id);
             }
-            settings.putSetting(category, command, id);
-            settings.commit();
         }
 
         RootUtils.runCommand(command);
@@ -110,6 +123,18 @@ public class Control {
             sControl = new Control();
         }
         return sControl;
+    }
+
+    public static void setProfileMode(boolean mode) {
+        getInstance().mProfileMode = mode;
+    }
+
+    public static LinkedHashMap<String, String> getProfileCommands() {
+        return getInstance().mProfileCommands;
+    }
+
+    public static void clearProfileCommands() {
+        getInstance().mProfileCommands.clear();
     }
 
     public static void runSetting(final String command, final String category, final String id,

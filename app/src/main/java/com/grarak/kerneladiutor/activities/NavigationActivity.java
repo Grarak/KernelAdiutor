@@ -58,6 +58,7 @@ import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.fragments.tools.BackupFragment;
 import com.grarak.kerneladiutor.fragments.tools.BuildpropFragment;
+import com.grarak.kerneladiutor.fragments.tools.ProfileFragment;
 import com.grarak.kerneladiutor.fragments.tools.customcontrols.CustomControlsFragment;
 import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadsFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
@@ -84,7 +85,7 @@ import java.util.LinkedHashMap;
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final static LinkedHashMap<Integer, BaseFragment> sFragments = new LinkedHashMap<>();
+    public final static LinkedHashMap<Integer, BaseFragment> sFragments = new LinkedHashMap<>();
     private final static HashMap<Integer, Class> sActivities = new HashMap<>();
 
     static {
@@ -137,6 +138,7 @@ public class NavigationActivity extends BaseActivity
             sFragments.put(R.string.backup, new BackupFragment());
         }
         sFragments.put(R.string.build_prop_editor, new BuildpropFragment());
+        sFragments.put(R.string.profile, new ProfileFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 

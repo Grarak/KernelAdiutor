@@ -85,6 +85,7 @@
     <string name="downloads">Downloads</string>
     <string name="backup">Backup</string>
     <string name="build_prop_editor">Build prop Editor</string>
+    <string name="profile">Profile</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -182,8 +183,7 @@
     <string name="mpdecision_summary">Qualcomm\'s hotplugging solution. You might get problems with changing frequencies when this is enabled.</string>
     <string name="intelliplug">IntelliPlug</string>
     <string name="intelliplug_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by faux123.</string>
-    <string name="profile">Profile</string>
-    <string name="profile_summary">The number in the parentheses indicates the amount of cores online at any time.</string>
+    <string name="cpu_hotplug_profile_summary">The number in the parentheses indicates the amount of cores online at any time.</string>
     <string name="insanity">InSaNiTy</string>
     <string name="balanced">Balanced</string>
     <string name="performance">Performance</string>
@@ -654,6 +654,14 @@
     <string name="key">Key</string>
     <string name="value">Value</string>
     <string name="key_empty">Key can\'t be empty!</string>
+
+    <!-- Profile -->
+    <string name="apply_on_boot_not_available">In profiles mode your changes won\'t have an impact on apply on boot.</string>
+    <string name="profile_warning">Everything you change here is gonna be saved to your profile. But attention! Your settings will also get applied, but won\'t get saved to apply on boot.</string>
+    <string name="no_changes">No changes made!</string>
+    <string name="apply_question">Apply %s?</string>
+    <string name="details">Details</string>
+    <string name="profile_already_exists">Profile with the same name already exists!</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

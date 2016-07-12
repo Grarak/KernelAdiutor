@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.activities.downloads;
+package com.grarak.kerneladiutor.activities.tools;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

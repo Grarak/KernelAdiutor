@@ -34,9 +34,9 @@ import android.view.MenuItem;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.FilePickerActivity;
 import com.grarak.kerneladiutor.activities.tools.CustomControlsActivity;
-import com.grarak.kerneladiutor.database.customcontrols.Controls;
-import com.grarak.kerneladiutor.database.customcontrols.ExportControl;
-import com.grarak.kerneladiutor.database.customcontrols.ImportControl;
+import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
+import com.grarak.kerneladiutor.database.tools.customcontrols.ExportControl;
+import com.grarak.kerneladiutor.database.tools.customcontrols.ImportControl;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
@@ -294,14 +294,13 @@ public class CustomControlsFragment extends RecyclerViewFragment {
         CardView cardView = new CardView(getActivity());
         cardView.setOnMenuListener(new CardView.OnMenuListener() {
 
-            private MenuItem mOnBoot;
 
             @Override
             public void onMenuReady(CardView cardView, PopupMenu popupMenu) {
                 Menu menu = popupMenu.getMenu();
                 menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));
-                mOnBoot = menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
-                mOnBoot.setChecked(Prefs.getBoolean(controlItem.getUniqueId() + "_onboot", false, getActivity()));
+                final MenuItem onBoot = menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
+                onBoot.setChecked(Prefs.getBoolean(controlItem.getUniqueId() + "_onboot", false, getActivity()));
                 menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.export));
                 menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.delete));
 
@@ -313,8 +312,8 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                                 edit(controlItem);
                                 break;
                             case 1:
-                                mOnBoot.setChecked(!mOnBoot.isChecked());
-                                Prefs.saveBoolean(controlItem.getUniqueId() + "_onboot", mOnBoot.isChecked(),
+                                onBoot.setChecked(!onBoot.isChecked());
+                                Prefs.saveBoolean(controlItem.getUniqueId() + "_onboot", onBoot.isChecked(),
                                         getActivity());
                                 break;
                             case 2:

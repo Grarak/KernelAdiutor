@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.database.customcontrols;
+package com.grarak.kerneladiutor.database.tools.customcontrols;
 
 import com.grarak.kerneladiutor.utils.Utils;
 

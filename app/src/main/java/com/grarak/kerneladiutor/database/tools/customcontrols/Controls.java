@@ -1,4 +1,4 @@
-package com.grarak.kerneladiutor.database.customcontrols;
+package com.grarak.kerneladiutor.database.tools.customcontrols;
 
 import android.content.Context;
 
