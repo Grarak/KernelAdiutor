@@ -24,6 +24,7 @@ import android.content.Context;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.root.Control;
+import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,9 @@ public class Sound {
     private static final String SPEAKER_GAIN = "/sys/kernel/sound_control_3/gpl_speaker_gain";
     private static final String MIC_BOOST = "/sys/devices/virtual/misc/soundcontrol/mic_boost";
     private static final String VOLUME_BOOST = "/sys/devices/virtual/misc/soundcontrol/volume_boost";
+	
+	private static final String TPA6165_EXTENSION_AMP = "/sys/kernel/debug/tpa6165/set_reg";
+	private static final String TPA6165_EXTENSION_AMP_REGS = "/sys/kernel/debug/tpa6165/registers";
 
     private static final List<String> sSpeakerGainFiles = new ArrayList<>();
 
@@ -102,7 +106,7 @@ public class Sound {
     public static void setHeadphonePowerAmpGain(String value, Context context) {
         int newGain = 38 - Utils.strToInt(value);
         value = String.valueOf(newGain);
-        run(Control.write(value + " " + value, HEADPHONE_POWERAMP_GAIN), HEADPHONE_POWERAMP_GAIN, context);
+        fauxRun(value + " " + value, HEADPHONE_POWERAMP_GAIN, HEADPHONE_POWERAMP_GAIN, context);
     }
 
     public static String getHeadphonePowerAmpGain() {
@@ -288,6 +292,30 @@ public class Sound {
         return Utils.existFile(SOUND_CONTROL_ENABLE);
     }
 
+	public static void setTpaAmpGain(String value, Context context) {
+		int gain = 185 + Utils.strToInt(value);
+		run(Control.chmod("222", TPA6165_EXTENSION_AMP), TPA6165_EXTENSION_AMP, context);
+		run(Control.write("0x07 0x" + Integer.toHexString(gain), TPA6165_EXTENSION_AMP), TPA6165_EXTENSION_AMP, context);
+	}
+	
+	public static String getTpaAmpGain() {
+		String strGain = RootUtils.runCommand("cat " + TPA6165_EXTENSION_AMP_REGS + " | awk \"/0x7/\" | cut -c9-13");
+		int gain = Integer.decode(strGain) - 185;
+		return String.valueOf(gain);
+	}
+	
+	public static List<String> getTpaAmpGainLimits() {
+        List<String> list = new ArrayList<>();
+        for (int i = -24; i <= 6; i++) {
+            list.add(String.valueOf(i));
+        }
+        return list;		
+	}
+	
+	public static boolean hasTpaAmpGain() {
+		return (Utils.existFile(TPA6165_EXTENSION_AMP) && Utils.existFile(TPA6165_EXTENSION_AMP_REGS));
+	}
+	
     public static boolean supported() {
         return hasSoundControlEnable() || hasHighPerfModeEnable() || hasHeadphoneGain()
                 || hasHandsetMicrophoneGain() || hasCamMicrophoneGain() || hasSpeakerGain()
