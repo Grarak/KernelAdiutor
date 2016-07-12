@@ -286,7 +286,7 @@ public class Sound {
         return list;        
     }
     
-    public static boolean hasTpaAmpGain() {
+    public static boolean hasHeadphoneTpa6165AmpGain() {
         return (Utils.existFile(TPA6165_REG_SETTER) && Utils.existFile(TPA6165_REGISTERS));
     }
 

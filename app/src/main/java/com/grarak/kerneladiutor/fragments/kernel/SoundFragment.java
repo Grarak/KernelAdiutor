@@ -202,9 +202,10 @@ public class SoundFragment extends RecyclerViewFragment {
 
     private void headphoneTpa6165AmpGainInit(List<RecyclerViewItem> items) {
         SeekBarView headphoneTpa6165AmpGain = new SeekBarView();
-        headphoneTpa6165AmpGain.setTitle(getString(R.string.tpa6165_amp_gain));
-        headphoneTpa6165AmpGain.setItems(Sound.getTpaAmpGainLimits());
-        headphoneTpa6165AmpGain.setProgress(Sound.getTpaAmpGainLimits().indexOf(Sound.getTpaAmpGain()));
+        headphoneTpa6165AmpGain.setTitle(getString(R.string.headphone_tpa6165_amp_gain));
+        headphoneTpa6165AmpGain.setItems(Sound.getHeadphoneTpa6165AmpGainLimits());
+        headphoneTpa6165AmpGain.setProgress(Sound.getHeadphoneTpa6165AmpGainLimits()
+            .indexOf(Sound.getHeadphoneTpa6165AmpGain()));
         headphoneTpa6165AmpGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
