@@ -46,8 +46,8 @@ public class Sound {
     private static final String MIC_BOOST = "/sys/devices/virtual/misc/soundcontrol/mic_boost";
     private static final String VOLUME_BOOST = "/sys/devices/virtual/misc/soundcontrol/volume_boost";
     
-    private static final String TPA6165_EXTENSION_AMP = "/sys/kernel/debug/tpa6165/set_reg";
-    private static final String TPA6165_EXTENSION_AMP_REGS = "/sys/kernel/debug/tpa6165/registers";
+    private static final String TPA6165_REG_SETTER = "/sys/kernel/debug/tpa6165/set_reg";
+    private static final String TPA6165_REGISTERS = "/sys/kernel/debug/tpa6165/registers";
 
     private static final List<String> sSpeakerGainFiles = new ArrayList<>();
 
@@ -264,6 +264,32 @@ public class Sound {
         return sFauxLimits;
     }
 
+    public static void setHeadphoneTpa6165AmpGain(String value, Context context) {
+        // Headphone Amp Gain is register 0x7.
+        // Zero corresponds to 185 (0xb9). The min value is -24 (0xa1) and max is 6 (0xbf).        
+        int gain = 185 + Utils.strToInt(value);
+        run(Control.chmod("222", TPA6165_REG_SETTER), TPA6165_REG_SETTER, context);
+        run(Control.write("0x07 0x" + Integer.toHexString(gain), TPA6165_REG_SETTER), TPA6165_REG_SETTER, context);
+    }
+    
+    public static String getHeadphoneTpa6165AmpGain() {
+        String strGain = RootUtils.runCommand("cat " + TPA6165_REGISTERS + " | awk \"/0x7/\" | cut -c9-13");
+        int gain = Integer.decode(strGain) - 185;
+        return String.valueOf(gain);
+    }
+    
+    public static List<String> getHeadphoneTpa6165AmpGainLimits() {
+        List<String> list = new ArrayList<>();
+        for (int i = -24; i <= 6; i++) {
+            list.add(String.valueOf(i));
+        }
+        return list;        
+    }
+    
+    public static boolean hasTpaAmpGain() {
+        return (Utils.existFile(TPA6165_EXTENSION_AMP) && Utils.existFile(TPA6165_EXTENSION_AMP_REGS));
+    }
+
     public static boolean hasHeadphoneGain() {
         return Utils.existFile(HEADPHONE_GAIN);
     }
@@ -290,30 +316,6 @@ public class Sound {
 
     public static boolean hasSoundControlEnable() {
         return Utils.existFile(SOUND_CONTROL_ENABLE);
-    }
-
-    public static void setTpaAmpGain(String value, Context context) {
-        int gain = 185 + Utils.strToInt(value);
-        run(Control.chmod("222", TPA6165_EXTENSION_AMP), TPA6165_EXTENSION_AMP, context);
-        run(Control.write("0x07 0x" + Integer.toHexString(gain), TPA6165_EXTENSION_AMP), TPA6165_EXTENSION_AMP, context);
-    }
-    
-    public static String getTpaAmpGain() {
-        String strGain = RootUtils.runCommand("cat " + TPA6165_EXTENSION_AMP_REGS + " | awk \"/0x7/\" | cut -c9-13");
-        int gain = Integer.decode(strGain) - 185;
-        return String.valueOf(gain);
-    }
-    
-    public static List<String> getTpaAmpGainLimits() {
-        List<String> list = new ArrayList<>();
-        for (int i = -24; i <= 6; i++) {
-            list.add(String.valueOf(i));
-        }
-        return list;        
-    }
-    
-    public static boolean hasTpaAmpGain() {
-        return (Utils.existFile(TPA6165_EXTENSION_AMP) && Utils.existFile(TPA6165_EXTENSION_AMP_REGS));
     }
     
     public static boolean supported() {
