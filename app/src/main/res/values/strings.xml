@@ -495,7 +495,7 @@
     <string name="headphone_poweramp_gain">Headphone PowerAmp Gain</string>
     <string name="microphone_gain">Microphone Gain</string>
     <string name="volume_gain">Volume Gain</string>
-	<string name="tpa6165_amp_gain">Headphone Amp Gain (TPA6165 Extension)</string>
+    <string name="tpa6165_amp_gain">Headphone Amp Gain (TPA6165 Extension)</string>
 
     <!-- Battery -->
     <string name="level">Level</string>
