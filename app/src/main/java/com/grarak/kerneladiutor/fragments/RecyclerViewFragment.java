@@ -279,6 +279,16 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         return new StaggeredGridLayoutManager(getSpanCount(), StaggeredGridLayoutManager.VERTICAL);
     }
 
+    protected void removeItem(RecyclerViewItem recyclerViewItem) {
+        int position = mItems.indexOf(recyclerViewItem);
+        if (position >= 0) {
+            mItems.remove(recyclerViewItem);
+            if (mRecyclerViewAdapter != null) {
+                mRecyclerViewAdapter.notifyItemRemoved(position);
+            }
+        }
+    }
+
     protected void clearItems() {
         mItems.clear();
         if (mRecyclerViewAdapter != null) {

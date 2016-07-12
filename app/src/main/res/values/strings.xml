@@ -86,6 +86,7 @@
     <string name="backup">Backup</string>
     <string name="build_prop_editor">Build prop Editor</string>
     <string name="profile">Profile</string>
+    <string name="recovery">Recovery</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -662,6 +663,11 @@
     <string name="apply_question">Apply %s?</string>
     <string name="details">Details</string>
     <string name="profile_already_exists">Profile with the same name already exists!</string>
+    <string name="wipe_data">Wipe Data</string>
+    <string name="wipe_cache">Wipe Cache</string>
+    <string name="flash_zip">Flash Zip</string>
+    <string name="add_action_first">You have to add actions first!</string>
+    <string name="flash_now_confirm">Do you want to run your actions? Your device will reboot into recovery and the actions will run in the order as you added them.</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>
