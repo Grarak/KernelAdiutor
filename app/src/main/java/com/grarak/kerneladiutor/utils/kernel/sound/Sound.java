@@ -287,7 +287,7 @@ public class Sound {
     }
     
     public static boolean hasTpaAmpGain() {
-        return (Utils.existFile(TPA6165_EXTENSION_AMP) && Utils.existFile(TPA6165_EXTENSION_AMP_REGS));
+        return (Utils.existFile(TPA6165_REG_SETTER) && Utils.existFile(TPA6165_REGISTERS));
     }
 
     public static boolean hasHeadphoneGain() {
