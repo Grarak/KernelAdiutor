@@ -70,9 +70,9 @@ public class SoundFragment extends RecyclerViewFragment {
         if (Sound.hasVolumeGain()) {
             volumeGainInit(items);
         }
-		if (Sound.hasTpaAmpGain()) {
-			Tpa6165AmpGainInit(items);
-		}
+        if (Sound.hasTpaAmpGain()) {
+            Tpa6165AmpGainInit(items);
+        }
     }
 
     private void soundControlEnableInit(List<RecyclerViewItem> items) {
@@ -237,14 +237,14 @@ public class SoundFragment extends RecyclerViewFragment {
 
         items.add(volumeGain);
     }
-	
-	private void Tpa6165AmpGainInit(List<RecyclerViewItem> items) {
-		SeekBarView TpaGain = new SeekBarView();
-		TpaGain.setTitle(getString(R.string.tpa6165_amp_gain));
-		TpaGain.setItems(Sound.getTpaAmpGainLimits());
-		TpaGain.setProgress(Sound.getTpaAmpGainLimits().indexOf(Sound.getTpaAmpGain()));
-		TpaGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
-			@Override
+    
+    private void Tpa6165AmpGainInit(List<RecyclerViewItem> items) {
+        SeekBarView TpaGain = new SeekBarView();
+        TpaGain.setTitle(getString(R.string.tpa6165_amp_gain));
+        TpaGain.setItems(Sound.getTpaAmpGainLimits());
+        TpaGain.setProgress(Sound.getTpaAmpGainLimits().indexOf(Sound.getTpaAmpGain()));
+        TpaGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
                 Sound.setTpaAmpGain(value, getActivity());
             }
@@ -253,8 +253,8 @@ public class SoundFragment extends RecyclerViewFragment {
             public void onMove(SeekBarView seekBarView, int position, String value) {
                 // Don't do anything
             }
-		});
-		
-		items.add(TpaGain);
-	}
+        });
+        
+        items.add(TpaGain);
+    }
 }
