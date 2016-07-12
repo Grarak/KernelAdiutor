@@ -208,7 +208,7 @@ public class SoundFragment extends RecyclerViewFragment {
         headphoneTpa6165AmpGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                Sound.setTpaAmpGain(value, getActivity());
+                Sound.setHeadphoneTpa6165AmpGain(value, getActivity());
             }
 
             @Override
