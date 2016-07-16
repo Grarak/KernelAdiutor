@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.database.tools;
+package com.grarak.kerneladiutor.database.tools.profiles;
 
 import android.content.Context;
 
@@ -36,8 +36,10 @@ import java.util.List;
  */
 public class Profiles extends Provider {
 
+    public static final int VERSION = 1;
+
     public Profiles(Context context) {
-        super(context.getFilesDir() + "/profiles.json", 1);
+        super(context.getFilesDir() + "/profiles.json", VERSION);
     }
 
     @Override

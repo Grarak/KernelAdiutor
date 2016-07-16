@@ -48,7 +48,7 @@
     <!-- Custom Controls -->
     <string-array name="custom_controls_options">
         <item>@string/create</item>
-        <item>@string/control_import</item>
+        <item>@string/import_item</item>
     </string-array>
     <string-array name="custom_controls_items">
         <item>@string/control_switch</item>
@@ -77,6 +77,11 @@
     <string-array name="build_prop_item_options">
         <item>@string/edit</item>
         <item>@string/delete</item>
+    </string-array>
+
+    <string-array name="profile_options">
+        <item>@string/create</item>
+        <item>@string/import_item</item>
     </string-array>
 
     <!-- Recovery -->

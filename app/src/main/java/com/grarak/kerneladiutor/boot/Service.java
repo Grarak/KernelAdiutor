@@ -32,7 +32,7 @@ import android.support.v7.app.NotificationCompat;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.Settings;
-import com.grarak.kerneladiutor.database.tools.Profiles;
+import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.root.RootFile;

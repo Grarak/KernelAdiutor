@@ -98,7 +98,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                         break;
                     case 1:
                         if (Utils.DONATED) {
-                            importItem();
+                            Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                            intent.putExtra(FilePickerActivity.PATH_INTENT, "/");
+                            intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
+                            startActivityForResult(intent, 1);
                         } else {
                             mDonateDialog = ViewUtils.dialogDonate(getActivity())
                                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -317,7 +320,8 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                                         getActivity());
                                 break;
                             case 2:
-                                export(controlItem);
+                                mExportItem = controlItem;
+                                requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                                 break;
                             case 3:
                                 mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
@@ -394,11 +398,6 @@ public class CustomControlsFragment extends RecyclerViewFragment {
         startActivityForResult(i, 0);
     }
 
-    private void export(Controls.ControlItem item) {
-        mExportItem = item;
-        requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    }
-
     private void showExportDialog() {
         ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
             @Override
@@ -425,13 +424,6 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                         mExportItem = null;
                     }
                 }).show();
-    }
-
-    private void importItem() {
-        Intent intent = new Intent(getActivity(), FilePickerActivity.class);
-        intent.putExtra(FilePickerActivity.PATH_INTENT, "/");
-        intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
-        startActivityForResult(intent, 1);
     }
 
     private void importing(final String path) {

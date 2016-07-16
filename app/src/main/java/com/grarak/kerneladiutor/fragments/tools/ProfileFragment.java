@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor.fragments.tools;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -38,8 +39,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.activities.FilePickerActivity;
 import com.grarak.kerneladiutor.activities.tools.ProfileActivity;
-import com.grarak.kerneladiutor.database.tools.Profiles;
+import com.grarak.kerneladiutor.database.tools.profiles.ExportProfile;
+import com.grarak.kerneladiutor.database.tools.profiles.ImportProfile;
+import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -66,8 +70,13 @@ public class ProfileFragment extends RecyclerViewFragment {
     private LinkedHashMap<String, String> mCommands;
     private AlertDialog.Builder mDeleteDialog;
     private AlertDialog.Builder mApplyDialog;
+    private Profiles.ProfileItem mExportProfile;
+    private AlertDialog.Builder mOptionsDialog;
+    private AlertDialog.Builder mDonateDialog;
+    private ImportProfile mImportProfile;
 
     private DetailsFragment mDetailsFragment;
+
 
     @Override
     protected boolean showViewPager() {
@@ -114,6 +123,18 @@ public class ProfileFragment extends RecyclerViewFragment {
         }
         if (mApplyDialog != null) {
             mApplyDialog.show();
+        }
+        if (mExportProfile != null) {
+            showExportDialog();
+        }
+        if (mOptionsDialog != null) {
+            mOptionsDialog.show();
+        }
+        if (mDonateDialog != null) {
+            mDonateDialog.show();
+        }
+        if (mImportProfile != null) {
+            showImportDialog(mImportProfile);
         }
     }
 
@@ -176,7 +197,8 @@ public class ProfileFragment extends RecyclerViewFragment {
                     menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.details));
                     final MenuItem onBoot = menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
                     onBoot.setChecked(profileItems.get(position).isOnBootEnabled());
-                    menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.delete));
+                    menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.export));
+                    menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.delete));
 
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -193,6 +215,10 @@ public class ProfileFragment extends RecyclerViewFragment {
                                     mProfiles.commit();
                                     break;
                                 case 2:
+                                    mExportProfile = profileItems.get(position);
+                                    requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                    break;
+                                case 3:
                                     mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
                                             new DialogInterface.OnClickListener() {
                                                 @Override
@@ -254,13 +280,49 @@ public class ProfileFragment extends RecyclerViewFragment {
     @Override
     protected void onBottomFabClick() {
         super.onBottomFabClick();
-        startActivityForResult(new Intent(getActivity(), ProfileActivity.class), 0);
+
+        mOptionsDialog = new AlertDialog.Builder(getActivity()).setItems(getResources().getStringArray(
+                R.array.profile_options), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i) {
+                    case 0:
+                        startActivityForResult(new Intent(getActivity(), ProfileActivity.class), 0);
+                        break;
+                    case 1:
+                        if (Utils.DONATED) {
+                            Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                            intent.putExtra(FilePickerActivity.PATH_INTENT, "/");
+                            intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
+                            startActivityForResult(intent, 1);
+                        } else {
+                            mDonateDialog = ViewUtils.dialogDonate(getActivity())
+                                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+                                            mDonateDialog = null;
+                                        }
+                                    });
+                            mDonateDialog.show();
+                        }
+                        break;
+                }
+            }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                mOptionsDialog = null;
+            }
+        });
+        mOptionsDialog.show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && data != null) {
+
+        if (data == null) return;
+        if (requestCode == 0) {
             LinkedHashMap<String, String> commandsList = new LinkedHashMap<>();
             ArrayList<String> ids = data.getStringArrayListExtra(ProfileActivity.RESULT_ID_INTENT);
             ArrayList<String> commands = data.getStringArrayListExtra(ProfileActivity.RESULT_COMMAND_INTENT);
@@ -268,7 +330,56 @@ public class ProfileFragment extends RecyclerViewFragment {
                 commandsList.put(ids.get(i), commands.get(i));
             }
             create(commandsList);
+        } else if (requestCode == 1) {
+            ImportProfile importProfile = new ImportProfile(data.getStringExtra(
+                    FilePickerActivity.RESULT_INTENT));
+
+            if (!importProfile.readable()) {
+                Utils.toast(R.string.import_malformed, getActivity());
+                return;
+            }
+
+            if (!importProfile.matchesVersion()) {
+                Utils.toast(R.string.import_wrong_version, getActivity());
+                return;
+            }
+
+            showImportDialog(importProfile);
         }
+    }
+
+    private void showImportDialog(final ImportProfile importProfile) {
+        mImportProfile = importProfile;
+        ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        }, new ViewUtils.OnDialogEditTextListener() {
+            @Override
+            public void onClick(String text) {
+                if (text.isEmpty()) {
+                    Utils.toast(R.string.name_empty, getActivity());
+                    return;
+                }
+
+                for (Profiles.ProfileItem profileItem : mProfiles.getAllProfiles()) {
+                    if (text.equals(profileItem.getName())) {
+                        Utils.toast(getString(R.string.already_exists, text), getActivity());
+                        return;
+                    }
+                }
+
+                mProfiles.putProfile(text, importProfile.getResults());
+                mProfiles.commit();
+                reload();
+            }
+        }, getActivity()).setTitle(getString(R.string.name)).setOnDismissListener(
+                new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        mImportProfile = null;
+                    }
+                }).show();
     }
 
     private void create(final LinkedHashMap<String, String> commands) {
@@ -287,7 +398,7 @@ public class ProfileFragment extends RecyclerViewFragment {
 
                 for (Profiles.ProfileItem profileItem : mProfiles.getAllProfiles()) {
                     if (text.equals(profileItem.getName())) {
-                        Utils.toast(R.string.profile_already_exists, getActivity());
+                        Utils.toast(getString(R.string.already_exists, text), getActivity());
                         return;
                     }
                 }
@@ -301,7 +412,53 @@ public class ProfileFragment extends RecyclerViewFragment {
             public void onDismiss(DialogInterface dialogInterface) {
                 mCommands = null;
             }
-        }).show();
+        }).setTitle(getString(R.string.name)).show();
+    }
+
+    @Override
+    public void onPermissionDenied(int request) {
+        super.onPermissionDenied(request);
+
+        if (request == 0) {
+            Utils.toast(R.string.permission_denied_write_storage, getActivity());
+        }
+    }
+
+    @Override
+    public void onPermissionGranted(int request) {
+        super.onPermissionGranted(request);
+
+        if (request == 0) {
+            showExportDialog();
+        }
+    }
+
+    private void showExportDialog() {
+        ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        }, new ViewUtils.OnDialogEditTextListener() {
+            @Override
+            public void onClick(String text) {
+                if (text.isEmpty()) {
+                    Utils.toast(R.string.name_empty, getActivity());
+                    return;
+                }
+
+                if (new ExportProfile(mExportProfile, mProfiles.getVersion()).export(text)) {
+                    Utils.toast(getString(R.string.exported_item, text, Utils.getInternalDataStorage()
+                            + "/profiles"), getActivity());
+                } else {
+                    Utils.toast(getString(R.string.already_exists, text), getActivity());
+                }
+            }
+        }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                mExportProfile = null;
+            }
+        }).setTitle(getString(R.string.name)).show();
     }
 
     @Override

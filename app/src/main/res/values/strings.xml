@@ -596,7 +596,7 @@
     <string name="example">Examples</string>
     <string name="custom_controls_example_summary">Need example? Click &lt;a href="https://github.com/Grarak/KernelAdiutor/wiki/Custom-Controls">here&lt;a>.</string>
     <string name="create">Create</string>
-    <string name="control_import">Import</string>
+    <string name="import_item">Import</string>
     <string name="control_switch">Switch</string>
     <string name="control_seekbar">Seekbar</string>
     <string name="title">Title</string>
@@ -662,7 +662,6 @@
     <string name="no_changes">No changes made!</string>
     <string name="apply_question">Apply %s?</string>
     <string name="details">Details</string>
-    <string name="profile_already_exists">Profile with the same name already exists!</string>
     <string name="wipe_data">Wipe Data</string>
     <string name="wipe_cache">Wipe Cache</string>
     <string name="flash_zip">Flash Zip</string>
