@@ -81,7 +81,11 @@ public class RootUtils {
     }
 
     public static void mount(boolean writeable, String mountpoint) {
-        runCommand(writeable ? "mount -o rw,remount " + mountpoint : "mount -o ro,remount " + mountpoint);
+        mount(writeable, mountpoint, getSU());
+    }
+
+    public static void mount(boolean writeable, String mountpoint, SU su) {
+        su.runCommand(writeable ? "mount -o rw,remount " + mountpoint : "mount -o ro,remount " + mountpoint);
     }
 
     public static String runScript(String text, String... arguments) {

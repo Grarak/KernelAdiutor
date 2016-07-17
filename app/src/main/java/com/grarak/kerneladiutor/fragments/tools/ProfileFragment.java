@@ -466,6 +466,7 @@ public class ProfileFragment extends RecyclerViewFragment {
         super.onDestroy();
         if (mLoader != null) {
             mLoader.cancel(true);
+            mLoader = null;
         }
         mLoaded = false;
     }

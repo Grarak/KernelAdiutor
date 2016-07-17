@@ -87,6 +87,7 @@
     <string name="build_prop_editor">Build prop Editor</string>
     <string name="profile">Profile</string>
     <string name="recovery">Recovery</string>
+    <string name="initd">Init.d</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -667,6 +668,13 @@
     <string name="flash_zip">Flash Zip</string>
     <string name="add_action_first">You have to add actions first!</string>
     <string name="flash_now_confirm">Do you want to run your actions? Your device will reboot into recovery and the actions will run in the order as you added them.</string>
+
+    <!-- Init.d -->
+    <string name="emulate_initd">Emulate Init.d</string>
+    <string name="emulate_initd_summary">If your device doesn\'t support Init.d by default, you can enable this to emulate its behaviour.</string>
+    <string name="exceute_question">Execute %s?</string>
+    <string name="executing">Executing</string>
+    <string name="result">Result</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

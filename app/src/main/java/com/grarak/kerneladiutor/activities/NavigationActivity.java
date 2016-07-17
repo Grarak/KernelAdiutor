@@ -58,6 +58,7 @@ import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.fragments.tools.BackupFragment;
 import com.grarak.kerneladiutor.fragments.tools.BuildpropFragment;
+import com.grarak.kerneladiutor.fragments.tools.InitdFragment;
 import com.grarak.kerneladiutor.fragments.tools.ProfileFragment;
 import com.grarak.kerneladiutor.fragments.tools.RecoveryFragment;
 import com.grarak.kerneladiutor.fragments.tools.customcontrols.CustomControlsFragment;
@@ -141,6 +142,7 @@ public class NavigationActivity extends BaseActivity
         sFragments.put(R.string.build_prop_editor, new BuildpropFragment());
         sFragments.put(R.string.profile, new ProfileFragment());
         sFragments.put(R.string.recovery, new RecoveryFragment());
+        sFragments.put(R.string.initd, new InitdFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.settings, null);
 

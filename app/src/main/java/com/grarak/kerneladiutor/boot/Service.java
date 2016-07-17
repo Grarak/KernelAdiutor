@@ -96,7 +96,8 @@ public class Service extends android.app.Service {
             }
         }
 
-        enabled = enabled || mCustomControls.size() > 0 || mProfiles.size() > 0;
+        final boolean initdEnabled = Prefs.getBoolean("initd_onboot", false, this);
+        enabled = enabled || mCustomControls.size() > 0 || mProfiles.size() > 0 || initdEnabled;
         if (!enabled) {
             stopSelf();
             return;
@@ -147,6 +148,14 @@ public class Service extends android.app.Service {
                     return;
                 }
                 RootUtils.SU su = new RootUtils.SU(true, TAG);
+
+                if (initdEnabled) {
+                    RootUtils.mount(true, "/system", su);
+                    su.runCommand("for i in `ls /system/etc/init.d`;do chmod 755 $i;done");
+                    su.runCommand("[ -d /system/etc/init.d ] && run-parts /system/etc/init.d");
+                    RootUtils.mount(false, "/system", su);
+                }
+
                 for (Settings.SettingsItem item : settings.getAllSettings()) {
                     if (mCategoryEnabled.get(item.getCategory())) {
                         synchronized (this) {
@@ -167,6 +176,7 @@ public class Service extends android.app.Service {
                         su.runCommand(command);
                     }
                 }
+
                 su.close();
                 stopSelf();
             }

@@ -514,6 +514,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mLoadingThread != null) {
+            mLoadingThread.cancel(true);
+            mLoadingThread = null;
+        }
         mLoaded = false;
     }
 }

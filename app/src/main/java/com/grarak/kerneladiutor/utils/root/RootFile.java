@@ -47,11 +47,7 @@ public class RootFile {
     }
 
     public void mkdir() {
-        if (isDirectory()) {
-            mSU.runCommand("mkdir -p '" + mFile + "'");
-        } else {
-            mSU.runCommand("mkdir -p '" + getParentFile() + "'");
-        }
+        mSU.runCommand("mkdir -p '" + mFile + "'");
     }
 
     public void mv(String newPath) {
