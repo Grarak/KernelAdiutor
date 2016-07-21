@@ -19,8 +19,6 @@
  */
 package com.grarak.kerneladiutor.database;
 
-import android.content.Context;
-
 import com.grarak.kerneladiutor.utils.Utils;
 
 import org.json.JSONArray;

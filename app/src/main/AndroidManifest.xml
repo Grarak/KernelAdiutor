@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,6 +71,20 @@
                 <action android:name="com.grarak.kerneladiutor.action.ACTION_TOGGLE_STATE" />
             </intent-filter>
         </receiver>
+
+        <!-- DashClock -->
+        <service
+            android:name=".services.DashClock"
+            android:icon="@drawable/ic_launcher_preview"
+            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
+            <intent-filter>
+                <action android:name="com.google.android.apps.dashclock.Extension" />
+            </intent-filter>
+
+            <meta-data
+                android:name="protocolVersion"
+                android:value="1" />
+        </service>
     </application>
 
 </manifest>

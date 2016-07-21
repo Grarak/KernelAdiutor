@@ -32,9 +32,9 @@ import com.grarak.kerneladiutor.activities.EditorActivity;
 import com.grarak.kerneladiutor.activities.tools.CustomControlsActivity;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.tools.customcontrols.Items;
-import com.grarak.kerneladiutor.views.recyclerview.customcontrols.CodeView;
 import com.grarak.kerneladiutor.views.recyclerview.EditTextView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
+import com.grarak.kerneladiutor.views.recyclerview.customcontrols.CodeView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
