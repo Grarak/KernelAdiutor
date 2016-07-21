@@ -670,6 +670,9 @@
     <string name="flash_now_confirm">Do you want to run your actions? Your device will reboot into recovery and the actions will run in the order as you added them.</string>
     <string name="press_again_to_apply">Press %s again to apply.</string>
     <string name="applied">Applied</string>
+    <string name="profile_tile">Profile Tile</string>
+    <string name="profile_tile_summary">Show a tile which allows you to select a profile.</string>
+    <string name="profile_title_error">This only works with ROMs which has CyanogenMod SDK included.</string>
 
     <!-- Init.d -->
     <string name="emulate_initd">Emulate Init.d</string>

@@ -72,6 +72,10 @@ public class Utils {
 
     private static final Set<CustomTarget> mProtectedFromGarbageCollectorTargets = new HashSet<>();
 
+    public static boolean hasCMSDK() {
+        return cyanogenmod.os.Build.CM_VERSION.SDK_INT >= cyanogenmod.os.Build.CM_VERSION_CODES.APRICOT;
+    }
+
     public static CharSequence htmlFrom(String text) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY);

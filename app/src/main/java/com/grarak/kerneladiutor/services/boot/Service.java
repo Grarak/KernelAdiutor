@@ -34,6 +34,7 @@ import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.Settings;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
+import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -67,7 +68,9 @@ public class Service extends android.app.Service {
         boolean enabled = false;
         final Settings settings = new Settings(this);
         Controls controls = new Controls(this);
-        Profiles profiles = new Profiles(this);
+        List<Profiles.ProfileItem> profiles = new Profiles(this).getAllProfiles();
+
+        Tile.publishProfileTile(profiles, this);
 
         for (Settings.SettingsItem item : settings.getAllSettings()) {
             if (!mCategoryEnabled.containsKey(item.getCategory())) {
@@ -88,7 +91,7 @@ public class Service extends android.app.Service {
                 }
             }
         }
-        for (Profiles.ProfileItem profileItem : profiles.getAllProfiles()) {
+        for (Profiles.ProfileItem profileItem : profiles) {
             if (profileItem.isOnBootEnabled()) {
                 for (String commad : profileItem.getCommands()) {
                     mProfiles.add(commad);

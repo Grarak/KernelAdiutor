@@ -33,11 +33,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
@@ -48,7 +50,9 @@ import com.grarak.kerneladiutor.database.tools.profiles.ImportProfile;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
-import com.grarak.kerneladiutor.services.profile.ProfileWidget;
+import com.grarak.kerneladiutor.services.profile.Tile;
+import com.grarak.kerneladiutor.services.profile.Widget;
+import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.Control;
@@ -80,14 +84,8 @@ public class ProfileFragment extends RecyclerViewFragment {
 
     private DetailsFragment mDetailsFragment;
 
-
     @Override
-    protected boolean showViewPager() {
-        return false;
-    }
-
-    @Override
-    protected boolean showBottomFab() {
+    protected boolean showTopFab() {
         return true;
     }
 
@@ -97,7 +95,7 @@ public class ProfileFragment extends RecyclerViewFragment {
     }
 
     @Override
-    protected Drawable getBottomFabDrawable() {
+    protected Drawable getTopFabDrawable() {
         Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
         DrawableCompat.setTint(drawable, ContextCompat.getColor(getActivity(), R.color.white));
         return drawable;
@@ -117,6 +115,8 @@ public class ProfileFragment extends RecyclerViewFragment {
     @Override
     protected void init() {
         super.init();
+
+        addViewPagerFragment(ProfileTileFragment.newInstance(this));
 
         if (mCommands != null) {
             create(mCommands);
@@ -281,13 +281,14 @@ public class ProfileFragment extends RecyclerViewFragment {
 
         mProfiles.commit();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
-        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(getActivity(), ProfileWidget.class));
+        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(getActivity(), Widget.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.profile_list);
+        Tile.publishProfileTile(profileItems, getActivity());
     }
 
     @Override
-    protected void onBottomFabClick() {
-        super.onBottomFabClick();
+    protected void onTopFabClick() {
+        super.onTopFabClick();
 
         mOptionsDialog = new AlertDialog.Builder(getActivity()).setItems(getResources().getStringArray(
                 R.array.profile_options), new DialogInterface.OnClickListener() {
@@ -506,7 +507,47 @@ public class ProfileFragment extends RecyclerViewFragment {
                 mCodeText.setText(commandsText.toString());
             }
         }
+    }
 
+    public static class ProfileTileFragment extends BaseFragment {
+
+        public static ProfileTileFragment newInstance(ProfileFragment profileFragment) {
+            ProfileTileFragment fragment = new ProfileTileFragment();
+            fragment.mProfileFragment = profileFragment;
+            return fragment;
+        }
+
+        private ProfileFragment mProfileFragment;
+
+        @Override
+        protected boolean retainInstance() {
+            return false;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                                 @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_profile_tile, container, false);
+
+            SwitchCompat switchCompat = (SwitchCompat) rootView.findViewById(R.id.switcher);
+            switchCompat.setChecked(Prefs.getBoolean("profiletile", false, getActivity()));
+            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (Utils.hasCMSDK()) {
+                        Prefs.saveBoolean("profiletile", b, getActivity());
+                        Tile.publishProfileTile(mProfileFragment.mProfiles.getAllProfiles(), getActivity());
+                    } else {
+                        Utils.toast(R.string.profile_title_error, getActivity());
+                        compoundButton.setChecked(false);
+                        Prefs.saveBoolean("profiletile", false, getActivity());
+                    }
+                }
+            });
+
+            return rootView;
+        }
     }
 
 }

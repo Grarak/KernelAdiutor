@@ -40,9 +40,9 @@ import java.util.List;
 /**
  * Created by willi on 17.07.16.
  */
-public class ProfileWidget extends AppWidgetProvider {
+public class Widget extends AppWidgetProvider {
 
-    private static final String TAG = ProfileWidget.class.getSimpleName();
+    private static final String TAG = Widget.class.getSimpleName();
 
     private static final String LIST_ITEM_CLICK = "list_item";
     private static final String ITEM_ARG = "item_extra";
