@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.boot;
+package com.grarak.kerneladiutor.services.boot;
 
 import android.app.Notification;
 import android.app.NotificationManager;

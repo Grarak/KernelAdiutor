@@ -668,6 +668,8 @@
     <string name="flash_zip">Flash Zip</string>
     <string name="add_action_first">You have to add actions first!</string>
     <string name="flash_now_confirm">Do you want to run your actions? Your device will reboot into recovery and the actions will run in the order as you added them.</string>
+    <string name="press_again_to_apply">Press %s again to apply.</string>
+    <string name="applied">Applied</string>
 
     <!-- Init.d -->
     <string name="emulate_initd">Emulate Init.d</string>

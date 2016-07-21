@@ -36,13 +36,28 @@
         <activity android:name=".activities.tools.DownloadsActivity" />
         <activity android:name=".activities.tools.ProfileActivity" />
 
-        <receiver android:name=".boot.Receiver">
+        <receiver android:name=".services.boot.Receiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name=".boot.Service" />
-        <receiver android:name=".boot.Service$CancelReceiver" />
+        <service android:name=".services.boot.Service" />
+        <receiver android:name=".services.boot.Service$CancelReceiver" />
+
+        <!-- Profile Widget -->
+        <receiver android:name=".services.profile.ProfileWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/profile_widget" />
+        </receiver>
+
+        <service
+            android:name=".services.profile.ProfileWidget$WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

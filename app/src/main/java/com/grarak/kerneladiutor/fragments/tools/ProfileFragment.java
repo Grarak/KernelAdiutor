@@ -20,6 +20,8 @@
 package com.grarak.kerneladiutor.fragments.tools;
 
 import android.Manifest;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -46,6 +48,7 @@ import com.grarak.kerneladiutor.database.tools.profiles.ImportProfile;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.services.profile.ProfileWidget;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.Control;
@@ -275,6 +278,11 @@ public class ProfileFragment extends RecyclerViewFragment {
             cardView.addItem(descriptionView);
             items.add(cardView);
         }
+
+        mProfiles.commit();
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
+        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(getActivity(), ProfileWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.profile_list);
     }
 
     @Override
@@ -370,7 +378,6 @@ public class ProfileFragment extends RecyclerViewFragment {
                 }
 
                 mProfiles.putProfile(text, importProfile.getResults());
-                mProfiles.commit();
                 reload();
             }
         }, getActivity()).setTitle(getString(R.string.name)).setOnDismissListener(
@@ -404,7 +411,6 @@ public class ProfileFragment extends RecyclerViewFragment {
                 }
 
                 mProfiles.putProfile(text, commands);
-                mProfiles.commit();
                 reload();
             }
         }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
