@@ -29,7 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.activities.tools.ProfileActivity;
+import com.grarak.kerneladiutor.activities.tools.profile.ProfileActivity;
 import com.grarak.kerneladiutor.utils.Prefs;
 
 /**

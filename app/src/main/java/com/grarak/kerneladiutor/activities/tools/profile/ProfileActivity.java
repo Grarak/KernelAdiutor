@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.activities.tools;
+package com.grarak.kerneladiutor.activities.tools.profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;

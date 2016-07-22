@@ -87,7 +87,7 @@
         android:layout_marginTop="50dp"
         android:visibility="gone"
         app:cardCornerRadius="5dp"
-        app:cardElevation="4dp"
+        app:cardElevation="16dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout

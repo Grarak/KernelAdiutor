@@ -23,8 +23,8 @@ import android.content.Intent;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
-import com.grarak.kerneladiutor.BuildConfig;
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.activities.MainActivity;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPUFreq;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -43,8 +43,8 @@ public class DashClock extends DashClockExtension {
         final int cores = CPUFreq.getCpuCount();
 
         if (extensionData == null) {
-            Intent intent = getPackageManager().getLaunchIntentForPackage(BuildConfig.APPLICATION_ID);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             extensionData = new ExtensionData()
                     .visible(true)
                     .icon(R.drawable.ic_launcher_preview)

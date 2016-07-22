@@ -44,11 +44,13 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.FilePickerActivity;
-import com.grarak.kerneladiutor.activities.tools.ProfileActivity;
+import com.grarak.kerneladiutor.activities.tools.profile.ProfileActivity;
+import com.grarak.kerneladiutor.activities.tools.profile.ProfileTaskerActivity;
 import com.grarak.kerneladiutor.database.tools.profiles.ExportProfile;
 import com.grarak.kerneladiutor.database.tools.profiles.ImportProfile;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
+import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.services.profile.Widget;
@@ -69,6 +71,13 @@ import java.util.List;
  */
 public class ProfileFragment extends RecyclerViewFragment {
 
+    public static ProfileFragment newInstance(boolean tasker) {
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.mTaskerMode = tasker;
+        return fragment;
+    }
+
+    private boolean mTaskerMode;
     private Profiles mProfiles;
 
     private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
@@ -81,17 +90,23 @@ public class ProfileFragment extends RecyclerViewFragment {
     private AlertDialog.Builder mOptionsDialog;
     private AlertDialog.Builder mDonateDialog;
     private ImportProfile mImportProfile;
+    private AlertDialog.Builder mSelectDialog;
 
     private DetailsFragment mDetailsFragment;
 
     @Override
-    protected boolean showTopFab() {
+    protected boolean showViewPager() {
         return true;
     }
 
     @Override
+    protected boolean showTopFab() {
+        return !mTaskerMode;
+    }
+
+    @Override
     protected BaseFragment getForegroundFragment() {
-        return mDetailsFragment = new DetailsFragment();
+        return mTaskerMode ? null : (mDetailsFragment = new DetailsFragment());
     }
 
     @Override
@@ -116,7 +131,15 @@ public class ProfileFragment extends RecyclerViewFragment {
     protected void init() {
         super.init();
 
-        addViewPagerFragment(ProfileTileFragment.newInstance(this));
+        if (mTaskerMode) {
+            addViewPagerFragment(new TaskerToastFragment());
+        } else {
+            addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.profile_tasker),
+                    getString(R.string.profile_tasker_summary)));
+            if (Utils.hasCMSDK()) {
+                addViewPagerFragment(ProfileTileFragment.newInstance(this));
+            }
+        }
 
         if (mCommands != null) {
             create(mCommands);
@@ -253,37 +276,65 @@ public class ProfileFragment extends RecyclerViewFragment {
             descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    mApplyDialog = ViewUtils.dialogBuilder(getString(R.string.apply_question,
-                            descriptionView.getSummary()), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    }, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            for (String command : profileItems.get(position).getCommands()) {
-                                Control.runSetting(command, null, null, null);
+                    if (mTaskerMode) {
+                        mSelectDialog = ViewUtils.dialogBuilder(getString(R.string.select_question,
+                                descriptionView.getSummary()), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
                             }
-                        }
-                    }, new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            mApplyDialog = null;
-                        }
-                    }, getActivity());
-                    mApplyDialog.show();
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ((ProfileTaskerActivity) getActivity()).finish(
+                                        descriptionView.getSummary().toString(),
+                                        profileItems.get(position).getCommands());
+                            }
+                        }, new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                mSelectDialog = null;
+                            }
+                        }, getActivity());
+                        mSelectDialog.show();
+                    } else {
+                        mApplyDialog = ViewUtils.dialogBuilder(getString(R.string.apply_question,
+                                descriptionView.getSummary()), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                for (String command : profileItems.get(position).getCommands()) {
+                                    Control.runSetting(command, null, null, null);
+                                }
+                            }
+                        }, new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                mApplyDialog = null;
+                            }
+                        }, getActivity());
+                        mApplyDialog.show();
+                    }
                 }
             });
 
-            cardView.addItem(descriptionView);
-            items.add(cardView);
+            if (mTaskerMode) {
+                items.add(descriptionView);
+            } else {
+                cardView.addItem(descriptionView);
+                items.add(cardView);
+            }
         }
 
-        mProfiles.commit();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
-        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(getActivity(), Widget.class));
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.profile_list);
-        Tile.publishProfileTile(profileItems, getActivity());
+        if (!mTaskerMode) {
+            mProfiles.commit();
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
+            int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(getActivity(), Widget.class));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.profile_list);
+            Tile.publishProfileTile(profileItems, getActivity());
+        }
     }
 
     @Override
@@ -535,14 +586,35 @@ public class ProfileFragment extends RecyclerViewFragment {
             switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (Utils.hasCMSDK()) {
-                        Prefs.saveBoolean("profiletile", b, getActivity());
-                        Tile.publishProfileTile(mProfileFragment.mProfiles.getAllProfiles(), getActivity());
-                    } else {
-                        Utils.toast(R.string.profile_title_error, getActivity());
-                        compoundButton.setChecked(false);
-                        Prefs.saveBoolean("profiletile", false, getActivity());
-                    }
+                    Prefs.saveBoolean("profiletile", b, getActivity());
+                    Tile.publishProfileTile(mProfileFragment.mProfiles.getAllProfiles(), getActivity());
+                }
+            });
+
+            return rootView;
+        }
+    }
+
+    public static class TaskerToastFragment extends BaseFragment {
+
+        @Override
+        protected boolean retainInstance() {
+            return false;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                                 @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_apply_on_boot, container, false);
+
+            ((TextView) rootView.findViewById(R.id.title)).setText(getString(R.string.profile_tasker_toast));
+            SwitchCompat switchCompat = (SwitchCompat) rootView.findViewById(R.id.switcher);
+            switchCompat.setChecked(Prefs.getBoolean("showtaskertoast", true, getActivity()));
+            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    Prefs.saveBoolean("showtaskertoast", b, getActivity());
                 }
             });
 

@@ -18,9 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity
-            android:name=".activities.MainActivity"
-            android:launchMode="singleInstance">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +36,7 @@
         <activity android:name=".activities.EditorActivity" />
         <activity android:name=".activities.FilePickerActivity" />
         <activity android:name=".activities.tools.DownloadsActivity" />
-        <activity android:name=".activities.tools.ProfileActivity" />
+        <activity android:name=".activities.tools.profile.ProfileActivity" />
 
         <receiver android:name=".services.boot.Receiver">
             <intent-filter>
@@ -85,6 +83,22 @@
                 android:name="protocolVersion"
                 android:value="1" />
         </service>
+
+        <!-- Tasker -->
+        <activity android:name=".activities.tools.profile.ProfileTaskerActivity">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".services.profile.Tasker"
+            android:process=":background">
+
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

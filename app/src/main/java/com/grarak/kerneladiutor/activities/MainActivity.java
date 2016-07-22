@@ -261,6 +261,7 @@ public class MainActivity extends BaseActivity {
 
     private void launch(int code) {
         Intent intent = new Intent(this, NavigationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("result", code);
         Prefs.saveInt("license", code, this);
         startActivity(intent);
