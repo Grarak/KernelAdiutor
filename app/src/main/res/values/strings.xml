@@ -675,6 +675,7 @@
     <string name="profile_tile_summary">Show a tile which allows you to select a profile.</string>
     <string name="profile_select">Select Profile</string>
     <string name="applying_profile">Applying %s!</string>
+    <string name="no_profiles">No profile found! You have to create them first.</string>
 
     <!-- Init.d -->
     <string name="emulate_initd">Emulate Init.d</string>

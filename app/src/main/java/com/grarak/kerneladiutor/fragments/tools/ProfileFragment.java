@@ -29,6 +29,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
@@ -213,6 +214,10 @@ public class ProfileFragment extends RecyclerViewFragment {
             mProfiles = new Profiles(getActivity());
         }
         final List<Profiles.ProfileItem> profileItems = mProfiles.getAllProfiles();
+        if (mTaskerMode && profileItems.size() == 0) {
+            Snackbar.make(getRootView(), R.string.no_profiles, Snackbar.LENGTH_LONG).show();
+            return;
+        }
         for (int i = 0; i < profileItems.size(); i++) {
             final int position = i;
             CardView cardView = new CardView(getActivity());
