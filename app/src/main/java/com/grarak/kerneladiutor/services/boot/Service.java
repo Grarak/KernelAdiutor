@@ -84,11 +84,8 @@ public class Service extends android.app.Service {
             }
         }
         for (Controls.ControlItem item : controls.getAllControls()) {
-            if (Prefs.getBoolean(item.getUniqueId() + "_onboot", false, this)) {
-                String args;
-                if (!(args = Prefs.getString(item.getUniqueId() + "_onboot_args", "", this)).isEmpty()) {
-                    mCustomControls.put(item.getApply(), args);
-                }
+            if (item.isOnBootEnabled() && item.getArguments() != null) {
+                mCustomControls.put(item.getApply(), item.getArguments());
             }
         }
         for (Profiles.ProfileItem profileItem : profiles) {

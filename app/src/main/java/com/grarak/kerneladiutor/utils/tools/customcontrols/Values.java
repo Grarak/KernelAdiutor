@@ -36,14 +36,13 @@ public class Values {
 
     private static final String TAG = Values.class.getSimpleName();
 
-    public static void run(String script, int uniqueId, Context context, String... arguments) {
-        RootUtils.runScript(script, arguments);
+    public static void run(String script, Controls.ControlItem controlItem, String... arguments) {
         StringBuilder args = new StringBuilder();
         for (String arg : arguments) {
             args.append(arg).append(" ");
         }
-        Prefs.saveString(uniqueId + "_onboot_args", args.toString().trim(), context);
-        Log.i(TAG, uniqueId + " args: " + args);
+        controlItem.setArguments(args.toString().trim());
+        RootUtils.runScript(script, arguments);
     }
 
     public static String getString(String script) throws CustomControlException {

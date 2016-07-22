@@ -37,6 +37,8 @@ public class ExportControl {
         mMain = new JSONObject();
         try {
             item.getItem().remove("uniqueId");
+            item.getItem().remove("onboot");
+            item.getItem().remove("arguments");
             mMain.put("version", version);
             mMain.put("control", item.getItem());
         } catch (JSONException ignored) {

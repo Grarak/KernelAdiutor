@@ -81,6 +81,32 @@ public class Controls extends Provider {
             return Items.Control.getControl(getString("id"));
         }
 
+        public boolean isOnBootEnabled() {
+            try {
+                return getItem().getBoolean("onboot");
+            } catch (JSONException ignored) {
+                return false;
+            }
+        }
+
+        public String getArguments() {
+            return getString("arguments");
+        }
+
+        public void enableOnBoot(boolean enable) {
+            try {
+                getItem().put("onboot", enable);
+            } catch (JSONException ignored) {
+            }
+        }
+
+        public void setArguments(String arguments) {
+            try {
+                getItem().put("arguments", arguments);
+            } catch (JSONException ignored) {
+            }
+        }
+
     }
 
 }
