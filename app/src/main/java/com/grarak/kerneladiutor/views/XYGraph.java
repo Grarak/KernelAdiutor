@@ -96,12 +96,17 @@ public class XYGraph extends View {
     }
 
     public void addPercentage(int percentage) {
-        if (percentage < 0 || percentage > 100)
+        if (percentage < 0 || percentage > 100) {
             throw new IllegalStateException("Percentage can only be between 0 and 100");
+        }
         mPercentages.add(percentage);
-        if (mPercentages.size() > 25) mPercentages.remove(0);
+        if (mPercentages.size() > 25) {
+            mPercentages.remove(0);
+        }
         state++;
-        if (state > 4) state = 1;
+        if (state > 4) {
+            state = 1;
+        }
         invalidate();
     }
 
@@ -127,21 +132,30 @@ public class XYGraph extends View {
         for (int i = 0; i < 7; i++) {
             float x = ((float) width / 6) * i;
             float offset = (float) width / 6 / 4 * state;
-            if (isRTL) x += offset;
-            else x -= offset;
+            if (isRTL) {
+                x += offset;
+            } else {
+                x -= offset;
+            }
             canvas.drawLine(x, 0, x, height, mPaintLine);
         }
 
         mPathGraph.reset();
         float graphX;
-        if (isRTL) graphX = ((float) width / 24) * (mPercentages.size() - 1);
-        else graphX = width - ((float) width / 24) * (mPercentages.size() - 1);
+        if (isRTL) {
+            graphX = ((float) width / 24) * (mPercentages.size() - 1);
+        } else {
+            graphX = width - ((float) width / 24) * (mPercentages.size() - 1);
+        }
         mPathGraph.moveTo(graphX, height);
         float x = 0;
         float y;
         for (int i = 0; i < mPercentages.size(); i++) {
-            if (isRTL) x = graphX - ((float) width / 24) * i;
-            else x = graphX + ((float) width / 24) * i;
+            if (isRTL) {
+                x = graphX - ((float) width / 24) * i;
+            } else {
+                x = graphX + ((float) width / 24) * i;
+            }
             y = ((float) (100 - mPercentages.get(i)) / 100) * height;
             mPathGraph.lineTo(x, y);
         }

@@ -36,7 +36,6 @@
     <string name="save">Save</string>
 
     <!-- File Picker -->
-    <string name="loading">Loading</string>
     <string name="select_question">Select %s?</string>
     <string name="wrong_extension">Please select a file with %s extension.</string>
 
@@ -94,7 +93,6 @@
     <string name="offline">Offline</string>
     <string name="core">Core %d</string>
     <string name="temperature">Temperature</string>
-    <string name="more">More</string>
     <string name="frequencies">Frequencies</string>
     <string name="refresh">Refresh</string>
     <string name="reset">Reset</string>
@@ -676,7 +674,6 @@
     <string name="profile_tile">Profile Tile</string>
     <string name="profile_tile_summary">Show a tile which allows you to select a profile.</string>
     <string name="profile_select">Select Profile</string>
-    <string name="no_profiles">No profile found! You have to create them first.</string>
     <string name="applying_profile">Applying %s!</string>
 
     <!-- Init.d -->

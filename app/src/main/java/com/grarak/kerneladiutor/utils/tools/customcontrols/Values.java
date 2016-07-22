@@ -34,8 +34,6 @@ import java.util.Random;
  */
 public class Values {
 
-    private static final String TAG = Values.class.getSimpleName();
-
     public static void run(String script, Controls.ControlItem controlItem, String... arguments) {
         StringBuilder args = new StringBuilder();
         for (String arg : arguments) {
