@@ -36,6 +36,10 @@ dependencies {
     }
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.google.firebase:firebase-crash:9.0.2'
+    compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
+        transitive = true;
+    }
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.adw.library:discrete-seekbar:1.0.1'
     compile 'org.cyanogenmod:platform.sdk:5.0.1'

@@ -53,6 +53,7 @@ import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
+import com.grarak.kerneladiutor.fragments.other.AboutFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
@@ -80,6 +81,7 @@ import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutor.utils.tools.Backup;
 import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -87,7 +89,7 @@ import java.util.LinkedHashMap;
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public final static LinkedHashMap<Integer, BaseFragment> sFragments = new LinkedHashMap<>();
+    public final static LinkedHashMap<Integer, Fragment> sFragments = new LinkedHashMap<>();
     private final static HashMap<Integer, Class> sActivities = new HashMap<>();
 
     static {
@@ -144,6 +146,7 @@ public class NavigationActivity extends BaseActivity
         sFragments.put(R.string.recovery, new RecoveryFragment());
         sFragments.put(R.string.initd, new InitdFragment());
         sFragments.put(R.string.other, null);
+        sFragments.put(R.string.about, new AboutFragment());
         sFragments.put(R.string.settings, null);
 
         sActivities.put(R.string.settings, SettingsActivity.class);
@@ -238,19 +241,22 @@ public class NavigationActivity extends BaseActivity
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
-        } else if (!sFragments.get(mSelection).onBackPressed()) {
-            if (mExit) {
-                mExit = false;
-                super.onBackPressed();
-            } else {
-                Utils.toast(R.string.press_back_again_exit, this);
-                mExit = true;
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mExit = false;
-                    }
-                }, 2000);
+        } else {
+            if (sFragments.get(mSelection) instanceof BaseFragment
+                    && !((BaseFragment) sFragments.get(mSelection)).onBackPressed()) {
+                if (mExit) {
+                    mExit = false;
+                    super.onBackPressed();
+                } else {
+                    Utils.toast(R.string.press_back_again_exit, this);
+                    mExit = true;
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mExit = false;
+                        }
+                    }, 2000);
+                }
             }
         }
     }
