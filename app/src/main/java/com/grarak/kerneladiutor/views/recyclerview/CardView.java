@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.app.Activity;
+import android.content.res.TypedArray;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class CardView extends RecyclerViewItem {
 
     private Activity mActivity;
 
+    private android.support.v7.widget.CardView mRootView;
     private TextView mTitle;
     private LinearLayout mLayout;
     private View mMenuButton;
@@ -69,6 +71,7 @@ public class CardView extends RecyclerViewItem {
 
     @Override
     public void onCreateView(View view) {
+        mRootView = (android.support.v7.widget.CardView) view;
         mTitle = (TextView) view.findViewById(R.id.card_title);
         mLayout = (LinearLayout) view.findViewById(R.id.card_layout);
         mMenuButton = view.findViewById(R.id.menu_button);
@@ -152,6 +155,12 @@ public class CardView extends RecyclerViewItem {
     }
 
     @Override
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        super.setOnItemClickListener(onItemClickListener);
+        refresh();
+    }
+
+    @Override
     protected void refresh() {
         super.refresh();
         if (mTitle != null) {
@@ -166,6 +175,17 @@ public class CardView extends RecyclerViewItem {
             mMenuButton.setVisibility(View.VISIBLE);
             mPopupMenu = new PopupMenu(mMenuButton.getContext(), mMenuButton);
             mOnMenuListener.onMenuReady(this, mPopupMenu);
+        }
+        if (mRootView != null && getOnItemClickListener() != null) {
+            TypedArray typedArray = mRootView.getContext().obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
+            mRootView.setForeground(typedArray.getDrawable(0));
+            typedArray.recycle();
+            mRootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getOnItemClickListener().onClick(CardView.this);
+                }
+            });
         }
     }
 }

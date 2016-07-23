@@ -88,6 +88,7 @@
     <string name="recovery">Recovery</string>
     <string name="initd">Init.d</string>
     <string name="about">About</string>
+    <string name="contributors">Contributors</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
@@ -687,6 +688,10 @@
     <!-- About -->
     <string name="about_me">Hi, I\'m Willi Ye aka Grarak, a 19 year old student living in Vienna. I\'ve been developing on Android for quite a long time. Beside Kernel Adiutor I\'m also maintaining CyanogenMod for few devices and working on ParanoidAndroid. So please understand if I don\'t find the time to update this application.</string>
     <string name="libraries_used">Libraries used</string>
+
+    <!-- Contributors -->
+    <string name="commits">%d commits</string>
+    <string name="no_internet">Please check your internet connection!</string>
 
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>

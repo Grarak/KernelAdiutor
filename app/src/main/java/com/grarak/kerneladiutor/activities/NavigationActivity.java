@@ -54,6 +54,7 @@ import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.other.AboutFragment;
+import com.grarak.kerneladiutor.fragments.other.ContributorsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
@@ -81,7 +82,6 @@ import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutor.utils.tools.Backup;
 import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
-import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -147,6 +147,7 @@ public class NavigationActivity extends BaseActivity
         sFragments.put(R.string.initd, new InitdFragment());
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.about, new AboutFragment());
+        sFragments.put(R.string.contributors, new ContributorsFragment());
         sFragments.put(R.string.settings, null);
 
         sActivities.put(R.string.settings, SettingsActivity.class);
