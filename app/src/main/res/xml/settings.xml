@@ -6,4 +6,8 @@
         android:summary="@string/fahrenheit_summary"
         android:title="@string/fahrenheit_title" />
 
+    <SwitchPreference
+        android:key="forceenglish"
+        android:summary="@string/force_english" />
+
 </PreferenceScreen>

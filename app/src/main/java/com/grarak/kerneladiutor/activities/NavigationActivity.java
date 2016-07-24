@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor.activities;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -153,6 +154,7 @@ public class NavigationActivity extends BaseActivity
         sActivities.put(R.string.settings, SettingsActivity.class);
     }
 
+    private static Activity mActivity;
     private Handler mHandler = new Handler();
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
@@ -169,6 +171,7 @@ public class NavigationActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = getToolBar();
         setSupportActionBar(toolbar);
@@ -308,6 +311,12 @@ public class NavigationActivity extends BaseActivity
             return sFragments.get(res);
         }
         return fragment;
+    }
+
+    public static void restart() {
+        if (mActivity != null) {
+            mActivity.recreate();
+        }
     }
 
 }

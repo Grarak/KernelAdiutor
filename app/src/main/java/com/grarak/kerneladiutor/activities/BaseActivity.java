@@ -30,6 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 
 /**
@@ -40,6 +41,9 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Prefs.getBoolean("forceenglish", false, this)) {
+            Utils.setLocale("en_US", this);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && setStatusBarColor()) {
             Window window = getWindow();

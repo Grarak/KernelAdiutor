@@ -118,6 +118,7 @@ public class Misc {
     }
 
     public static void enablePowerSavingWq(boolean enabled, Context context) {
+        run(Control.chmod("755", CPU_WQ_POWER_SAVING), CPU_WQ_POWER_SAVING + "chmod", context);
         run(Control.write(enabled ? "Y" : "N", CPU_WQ_POWER_SAVING), CPU_WQ_POWER_SAVING, context);
     }
 

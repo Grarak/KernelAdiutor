@@ -696,4 +696,5 @@
     <!-- Settings -->
     <string name="fahrenheit_title">Fahrenheit</string>
     <string name="fahrenheit_summary">Use fahrenheit to measure temperature.</string>
+    <string name="force_english">Force displaying english language</string>
 </resources>

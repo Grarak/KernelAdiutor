@@ -39,7 +39,6 @@ import com.grarak.kerneladiutor.database.tools.customcontrols.ExportControl;
 import com.grarak.kerneladiutor.database.tools.customcontrols.ImportControl;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.tools.customcontrols.CustomControlException;

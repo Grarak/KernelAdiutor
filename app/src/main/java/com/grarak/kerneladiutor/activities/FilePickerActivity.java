@@ -29,7 +29,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
@@ -61,13 +60,6 @@ public class FilePickerActivity extends BaseActivity {
         setContentView(R.layout.activity_fragments);
 
         initToolBar();
-
-        getToolBar().setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         mPath = getIntent().getStringExtra(PATH_INTENT);
         mExtension = getIntent().getStringExtra(EXTENSION_INTENT);

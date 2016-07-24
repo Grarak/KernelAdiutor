@@ -19,11 +19,7 @@
  */
 package com.grarak.kerneladiutor.utils.tools.customcontrols;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 import java.util.List;

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -60,6 +61,7 @@ import java.math.RoundingMode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -71,6 +73,14 @@ public class Utils {
     public static boolean DONATED = BuildConfig.DEBUG;
 
     private static final Set<CustomTarget> mProtectedFromGarbageCollectorTargets = new HashSet<>();
+
+    public static void setLocale(String lang, Context context) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getApplicationContext().getResources().updateConfiguration(config, null);
+    }
 
     public static boolean hasCMSDK() {
         return cyanogenmod.os.Build.CM_VERSION.SDK_INT >= cyanogenmod.os.Build.CM_VERSION_CODES.APRICOT;
@@ -343,6 +353,13 @@ public class Utils {
 
     public static boolean isRTL(View view) {
         return ViewCompat.getLayoutDirection(view) == ViewCompat.LAYOUT_DIRECTION_RTL;
+    }
+
+    public static float getActionBarSize(Context context) {
+        TypedArray typedArray = context.obtainStyledAttributes(new int[]{R.attr.actionBarSize});
+        float size = typedArray.getDimension(0, 0);
+        typedArray.recycle();
+        return size;
     }
 
     public static int getColorPrimaryColor(Context context) {
