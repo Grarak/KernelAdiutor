@@ -702,4 +702,11 @@
     <string name="fifty_sec">50 seconds</string>
     <string name="apply_on_boot_test_summary">Test apply on boot. This includes all kind of things which are getting applied during booting, such as custom controls, profiles, init.d, etc.</string>
     <string name="nothing_apply">Nothing found to apply!</string>
+    <string name="debugging">Debugging</string>
+    <string name="logcat">Logcat</string>
+    <string name="logcat_summary">Copy logcat to /sdcard/logcat.txt</string>
+    <string name="last_kmsg">Last Kernel Message</string>
+    <string name="last_kmsg_summary">Copy /proc/last_kmsg to /sdcard/last_kmsg.txt</string>
+    <string name="driver_message">Driver Message</string>
+    <string name="driver_message_summary">Copy driver message (dmesg) to /sdcard/dmesg.txt</string>
 </resources>

@@ -24,4 +24,19 @@
             android:title="@string/test" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/debugging">
+        <Preference
+            android:key="logcat"
+            android:summary="@string/logcat_summary"
+            android:title="@string/logcat" />
+        <Preference
+            android:key="lastkmsg"
+            android:summary="@string/last_kmsg_summary"
+            android:title="@string/last_kmsg" />
+        <Preference
+            android:key="dmesg"
+            android:summary="@string/driver_message_summary"
+            android:title="@string/driver_message" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

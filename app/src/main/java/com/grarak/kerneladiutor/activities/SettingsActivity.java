@@ -20,8 +20,10 @@
 package com.grarak.kerneladiutor.activities;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,6 +35,7 @@ import android.preference.SwitchPreference;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.services.boot.Service;
 import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 /**
  * Created by willi on 08.05.16.
@@ -69,6 +72,9 @@ public class SettingsActivity extends BaseActivity {
 
         private static final String KEY_FORCE_ENGLISH = "forceenglish";
         private static final String KEY_APPLY_ON_BOOT_TEST = "applyonboottest";
+        private static final String KEY_LOGCAT = "logcat";
+        private static final String KEY_LAST_KMSG = "lastkmsg";
+        private static final String KEY_DMESG = "dmesg";
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,14 @@ public class SettingsActivity extends BaseActivity {
             }
 
             findPreference(KEY_APPLY_ON_BOOT_TEST).setOnPreferenceClickListener(this);
+            findPreference(KEY_LOGCAT).setOnPreferenceClickListener(this);
+
+            if (Utils.existFile("/proc/last_kmsg") || Utils.existFile("/sys/fs/pstore/console-ramoops")) {
+                findPreference(KEY_LAST_KMSG).setOnPreferenceClickListener(this);
+            } else {
+                getPreferenceScreen().removePreference(findPreference(KEY_LAST_KMSG));
+            }
+            findPreference(KEY_DMESG).setOnPreferenceClickListener(this);
         }
 
         @Override
@@ -116,8 +130,46 @@ public class SettingsActivity extends BaseActivity {
                 }));
                 getActivity().startService(intent);
                 return true;
+            } else if (key.equals(KEY_LOGCAT)) {
+                new Execute().execute("logcat -d > /sdcard/logcat.txt");
+                return true;
+            } else if (key.equals(KEY_LAST_KMSG)) {
+                if (Utils.existFile("/proc/last_kmsg")) {
+                    new Execute().execute("cat /proc/last_kmsg > /sdcard/last_kmsg.txt");
+                } else if (Utils.existFile("/sys/fs/pstore/console-ramoops")) {
+                    new Execute().execute("cat /sys/fs/pstore/console-ramoops > /sdcard/last_kmsg.txt");
+                }
+                return true;
+            } else if (key.equals(KEY_DMESG)) {
+                new Execute().execute("dmesg > /sdcard/dmesg.txt");
+                return true;
             }
             return false;
+        }
+
+        private class Execute extends AsyncTask<String, Void, Void> {
+            private ProgressDialog mProgressDialog;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressDialog = new ProgressDialog(getActivity());
+                mProgressDialog.setMessage(getString(R.string.executing));
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+            }
+
+            @Override
+            protected Void doInBackground(String... params) {
+                RootUtils.runCommand(params[0]);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                mProgressDialog.dismiss();
+            }
         }
     }
 
