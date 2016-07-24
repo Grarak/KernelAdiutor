@@ -99,7 +99,10 @@ public class CPUBoost {
             for (String line : value.split(" ")) {
                 int core = Utils.strToInt(line.split(":")[0]);
                 String freq = line.split(":")[1];
-                list.add(freq.equals("0") ? 0 : CPUFreq.getFreqs(core).indexOf(Utils.strToInt(freq)) + 1);
+                try {
+                    list.add(freq.equals("0") ? 0 : CPUFreq.getFreqs(core).indexOf(Utils.strToInt(freq)) + 1);
+                } catch (NullPointerException ignored) {
+                }
             }
         } else {
             list.add(value.equals("0") ? 0 : CPUFreq.getFreqs().indexOf(Utils.strToInt(value)) + 1);

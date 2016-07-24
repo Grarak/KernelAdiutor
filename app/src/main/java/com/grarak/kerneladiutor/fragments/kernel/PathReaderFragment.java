@@ -93,7 +93,7 @@ public class PathReaderFragment extends RecyclerViewFragment {
                     public void onClick(RecyclerViewItem item) {
                         List<Integer> freqs = CPUFreq.getFreqs(mCPU);
                         int freq = Utils.strToInt(value);
-                        if (freq != 0 && freqs.indexOf(freq) != -1) {
+                        if (freqs != null && freq != 0 && freqs.indexOf(freq) != -1) {
                             String[] values = new String[freqs.size()];
                             for (int i = 0; i < values.length; i++) {
                                 values[i] = String.valueOf(freqs.get(i));

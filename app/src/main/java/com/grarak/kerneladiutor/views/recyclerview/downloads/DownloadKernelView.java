@@ -103,9 +103,9 @@ public class DownloadKernelView extends RecyclerViewItem {
         title.setText(titleText);
         title.setMovementMethod(LinkMovementMethod.getInstance());
 
-        CharSequence summaryText = Utils.htmlFrom(mDownload.getDescription());
-        if (summaryText != null) {
-            summary.setText(summaryText);
+        String description = mDownload.getDescription();
+        if (description != null) {
+            summary.setText(Utils.htmlFrom(description));
             summary.setMovementMethod(LinkMovementMethod.getInstance());
         } else {
             summary.setVisibility(View.GONE);

@@ -218,7 +218,8 @@ public class FilePickerActivity extends BaseActivity {
                 descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                     @Override
                     public void onClick(RecyclerViewItem item) {
-                        if (mExtension != null && !mExtension.isEmpty() && !file.getName().endsWith(mExtension)) {
+                        if (mExtension != null && !mExtension.isEmpty() && file.getName() != null
+                                && !file.getName().endsWith(mExtension)) {
                             Utils.toast(getString(R.string.wrong_extension, mExtension), getActivity());
                         } else {
                             mPickDialog = ViewUtils.dialogBuilder(getString(R.string.select_question, file.getName()),

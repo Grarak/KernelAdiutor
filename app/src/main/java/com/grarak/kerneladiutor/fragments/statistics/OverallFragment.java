@@ -453,7 +453,7 @@ public class OverallFragment extends RecyclerViewFragment {
                     }
                 }
             }).start();
-            if (sFreqs == null || sCPUUsages == null || sUsages == null) return;
+            if (sFreqs == null || sCPUUsages == null || sUsages == null || !isAdded()) return;
             for (int i = 0; i < sUsages.size(); i++) {
                 View usageView = sUsages.get(i);
                 TextView usageOfflineText = (TextView) usageView.findViewById(R.id.usage_offline_text);
