@@ -20,13 +20,18 @@
 package com.grarak.kerneladiutor.activities;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Messenger;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.services.boot.Service;
 import com.grarak.kerneladiutor.utils.Utils;
 
 /**
@@ -60,9 +65,10 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragment
-            implements Preference.OnPreferenceChangeListener {
+            implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
         private static final String KEY_FORCE_ENGLISH = "forceenglish";
+        private static final String KEY_APPLY_ON_BOOT_TEST = "applyonboottest";
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,8 @@ public class SettingsActivity extends BaseActivity {
             } else {
                 forceEnglish.setOnPreferenceChangeListener(this);
             }
+
+            findPreference(KEY_APPLY_ON_BOOT_TEST).setOnPreferenceClickListener(this);
         }
 
         @Override
@@ -87,6 +95,26 @@ public class SettingsActivity extends BaseActivity {
                 }
                 NavigationActivity.restart();
                 getActivity().recreate();
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            String key = preference.getKey();
+            if (key.equals(KEY_APPLY_ON_BOOT_TEST)) {
+                Intent intent = new Intent(getActivity(), Service.class);
+                intent.putExtra("messenger", new Messenger(new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        if (msg.arg1 == 1) {
+                            Utils.toast(R.string.nothing_apply, getActivity());
+                        }
+                    }
+                }));
+                getActivity().startService(intent);
                 return true;
             }
             return false;

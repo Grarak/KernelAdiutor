@@ -10,4 +10,18 @@
         android:key="forceenglish"
         android:summary="@string/force_english" />
 
+    <PreferenceCategory android:title="@string/apply_on_boot">
+        <ListPreference
+            android:defaultValue="10"
+            android:entries="@array/apply_on_boot_delay_entries"
+            android:entryValues="@array/apply_on_boot_delay_values"
+            android:key="applyonbootdelay"
+            android:summary="%s"
+            android:title="@string/delay" />
+        <Preference
+            android:key="applyonboottest"
+            android:summary="@string/apply_on_boot_test_summary"
+            android:title="@string/test" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

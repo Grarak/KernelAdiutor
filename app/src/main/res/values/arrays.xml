@@ -95,4 +95,16 @@
         <item>@string/flash_zip</item>
     </string-array>
 
+    <!-- Settings -->
+    <string-array name="apply_on_boot_delay_entries">
+        <item>@string/ten_sec</item>
+        <item>@string/twenty_sec</item>
+        <item>@string/fifty_sec</item>
+    </string-array>
+    <string-array name="apply_on_boot_delay_values">
+        <item>10</item>
+        <item>20</item>
+        <item>50</item>
+    </string-array>
+
 </resources>

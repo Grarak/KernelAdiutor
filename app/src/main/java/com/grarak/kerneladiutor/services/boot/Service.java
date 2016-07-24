@@ -26,7 +26,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
 
@@ -36,6 +40,7 @@ import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
@@ -64,6 +69,12 @@ public class Service extends android.app.Service {
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
+
+        Messenger messenger = null;
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            messenger = (Messenger) extras.get("messenger");
+        }
 
         boolean enabled = false;
         final Settings settings = new Settings(this);
@@ -99,11 +110,19 @@ public class Service extends android.app.Service {
         final boolean initdEnabled = Prefs.getBoolean("initd_onboot", false, this);
         enabled = enabled || mCustomControls.size() > 0 || mProfiles.size() > 0 || initdEnabled;
         if (!enabled) {
+            if (messenger != null) {
+                try {
+                    Message message = Message.obtain();
+                    message.arg1 = 1;
+                    messenger.send(message);
+                } catch (RemoteException ignored) {
+                }
+            }
             stopSelf();
             return;
         }
 
-        final int seconds = 10;
+        final int seconds = Utils.strToInt(Prefs.getString("applyonbootdelay", "10", this));
         PendingIntent cancelIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, CancelReceiver.class), 0);
 
         final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
