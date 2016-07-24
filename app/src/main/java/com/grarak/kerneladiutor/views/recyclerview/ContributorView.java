@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -51,6 +52,9 @@ public class ContributorView extends RecyclerViewItem {
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView contributions = (TextView) view.findViewById(R.id.contributions);
 
+        if (Utils.DARK_THEME) {
+            name.setTextColor(ContextCompat.getColor(view.getContext(), R.color.white));
+        }
         Utils.loadImagefromUrl(mContributor.getAvatarUrl(), image, 200, 200);
         name.setText(mContributor.getLogin());
         contributions.setText(view.getResources().getString(R.string.commits, mContributor.getContributions()));

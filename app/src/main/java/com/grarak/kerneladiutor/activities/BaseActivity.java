@@ -41,6 +41,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setTheme((Utils.DARK_THEME = Prefs.getBoolean("darktheme", false, this))
+                ? R.style.AppThemeDark_NoActionBar : R.style.AppTheme_NoActionBar);
         if (Prefs.getBoolean("forceenglish", false, this)) {
             Utils.setLocale("en_US", this);
         }

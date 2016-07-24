@@ -19,10 +19,12 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.Utils;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -117,6 +119,10 @@ public class SeekBarView extends RecyclerViewItem {
                 }
             }
         });
+
+        if (Utils.DARK_THEME) {
+            mTitle.setTextColor(ContextCompat.getColor(view.getContext(), R.color.white));
+        }
 
         super.onCreateView(view);
     }

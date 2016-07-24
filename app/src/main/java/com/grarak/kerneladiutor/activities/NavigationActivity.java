@@ -19,7 +19,6 @@
  */
 package com.grarak.kerneladiutor.activities;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -154,7 +153,7 @@ public class NavigationActivity extends BaseActivity
         sActivities.put(R.string.settings, SettingsActivity.class);
     }
 
-    private static Activity mActivity;
+    private static NavigationActivity mActivity;
     private Handler mHandler = new Handler();
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;

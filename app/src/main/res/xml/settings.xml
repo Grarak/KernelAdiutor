@@ -7,6 +7,10 @@
         android:title="@string/fahrenheit_title" />
 
     <SwitchPreference
+        android:key="darktheme"
+        android:summary="@string/dark_theme" />
+
+    <SwitchPreference
         android:key="forceenglish"
         android:summary="@string/force_english" />
 

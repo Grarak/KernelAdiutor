@@ -89,11 +89,11 @@ public class CPUFreq {
             }
             boolean offline = isOffline(i);
             if (offline) {
-                onlineCpu(i, true, context);
+                onlineCpu(i, true, null);
             }
             run(Control.write(value, Utils.strFormat(path, i)), Utils.strFormat(path, i), context);
             if (offline) {
-                onlineCpu(i, false, context);
+                onlineCpu(i, false, null);
             }
         }
     }

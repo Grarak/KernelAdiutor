@@ -20,11 +20,13 @@
 package com.grarak.kerneladiutor.views.recyclerview.customcontrols;
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
@@ -108,6 +110,10 @@ public class CodeView extends RecyclerViewItem {
                 mScriptThread.start();
             }
         });
+
+        if (Utils.DARK_THEME) {
+            mTitleView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.white));
+        }
 
         super.onCreateView(view);
     }

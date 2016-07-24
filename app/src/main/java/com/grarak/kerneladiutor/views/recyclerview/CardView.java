@@ -21,14 +21,19 @@ package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.app.Activity;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +53,7 @@ public class CardView extends RecyclerViewItem {
     private android.support.v7.widget.CardView mRootView;
     private TextView mTitle;
     private LinearLayout mLayout;
-    private View mMenuButton;
+    private ImageButton mMenuButton;
 
     private CharSequence mTitleText;
     private PopupMenu mPopupMenu;
@@ -74,7 +79,7 @@ public class CardView extends RecyclerViewItem {
         mRootView = (android.support.v7.widget.CardView) view;
         mTitle = (TextView) view.findViewById(R.id.card_title);
         mLayout = (LinearLayout) view.findViewById(R.id.card_layout);
-        mMenuButton = view.findViewById(R.id.menu_button);
+        mMenuButton = (ImageButton) view.findViewById(R.id.menu_button);
 
         mMenuButton.setRotation(90);
         mMenuButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +90,12 @@ public class CardView extends RecyclerViewItem {
                 }
             }
         });
+
+        if (Utils.DARK_THEME) {
+            Drawable drawable = mMenuButton.getDrawable();
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(view.getContext(), R.color.white));
+            mMenuButton.setImageDrawable(drawable);
+        }
 
         super.onCreateView(view);
         setupLayout();

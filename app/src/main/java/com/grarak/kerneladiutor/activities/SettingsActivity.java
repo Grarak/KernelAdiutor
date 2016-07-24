@@ -71,6 +71,7 @@ public class SettingsActivity extends BaseActivity {
             implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
         private static final String KEY_FORCE_ENGLISH = "forceenglish";
+        private static final String KEY_DARK_THEME = "darktheme";
         private static final String KEY_APPLY_ON_BOOT_TEST = "applyonboottest";
         private static final String KEY_LOGCAT = "logcat";
         private static final String KEY_LAST_KMSG = "lastkmsg";
@@ -80,6 +81,8 @@ public class SettingsActivity extends BaseActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
+
+            findPreference(KEY_DARK_THEME).setOnPreferenceChangeListener(this);
 
             SwitchPreference forceEnglish = (SwitchPreference) findPreference(KEY_FORCE_ENGLISH);
             if (Resources.getSystem().getConfiguration().locale.getLanguage().startsWith("en")) {
@@ -96,13 +99,20 @@ public class SettingsActivity extends BaseActivity {
             } else {
                 getPreferenceScreen().removePreference(findPreference(KEY_LAST_KMSG));
             }
+
             findPreference(KEY_DMESG).setOnPreferenceClickListener(this);
         }
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
             String key = preference.getKey();
-            if (key.equals(KEY_FORCE_ENGLISH)) {
+            if (key.equals(KEY_DARK_THEME)) {
+                getActivity().finish();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                return true;
+            } else if (key.equals(KEY_FORCE_ENGLISH)) {
                 boolean checked = (boolean) o;
                 if (!checked) {
                     Utils.setLocale(Resources.getSystem().getConfiguration().locale.getLanguage(), getActivity());
