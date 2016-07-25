@@ -55,6 +55,7 @@ import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
 import com.grarak.kerneladiutor.fragments.other.AboutFragment;
 import com.grarak.kerneladiutor.fragments.other.ContributorsFragment;
+import com.grarak.kerneladiutor.fragments.other.FAQFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
@@ -148,6 +149,7 @@ public class NavigationActivity extends BaseActivity
         sFragments.put(R.string.other, null);
         sFragments.put(R.string.about, new AboutFragment());
         sFragments.put(R.string.contributors, new ContributorsFragment());
+        sFragments.put(R.string.faq, new FAQFragment());
         sFragments.put(R.string.settings, null);
 
         sActivities.put(R.string.settings, SettingsActivity.class);
