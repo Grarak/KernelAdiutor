@@ -127,32 +127,33 @@ public class SettingsActivity extends BaseActivity {
         @Override
         public boolean onPreferenceClick(Preference preference) {
             String key = preference.getKey();
-            if (key.equals(KEY_APPLY_ON_BOOT_TEST)) {
-                Intent intent = new Intent(getActivity(), Service.class);
-                intent.putExtra("messenger", new Messenger(new Handler() {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        super.handleMessage(msg);
-                        if (msg.arg1 == 1) {
-                            Utils.toast(R.string.nothing_apply, getActivity());
+            switch (key) {
+                case KEY_APPLY_ON_BOOT_TEST:
+                    Intent intent = new Intent(getActivity(), Service.class);
+                    intent.putExtra("messenger", new Messenger(new Handler() {
+                        @Override
+                        public void handleMessage(Message msg) {
+                            super.handleMessage(msg);
+                            if (msg.arg1 == 1) {
+                                Utils.toast(R.string.nothing_apply, getActivity());
+                            }
                         }
+                    }));
+                    getActivity().startService(intent);
+                    return true;
+                case KEY_LOGCAT:
+                    new Execute().execute("logcat -d > /sdcard/logcat.txt");
+                    return true;
+                case KEY_LAST_KMSG:
+                    if (Utils.existFile("/proc/last_kmsg")) {
+                        new Execute().execute("cat /proc/last_kmsg > /sdcard/last_kmsg.txt");
+                    } else if (Utils.existFile("/sys/fs/pstore/console-ramoops")) {
+                        new Execute().execute("cat /sys/fs/pstore/console-ramoops > /sdcard/last_kmsg.txt");
                     }
-                }));
-                getActivity().startService(intent);
-                return true;
-            } else if (key.equals(KEY_LOGCAT)) {
-                new Execute().execute("logcat -d > /sdcard/logcat.txt");
-                return true;
-            } else if (key.equals(KEY_LAST_KMSG)) {
-                if (Utils.existFile("/proc/last_kmsg")) {
-                    new Execute().execute("cat /proc/last_kmsg > /sdcard/last_kmsg.txt");
-                } else if (Utils.existFile("/sys/fs/pstore/console-ramoops")) {
-                    new Execute().execute("cat /sys/fs/pstore/console-ramoops > /sdcard/last_kmsg.txt");
-                }
-                return true;
-            } else if (key.equals(KEY_DMESG)) {
-                new Execute().execute("dmesg > /sdcard/dmesg.txt");
-                return true;
+                    return true;
+                case KEY_DMESG:
+                    new Execute().execute("dmesg > /sdcard/dmesg.txt");
+                    return true;
             }
             return false;
         }
