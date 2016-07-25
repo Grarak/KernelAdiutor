@@ -43,6 +43,7 @@ import java.util.List;
  */
 public class CPUFreq {
 
+    private static final String CPU_PRESENT = "/sys/devices/system/cpu/present";
     private static final String CUR_FREQ = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_cur_freq";
     private static final String AVAILABLE_FREQS = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_available_frequencies";
     public static final String TIME_STATE = "/sys/devices/system/cpu/cpufreq/stats/cpu%d/time_in_state";
@@ -426,7 +427,17 @@ public class CPUFreq {
     }
 
     public static int getCpuCount() {
-        return sCpuCount == 0 ? sCpuCount = Runtime.getRuntime().availableProcessors() : sCpuCount;
+        if (sCpuCount == 0 && Utils.existFile(CPU_PRESENT)) {
+            try {
+                String output = Utils.readFile(CPU_PRESENT);
+                sCpuCount = output.equals("0") ? 1 : Integer.parseInt(output.split("-")[1]) + 1;
+            } catch (Exception ignored) {
+            }
+        }
+        if (sCpuCount == 0) {
+            sCpuCount = Runtime.getRuntime().availableProcessors();
+        }
+        return sCpuCount;
     }
 
     public static float[] getCpuUsage() {
