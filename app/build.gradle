@@ -11,6 +11,7 @@ android {
         targetSdkVersion 24
         versionCode 154
         versionName "0.9.23 beta"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

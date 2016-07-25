@@ -81,7 +81,9 @@ public class Service extends android.app.Service {
         Controls controls = new Controls(this);
         List<Profiles.ProfileItem> profiles = new Profiles(this).getAllProfiles();
 
-        Tile.publishProfileTile(profiles, this);
+        if (messenger == null) {
+            Tile.publishProfileTile(profiles, this);
+        }
 
         for (Settings.SettingsItem item : settings.getAllSettings()) {
             if (!mCategoryEnabled.containsKey(item.getCategory())) {

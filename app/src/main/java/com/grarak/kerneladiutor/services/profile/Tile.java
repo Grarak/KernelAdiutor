@@ -63,7 +63,10 @@ public class Tile extends BroadcastReceiver {
     public static void publishProfileTile(List<Profiles.ProfileItem> profiles, Context context) {
         if (!Utils.hasCMSDK()) return;
         if (profiles == null || profiles.size() < 1 || !Prefs.getBoolean("profiletile", true, context)) {
-            CMStatusBarManager.getInstance(context).removeTile(0);
+            try {
+                CMStatusBarManager.getInstance(context).removeTile(0);
+            } catch (SecurityException ignored) {
+            }
             return;
         }
 

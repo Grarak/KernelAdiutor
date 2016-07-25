@@ -73,7 +73,7 @@ public class DownloadsFragment extends RecyclerViewFragment {
     @Override
     protected void postInit() {
         super.postInit();
-        if (mWebpageReader == null) {
+        if (mWebpageReader == null && mSupport != null) {
             showProgress();
             mWebpageReader = new WebpageReader(new WebpageReader.WebpageCallback() {
 

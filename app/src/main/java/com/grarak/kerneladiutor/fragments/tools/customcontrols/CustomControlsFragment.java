@@ -121,7 +121,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
             }
         });
         if (!getActivity().isFinishing()) {
-            mOptionsDialog.show();
+            try {
+                mOptionsDialog.show();
+            } catch (NullPointerException ignored) {
+            }
         }
     }
 
