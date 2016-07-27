@@ -48,7 +48,7 @@
     <!-- Custom Controls -->
     <string-array name="custom_controls_options">
         <item>@string/create</item>
-        <item>@string/control_import</item>
+        <item>@string/import_item</item>
     </string-array>
     <string-array name="custom_controls_items">
         <item>@string/control_switch</item>
@@ -77,6 +77,34 @@
     <string-array name="build_prop_item_options">
         <item>@string/edit</item>
         <item>@string/delete</item>
+    </string-array>
+
+    <string-array name="profile_options">
+        <item>@string/create</item>
+        <item>@string/import_item</item>
+    </string-array>
+
+    <!-- Recovery -->
+    <string-array name="recovery_options">
+        <item>@string/cwm_recovery</item>
+        <item>@string/twrp</item>
+    </string-array>
+    <string-array name="recovery_commands">
+        <item>@string/wipe_data</item>
+        <item>@string/wipe_cache</item>
+        <item>@string/flash_zip</item>
+    </string-array>
+
+    <!-- Settings -->
+    <string-array name="apply_on_boot_delay_entries">
+        <item>@string/ten_sec</item>
+        <item>@string/twenty_sec</item>
+        <item>@string/fifty_sec</item>
+    </string-array>
+    <string-array name="apply_on_boot_delay_values">
+        <item>10</item>
+        <item>20</item>
+        <item>50</item>
     </string-array>
 
 </resources>

@@ -33,6 +33,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
+import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -144,6 +146,7 @@ public class MainActivity extends BaseActivity {
             Sound.supported();
             Temperature.supported(MainActivity.this);
             Thermal.supported();
+            Tile.publishProfileTile(new Profiles(MainActivity.this).getAllProfiles(), MainActivity.this);
             Vibration.supported();
             Voltage.supported();
             Wake.supported();
@@ -258,6 +261,7 @@ public class MainActivity extends BaseActivity {
 
     private void launch(int code) {
         Intent intent = new Intent(this, NavigationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("result", code);
         Prefs.saveInt("license", code, this);
         startActivity(intent);

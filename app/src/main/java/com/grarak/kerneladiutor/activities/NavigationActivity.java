@@ -53,11 +53,17 @@ import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
+import com.grarak.kerneladiutor.fragments.other.AboutFragment;
+import com.grarak.kerneladiutor.fragments.other.ContributorsFragment;
+import com.grarak.kerneladiutor.fragments.other.FAQFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.OverallFragment;
 import com.grarak.kerneladiutor.fragments.tools.BackupFragment;
 import com.grarak.kerneladiutor.fragments.tools.BuildpropFragment;
+import com.grarak.kerneladiutor.fragments.tools.InitdFragment;
+import com.grarak.kerneladiutor.fragments.tools.ProfileFragment;
+import com.grarak.kerneladiutor.fragments.tools.RecoveryFragment;
 import com.grarak.kerneladiutor.fragments.tools.customcontrols.CustomControlsFragment;
 import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadsFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
@@ -84,7 +90,7 @@ import java.util.LinkedHashMap;
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final static LinkedHashMap<Integer, BaseFragment> sFragments = new LinkedHashMap<>();
+    public final static LinkedHashMap<Integer, Fragment> sFragments = new LinkedHashMap<>();
     private final static HashMap<Integer, Class> sActivities = new HashMap<>();
 
     static {
@@ -137,12 +143,19 @@ public class NavigationActivity extends BaseActivity
             sFragments.put(R.string.backup, new BackupFragment());
         }
         sFragments.put(R.string.build_prop_editor, new BuildpropFragment());
+        sFragments.put(R.string.profile, new ProfileFragment());
+        sFragments.put(R.string.recovery, new RecoveryFragment());
+        sFragments.put(R.string.initd, new InitdFragment());
         sFragments.put(R.string.other, null);
+        sFragments.put(R.string.about, new AboutFragment());
+        sFragments.put(R.string.contributors, new ContributorsFragment());
+        sFragments.put(R.string.faq, new FAQFragment());
         sFragments.put(R.string.settings, null);
 
         sActivities.put(R.string.settings, SettingsActivity.class);
     }
 
+    private static NavigationActivity mActivity;
     private Handler mHandler = new Handler();
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
@@ -159,6 +172,7 @@ public class NavigationActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = getToolBar();
         setSupportActionBar(toolbar);
@@ -232,19 +246,22 @@ public class NavigationActivity extends BaseActivity
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
-        } else if (!sFragments.get(mSelection).onBackPressed()) {
-            if (mExit) {
-                mExit = false;
-                super.onBackPressed();
-            } else {
-                Utils.toast(R.string.press_back_again_exit, this);
-                mExit = true;
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mExit = false;
-                    }
-                }, 2000);
+        } else {
+            if (sFragments.get(mSelection) instanceof BaseFragment
+                    && !((BaseFragment) sFragments.get(mSelection)).onBackPressed()) {
+                if (mExit) {
+                    mExit = false;
+                    super.onBackPressed();
+                } else {
+                    Utils.toast(R.string.press_back_again_exit, this);
+                    mExit = true;
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mExit = false;
+                        }
+                    }, 2000);
+                }
             }
         }
     }
@@ -295,6 +312,12 @@ public class NavigationActivity extends BaseActivity
             return sFragments.get(res);
         }
         return fragment;
+    }
+
+    public static void restart() {
+        if (mActivity != null) {
+            mActivity.recreate();
+        }
     }
 
 }

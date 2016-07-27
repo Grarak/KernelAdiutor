@@ -28,7 +28,7 @@ import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class KSMFragment extends RecyclerViewFragment {
 
-    private HashMap<Integer, DescriptionView> mInfos = new HashMap<>();
+    private List<DescriptionView> mInfos = new ArrayList<>();
 
     @Override
     protected void init() {
@@ -127,7 +127,7 @@ public class KSMFragment extends RecyclerViewFragment {
                 info.setTitle(KSM.getInfoText(i, getActivity()));
 
                 items.add(info);
-                mInfos.put(i, info);
+                mInfos.add(info);
             }
         }
     }
@@ -137,8 +137,8 @@ public class KSMFragment extends RecyclerViewFragment {
         super.refresh();
 
         if (mInfos.size() > 0) {
-            for (int position : mInfos.keySet()) {
-                mInfos.get(position).setSummary(KSM.getInfo(position));
+            for (int i = 0; i < mInfos.size(); i++) {
+                mInfos.get(i).setSummary(KSM.getInfo(i));
             }
         }
     }

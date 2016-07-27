@@ -27,8 +27,8 @@ import android.view.ViewGroup;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.screen.Calibration;
@@ -219,12 +219,12 @@ public class ScreenFragment extends RecyclerViewFragment {
             final SeekBarView saturationIntensity = new SeekBarView();
             saturationIntensity.setTitle(getString(R.string.saturation_intensity));
             saturationIntensity.setMax(158);
-            saturationIntensity.setProgress(saturation == 128 ? 30 : saturation - 255);
+            saturationIntensity.setProgress(saturation == 128 ? 30 : saturation - 225);
             saturationIntensity.setEnabled(saturation != 128);
             saturationIntensity.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
-                    Calibration.setSaturationIntensity(position + 255, getActivity());
+                    Calibration.setSaturationIntensity(position + 225, getActivity());
                 }
 
                 @Override

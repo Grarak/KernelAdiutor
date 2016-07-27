@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/summary"

@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.utils;
 
 import android.os.Build;
+import android.util.Log;
 
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
@@ -321,8 +322,9 @@ public class Device {
 
     public static String getBoard() {
         String hardware = CPUInfo.getVendor().toLowerCase();
-        if (hardware.matches(".*msm\\d*")) {
-            return "msm" + hardware.split("msm")[1].trim();
+        if (hardware.matches(".*msm\\d.*")) {
+            String board = hardware.split("msm")[1].trim().replaceAll("[^0-9]+", "");
+            return "msm" + board;
         } else if (hardware.matches("mt\\d*.")) {
             return "mt" + hardware.split("mt")[1].trim();
         }

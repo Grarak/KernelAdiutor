@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.activities.downloads.DownloadsActivity;
+import com.grarak.kerneladiutor.activities.tools.DownloadsActivity;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.WebpageReader;
@@ -73,7 +73,7 @@ public class DownloadsFragment extends RecyclerViewFragment {
     @Override
     protected void postInit() {
         super.postInit();
-        if (mWebpageReader == null) {
+        if (mWebpageReader == null && mSupport != null) {
             showProgress();
             mWebpageReader = new WebpageReader(new WebpageReader.WebpageCallback() {
 

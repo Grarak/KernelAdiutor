@@ -27,8 +27,8 @@ import android.os.BatteryManager;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.battery.Battery;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
@@ -43,25 +43,16 @@ import java.util.List;
  */
 public class BatteryFragment extends RecyclerViewFragment {
 
-    private DescriptionFragment mLevel;
+    private DescriptionView mLevel;
     private DescriptionView mVoltage;
 
     private static int sBatteryLevel;
     private static int sBatteryVoltage;
 
     @Override
-    protected void init() {
-        super.init();
-
-        addViewPagerFragment(mLevel = DescriptionFragment.newInstance(getString(R.string.level), null));
-    }
-
-    @Override
     protected void addItems(List<RecyclerViewItem> items) {
+        levelInit(items);
         voltageInit(items);
-        if (Battery.hasCapacity(getActivity())) {
-            capacityInit(items);
-        }
         if (Battery.hasForceFastCharge()) {
             forceFastChargeInit(items);
         }
@@ -75,9 +66,20 @@ public class BatteryFragment extends RecyclerViewFragment {
     protected void postInit() {
         super.postInit();
 
+        if (Battery.hasCapacity(getActivity())) {
+            addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.capacity),
+                    Battery.getCapacity(getActivity()) + getString(R.string.mah)));
+        }
         if (itemsSize() > 2) {
             addViewPagerFragment(ApplyOnBootFragment.newInstance(ApplyOnBootFragment.BATTERY));
         }
+    }
+
+    private void levelInit(List<RecyclerViewItem> items) {
+        mLevel = new DescriptionView();
+        mLevel.setTitle(getString(R.string.level));
+
+        items.add(mLevel);
     }
 
     private void voltageInit(List<RecyclerViewItem> items) {
@@ -85,14 +87,6 @@ public class BatteryFragment extends RecyclerViewFragment {
         mVoltage.setTitle(getString(R.string.voltage));
 
         items.add(mVoltage);
-    }
-
-    private void capacityInit(List<RecyclerViewItem> items) {
-        DescriptionView capacity = new DescriptionView();
-        capacity.setTitle(getString(R.string.capacity));
-        capacity.setSummary(Battery.getCapacity(getActivity()) + getString(R.string.mah));
-
-        items.add(capacity);
     }
 
     private void forceFastChargeInit(List<RecyclerViewItem> items) {

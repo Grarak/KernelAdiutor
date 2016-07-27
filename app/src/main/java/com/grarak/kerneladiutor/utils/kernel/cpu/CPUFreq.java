@@ -43,6 +43,7 @@ import java.util.List;
  */
 public class CPUFreq {
 
+    private static final String CPU_PRESENT = "/sys/devices/system/cpu/present";
     private static final String CUR_FREQ = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_cur_freq";
     private static final String AVAILABLE_FREQS = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_available_frequencies";
     public static final String TIME_STATE = "/sys/devices/system/cpu/cpufreq/stats/cpu%d/time_in_state";
@@ -89,11 +90,11 @@ public class CPUFreq {
             }
             boolean offline = isOffline(i);
             if (offline) {
-                onlineCpu(i, true, context);
+                onlineCpu(i, true, null);
             }
             run(Control.write(value, Utils.strFormat(path, i)), Utils.strFormat(path, i), context);
             if (offline) {
-                onlineCpu(i, false, context);
+                onlineCpu(i, false, null);
             }
         }
     }
@@ -271,14 +272,14 @@ public class CPUFreq {
         if (!sFreqs.containsKey(cpu)) {
             if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))
                     || Utils.existFile(Utils.strFormat(TIME_STATE, cpu))
-                    || Utils.existFile(Utils.strFormat(TIME_STATE_2, 0))) {
+                    || Utils.existFile(Utils.strFormat(TIME_STATE_2, cpu))) {
                 String file;
                 if (Utils.existFile(Utils.strFormat(OPP_TABLE, cpu))) {
                     file = Utils.strFormat(OPP_TABLE, cpu);
                 } else if (Utils.existFile(Utils.strFormat(TIME_STATE, cpu))) {
                     file = Utils.strFormat(TIME_STATE, cpu);
                 } else {
-                    file = Utils.strFormat(TIME_STATE_2, 0);
+                    file = Utils.strFormat(TIME_STATE_2, cpu);
                 }
                 String[] valueArray = Utils.readFile(file).trim().split("\\r?\\n");
                 List<Integer> freqs = new ArrayList<>();
@@ -290,7 +291,7 @@ public class CPUFreq {
                     freqs.add((int) freqInt);
                 }
                 sFreqs.put(cpu, freqs);
-            } else if (Utils.existFile(Utils.strFormat(AVAILABLE_FREQS, 0))) {
+            } else if (Utils.existFile(Utils.strFormat(AVAILABLE_FREQS, cpu))) {
                 int readcpu = cpu;
                 boolean offline = isOffline(cpu);
                 if (offline) {
@@ -426,7 +427,17 @@ public class CPUFreq {
     }
 
     public static int getCpuCount() {
-        return sCpuCount == 0 ? sCpuCount = Runtime.getRuntime().availableProcessors() : sCpuCount;
+        if (sCpuCount == 0 && Utils.existFile(CPU_PRESENT)) {
+            try {
+                String output = Utils.readFile(CPU_PRESENT);
+                sCpuCount = output.equals("0") ? 1 : Integer.parseInt(output.split("-")[1]) + 1;
+            } catch (Exception ignored) {
+            }
+        }
+        if (sCpuCount == 0) {
+            sCpuCount = Runtime.getRuntime().availableProcessors();
+        }
+        return sCpuCount;
     }
 
     public static float[] getCpuUsage() {

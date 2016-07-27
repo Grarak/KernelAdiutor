@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview.downloads;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,8 +28,6 @@ import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
-
-import java.util.regex.Pattern;
 
 /**
  * Created by willi on 06.07.16.
@@ -55,14 +54,8 @@ public class KernelItemView extends RecyclerViewItem {
         TextView summary = (TextView) view.findViewById(R.id.summary);
 
         Utils.loadImagefromUrl(mKernelContent.getLogo(), icon, 300, 300);
-        String titletext = mKernelContent.getName();
 
-        Pattern colorPattern = Pattern.compile(".*<font color=\"#ffffff\">.*?</font>.*", Pattern.CASE_INSENSITIVE);
-        if (colorPattern.matcher(titletext).matches()) {
-            titletext = titletext.replaceAll("(?i)color=\"#ffffff\">", "color=\"#000000\">");
-        }
-
-        title.setText(Utils.htmlFrom(titletext));
+        title.setText(Utils.htmlFrom(mKernelContent.getName()).toString());
         summary.setText(Utils.htmlFrom(mKernelContent.getShortDescription()));
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +66,10 @@ public class KernelItemView extends RecyclerViewItem {
                 }
             }
         });
+
+        if (Utils.DARK_THEME) {
+            title.setTextColor(ContextCompat.getColor(view.getContext(), R.color.white));
+        }
     }
 
 }

@@ -19,8 +19,10 @@
  */
 package com.grarak.kerneladiutor.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -56,6 +58,8 @@ public class EditTextFragment extends BaseFragment {
 
         mTitle = (TextView) rootView.findViewById(R.id.title);
         mEditText = (AppCompatEditText) rootView.findViewById(R.id.edittext);
+        mEditText.getBackground().mutate().setColorFilter(ContextCompat.getColor(getActivity(),
+                R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
 
         refresh();
 

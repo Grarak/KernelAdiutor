@@ -66,7 +66,7 @@ public class EditorActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, Menu.FIRST, Menu.FIRST, getString(R.string.save)).setIcon(R.drawable.ic_save)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return super.onCreateOptionsMenu(menu);
     }
 

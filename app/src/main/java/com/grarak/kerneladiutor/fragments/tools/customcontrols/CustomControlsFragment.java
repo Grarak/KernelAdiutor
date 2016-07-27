@@ -34,12 +34,11 @@ import android.view.MenuItem;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.FilePickerActivity;
 import com.grarak.kerneladiutor.activities.tools.CustomControlsActivity;
-import com.grarak.kerneladiutor.database.customcontrols.Controls;
-import com.grarak.kerneladiutor.database.customcontrols.ExportControl;
-import com.grarak.kerneladiutor.database.customcontrols.ImportControl;
+import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
+import com.grarak.kerneladiutor.database.tools.customcontrols.ExportControl;
+import com.grarak.kerneladiutor.database.tools.customcontrols.ImportControl;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.tools.customcontrols.CustomControlException;
@@ -98,7 +97,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                         break;
                     case 1:
                         if (Utils.DONATED) {
-                            importItem();
+                            Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                            intent.putExtra(FilePickerActivity.PATH_INTENT, "/");
+                            intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
+                            startActivityForResult(intent, 1);
                         } else {
                             mDonateDialog = ViewUtils.dialogDonate(getActivity())
                                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -119,7 +121,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
             }
         });
         if (!getActivity().isFinishing()) {
-            mOptionsDialog.show();
+            try {
+                mOptionsDialog.show();
+            } catch (NullPointerException ignored) {
+            }
         }
     }
 
@@ -232,7 +237,8 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                     switchView.addOnSwitchListener(new SwitchView.OnSwitchListener() {
                         @Override
                         public void onChanged(SwitchView switchView, boolean isChecked) {
-                            Values.run(item.getApply(), item.getUniqueId(), getActivity(), isChecked ? "1" : "0");
+                            Values.run(item.getApply(), item, isChecked ? "1" : "0");
+                            mControlsProvider.commit();
                         }
                     });
 
@@ -250,7 +256,8 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                     seekBarView.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                         @Override
                         public void onStop(SeekBarView seekBarView, int position, String value) {
-                            Values.run(item.getApply(), item.getUniqueId(), getActivity(), String.valueOf(position));
+                            Values.run(item.getApply(), item, String.valueOf(position));
+                            mControlsProvider.commit();
                         }
 
                         @Override
@@ -273,8 +280,9 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                     genericSelectView.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
                         @Override
                         public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
-                            Values.run(item.getApply(), item.getUniqueId(), getActivity(), value);
+                            Values.run(item.getApply(), item, value);
                             genericSelectView.setValue(value);
+                            mControlsProvider.commit();
                         }
                     });
 
@@ -288,20 +296,19 @@ public class CustomControlsFragment extends RecyclerViewFragment {
 
             items.add(cardView);
         }
+        mControlsProvider.commit();
     }
 
     private CardView getCard(final Controls.ControlItem controlItem) {
         CardView cardView = new CardView(getActivity());
         cardView.setOnMenuListener(new CardView.OnMenuListener() {
 
-            private MenuItem mOnBoot;
-
             @Override
             public void onMenuReady(CardView cardView, PopupMenu popupMenu) {
                 Menu menu = popupMenu.getMenu();
                 menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));
-                mOnBoot = menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
-                mOnBoot.setChecked(Prefs.getBoolean(controlItem.getUniqueId() + "_onboot", false, getActivity()));
+                final MenuItem onBoot = menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
+                onBoot.setChecked(controlItem.isOnBootEnabled());
                 menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.export));
                 menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.delete));
 
@@ -313,12 +320,13 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                                 edit(controlItem);
                                 break;
                             case 1:
-                                mOnBoot.setChecked(!mOnBoot.isChecked());
-                                Prefs.saveBoolean(controlItem.getUniqueId() + "_onboot", mOnBoot.isChecked(),
-                                        getActivity());
+                                onBoot.setChecked(!onBoot.isChecked());
+                                controlItem.enableOnBoot(onBoot.isChecked());
+                                mControlsProvider.commit();
                                 break;
                             case 2:
-                                export(controlItem);
+                                mExportItem = controlItem;
+                                requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                                 break;
                             case 3:
                                 mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
@@ -355,9 +363,6 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                 mControlsProvider.delete(i);
             }
         }
-        mControlsProvider.commit();
-        Prefs.remove(uniqueId + "_onboot", getActivity());
-        Prefs.remove(uniqueId + "_onboot_args", getActivity());
         reload();
     }
 
@@ -395,11 +400,6 @@ public class CustomControlsFragment extends RecyclerViewFragment {
         startActivityForResult(i, 0);
     }
 
-    private void export(Controls.ControlItem item) {
-        mExportItem = item;
-        requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    }
-
     private void showExportDialog() {
         ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
             @Override
@@ -426,13 +426,6 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                         mExportItem = null;
                     }
                 }).show();
-    }
-
-    private void importItem() {
-        Intent intent = new Intent(getActivity(), FilePickerActivity.class);
-        intent.putExtra(FilePickerActivity.PATH_INTENT, "/");
-        intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
-        startActivityForResult(intent, 1);
     }
 
     private void importing(final String path) {
@@ -501,7 +494,6 @@ public class CustomControlsFragment extends RecyclerViewFragment {
             result.put("uniqueId", Values.getUniqueId(items));
         }
         mControlsProvider.putItem(result);
-        mControlsProvider.commit();
         reload();
     }
 
@@ -523,6 +515,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mLoadingThread != null) {
+            mLoadingThread.cancel(true);
+            mLoadingThread = null;
+        }
         mLoaded = false;
     }
 }

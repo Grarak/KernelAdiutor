@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Kernel Adiutor</string>
 
     <string name="checking_info">Checking info…</string>
@@ -36,7 +36,6 @@
     <string name="save">Save</string>
 
     <!-- File Picker -->
-    <string name="loading">Loading</string>
     <string name="select_question">Select %s?</string>
     <string name="wrong_extension">Please select a file with %s extension.</string>
 
@@ -85,13 +84,18 @@
     <string name="downloads">Downloads</string>
     <string name="backup">Backup</string>
     <string name="build_prop_editor">Build prop Editor</string>
+    <string name="profile">Profile</string>
+    <string name="recovery">Recovery</string>
+    <string name="initd">Init.d</string>
+    <string name="about">About</string>
+    <string name="contributors">Contributors</string>
+    <string name="faq">FAQ</string>
     <string name="settings">Settings</string>
 
     <!-- Overall -->
     <string name="offline">Offline</string>
     <string name="core">Core %d</string>
     <string name="temperature">Temperature</string>
-    <string name="more">More</string>
     <string name="frequencies">Frequencies</string>
     <string name="refresh">Refresh</string>
     <string name="reset">Reset</string>
@@ -182,8 +186,7 @@
     <string name="mpdecision_summary">Qualcomm\'s hotplugging solution. You might get problems with changing frequencies when this is enabled.</string>
     <string name="intelliplug">IntelliPlug</string>
     <string name="intelliplug_summary">An in-kernel replacement for Qualcomm\'s MPDecision. Developed by faux123.</string>
-    <string name="profile">Profile</string>
-    <string name="profile_summary">The number in the parentheses indicates the amount of cores online at any time.</string>
+    <string name="cpu_hotplug_profile_summary">The number in the parentheses indicates the amount of cores online at any time.</string>
     <string name="insanity">InSaNiTy</string>
     <string name="balanced">Balanced</string>
     <string name="performance">Performance</string>
@@ -596,7 +599,7 @@
     <string name="example">Examples</string>
     <string name="custom_controls_example_summary">Need example? Click &lt;a href="https://github.com/Grarak/KernelAdiutor/wiki/Custom-Controls">here&lt;a>.</string>
     <string name="create">Create</string>
-    <string name="control_import">Import</string>
+    <string name="import_item">Import</string>
     <string name="control_switch">Switch</string>
     <string name="control_seekbar">Seekbar</string>
     <string name="title">Title</string>
@@ -630,7 +633,6 @@
 
     <!-- Downloads -->
     <string name="downloads_error">Couldn\'t find any supported kernels! Please check your internet access.</string>
-    <string name="about">About</string>
     <string name="download_error">Failed to download %s.</string>
     <string name="downloading_counting">%1$s/%2$s</string>
     <string name="check_md5">Checking md5</string>
@@ -656,7 +658,72 @@
     <string name="value">Value</string>
     <string name="key_empty">Key can\'t be empty!</string>
 
+    <!-- Profile -->
+    <string name="apply_on_boot_not_available">In profiles mode your changes won\'t have an impact on apply on boot.</string>
+    <string name="profile_warning">Everything you change here is gonna be saved to your profile. But attention! Your settings will also get applied, but won\'t get saved to apply on boot.</string>
+    <string name="no_changes">No changes made!</string>
+    <string name="apply_question">Apply %s?</string>
+    <string name="details">Details</string>
+    <string name="wipe_data">Wipe Data</string>
+    <string name="wipe_cache">Wipe Cache</string>
+    <string name="flash_zip">Flash Zip</string>
+    <string name="add_action_first">You have to add actions first!</string>
+    <string name="flash_now_confirm">Do you want to run your actions? Your device will reboot into recovery and the actions will run in the order as you added them.</string>
+    <string name="press_again_to_apply">Press %s again to apply.</string>
+    <string name="applied">Applied</string>
+    <string name="profile_tasker">Profile Tasker</string>
+    <string name="profile_tasker_summary">If you want to apply a profile at a specific event, such as launching an application, you have to use Tasker.</string>
+    <string name="profile_tasker_toast">Show toast when tasker applies a profile</string>
+    <string name="profile_tile">Profile Tile</string>
+    <string name="profile_tile_summary">Show a tile which allows you to select a profile.</string>
+    <string name="profile_select">Select Profile</string>
+    <string name="applying_profile">Applying %s!</string>
+    <string name="no_profiles">No profile found! You have to create them first.</string>
+
+    <!-- Init.d -->
+    <string name="emulate_initd">Emulate Init.d</string>
+    <string name="emulate_initd_summary">If your device doesn\'t support Init.d by default, you can enable this to emulate its behaviour.</string>
+    <string name="exceute_question">Execute %s?</string>
+    <string name="executing">Executing</string>
+    <string name="result">Result</string>
+
+    <!-- About -->
+    <string name="about_me">Hi, I\'m Willi Ye aka Grarak, a 19 year old student living in Vienna. I\'ve been developing on Android for quite a long time. Beside Kernel Adiutor I\'m also maintaining CyanogenMod for few devices and working on ParanoidAndroid. So please understand if I don\'t find the time to update this application.</string>
+    <string name="libraries_used">Libraries used</string>
+
+    <!-- Contributors -->
+    <string name="commits">%d commits</string>
+    <string name="no_internet">Please check your internet connection!</string>
+
+    <!-- FAQ -->
+    <string name="misspelled">Why did you misspell \"Adiutor\"?</string>
+    <string name="misspelled_summary">Adiutor is Latin and means helper.</string>
+    <string name="have_to_donate">Do I have to donate in order to use those premium features?</string>
+    <string name="have_to_donate_summary">No, this application is open source. You can easily build it yourself. Donation features are enabled by default once you build a debugging apk, so no need to change any line of code.</string>
+    <string name="cpu_freq_not_sticking">Why doesn\'t my determined CPU freq stick?</string>
+    <string name="cpu_freq_not_sticking_summary">This could be due to many reasons. Many kernels nowadays have their own hotplugging system which controls the CPU frequency and CyanogenMod has their own CPU Boost implementation which regulate the frequency. I would suggest you don\'t touch the CPU frequencies and let the kernel do its job. This also counts for other functions! If they don\'t stick, it\'s because the kernel/system doesn\'t want to let you change it.</string>
+    <string name="feature_not_appearing">Why don\'t features x and y show up?</string>
+    <string name="feature_not_appearing_summary">Only features which are supported by your device are shown!</string>
+    <string name="feature_function">What does feature x do?</string>
+    <string name="feature_function_summary">If you don\'t know what this control does, then simply don\'t touch it. Please do a proper research before playing with your expensive hardware.</string>
+    <string name="add_new_features">Could you add feature x and y?</string>
+    <string name="add_new_features_summary">That\'s hard to say. I try to add all features, but it\'s hard to make this app universal for all devices.</string>
+
     <!-- Settings -->
+    <string name="dark_theme">Dark theme</string>
     <string name="fahrenheit_title">Fahrenheit</string>
     <string name="fahrenheit_summary">Use fahrenheit to measure temperature.</string>
+    <string name="force_english">Force displaying english language</string>
+    <string name="ten_sec">10 seconds</string>
+    <string name="twenty_sec">20 seconds</string>
+    <string name="fifty_sec">50 seconds</string>
+    <string name="apply_on_boot_test_summary">Test apply on boot. This includes all kind of things which are getting applied during booting, such as custom controls, profiles, init.d, etc.</string>
+    <string name="nothing_apply">Nothing found to apply!</string>
+    <string name="debugging">Debugging</string>
+    <string name="logcat">Logcat</string>
+    <string name="logcat_summary">Copy logcat to /sdcard/logcat.txt</string>
+    <string name="last_kmsg">Last Kernel Message</string>
+    <string name="last_kmsg_summary">Copy /proc/last_kmsg to /sdcard/last_kmsg.txt</string>
+    <string name="driver_message">Driver Message</string>
+    <string name="driver_message_summary">Copy driver message (dmesg) to /sdcard/dmesg.txt</string>
 </resources>

@@ -37,8 +37,8 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
-import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.utils.tools.Recovery;
+import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
 import java.io.File;
@@ -103,9 +103,9 @@ public class DownloadKernelView extends RecyclerViewItem {
         title.setText(titleText);
         title.setMovementMethod(LinkMovementMethod.getInstance());
 
-        CharSequence summaryText = Utils.htmlFrom(mDownload.getDescription());
-        if (summaryText != null) {
-            summary.setText(summaryText);
+        String description = mDownload.getDescription();
+        if (description != null) {
+            summary.setText(Utils.htmlFrom(description));
             summary.setMovementMethod(LinkMovementMethod.getInstance());
         } else {
             summary.setVisibility(View.GONE);

@@ -171,7 +171,7 @@ public class CPUHotplug extends RecyclerViewFragment {
         if (IntelliPlug.hasIntelliPlugProfile()) {
             SelectView profile = new SelectView();
             profile.setTitle(getString(R.string.profile));
-            profile.setSummary(getString(R.string.profile_summary));
+            profile.setSummary(getString(R.string.cpu_hotplug_profile_summary));
             profile.setItems(IntelliPlug.getIntelliPlugProfileMenu(getActivity()));
             profile.setItem(IntelliPlug.getIntelliPlugProfile());
             profile.setOnItemSelected(new SelectView.OnItemSelected() {

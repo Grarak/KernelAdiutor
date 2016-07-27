@@ -163,7 +163,7 @@ public class Calibration {
     }
 
     public static void enableGrayscaleMode(boolean enable, Context context) {
-        run(Control.write(enable ? "128" : "255", KCAL_CTRL_SAT), KCAL_CTRL_SAT, context);
+        setSaturationIntensity(enable ? 128 : 255, context);
     }
 
     public static void setSaturationIntensity(int value, Context context) {

@@ -87,7 +87,7 @@
         android:layout_marginTop="50dp"
         android:visibility="gone"
         app:cardCornerRadius="5dp"
-        app:cardElevation="4dp"
+        app:cardElevation="16dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -113,8 +113,7 @@
             <FrameLayout
                 android:id="@+id/foreground_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white" />
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

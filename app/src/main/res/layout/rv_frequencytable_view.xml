@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-medium"
-            android:text="test"
             android:textColor="@color/black"
             android:textSize="13sp" />
 
@@ -30,7 +29,6 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-thin"
             android:gravity="end"
-            android:text="test1"
             android:textSize="12sp" />
 
         <TextView
@@ -40,7 +38,6 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-thin"
             android:gravity="end"
-            android:text="test2"
             android:textSize="12sp" />
 
     </LinearLayout>
