@@ -81,7 +81,10 @@ public class SelectView extends ValueView {
         if (getTitle() != null) {
             dialog.setTitle(getTitle());
         }
-        dialog.show();
+        try {
+            dialog.show();
+        } catch (NullPointerException ignored) {
+        }
     }
 
     @Override

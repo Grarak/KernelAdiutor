@@ -106,7 +106,7 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
             public void run() {
                 mCallback.onAuthenticated();
             }
-        }, 500);
+        }, 100);
     }
 
     private void showError() {

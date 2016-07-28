@@ -92,6 +92,8 @@ public class SettingsActivity extends BaseActivity {
         private static final String KEY_DELETE_PASSWORD = "delete_password";
         private static final String KEY_FINGERPRINT = "fingerprint";
 
+        private Preference mFingerprint;
+
         private static String mOldPassword;
         private static String mDeletePassword;
 
@@ -135,8 +137,8 @@ public class SettingsActivity extends BaseActivity {
                 ((PreferenceCategory) findPreference(KEY_SECURITY_CATEGORY)).removePreference(
                         findPreference(KEY_FINGERPRINT));
             } else {
-                findPreference(KEY_FINGERPRINT).setEnabled(!Prefs.getString("password", "",
-                        getActivity()).isEmpty());
+                mFingerprint = findPreference(KEY_FINGERPRINT);
+                mFingerprint.setEnabled(!Prefs.getString("password", "", getActivity()).isEmpty());
             }
         }
 
@@ -288,7 +290,9 @@ public class SettingsActivity extends BaseActivity {
 
                             Prefs.saveString("password", Utils.encodeString(newPassword.getText()
                                     .toString()), getActivity());
-                            findPreference(KEY_FINGERPRINT).setEnabled(true);
+                            if (mFingerprint != null) {
+                                mFingerprint.setEnabled(true);
+                            }
                         }
                     }).setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
@@ -327,7 +331,9 @@ public class SettingsActivity extends BaseActivity {
                             }
 
                             Prefs.saveString("password", "", getActivity());
-                            findPreference(KEY_FINGERPRINT).setEnabled(false);
+                            if (mFingerprint != null) {
+                                mFingerprint.setEnabled(false);
+                            }
                         }
                     }).setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override

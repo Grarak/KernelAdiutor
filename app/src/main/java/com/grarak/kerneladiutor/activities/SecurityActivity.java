@@ -30,6 +30,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.FingerprintUiHelper;
@@ -136,8 +138,12 @@ public class SecurityActivity extends BaseActivity {
         }
 
         mCryptoObject = new FingerprintManagerCompat.CryptoObject(mCipher);
-        final SwirlView swirlView = (SwirlView) findViewById(R.id.fingerprint);
-        swirlView.setVisibility(View.VISIBLE);
+        FrameLayout fingerprintParent = (FrameLayout) findViewById(R.id.fingerprint_parent);
+        final SwirlView swirlView = new SwirlView(this);
+        swirlView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        fingerprintParent.addView(swirlView);
+        fingerprintParent.setVisibility(View.VISIBLE);
 
         mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(
                 mFingerprintManagerCompat).build(swirlView,

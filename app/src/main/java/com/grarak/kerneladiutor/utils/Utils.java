@@ -243,7 +243,7 @@ public class Utils {
             if (file.isDirectory()) {
                 RootFile rootFile = findExtension(file, extension);
                 if (rootFile != null) return rootFile;
-            } else if (file.getName().endsWith(extension)) {
+            } else if (file.getName() != null && file.getName().endsWith(extension)) {
                 return file;
             }
         }
