@@ -95,11 +95,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void onPermissionGranted(int request) {
-
     }
 
     public void onPermissionDenied(int request) {
-
     }
 
 }

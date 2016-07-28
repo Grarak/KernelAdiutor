@@ -33,6 +33,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
 import android.text.Html;
+import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -55,6 +56,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -74,6 +76,24 @@ public class Utils {
     public static boolean DARK_THEME;
 
     private static final Set<CustomTarget> mProtectedFromGarbageCollectorTargets = new HashSet<>();
+
+    public static String decodeString(String text) {
+        try {
+            return new String(Base64.decode(text, Base64.DEFAULT), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String encodeString(String text) {
+        try {
+            return Base64.encodeToString(text.getBytes("UTF-8"), Base64.DEFAULT);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static void setLocale(String lang, Context context) {
         Locale locale = new Locale(lang);

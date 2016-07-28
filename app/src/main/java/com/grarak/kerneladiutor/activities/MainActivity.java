@@ -65,10 +65,10 @@ import java.net.URL;
  */
 public class MainActivity extends BaseActivity {
 
-    private boolean mCheck;
     private TextView mRootAccess;
     private TextView mBusybox;
     private TextView mCollectInfo;
+    private boolean mExecuting;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,21 +84,55 @@ public class MainActivity extends BaseActivity {
             splashBackground.setVisibility(View.GONE);
         }
 
-        if (savedInstanceState != null) {
-            mCheck = savedInstanceState.getBoolean("check");
+        if (savedInstanceState == null) {
+            String password;
+            if (!(password = Prefs.getString("password", "", this)).isEmpty()) {
+                Intent intent = new Intent(this, SecurityActivity.class);
+                intent.putExtra(SecurityActivity.PASSWORD_INTENT, password);
+                startActivityForResult(intent, 2);
+            } else {
+                execute();
+            }
+        } else {
+            mExecuting = savedInstanceState.getBoolean("executing");
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!mCheck) new CheckingTask().execute();
+    private void execute() {
+        if (!mExecuting) {
+            new CheckingTask().execute();
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("check", mCheck);
+        outState.putBoolean("executing", mExecuting);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            launch(data.getIntExtra("result", -1));
+        } else if (requestCode == 1) {
+            launch(0);
+        } else if (requestCode == 2) {
+            if (resultCode == 1) {
+                execute();
+            } else {
+                finish();
+            }
+        }
+    }
+
+    private void launch(int code) {
+        Intent intent = new Intent(this, NavigationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("result", code);
+        Prefs.saveInt("license", code, this);
+        startActivity(intent);
+        finish();
     }
 
     private class CheckingTask extends AsyncTask<Void, Integer, Void> {
@@ -109,7 +143,7 @@ public class MainActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mCheck = true;
+            mExecuting = true;
         }
 
         @Override
@@ -183,7 +217,6 @@ public class MainActivity extends BaseActivity {
                                 "https://www.google.com/search?site=&source=hp&q=root+"
                                         + Device.getVendor() + "+" + Device.getModel());
                 startActivity(intent);
-                mCheck = false;
                 finish();
                 return;
             }
@@ -234,7 +267,6 @@ public class MainActivity extends BaseActivity {
                 @Override
                 protected void onPostExecute(Boolean aBoolean) {
                     super.onPostExecute(aBoolean);
-                    mCheck = false;
                     if (aBoolean) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.setComponent(new ComponentName("com.grarak.kerneladiutordonate",
@@ -243,29 +275,11 @@ public class MainActivity extends BaseActivity {
                     } else {
                         launch(mPatched ? 3 : -1);
                     }
+                    mExecuting = false;
                 }
             }.execute();
         }
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            launch(data.getIntExtra("result", -1));
-        } else if (requestCode == 1) {
-            launch(0);
-        }
-    }
-
-    private void launch(int code) {
-        Intent intent = new Intent(this, NavigationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("result", code);
-        Prefs.saveInt("license", code, this);
-        startActivity(intent);
-        finish();
     }
 
 }

@@ -21,19 +21,29 @@ package com.grarak.kerneladiutor.activities;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
+import android.text.InputType;
+import android.view.Gravity;
+import android.widget.LinearLayout;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.services.boot.Service;
+import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
@@ -73,14 +83,29 @@ public class SettingsActivity extends BaseActivity {
         private static final String KEY_FORCE_ENGLISH = "forceenglish";
         private static final String KEY_DARK_THEME = "darktheme";
         private static final String KEY_APPLY_ON_BOOT_TEST = "applyonboottest";
+        private static final String KEY_DEBUGGING_CATEGORY = "debugging_category";
         private static final String KEY_LOGCAT = "logcat";
         private static final String KEY_LAST_KMSG = "lastkmsg";
         private static final String KEY_DMESG = "dmesg";
+        private static final String KEY_SECURITY_CATEGORY = "security_category";
+        private static final String KEY_SET_PASSWORD = "set_password";
+        private static final String KEY_DELETE_PASSWORD = "delete_password";
+        private static final String KEY_FINGERPRINT = "fingerprint";
+
+        private static String mOldPassword;
+        private static String mDeletePassword;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
+
+            if (mOldPassword != null) {
+                editPasswordDialog(mOldPassword);
+            }
+            if (mDeletePassword != null) {
+                deletePasswordDialog(mDeletePassword);
+            }
 
             findPreference(KEY_DARK_THEME).setOnPreferenceChangeListener(this);
 
@@ -97,29 +122,42 @@ public class SettingsActivity extends BaseActivity {
             if (Utils.existFile("/proc/last_kmsg") || Utils.existFile("/sys/fs/pstore/console-ramoops")) {
                 findPreference(KEY_LAST_KMSG).setOnPreferenceClickListener(this);
             } else {
-                getPreferenceScreen().removePreference(findPreference(KEY_LAST_KMSG));
+                ((PreferenceCategory) findPreference(KEY_DEBUGGING_CATEGORY)).removePreference(
+                        findPreference(KEY_LAST_KMSG));
             }
 
             findPreference(KEY_DMESG).setOnPreferenceClickListener(this);
+            findPreference(KEY_SET_PASSWORD).setOnPreferenceClickListener(this);
+            findPreference(KEY_DELETE_PASSWORD).setOnPreferenceClickListener(this);
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+                    || !FingerprintManagerCompat.from(getActivity()).isHardwareDetected()) {
+                ((PreferenceCategory) findPreference(KEY_SECURITY_CATEGORY)).removePreference(
+                        findPreference(KEY_FINGERPRINT));
+            } else {
+                findPreference(KEY_FINGERPRINT).setEnabled(!Prefs.getString("password", "",
+                        getActivity()).isEmpty());
+            }
         }
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
             String key = preference.getKey();
-            if (key.equals(KEY_DARK_THEME)) {
-                getActivity().finish();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                return true;
-            } else if (key.equals(KEY_FORCE_ENGLISH)) {
-                boolean checked = (boolean) o;
-                if (!checked) {
-                    Utils.setLocale(Resources.getSystem().getConfiguration().locale.getLanguage(), getActivity());
-                }
-                NavigationActivity.restart();
-                getActivity().recreate();
-                return true;
+            switch (key) {
+                case KEY_DARK_THEME:
+                    getActivity().finish();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    return true;
+                case KEY_FORCE_ENGLISH:
+                    boolean checked = (boolean) o;
+                    if (!checked) {
+                        Utils.setLocale(Resources.getSystem().getConfiguration().locale.getLanguage(), getActivity());
+                    }
+                    NavigationActivity.restart();
+                    getActivity().recreate();
+                    return true;
             }
             return false;
         }
@@ -154,6 +192,12 @@ public class SettingsActivity extends BaseActivity {
                 case KEY_DMESG:
                     new Execute().execute("dmesg > /sdcard/dmesg.txt");
                     return true;
+                case KEY_SET_PASSWORD:
+                    editPasswordDialog(Prefs.getString("password", "", getActivity()));
+                    return true;
+                case KEY_DELETE_PASSWORD:
+                    deletePasswordDialog(Prefs.getString("password", "", getActivity()));
+                    return true;
             }
             return false;
         }
@@ -181,6 +225,116 @@ public class SettingsActivity extends BaseActivity {
                 super.onPostExecute(aVoid);
                 mProgressDialog.dismiss();
             }
+        }
+
+        private void editPasswordDialog(final String oldPass) {
+            mOldPassword = oldPass;
+
+            LinearLayout linearLayout = new LinearLayout(getActivity());
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setGravity(Gravity.CENTER);
+            int padding = Math.round(getResources().getDimension(R.dimen.dialog_edittext_padding));
+            linearLayout.setPadding(padding, padding, padding, padding);
+
+            final AppCompatEditText oldPassword = new AppCompatEditText(getActivity());
+            if (!oldPass.isEmpty()) {
+                oldPassword.setInputType(InputType.TYPE_CLASS_TEXT
+                        | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                oldPassword.setHint(getString(R.string.old_password));
+                linearLayout.addView(oldPassword);
+            }
+
+            final AppCompatEditText newPassword = new AppCompatEditText(getActivity());
+            newPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            newPassword.setHint(getString(R.string.new_password));
+            linearLayout.addView(newPassword);
+
+            final AppCompatEditText confirmNewPassword = new AppCompatEditText(getActivity());
+            confirmNewPassword.setInputType(InputType.TYPE_CLASS_TEXT
+                    | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            confirmNewPassword.setHint(getString(R.string.confirm_new_password));
+            linearLayout.addView(confirmNewPassword);
+
+            new AlertDialog.Builder(getActivity()).setView(linearLayout)
+                    .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    })
+                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (!oldPass.isEmpty() && !oldPassword.getText().toString().equals(Utils
+                                    .decodeString(oldPass))) {
+                                Utils.toast(getString(R.string.old_password_wrong), getActivity());
+                                return;
+                            }
+
+                            if (newPassword.getText().toString().isEmpty()) {
+                                Utils.toast(getString(R.string.password_empty), getActivity());
+                                return;
+                            }
+
+                            if (!newPassword.getText().toString().equals(confirmNewPassword.getText()
+                                    .toString())) {
+                                Utils.toast(getString(R.string.password_not_match), getActivity());
+                                return;
+                            }
+
+                            if (newPassword.getText().toString().length() > 32) {
+                                Utils.toast(getString(R.string.password_too_long), getActivity());
+                                return;
+                            }
+
+                            Prefs.saveString("password", Utils.encodeString(newPassword.getText()
+                                    .toString()), getActivity());
+                            findPreference(KEY_FINGERPRINT).setEnabled(true);
+                        }
+                    }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    mOldPassword = null;
+                }
+            }).show();
+        }
+
+        private void deletePasswordDialog(final String password) {
+            if (password.isEmpty()) {
+                Utils.toast(getString(R.string.set_password_first), getActivity());
+                return;
+            }
+
+            mDeletePassword = password;
+
+            LinearLayout linearLayout = new LinearLayout(getActivity());
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setGravity(Gravity.CENTER);
+            int padding = Math.round(getResources().getDimension(R.dimen.dialog_edittext_padding));
+            linearLayout.setPadding(padding, padding, padding, padding);
+
+            final AppCompatEditText mPassword = new AppCompatEditText(getActivity());
+            mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            mPassword.setHint(getString(R.string.password));
+            linearLayout.addView(mPassword);
+
+            new AlertDialog.Builder(getActivity()).setView(linearLayout)
+                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (!mPassword.getText().toString().equals(Utils.decodeString(password))) {
+                                Utils.toast(getString(R.string.password_wrong), getActivity());
+                                return;
+                            }
+
+                            Prefs.saveString("password", "", getActivity());
+                            findPreference(KEY_FINGERPRINT).setEnabled(false);
+                        }
+                    }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    mDeletePassword = null;
+                }
+            }).show();
         }
     }
 

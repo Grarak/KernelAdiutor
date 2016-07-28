@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="swirl_ridgeColor">?android:attr/textColorSecondary</item>
+        <item name="swirl_errorColor">@color/colorAccent</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat">
@@ -13,6 +15,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="swirl_ridgeColor">?android:attr/textColorSecondary</item>
+        <item name="swirl_errorColor">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

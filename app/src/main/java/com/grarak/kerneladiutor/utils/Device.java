@@ -20,7 +20,6 @@
 package com.grarak.kerneladiutor.utils;
 
 import android.os.Build;
-import android.util.Log;
 
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 

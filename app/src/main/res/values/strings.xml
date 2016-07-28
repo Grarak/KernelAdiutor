@@ -8,6 +8,10 @@
     <string name="no_root">No root</string>
     <string name="no_busybox">No busybox</string>
 
+    <!-- Security -->
+    <string name="password">Password</string>
+    <string name="password_wrong">Password is wrong</string>
+
     <string name="select_picture">Select Picture</string>
     <string name="no_picture">No Picture</string>
     <string name="went_wrong">Something went wrong!</string>
@@ -31,6 +35,7 @@
 
     <!-- Permissions Denied -->
     <string name="permission_denied_write_storage">Permission denied for writing to storage!</string>
+    <string name="permission_denied_fingerprint">Permission denied for reading fingerprints!</string>
 
     <!-- Editor -->
     <string name="save">Save</string>
@@ -725,4 +730,17 @@
     <string name="last_kmsg_summary">Copy /proc/last_kmsg to /sdcard/last_kmsg.txt</string>
     <string name="driver_message">Driver Message</string>
     <string name="driver_message_summary">Copy driver message (dmesg) to /sdcard/dmesg.txt</string>
+    <string name="security">Security</string>
+    <string name="set_password">Set Password</string>
+    <string name="set_password_summary">You can protect Kernel Adiutor by setting up a password. Every time you open this application, you have to enter it. If you forget it, simply wipe the data of this application in settings of your device. Don\'t worry I won\'t share your password.</string>
+    <string name="delete_password">Delete Password</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="old_password_wrong">Old password is wrong</string>
+    <string name="password_empty">Password is empty</string>
+    <string name="password_not_match">New password doesn\'t match confirmation</string>
+    <string name="password_too_long">Password is too long (max. 32 charactars)</string>
+    <string name="set_password_first">Set a password first</string>
+    <string name="fingerprint_summary">Use fingerprint to pass security check. This will work as long you have fingerprints registered.</string>
 </resources>

@@ -19,10 +19,13 @@
  */
 package com.grarak.kerneladiutor.activities;
 
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -33,6 +36,9 @@ import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by willi on 14.04.16.
  */
@@ -40,9 +46,9 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         super.setTheme((Utils.DARK_THEME = Prefs.getBoolean("darktheme", false, this))
                 ? R.style.AppThemeDark_NoActionBar : R.style.AppTheme_NoActionBar);
+        super.onCreate(savedInstanceState);
         if (Prefs.getBoolean("forceenglish", false, this)) {
             Utils.setLocale("en_US", this);
         }
