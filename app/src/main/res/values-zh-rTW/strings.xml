@@ -53,8 +53,8 @@
   <string name="tools">工具</string>
   <string name="other">其他</string>
   <!-- Menus -->
-  <string name="overall">概觀</string>
   <string name="device">裝置</string>
+  <string name="overall">概觀</string>
   <string name="inputs">輸入</string>
   <string name="cpu">CPU</string>
   <string name="cpu_voltage">CPU 電壓</string>
@@ -84,18 +84,6 @@
   <string name="contributors">貢獻者</string>
   <string name="faq">常見問題列表</string>
   <string name="settings">設定</string>
-  <!-- Overall -->
-  <string name="offline">離線</string>
-  <string name="core">核心 %d</string>
-  <string name="temperature">溫度</string>
-  <string name="frequencies">頻率</string>
-  <string name="refresh">重新整理</string>
-  <string name="reset">重新設置</string>
-  <string name="restore">還原</string>
-  <string name="deep_sleep">深度睡眠</string>
-  <string name="uptime">核心啟用時間</string>
-  <string name="error_frequencies">載入頻率失敗</string>
-  <string name="unused_frequencies">未使用的頻率</string>
   <!-- Device -->
   <string name="processor">CPU 處理器</string>
   <string name="vendor">製造商</string>
@@ -111,6 +99,16 @@
   <string name="bootloader">開機啟動器(Bootloader)</string>
   <string name="hardware">硬體</string>
   <string name="architecture">CPU 架構</string>
+  <!-- Overall -->
+  <string name="offline">離線</string>
+  <string name="core">核心 %d</string>
+  <string name="refresh">重新整理</string>
+  <string name="reset">重新設置</string>
+  <string name="restore">還原</string>
+  <string name="deep_sleep">深度睡眠</string>
+  <string name="uptime">核心啟用時間</string>
+  <string name="error_frequencies">載入頻率失敗</string>
+  <string name="unused_frequencies">未使用的頻率</string>
   <!-- Inputs -->
   <string name="bus">匯流排(Bus)</string>
   <string name="product">產品</string>
@@ -127,7 +125,6 @@
   <string name="cpu_governor">CPU 管理模式</string>
   <string name="cpu_governor_summary">The CPU governor determines how the CPU behaves in response to changes in workload. Changing the governor will impact how the CPU scales through the frequency steps available to your CPU.</string>
   <string name="cpu_governor_tunables">CPU 管理模式調整</string>
-  <string name="cpu_governor_tunables_summary">這些配置項目與您使用的管理模式有關。</string>
   <string name="cpu_governor_tunables_read_error">無法讀取目前 CPU 的管理器。\n\n如果您正在使用 QCOM 的 異質運算多核心處理器架構(big.LITTLE)，這是一個已知的問題。系統會強制 CPU 關閉，使得應用程式非常難讀取到 CPU 特定核心並進行狀態統計。請嘗試重新選擇該選項。CPU 有時會傲嬌的拒絕打開一個核心。</string>
   <string name="tunables_error">%s 不可調整</string>
   <string name="mc_power_saving">多核心省電</string>
@@ -308,6 +305,7 @@
   <string name="check_interval">檢查間隔</string>
   <string name="shutdown_temp">關機溫度</string>
   <!-- GPU -->
+  <string name="frequencies">頻率</string>
   <string name="gpu_2d_max_freq">GPU 2D 最大頻率</string>
   <string name="gpu_2d_max_freq_summary">設定 GPU 2D可提升的最大頻率</string>
   <string name="gpu_max_freq">GPU 最大頻率</string>

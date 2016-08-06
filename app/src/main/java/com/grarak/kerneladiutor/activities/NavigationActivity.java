@@ -38,6 +38,7 @@ import android.view.SubMenu;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
+import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.kernel.BatteryFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplug;
@@ -101,8 +102,8 @@ public class NavigationActivity extends BaseActivity
 
     static {
         sFragments.put(R.string.statistics, null);
-        sFragments.put(R.string.overall, new OverallFragment());
         sFragments.put(R.string.device, new DeviceFragment());
+        sFragments.put(R.string.overall, new OverallFragment());
         if (Device.MemInfo.getItems().size() > 0) {
             sFragments.put(R.string.memory, new MemoryFragment());
         }
@@ -331,13 +332,12 @@ public class NavigationActivity extends BaseActivity
             getSupportActionBar().setTitle(getString(res));
             mNavigationView.setCheckedItem(res);
             mSelection = res;
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, getFragment(res),
-                            res + "_key").commit();
-                }
-            }, delay ? 250 : 0);
+            Fragment fragment = getFragment(res);
+            if (fragment instanceof RecyclerViewFragment) {
+                ((RecyclerViewFragment) fragment).mDelay = delay;
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment,
+                    res + "_key").commit();
         }
     }
 

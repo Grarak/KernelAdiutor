@@ -47,13 +47,13 @@
   <string name="recovery">리커버리</string>
   <string name="initd">Init.d</string>
   <string name="settings">설정</string>
+  <!-- Device -->
+  <string name="features">기능</string>
   <!-- Overall -->
   <string name="offline">꺼져있음</string>
   <string name="core">%d 번째 코어</string>
   <string name="restore">복원</string>
   <string name="uptime">가동 시간</string>
-  <!-- Device -->
-  <string name="features">기능</string>
   <!-- Inputs -->
   <!-- CPU -->
   <string name="cpu_max_freq">최대 CPU 클럭</string>
@@ -65,7 +65,6 @@
   <string name="cpu_governor">CPU 가버너</string>
   <string name="cpu_governor_summary">CPU 가버너는 작업량의 변화에 따라 CPU가 어떻게 작동할 지 결정합니다. 가버너를 바꾸는 것은 주어진 클럭 테이블 내에서 CPU가 어떻게 클럭을 분배하는지에 영향을 줍니다.</string>
   <string name="cpu_governor_tunables">CPU 가버너 고급 설정</string>
-  <string name="cpu_governor_tunables_summary">각 가버너에 따라 달라지는 설정 항목들입니다.</string>
   <string name="mc_power_saving">멀티코어 절약 모드</string>
   <string name="mc_power_saving_summary">최소한의 코어로 작업을 처리합니다.</string>
   <string name="disabled">사용 안 함</string>

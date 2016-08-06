@@ -47,13 +47,13 @@
   <string name="recovery">Recovery</string>
   <string name="initd">Init.d</string>
   <string name="settings">Nastavitve</string>
+  <!-- Device -->
+  <string name="features">Funkcije</string>
   <!-- Overall -->
   <string name="offline">Izključeno</string>
   <string name="core">Jedro %d</string>
   <string name="restore">Obnovi</string>
   <string name="uptime">Čas delovanja od zadnjega vklopa</string>
-  <!-- Device -->
-  <string name="features">Funkcije</string>
   <!-- Inputs -->
   <!-- CPU -->
   <string name="cpu_max_freq">Najvišja dovoljena frekvenca CPU</string>
@@ -65,7 +65,6 @@
   <string name="cpu_governor">Governor CPU</string>
   <string name="cpu_governor_summary">Governor CPU določa, kako se CPU obnaša ob spremembah obremenitve. Spreminjanje governorja bo vplivalo na to, na kateri frekvenci bo CPU delal pri določeni obremenitvi.</string>
   <string name="cpu_governor_tunables">Napredne nastavitve governorja CPU</string>
-  <string name="cpu_governor_tunables_summary">Različne vrednosti CPU governoja, ki jih lahko spreminjamo (odvisno od tega, kateri CPU governor uporabljamo).</string>
   <string name="mc_power_saving">Varčevanje z baterijo glede na število jeder</string>
   <string name="mc_power_saving_summary">Poskusi razvrstiti naloge v skupine, tako da bo za izpolnitev le-teh uporabljenih čim manj jeder CPU.</string>
   <string name="disabled">Onemogočen</string>

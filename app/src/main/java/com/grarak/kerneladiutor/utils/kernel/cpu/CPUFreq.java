@@ -71,7 +71,7 @@ public class CPUFreq {
     private static final String TAG = CPUFreq.class.getSimpleName();
 
     public static String getGovernorTunablesPath(int cpu, String governor) {
-        if (isBigLITTLE()) {
+        if (Utils.existFile(Utils.strFormat(CPU_GOVERNOR_TUNABLES_CORE, cpu, governor))) {
             return Utils.strFormat(CPU_GOVERNOR_TUNABLES_CORE, cpu, governor);
         } else {
             return Utils.strFormat(CPU_GOVERNOR_TUNABLES, governor);
@@ -91,11 +91,13 @@ public class CPUFreq {
             }
             boolean offline = isOffline(i);
             if (offline) {
-                onlineCpu(i, true, null);
+                onlineCpu(i, true, context);
             }
+            run(Control.chmod("644", Utils.strFormat(path, i)), Utils.strFormat(path, i) + "chmod644", context);
             run(Control.write(value, Utils.strFormat(path, i)), Utils.strFormat(path, i), context);
+            run(Control.chmod("444", Utils.strFormat(path, i)), Utils.strFormat(path, i) + "chmod444", context);
             if (offline) {
-                onlineCpu(i, false, null);
+                onlineCpu(i, false, context);
             }
         }
     }
@@ -209,9 +211,8 @@ public class CPUFreq {
             for (int i = min; i <= max; i++) {
                 MSMPerformance.setCpuMinFreq(freq, i, context);
             }
-        } else {
-            applyCpu(CPU_MIN_FREQ, String.valueOf(freq), min, max, context);
         }
+        applyCpu(CPU_MIN_FREQ, String.valueOf(freq), min, max, context);
     }
 
     public static int getMinFreq(boolean forceRead) {
@@ -230,12 +231,11 @@ public class CPUFreq {
             for (int i = min; i <= max; i++) {
                 MSMPerformance.setCpuMaxFreq(freq, i, context);
             }
+        }
+        if (Utils.existFile(Utils.strFormat(CPU_MAX_FREQ_KT, 0))) {
+            applyCpu(CPU_MAX_FREQ_KT, String.valueOf(freq), min, max, context);
         } else {
-            if (Utils.existFile(Utils.strFormat(CPU_MAX_FREQ_KT, 0))) {
-                applyCpu(CPU_MAX_FREQ_KT, String.valueOf(freq), min, max, context);
-            } else {
-                applyCpu(CPU_MAX_FREQ, String.valueOf(freq), min, max, context);
-            }
+            applyCpu(CPU_MAX_FREQ, String.valueOf(freq), min, max, context);
         }
     }
 

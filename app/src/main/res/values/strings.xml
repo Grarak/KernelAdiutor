@@ -25,6 +25,8 @@
     <string name="donate_summary">This feature is only available when the donation app is installed! Don\'t worry though. Because this app is open source you can easily build it yourself and remove this check. But I hope you support developers anyway. Thanks for using Kernel Adiutor! Once you bought the donation app you have to restart Kernel Adiutor in order to enable all features.</string>
     <string name="donate_nope">I won\'t fall for this scam!</string>
     <string name="donate_yes">I love this app. Must donate!</string>
+    <string name="ad_here">Your advertisement could be here</string>
+    <string name="remove_ad">Remove ad</string>
 
     <string name="apply_on_boot">Apply on boot</string>
     <string name="apply_on_boot_text">Applying settings in %d seconds.</string>
@@ -66,8 +68,8 @@
     <string name="other">Other</string>
 
     <!-- Menus -->
-    <string name="overall">Overall</string>
     <string name="device">Device</string>
+    <string name="overall">Overall</string>
     <string name="memory">Memory</string>
     <string name="inputs">Inputs</string>
     <string name="cpu">CPU</string>
@@ -99,21 +101,6 @@
     <string name="faq">FAQ</string>
     <string name="settings">Settings</string>
 
-    <!-- Overall -->
-    <string name="offline">Offline</string>
-    <string name="core">Core %d</string>
-    <string name="temperature">Temperature</string>
-    <string name="frequencies">Frequencies</string>
-    <string name="refresh">Refresh</string>
-    <string name="reset">Reset</string>
-    <string name="restore">Restore</string>
-    <string name="cluster_big" translatable="false">big</string>
-    <string name="cluster_little" translatable="false">LITTLE</string>
-    <string name="deep_sleep">Deep sleep</string>
-    <string name="uptime">Uptime</string>
-    <string name="error_frequencies">Failed to load frequencies</string>
-    <string name="unused_frequencies">Unused Frequencies</string>
-
     <!-- Device -->
     <string name="processor">Processor</string>
     <string name="vendor">Vendor</string>
@@ -130,6 +117,19 @@
     <string name="trustzone" translatable="false">TrustZone</string>
     <string name="hardware">Hardware</string>
     <string name="architecture">Architecture</string>
+
+    <!-- Overall -->
+    <string name="offline">Offline</string>
+    <string name="core">Core %d</string>
+    <string name="refresh">Refresh</string>
+    <string name="reset">Reset</string>
+    <string name="restore">Restore</string>
+    <string name="cluster_big" translatable="false">big</string>
+    <string name="cluster_little" translatable="false">LITTLE</string>
+    <string name="deep_sleep">Deep sleep</string>
+    <string name="uptime">Uptime</string>
+    <string name="error_frequencies">Failed to load frequencies</string>
+    <string name="unused_frequencies">Unused Frequencies</string>
 
     <!-- Inputs -->
     <string name="bus">Bus</string>
@@ -150,7 +150,7 @@
     <string name="cpu_governor">CPU Governor</string>
     <string name="cpu_governor_summary">The CPU governor determines how the CPU behaves in response to changes in workload. Changing the governor will impact how the CPU scales through the frequency steps available to your CPU.</string>
     <string name="cpu_governor_tunables">CPU Governor Tunables</string>
-    <string name="cpu_governor_tunables_summary">The various configuration items which are Governor-dependent.</string>
+    <string name="governor_tunables_summary">The various configuration items which are Governor-dependent.</string>
     <string name="cpu_governor_tunables_read_error">Failed to read current governor of CPU.\n\nIf you are using a QCOM big.LITTLE device this is a known problem. The system forces the CPU to turn off cores making it extremely hard to read out CPU specific stats. Try to select this option again. The CPU sometimes refuses to turn on a core.</string>
     <string name="tunables_error">%s is not tuneable</string>
     <string name="mc_power_saving">Multicore Power Saving</string>
@@ -363,6 +363,7 @@
     <string name="shutdown_temp">Shutdown Temperature</string>
 
     <!-- GPU -->
+    <string name="frequencies">Frequencies</string>
     <string name="gpu_2d_freq">GPU 2D Frequency</string>
     <string name="gpu_freq">GPU Frequency</string>
     <string name="gpu_2d_max_freq">GPU 2D Maximum Frequency</string>
@@ -375,6 +376,7 @@
     <string name="gpu_2d_governor_summary">Set the 2D governor of the GPU.</string>
     <string name="gpu_governor">GPU Governor</string>
     <string name="gpu_governor_summary">Set the governor of the GPU.</string>
+    <string name="gpu_governor_tunables">GPU Governor Tunables</string>
     <string name="simple_gpu_algorithm">Simple GPU Algorithm</string>
     <string name="simple_gpu_algorithm_summary">An add-on for MSM Adreno TZ GPU Governor. Developed by faux123.</string>
     <string name="laziness">Laziness</string>
@@ -690,6 +692,8 @@
     <string name="flash">Flash</string>
 
     <!-- Build prop Editor -->
+    <string name="item_count">%s item</string>
+    <string name="items_count">%s items</string>
     <string name="search">Search</string>
     <string name="key">Key</string>
     <string name="value">Value</string>

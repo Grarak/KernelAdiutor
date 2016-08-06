@@ -1,15 +1,4 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.21.7'
-    }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 24
@@ -19,8 +8,8 @@ android {
         applicationId "com.grarak.kerneladiutor"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 171
-        versionName "0.9.27.1"
+        versionCode 172
+        versionName "0.9.27.2 beta"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -36,7 +25,6 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
-    maven { url "https://maven.fabric.io/public" }
 }
 
 dependencies {
@@ -50,12 +38,12 @@ dependencies {
         transitive = true;
     }
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
+    compile 'com.google.firebase:firebase-ads:9.4.0'
     compile 'com.mattprecious.swirl:swirl:1.0.0'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.adw.library:discrete-seekbar:1.0.1'
     compile 'org.cyanogenmod:platform.sdk:5.0.1'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
-        transitive = true;
-    }
 }
+
+apply plugin: 'com.google.gms.google-services'

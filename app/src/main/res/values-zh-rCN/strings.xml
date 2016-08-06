@@ -48,8 +48,8 @@
   <string name="tools">工具</string>
   <string name="other">其他</string>
   <!-- Menus -->
-  <string name="overall">总计</string>
   <string name="device">设备</string>
+  <string name="overall">总计</string>
   <string name="inputs">输入</string>
   <string name="cpu">CPU</string>
   <string name="cpu_voltage">CPU 电压</string>
@@ -78,18 +78,6 @@
   <string name="contributors">贡献者</string>
   <string name="faq">疑问与解答</string>
   <string name="settings">设置</string>
-  <!-- Overall -->
-  <string name="offline">离线</string>
-  <string name="core">核心 %d</string>
-  <string name="temperature">温度</string>
-  <string name="frequencies">频率</string>
-  <string name="refresh">刷新</string>
-  <string name="reset">复位</string>
-  <string name="restore">还原</string>
-  <string name="deep_sleep">深度睡眠</string>
-  <string name="uptime">启动时间</string>
-  <string name="error_frequencies">未能加载频率</string>
-  <string name="unused_frequencies">未使用的频率</string>
   <!-- Device -->
   <string name="processor">处理器</string>
   <string name="vendor">制造商</string>
@@ -105,6 +93,16 @@
   <string name="bootloader">引导程序</string>
   <string name="hardware">硬件</string>
   <string name="architecture">架构</string>
+  <!-- Overall -->
+  <string name="offline">离线</string>
+  <string name="core">核心 %d</string>
+  <string name="refresh">刷新</string>
+  <string name="reset">复位</string>
+  <string name="restore">还原</string>
+  <string name="deep_sleep">深度睡眠</string>
+  <string name="uptime">启动时间</string>
+  <string name="error_frequencies">未能加载频率</string>
+  <string name="unused_frequencies">未使用的频率</string>
   <!-- Inputs -->
   <string name="product">产品</string>
   <string name="version">版本</string>
@@ -120,7 +118,6 @@
   <string name="cpu_governor">CPU 调速器</string>
   <string name="cpu_governor_summary">The CPU governor determines how the CPU behaves in response to changes in workload. Changing the governor will impact how the CPU scales through the frequency steps available to your CPU.</string>
   <string name="cpu_governor_tunables">CPU 调速器微调</string>
-  <string name="cpu_governor_tunables_summary">这些配置项与您使用的调速器有关</string>
   <string name="tunables_error">%s 不可调节</string>
   <string name="mc_power_saving">多核省电</string>
   <string name="mc_power_saving_summary">尝试尽可能用最少的核心来分组处理任务。</string>
@@ -298,6 +295,7 @@
   <string name="check_interval">检查间隔</string>
   <string name="shutdown_temp">关机温度</string>
   <!-- GPU -->
+  <string name="frequencies">频率</string>
   <string name="gpu_2d_freq">GPU 2D 频率</string>
   <string name="gpu_freq">GPU 频率</string>
   <string name="gpu_2d_max_freq">GPU 2D 最高频率</string>
