@@ -32,7 +32,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.MobileAds;
+import com.crashlytics.android.Crashlytics;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.services.profile.Tile;
@@ -61,6 +61,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import io.fabric.sdk.android.Fabric;
+
 /**
  * Created by willi on 14.04.16.
  */
@@ -74,6 +76,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         View splashBackground = findViewById(R.id.splash_background);
@@ -222,7 +225,6 @@ public class MainActivity extends BaseActivity {
                 return;
             }
 
-            MobileAds.initialize(MainActivity.this, "ca-app-pub-1851546461606210~9501142287");
             new AsyncTask<Void, Void, Boolean>() {
 
                 private ApplicationInfo mApplicationInfo;
