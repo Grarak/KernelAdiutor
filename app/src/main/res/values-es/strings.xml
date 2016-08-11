@@ -20,7 +20,7 @@
   <string name="unknown">Desconocido</string>
   <string name="pirated">Parece que la aplicación de la donación no fue adquirida a través de Play Store! Si lo piratea, entonces la vergüenza en usted!</string>
   <string name="donate">Donar</string>
-  <string name="donate_summary">Esta función sólo está disponible cuando se instala la app de donación! No te preocupes aunque. Porque esta aplicación es de código abierto fácilmente puede construirlo usted mismo y quitar esta comprobación. Pero espero que usted apoya a los desarrolladores de todos modos. Gracias por usar Kernel Adiutor! Una vez que compraste la aplicación donación que tienes que reiniciar Adiutor Kernel para habilitar todas las funciones.</string>
+  <string name="donate_summary">Esta función sólo está disponible cuando se instala la app de donación! No te preocupes, porque esta aplicación es de código abierto fácilmente puede construirlo usted mismo y quitar esta comprobación. Pero espero que usted apoya a los desarrolladores de todos modos. Gracias por usar Kernel Adiutor! Una vez que compraste la aplicación donación que tienes que reiniciar Adiutor Kernel para habilitar todas las funciones.</string>
   <string name="donate_nope">No hay donacion!</string>
   <string name="donate_yes">Gracias por su donativo!</string>
   <string name="apply_on_boot">Aplicar al Inicio</string>
