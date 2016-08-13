@@ -171,10 +171,10 @@ public class NavigationActivity extends BaseActivity
         sFragments.put(R.string.initd, new InitdFragment());
         sFragments.put(R.string.on_boot, new OnBootFragment());
         sFragments.put(R.string.other, null);
-        sFragments.put(R.string.about, new AboutFragment());
-        sFragments.put(R.string.contributors, new ContributorsFragment());
-        sFragments.put(R.string.faq, new FAQFragment());
         sFragments.put(R.string.settings, null);
+        sFragments.put(R.string.faq, new FAQFragment());
+        sFragments.put(R.string.contributors, new ContributorsFragment());
+        sFragments.put(R.string.about, new AboutFragment());
 
         sActivities.put(R.string.settings, SettingsActivity.class);
     }
