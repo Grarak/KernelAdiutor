@@ -24,6 +24,7 @@ import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.io.IO;
+import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
@@ -63,8 +64,8 @@ public class IOFragment extends RecyclerViewFragment {
 
     private void storageInit(final IO.Storage storage, List<RecyclerViewItem> items) {
         List<RecyclerViewItem> views = new ArrayList<>();
-        TitleView title = new TitleView();
-        title.setText(getString(storage == IO.Storage.Internal ? R.string.internal_storage
+        CardView ioCard = new CardView(getActivity());
+        ioCard.setTitle(getString(storage == IO.Storage.Internal ? R.string.internal_storage
                 : R.string.external_storage));
 
         if (IO.hasScheduler(storage)) {
