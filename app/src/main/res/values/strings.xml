@@ -525,6 +525,11 @@
     <string name="lock_mic_gain_summary">Prevent modifications to microphone gains</string>
     <string name="microphone_gain">Microphone Gain</string>
     <string name="volume_gain">Volume Gain</string>
+    <string name="per_channel_controls">Per-channel controls</string>
+    <string name="per_channel_controls_summary">Use different gain values for each channel</string>
+    <string name="all_channels">All Channels</string>
+    <string name="left_channel">Left Channel</string>
+    <string name="right_channel">Right Channel</string>
 
     <!-- Battery -->
     <string name="level">Level</string>
