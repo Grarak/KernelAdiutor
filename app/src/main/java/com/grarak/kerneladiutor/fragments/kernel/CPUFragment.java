@@ -106,9 +106,6 @@ public class CPUFragment extends RecyclerViewFragment {
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
         freqInit(items);
-        if (Misc.hasMcPowerSaving()) {
-            mcPowerSavingInit(items);
-        }
         if (Misc.hasPowerSavingWq()) {
             powerSavingWqInit(items);
         }
@@ -323,22 +320,6 @@ public class CPUFragment extends RecyclerViewFragment {
         if (offline) {
             CPUFreq.onlineCpu(min, false, false, null);
         }
-    }
-
-    private void mcPowerSavingInit(List<RecyclerViewItem> items) {
-        SelectView mcPowerSaving = new SelectView();
-        mcPowerSaving.setTitle(getString(R.string.mc_power_saving));
-        mcPowerSaving.setSummary(getString(R.string.mc_power_saving_summary));
-        mcPowerSaving.setItems(Arrays.asList(getResources().getStringArray(R.array.mc_power_saving_items)));
-        mcPowerSaving.setItem(Misc.getCurMcPowerSaving());
-        mcPowerSaving.setOnItemSelected(new SelectView.OnItemSelected() {
-            @Override
-            public void onItemSelected(SelectView selectView, int position, String item) {
-                Misc.setMcPowerSaving(position, getActivity());
-            }
-        });
-
-        items.add(mcPowerSaving);
     }
 
     private void powerSavingWqInit(List<RecyclerViewItem> items) {

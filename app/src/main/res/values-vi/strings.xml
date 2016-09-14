@@ -140,8 +140,6 @@
   <string name="cpu_governor_tunables_read_error">Không thể đọc Gov hiện tại của CPU.\n\nNếu bạn đang sử dụng một thiết bị QCOM big.LITTLE thì đây là một vấn đề đã được biết. Hệ thống buột tắt CPU nên cực kỳ khó khăn để đọc ra số liệu thống kê CPU cụ thể. Cố gắng chọn tùy chọn này một lần nữa. CPU đôi khi từ chối để bật một lõi.</string>
   <string name="tunables_error">%s không hiệu chỉnh được</string>
   <string name="manual">Thủ công</string>
-  <string name="mc_power_saving">Tiết kiệm năng lượng đa lõi</string>
-  <string name="mc_power_saving_summary">Cố gắng gộp nhiều tác vụ vào ít lõi nhất.</string>
   <string name="disabled">Đã tắt</string>
   <string name="enabled">Đã bật</string>
   <string name="aggressive">Tích cực</string>

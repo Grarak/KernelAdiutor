@@ -56,8 +56,6 @@
   <string name="cpu_max_screen_off_freq">תדר מעבד מקסימלי למסך כבוי</string>
   <string name="cpu_max_screen_off_freq_summary">הכנס את התדר המקסימלי שהמעבד יגיע אליו כשהמסך כבוי.</string>
   <string name="cpu_governor">GPU Governor</string>
-  <string name="mc_power_saving">חיסכון חשמל מרובה ליבות</string>
-  <string name="mc_power_saving_summary">נסה לאחד משימות לכמות המינ\' האפשרית של ליבות.</string>
   <string name="disabled">כבוי</string>
   <string name="enabled">מופעל</string>
   <string name="aggressive">אגרסיבי</string>

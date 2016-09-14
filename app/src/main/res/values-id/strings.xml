@@ -138,8 +138,6 @@
   <string name="governor_tunables_summary">Beragam pilihan konfigurasi yang bergantung-Governor.</string>
   <string name="tunables_error">%s is not tuneable</string>
   <string name="manual">Manual</string>
-  <string name="mc_power_saving">Penghemat Daya Inti Majemuk</string>
-  <string name="mc_power_saving_summary">Cobalah untuk mengelompokkan tugas-tugas Inti yang memungkinkan.</string>
   <string name="disabled">Non-aktif</string>
   <string name="enabled">Aktif</string>
   <string name="aggressive">Agresif</string>

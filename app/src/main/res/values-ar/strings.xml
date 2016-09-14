@@ -143,8 +143,6 @@
   <string name="cpu_governor_summary">ان المتحكم بالمعالج يحدد كيف يتصرف المعالج في الاستجابة للعمل تحت الحمل. تغير المتحكم سوف يؤثر على كيفية عبور خطوات التردد المتاح لمعالجك.</string>
   <string name="cpu_governor_tunables">متحكم الموجة للمعالج</string>
   <string name="governor_tunables_summary">ان مختلف عناصر التكوين متعلقة بالمتحكم بشكل معمق.</string>
-  <string name="mc_power_saving">نظام توفير الطاقة المتعدد النواة</string>
-  <string name="mc_power_saving_summary">حاول جمع المهمات في اقل انوية ممكنة.</string>
   <string name="disabled">غير مفعل</string>
   <string name="enabled">مفعل</string>
   <string name="aggressive">اندفاعي</string>

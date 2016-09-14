@@ -34,7 +34,6 @@ import java.util.List;
  */
 public class Misc {
 
-    private static final String CPU_MC_POWER_SAVING = "/sys/devices/system/cpu/sched_mc_power_savings";
     private static final String CPU_WQ_POWER_SAVING = "/sys/module/workqueue/parameters/power_efficient";
     private static final String CPU_AVAILABLE_CFS_SCHEDULERS = "/sys/devices/system/cpu/sched_balance_policy/available_sched_balance_policy";
     private static final String CPU_CURRENT_CFS_SCHEDULER = "/sys/devices/system/cpu/sched_balance_policy/current_sched_balance_policy";
@@ -133,18 +132,6 @@ public class Misc {
 
     public static boolean hasPowerSavingWq() {
         return Utils.existFile(CPU_WQ_POWER_SAVING);
-    }
-
-    public static void setMcPowerSaving(int value, Context context) {
-        run(Control.write(String.valueOf(value), CPU_MC_POWER_SAVING), CPU_MC_POWER_SAVING, context);
-    }
-
-    public static int getCurMcPowerSaving() {
-        return Utils.strToInt(Utils.readFile(CPU_MC_POWER_SAVING));
-    }
-
-    public static boolean hasMcPowerSaving() {
-        return Utils.existFile(CPU_MC_POWER_SAVING);
     }
 
     private static void run(String command, String id, Context context) {

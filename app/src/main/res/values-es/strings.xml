@@ -142,8 +142,6 @@
   <string name="cpu_governor_tunables_read_error">Error al leer el actual gobernador de CPU.\n\nSi está utilizando una gran/pequeño dispositivo QCOM esto es un problema conocido. El sistema obliga a la CPU para apagar núcleos de lo que es extremadamente difícil de leer las estadísticas específicas de la CPU. Trate de seleccionar esta opción otra vez. La CPU a veces se niega a encender un núcleo.</string>
   <string name="tunables_error">%s no se puede ajustar</string>
   <string name="manual">Manual</string>
-  <string name="mc_power_saving">Ahorro de Energía Multinúcleo</string>
-  <string name="mc_power_saving_summary">Intenta agrupar tareas en el menor número de núcleos posible.</string>
   <string name="disabled">Desabilitado</string>
   <string name="enabled">Activo</string>
   <string name="aggressive">Agresivo</string>

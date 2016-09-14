@@ -109,8 +109,6 @@
   <string name="cpu_governor">Governador CPU</string>
   <string name="cpu_governor_tunables">Parâmetros governador CPU</string>
   <string name="tunables_error">%s não é ajustável</string>
-  <string name="mc_power_saving">Modo de Poupança Multinuclear</string>
-  <string name="mc_power_saving_summary">Tenta agrupar tarefas no menor número de núcleos possíveis.</string>
   <string name="disabled">Desativado</string>
   <string name="enabled">Ativado</string>
   <string name="aggressive">Agressivo</string>

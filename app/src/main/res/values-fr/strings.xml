@@ -137,8 +137,6 @@
   <string name="cpu_governor_tunables_read_error">Impossible de lire l\'ordonnanceur actuel du processeur.\n\nSi vous utilisez un appareil avec un processeur QCOM big.LITTLE, il s’agit d’un problème connu. Le système force le processeur à éteindre les cœurs, rendant extrêmement difficile l\'accès à la lecture des statistiques spécifiques du processeur. Réessayez de sélectionner cette option. Le processeur refuse parfois de tourner sur un cœur.</string>
   <string name="tunables_error">%s n\'est pas réglable</string>
   <string name="manual">Manuel</string>
-  <string name="mc_power_saving">Économie d\'Énergie Multicœurs</string>
-  <string name="mc_power_saving_summary">Essayez de regrouper les tâches en moins de cœurs possible.</string>
   <string name="disabled">Désactivé</string>
   <string name="enabled">Activé</string>
   <string name="aggressive">Aggresif</string>

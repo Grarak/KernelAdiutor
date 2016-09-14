@@ -142,8 +142,6 @@
   <string name="cpu_governor_tunables_read_error">无法读取当前处理器的调节器。\n\n如果您使用的是Qualcomm big.little装置，这是一个已知的问题。该系统迫使中央处理器关闭核心，使它很难读取特定的统计数据。再次选择此选项。中央处理器有时拒绝打开一个核心。</string>
   <string name="tunables_error">%s 不可调节</string>
   <string name="manual">手动</string>
-  <string name="mc_power_saving">多核省电</string>
-  <string name="mc_power_saving_summary">尝试尽可能用最少的核心来分组处理任务。</string>
   <string name="disabled">禁用</string>
   <string name="enabled">启用</string>
   <string name="aggressive">积极</string>

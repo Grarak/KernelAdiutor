@@ -136,8 +136,6 @@
   <string name="governor_tunables_summary">The various configuration items which are Governor-dependent.</string>
   <string name="cpu_governor_tunables_read_error">無法讀取目前 CPU 的管理器。\n\n如果您正在使用 QCOM 的 異質運算多核心處理器架構(big.LITTLE)，這是一個已知的問題。系統會強制 CPU 關閉，使得應用程式非常難讀取到 CPU 特定核心並進行狀態統計。請嘗試重新選擇該選項。CPU 有時會傲嬌的拒絕打開一個核心。</string>
   <string name="tunables_error">%s 不可調整</string>
-  <string name="mc_power_saving">多核心省電</string>
-  <string name="mc_power_saving_summary">盡可能用最少的核心來分配處理任務</string>
   <string name="disabled">已停用</string>
   <string name="enabled">已啟用</string>
   <string name="aggressive">積極的</string>

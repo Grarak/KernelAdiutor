@@ -137,8 +137,6 @@
   <string name="governor_tunables_summary">विभिन्न कॉन्फ़िगरेशन आइटम जो गवर्नर पर निर्भर कर रहे हैं।</string>
   <string name="cpu_governor_tunables_read_error">CPU के वर्तमान गवर्नर को रीड करने में विफल।\n\nयदि आप QCOM big.LITTLE डिवाइस उपयोग कर रहे हे तो यह एक ज्ञात समस्या है। कठोरता से विशिष्ट CPU स्टेट्स रीड करने के लिए CPU कोर्स बन्द करने के लिए यह सिस्टम बाध्य करता है। इस विकल्प को पुनः चुने। कभी कभी CPU कोर को चालू नही होने देता।</string>
   <string name="tunables_error">%s ट्यूनेबल नहीं है</string>
-  <string name="mc_power_saving">Multicore बिजली की बचत</string>
-  <string name="mc_power_saving_summary">समूह में कार्य करने के लिए कम से कम संभव कोर में प्रयास करें।</string>
   <string name="disabled">असक्षम</string>
   <string name="enabled">सक्षम</string>
   <string name="aggressive">आक्रामक</string>
