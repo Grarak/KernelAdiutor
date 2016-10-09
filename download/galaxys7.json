@@ -9,7 +9,7 @@
 "features": [
   "Built with Sabermod GCC 7.0 ARM64 Kernel Toolchain",
 ]
-"downloads": [
+"downloads:" [
   {
     "name": "TGPKernel v2.30",
     "description": "<bFor Samsung Galaxy S7 Variants Only</b>",
