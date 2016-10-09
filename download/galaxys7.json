@@ -10,7 +10,6 @@
     "Built with Sabermod GCC 7.0 ARM64 Kernel Toolchain",
     "Samsung Kernel Source: G930FXXU1BPHJ",
     "Linux Kernel Source: 3.18.42",
-    " ",
     "Activated powersave Governor",
     "Activated joystick_xpad Support",
     "Added Frandom Support",
