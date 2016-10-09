@@ -1,6 +1,30 @@
 [
   {
     "vendor": [
+      "samsung"
+    ],
+    "device": [
+      "SM-G930F",
+      "SM-G930FD",
+      "SM-G930W8",
+      "heroltexx"
+    ],
+    "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/galaxys7.json"
+  },
+  {
+    "vendor": [
+      "samsung"
+    ],
+    "device": [
+      "SM-G935F",
+      "SM-G935FD",
+      "SM-G935W8",
+      "hero2ltexx"
+    ],
+    "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/galaxys7edge.json"
+  },
+  {
+    "vendor": [
       "HTC",
       "htc"
     ],
