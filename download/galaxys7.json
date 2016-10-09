@@ -4,7 +4,7 @@
   "long_description": "Welcome to TGPKernel, a custom ROM for Samsung Galaxy S7/S7 Edge devices running stock Samsung firmware",
   "logo": "https://img.xda-cdn.com/JefSqFrgrpwL7jiI-hY0ztb40qY=/http%3A%2F%2Fdjb77.users.sourceforge.net%2Flogo-v3.png",
   "xda": "http://forum.xda-developers.com/showthread.php?t=3462897",
-  "github": "https://github.com/djb77/tgpkernel-s7.git",
+  "github": "https://github.com/djb77/tgpkernel-s7",
   "paypal": "https://www.paypal.me/djb77",
   "features": [
     "Built with Sabermod GCC 7.0 ARM64 Kernel Toolchain",
@@ -28,7 +28,7 @@
     "Enabled Lockup Detector",
     "Enabled rw for /system",
     "F2FS Support",
-    "NTFS Support"
+    "NTFS Support",
     {
     "name": "CPU Governors",
     "items": [
@@ -93,6 +93,15 @@
       "url": "https://github.com/djb77/tgpkernel-s7/raw/tw601/build/release/g930x.img",
       "md5sum": "5b5b03954c2d0b6b00f5dec8935e590f",
       "install_method": "dd if=$FILE of=/dev/block/platform/155a0000.ufs/by-name/BOOT",
+       "changelog": [
+       "Disabled CIFS/NFS/ISO9660/Joilet/UDF Filesystems (Revert)",
+       "Fixed bug in include/linux/cpufreq.h",
+       "Enabled conservative in CPU Governors",
+       "A-Z Sorted IO Schedulers in block/makefile",
+       "Text fix for Lionheart CPU Governor",
+       "Added more CPU Governers (@Tkkg1994)",
+       "Added more IO Schedulers (@Tkkg1994)",
+      ]
     },
     {
       "name": "TGPKernel v2.30",
@@ -100,6 +109,15 @@
       "url": "https://github.com/djb77/tgpkernel-s7/raw/tw601/build/release/g935x.img",
       "md5sum": "9bd3fa0483406e4d6d33314a7d5d70c2",
       "install_method": "dd if=$FILE of=/dev/block/platform/155a0000.ufs/by-name/BOOT",
+       "changelog": [
+       "Disabled CIFS/NFS/ISO9660/Joilet/UDF Filesystems (Revert)",
+       "Fixed bug in include/linux/cpufreq.h",
+       "Enabled conservative in CPU Governors",
+       "A-Z Sorted IO Schedulers in block/makefile",
+       "Text fix for Lionheart CPU Governor",
+       "Added more CPU Governers (@Tkkg1994)",
+       "Added more IO Schedulers (@Tkkg1994)",
+      ]
     }
   ]
 }
