@@ -25,3 +25,4 @@
     "install_method": "dd if=$FILE of=/dev/block/platform/155a0000.ufs/by-name/BOOT",
   }
 ]
+]
