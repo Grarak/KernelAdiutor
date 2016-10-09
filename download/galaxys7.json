@@ -8,7 +8,7 @@
     "paypal": "https://www.paypal.me/djb77",
 "features": [
   "Built with Sabermod GCC 7.0 ARM64 Kernel Toolchain",
-]
+],
 "downloads:" [
   {
     "name": "TGPKernel v2.30",
