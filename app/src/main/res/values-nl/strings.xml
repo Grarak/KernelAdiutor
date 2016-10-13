@@ -142,8 +142,6 @@
   <string name="cpu_governor_tunables_read_error">Mislukt om de huidige governor van CPU te lezen.\n\nals u een QCOM big.LITTLE apparaat aan het gebruiken bent dan is dit een bekend probleem. Het systeem forceert de CPU om cores uit te schakelen waardoor het zeer moeilijk wordt om CPU specifieke stats uit te lezen. Probeer deze optie opnieuw te selecteren. De CPU weigert soms om een core in te schakelen.</string>
   <string name="tunables_error">%s is niet afstembaar</string>
   <string name="manual">Handleiding</string>
-  <string name="mc_power_saving">Multicore Energiebesparing</string>
-  <string name="mc_power_saving_summary">Probeer taken te groeperen in de minst kernen mogelijk.</string>
   <string name="disabled">Uitgeschakeld</string>
   <string name="enabled">Ingeschakeld</string>
   <string name="aggressive">Agressief</string>

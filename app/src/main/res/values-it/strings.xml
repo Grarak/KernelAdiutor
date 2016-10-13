@@ -142,8 +142,6 @@
   <string name="cpu_governor_tunables_read_error">Impossibile leggere l\'attuale governatore della CPU.\n\nSe si utilizza un dispositivo Qualcomm big.LITTLE si tratta di un problema noto. Il sistema impone alla CPU di disattivare i core e ciò rende estremamente difficile leggere le statistiche. Prova a selezionare nuovamente questa opzione. La CPU a volte si rifiuta di girare su un core.</string>
   <string name="tunables_error">%s non si può modificare</string>
   <string name="manual">Manuale</string>
-  <string name="mc_power_saving">Risparmio Energetico Multicore</string>
-  <string name="mc_power_saving_summary">Prova a raggruppare le attività nel minor numero di core disponibili.</string>
   <string name="disabled">Disabilitato</string>
   <string name="enabled">Abilitato</string>
   <string name="aggressive">Aggressivo</string>

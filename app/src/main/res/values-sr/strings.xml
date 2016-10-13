@@ -131,8 +131,6 @@
   <string name="cpu_governor_tunables">Фине поставке ЦПУ управљача</string>
   <string name="tunables_error">%s није подесиво</string>
   <string name="manual">Ручно</string>
-  <string name="mc_power_saving">Multicore уштеда енергије</string>
-  <string name="mc_power_saving_summary">Групација задатака у што мање језгри</string>
   <string name="disabled">Искључено</string>
   <string name="enabled">Укључено</string>
   <string name="aggressive">Агресивно</string>

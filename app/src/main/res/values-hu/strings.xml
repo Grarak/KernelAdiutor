@@ -142,8 +142,6 @@
   <string name="cpu_governor_tunables_read_error">Nem sikerült beolvasni a jelenlegi CPU ütemezőt.\n\nHa egy QCOM big.LITTLE eszközt használsz, akkor ez egy ismert probléma. A rendszer arra kényszeríti a CPU-t, hogy kikapcsolja a magokat, így rendkívül nehezen olvasható ki a CPU-specifikus statisztika. Próbáld ezt a lehetőséget újra kiválasztani. A CPU néha nem hajlandó a magot bekapcsolni.</string>
   <string name="tunables_error">%s nem hangolható</string>
   <string name="manual">Manuális</string>
-  <string name="mc_power_saving">Többmagos Energiatakarékosság</string>
-  <string name="mc_power_saving_summary">A feladatok csoportosítása a lehető legkevesebb magra.</string>
   <string name="disabled">Letiltva</string>
   <string name="enabled">Engedélyezve</string>
   <string name="aggressive">Agresszív</string>

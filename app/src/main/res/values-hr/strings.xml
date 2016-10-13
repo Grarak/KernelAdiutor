@@ -134,8 +134,6 @@
   <string name="cpu_governor_summary">Governor CPU-a određuje kako će se procesor ponašati pod promjenama opterećenja. Promjena governora utjecat će na način na koji se procesor mijenja kroz korake frekvencije koji su dostupni za vaš CPU.</string>
   <string name="cpu_governor_tunables">Postavke governora CPU-a</string>
   <string name="tunables_error">%s ne može se mijenjati.</string>
-  <string name="mc_power_saving">Višejezgrena štednja energije</string>
-  <string name="mc_power_saving_summary">Pokušava grupirati zadatke u što je manje jezgri moguće.</string>
   <string name="disabled">Onemogućeno</string>
   <string name="enabled">Omogućeno</string>
   <string name="aggressive">Agresivno</string>

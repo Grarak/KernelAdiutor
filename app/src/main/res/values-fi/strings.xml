@@ -133,8 +133,6 @@
   <string name="governor_tunables_summary">Monenlaisia kokoonpano nimikkeitä, jotka ovat tilariippuvaisia.</string>
   <string name="cpu_governor_tunables_read_error">Nykyisten tila-arvojen lukeminen epäonnistui CPU.\n\n osalta. Jos sinä käytät QCOM big.LITTLE laitetta tämä on tiedostettu ongelma. Järjestelmä pakotta suorittimen sammuttamaan ytimiä, joka tekee suorittimeen liittyvän tiedon lukemisesta hyvin hankalaa. Kokeile valita tämä asetus uudelleen. Välillä suoritin kieltäytyy käynnistämästä ytimiä.</string>
   <string name="tunables_error">%s ei ole tuunattavissa</string>
-  <string name="mc_power_saving">Moniytimien virransäästö</string>
-  <string name="mc_power_saving_summary">Yritä järjestää tehtävät mahdollisimman vähille ytimille.</string>
   <string name="disabled">Poissa käytöstä</string>
   <string name="enabled">Käytössä</string>
   <string name="aggressive">Aggressiivinen</string>

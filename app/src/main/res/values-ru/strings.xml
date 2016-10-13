@@ -142,8 +142,6 @@
   <string name="cpu_governor_tunables_read_error">Не удалось определить текущий регулятор.\n\nЕсли вы используете устройство QCOM с big.LITTLE, то это известная проблема. Система заставляет ЦП отключать ядра, делая крайне тяжелым считывание определённой статистики ЦП. Попробуйте выбрать эту опцию еще раз. Иногда ЦП отказывается включить ядро.</string>
   <string name="tunables_error">%s не настраивается</string>
   <string name="manual">Руководство</string>
-  <string name="mc_power_saving">Многоядерное энергосбережение</string>
-  <string name="mc_power_saving_summary">Пытаться группировать задачи для наименьшего количества ядер.</string>
   <string name="disabled">Отключено</string>
   <string name="enabled">Включено</string>
   <string name="aggressive">Агрессивное</string>

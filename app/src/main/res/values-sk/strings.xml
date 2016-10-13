@@ -131,8 +131,6 @@
   <string name="governor_tunables_summary">Rôzne konfiguračné prvky ktoré závisia na governore.</string>
   <string name="cpu_governor_tunables_read_error">Nepodarilo sa načítať governor CPU.\n\n ak používate zariadenie od QCOM-u s big.LITTLE architektúrou je toto bežný problém. Systém vynucuje vypínanie jadier a to robí extrémny problem pri čítaní podrobných štatistík. Skúste znovu zvoliť túto možnosť. CPU niekedy odmietne zapnúť jadro.</string>
   <string name="tunables_error">%s nie je laditeľný</string>
-  <string name="mc_power_saving">Viacjadrové šetrenie energie</string>
-  <string name="mc_power_saving_summary">Skúste zhrnúť úlohy do čo najmenšieho počtu jadier.</string>
   <string name="disabled">Zakázané</string>
   <string name="enabled">Povolené</string>
   <string name="aggressive">Agresívne</string>
