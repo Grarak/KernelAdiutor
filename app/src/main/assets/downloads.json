@@ -234,4 +234,13 @@
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/galaxys7.json"
   }
+  {
+    "vendor": [
+      "Sony"
+    ],
+    "device": [
+      "nicki"
+    ],
+    "link": "https://raw.githubusercontent.com/Nicklas373/Hana-CoreUX-Kernel_MSM8627-AOSP_7.0/master/tools/nicki.json"
+  }
 ]
