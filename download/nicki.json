@@ -1,0 +1,77 @@
+{
+  "name": "<b><font color=\"#FFFFFF\">Hana Core + Kernel</font></b>",
+  "short_description": "Based on Hana Kernel <b>|</b> For Xperia M",
+  "long_description": "Welcome to <b>Hana Core + Kernel</b> This kernel have main to optimize Xperia M / M Dual device with latest source kernel<br><br>many optimization for processor,gpu and much improvement in LMK and KSM manager.<br><a href=\"https://github.com/Nicklas373\">My Github Profile</a>",
+  "logo": "https://lh3.googleusercontent.com/zl3NLTLzyMqglAC26Id5wMyTLo5iU5HAby8VmhXd1F2XWPdAWLRAmZOoNL1dR8yRb5vxIJ8OBg=w1366-h768-rw-no",
+  "xda": "http://forum.xda-developers.com/xperia-m/orig-development/6-0-aoicore-kernel-t3454265",
+  "github": "https://github.com/Nicklas373/Hana-CoreUX-Kernel_MSM8627-AOSP_7.0",
+  "google_plus": "https://plus.google.com/+DickyHerlambangNicklasCRJ",
+  "paypal": "paypal.me/NicklasXDA",
+  "features": [
+    "Build with Crosstool NG Toolchains 5.4.0",
+    {
+      "name": "CPU Governors",
+      "items": [
+        "interactive (default)",
+        "ondemand",
+        "userspace",
+        "powersave",
+        "performance",
+	"conservative",
+        "darkness",
+        "alucard",
+        "intellidemand",
+        "intellimm",
+	"intelliactive",
+	"lionheart",
+	"lulzactive",
+	"smartass2"
+      ]
+    },
+    {
+      "name": "I/O Schedulers",
+      "items": [
+        "noop",
+        "deadline",
+        "row",
+        "cfq (default)",
+        "bfq",
+	"sio",
+	"sioplus",
+	"fifo",
+	"fiops",
+	"tripndroid",
+	"vr",
+	"zen"
+      ]
+    },
+    "Linux Kernel 3.4.11",
+    "Compatibility with all rom",
+    "Overclocked to 1,7Ghz",
+    "Alucard Hotplug",
+    "Fast USB charge (enable by default)",
+    "Full support for NEON-VFPV4 feature",
+    "Optimize for armv7 device",
+    "Enable Krait Retention for msm8960",
+    "Enable ARM Hibernation function",
+    "Auto hotplug drivers for optimized mpdecision",
+    "Graphite optimization",
+    "Use new hashtable implementation on KSM and HGM",
+    "Improved get cpu idle time on stock governor",
+    "Stability Fixes"
+  ],
+  "downloads": [
+    {
+      "name": "1.2.5",
+      "description": "<b>Only for <i>6.0.X</i> based ROM,<i>Powered by Hana kernel</i></b>",
+      "url": "https://qc3.androidfilehost.com/dl/X7i2oB579vjxi2vqlBylMw/1476753267/529152257862667872/Hana_Core-UX_v1.2.5-nicki.zip",
+      "md5sum": "3a653bf42b988157d985846d1db4f233",
+      "changelog": [
+	"Removed Intelli Plug and AutoSMP Hotplug"
+	"Added Darkness & Remove HYPER CPU Governor"
+	"Re-added function Use RQ Stats for Alucard Hotplug"
+	"Improved Intellidemand & Intelliactive CPU Governor"
+      ]
+    }
+  ]
+}
