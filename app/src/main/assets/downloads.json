@@ -1,5 +1,5 @@
 [
-  {
+ {
     "vendor": [
       "HTC",
       "htc"
@@ -233,5 +233,21 @@
       "hero2ltexx"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/galaxys7.json"
+  },
+  {
+    "vendor": [
+      "Sony",
+      "sony",
+      "SONY"
+    ],
+    "device": [
+      "nicki",
+      "Xperia M",
+      "C1904",
+      "C1905",
+      "C2004",
+      "C2005"
+    ],
+    "link": "https://raw.githubusercontent.com/Nicklas373/KernelAdiutor/master/download/nicki.json"
   }
 ]
