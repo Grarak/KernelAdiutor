@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ *
+ * This file is part of Kernel Adiutor.
+ *
+ * Kernel Adiutor is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Kernel Adiutor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package com.grarak.kerneladiutor.fragments.other;
 
 import android.app.ProgressDialog;
@@ -14,7 +33,6 @@ import android.os.Messenger;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-import android.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -38,6 +56,7 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutor.views.BorderCircleView;
+import com.grarak.kerneladiutor.views.dialog.Dialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -362,7 +381,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         confirmNewPassword.setHint(getString(R.string.confirm_new_password));
         linearLayout.addView(confirmNewPassword);
 
-        new AlertDialog.Builder(getActivity()).setView(linearLayout)
+        new Dialog(getActivity()).setView(linearLayout)
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -426,7 +445,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         mPassword.setHint(getString(R.string.password));
         linearLayout.addView(mPassword);
 
-        new AlertDialog.Builder(getActivity()).setView(linearLayout)
+        new Dialog(getActivity()).setView(linearLayout)
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -494,7 +513,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             subView.addView(circle);
         }
 
-        new AlertDialog.Builder(getActivity()).setView(linearLayout)
+        new Dialog(getActivity()).setView(linearLayout)
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
