@@ -8,7 +8,9 @@ android:
     - tools
     - build-tools-25
     - android-25
-
+  licenses:
+    - '.+'
+    
 jdk:
   - oraclejdk8
 
