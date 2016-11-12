@@ -51,6 +51,9 @@ public class Sound {
 
     private static final String MIC_BOOST = "/sys/devices/virtual/misc/soundcontrol/mic_boost";
     private static final String VOLUME_BOOST = "/sys/devices/virtual/misc/soundcontrol/volume_boost";
+    private static final String SPEAKER_L_BOOST = "/sys/devices/virtual/misc/soundcontrol/speaker_l_boost";
+    private static final String SPEAKER_R_BOOST = "/sys/devices/virtual/misc/soundcontrol/speaker_r_boost";
+    private static final String CAMERA_MIC_BOOST = "/sys/devices/virtual/misc/soundcontrol/camera_mic_boost";
 
     private static final List<String> sSpeakerGainFiles = new ArrayList<>();
 
@@ -88,6 +91,42 @@ public class Sound {
 
     public static boolean hasVolumeGain() {
         return Utils.existFile(VOLUME_BOOST);
+    }
+
+    public static void setSpeakerLGain(String value, Context context) {
+        run(Control.write(value, SPEAKER_L_BOOST), SPEAKER_L_BOOST, context);
+    }
+
+    public static String getSpeakerLGain() {
+        return Utils.readFile(SPEAKER_L_BOOST);
+    }
+
+    public static boolean hasSpeakerLGain() {
+        return Utils.existFile(SPEAKER_L_BOOST);
+    }
+
+    public static void setSpeakerRGain(String value, Context context) {
+        run(Control.write(value, SPEAKER_R_BOOST), SPEAKER_R_BOOST, context);
+    }
+
+    public static String getSpeakerRGain() {
+        return Utils.readFile(SPEAKER_R_BOOST);
+    }
+
+    public static boolean hasSpeakerRGain() {
+        return Utils.existFile(SPEAKER_R_BOOST);
+    }
+
+    public static void setCameraMicGain(String value, Context context) {
+        run(Control.write(value, CAMERA_MIC_BOOST), CAMERA_MIC_BOOST, context);
+    }
+
+    public static String getCameraMicGain() {
+        return Utils.readFile(CAMERA_MIC_BOOST);
+    }
+
+    public static boolean hasCameraMicGain() {
+        return Utils.existFile(CAMERA_MIC_BOOST);
     }
 
     public static void setMicrophoneGain(String value, Context context) {
