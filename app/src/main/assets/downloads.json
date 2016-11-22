@@ -236,15 +236,10 @@
   },
   { 
     "vendor": [
-      "Sony",	
-      "SONY"
+      "Sony"
     ],
     "device": [
-      "Xperia M",
-      "C1904",
-      "C1905",
-      "D2004",
-      "D2005"
+      "nicki"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/nicki.json"
   }
