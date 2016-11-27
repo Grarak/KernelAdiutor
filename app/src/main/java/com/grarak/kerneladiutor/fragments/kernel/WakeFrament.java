@@ -106,7 +106,7 @@ public class WakeFrament extends RecyclerViewFragment {
     }
 
     private void s2wInit(List<RecyclerViewItem> items) {
-        if (S2w.supported()) {
+        /*if (S2w.supported()) {
             SelectView s2w = new SelectView();
             s2w.setTitle(getString(R.string.s2w));
             s2w.setSummary(getString(R.string.s2w_summary));
@@ -120,7 +120,58 @@ public class WakeFrament extends RecyclerViewFragment {
             });
 
             items.add(s2w);
+        }*/
+
+        if (S2w.supported()) {
+            SwitchView sv = new SwitchView();
+            sv.setTitle("S2W Right");
+            sv.setChecked(S2w.isS2wRightEnabled());
+            sv.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    if(isChecked) S2w.set(S2w.get()+1, getActivity());
+                    else S2w.set(S2w.get()-1, getActivity());
+                }
+            });
+            items.add(sv);
+
+            sv = new SwitchView();
+            sv.setTitle("S2W Left");
+            sv.setChecked(S2w.isS2wLeftEnabled());
+            sv.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    if(isChecked) S2w.set(S2w.get()+2, getActivity());
+                    else S2w.set(S2w.get()-2, getActivity());
+                }
+            });
+            items.add(sv);
+
+            sv = new SwitchView();
+            sv.setTitle("S2W Up");
+            sv.setChecked(S2w.isS2wUpEnabled());
+            sv.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    if(isChecked) S2w.set(S2w.get()+4, getActivity());
+                    else S2w.set(S2w.get()-4, getActivity());
+                }
+            });
+            items.add(sv);
+
+            sv = new SwitchView();
+            sv.setTitle("S2W Down");
+            sv.setChecked(S2w.isS2wDownEnabled());
+            sv.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    if(isChecked) S2w.set(S2w.get()+8, getActivity());
+                    else S2w.set(S2w.get()-8, getActivity());
+                }
+            });
+            items.add(sv);
         }
+
 
         if (S2w.hasLenient()) {
             SwitchView lenient = new SwitchView();

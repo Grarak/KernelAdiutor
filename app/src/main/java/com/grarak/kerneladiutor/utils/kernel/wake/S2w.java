@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.utils.kernel.wake;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
@@ -67,6 +68,31 @@ public class S2w {
     }
 
     private static String FILE;
+
+    public static boolean isS2wDownEnabled() {
+        return Integer.valueOf(Utils.readFile(FILE)) - 8 >= 0;
+    }
+
+    public static boolean isS2wUpEnabled() {
+        int value = Integer.valueOf(Utils.readFile(FILE));
+        if(isS2wDownEnabled()) value -= 8;
+        return value - 4 >= 0;
+    }
+
+    public static boolean isS2wLeftEnabled() {
+        int value = Integer.valueOf(Utils.readFile(FILE));
+        if(isS2wDownEnabled()) value -= 8;
+        if(isS2wUpEnabled()) value -= 4;
+        return value - 2 >= 0;
+    }
+
+    public static boolean isS2wRightEnabled() {
+        int value = Integer.valueOf(Utils.readFile(FILE));
+        if(isS2wDownEnabled()) value -= 8;
+        if(isS2wUpEnabled()) value -= 4;
+        if(isS2wLeftEnabled()) value -= 2;
+        return value - 1 >= 0;
+    }
 
     public static void enableLenient(boolean enable, Context context) {
         run(Control.write(enable ? "1" : "0", LENIENT), LENIENT, context);
