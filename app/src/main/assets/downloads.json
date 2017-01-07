@@ -295,6 +295,16 @@
       "le_s2_ww"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/s2.json"
-  }
+  },
+  {
+  "vendor": [
+    "samsung"
+  ],
+  "device": [
+    "zerolte",
+    "SM-G920I"
+  ],
+  "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/zerolte.json"
+} 
 ]
 
