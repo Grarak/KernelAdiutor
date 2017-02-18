@@ -84,6 +84,7 @@ public class Calibration {
         sColorEnables.add(DIAG0_POWER_CTRL);
         sColorEnables.add(COLOR_CONTROL_CTRL);
 
+        sNewKCAL.add(FB_KCAL);
         sNewKCAL.add(KCAL_CTRL_ENABLE);
         sNewKCAL.add(KCAL_CTRL_INVERT);
         sNewKCAL.add(KCAL_CTRL_SAT);
@@ -262,11 +263,6 @@ public class Calibration {
                 break;
             case FB0_RGB:
                 for (int i = 255; i <= 32768; i++) {
-                    list.add(String.valueOf(i));
-                }
-                break;
-            case FB_KCAL:
-                for (int i = 0; i < 256; i++) {
                     list.add(String.valueOf(i));
                 }
                 break;
