@@ -38,6 +38,9 @@ public class Misc {
     private static final String LM3530_MIN_BRIGHTNESS = "/sys/devices/i2c-0/0-0038/lm3530_min_br";
     private static final String LM3530_MAX_BRIGHTNESS = "/sys/devices/i2c-0/0-0038/lm3530_max_br";
 
+    private static final String MT65xx_MAX_BRIGHTNESS = "/sys/devices/platform/leds-mt65xx/leds/lcd-backlight/max_brightness";
+    private static final String MT65xx_CUR_BRIGHTNESS = "/sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness";
+
     private static final String LM3630_BACKLIGHT_DIMMER = "/sys/module/lm3630_bl/parameters/backlight_dimmer";
     private static final String MDSS_BACKLIGHT_DIMMER = "/sys/module/mdss_fb/parameters/backlight_dimmer";
     private static final String LM3630_MIN_BRIGHTNESS = "/sys/module/lm3630_bl/parameters/min_brightness";
@@ -76,10 +79,6 @@ public class Misc {
             run(Control.write(enable ? "1" : "0", TPD_GLOVE_MODE), TPD_GLOVE_MODE, context);
         }
         }
-
-    public static void enableTpdGloveMode(boolean enable, Context context) {
-        run(Control.write(enable ? "1" : "0", TPD_GLOVE_MODE), TPD_GLOVE_MODE, context);
-    }
 
     public static boolean isGloveModeEnabled() {
         return Utils.readFile(GLOVE_MODE).equals("1");
