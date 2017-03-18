@@ -83,5 +83,10 @@
     "gpu": "/sys/class/thermal/thermal_zone15/temp",
     "cpu-offset": 10,
     "gpu-offset": 10
-  }
+  },
+  "board": "mt6753",
+    "cpu": "/sys/class/thermal/thermal_zone2/temp",
+    "gpu": "/sys/class/thermal/thermal_zone10/temp",
+    "cpu-offset": 1000,
+    "gpu-offset": 1000
 ]
