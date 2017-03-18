@@ -81,11 +81,11 @@ public class Misc {
         }
 
     public static boolean isGloveModeEnabled() {
-        return Utils.readFile(GLOVE_MODE).equals("1");
+        return Utils.readFile(GLOVE_MODE).equals("glove");
     }
 
     public static boolean isTpdGloveModeEnabled() {
-        return Utils.readFile(TPD_GLOVE_MODE).equals("glove");
+        return Utils.readFile(TPD_GLOVE_MODE).equals("1");
     }
 
     public static boolean hasGloveMode() {
