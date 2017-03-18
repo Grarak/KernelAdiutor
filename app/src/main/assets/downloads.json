@@ -296,6 +296,18 @@
       "le_s2_ww"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/s2.json"
+  },
+  {
+    "vendor": [
+      "LENOVO",
+      "lenovo"
+    ],
+    "device": [
+      "A7010a48",
+      "K4 NOTE",
+      "k5fpr"
+    ],
+    "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/A7010a48.json"
   }
 ]
 
