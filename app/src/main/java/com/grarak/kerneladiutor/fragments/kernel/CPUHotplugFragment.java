@@ -275,8 +275,6 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
         items.add(inputboost);
         items.add(inputboost_cpus);
         mEnableViews.add(mtStrategy);
-        mEnableViews.add(rushboost);
-        mEnableViews.add(inputboost);
     }
 
     private void intelliPlugInit(List<RecyclerViewItem> items) {
