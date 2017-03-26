@@ -523,6 +523,7 @@
 
     <!-- Sound -->
     <string name="sound_control">Sound Control</string>
+    <string name="headset_pdesireaudio">PDesireAudio Ultra High Quality Mode</string>
     <string name="headset_highperf_mode">Headset High Performance Mode</string>
     <string name="headphone_gain">Headphone Gain</string>
     <string name="handset_microphone_gain">Handset Microphone Gain</string>
