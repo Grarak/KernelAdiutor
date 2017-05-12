@@ -504,7 +504,7 @@
   <string name="microphone_gain">麦克风增益</string>
   <string name="volume_gain">音量增益</string>
   <!-- Battery -->
-  <string name="level">级别</string>
+  <string name="level">电量</string>
   <string name="voltage">电压</string>
   <string name="capacity">容量</string>
   <string name="usb_fast_charge">USB 快充</string>
