@@ -79,6 +79,15 @@ public class SoundFragment extends RecyclerViewFragment {
         if (Sound.hasVolumeGain()) {
             volumeGainInit(items);
         }
+        if (Sound.hasSpeakerLGain()) {
+            speakerLGainInit(items);
+        }
+        if (Sound.hasSpeakerRGain()) {
+            speakerRGainInit(items);
+        }
+        if (Sound.hasCameraMicGain()) {
+            cameraMicGainInit(items);
+        }
     }
 
     private void soundControlEnableInit(List<RecyclerViewItem> items) {
@@ -292,6 +301,63 @@ public class SoundFragment extends RecyclerViewFragment {
         });
 
         items.add(volumeGain);
+    }
+
+    private void speakerLGainInit(List<RecyclerViewItem> items) {
+        SeekBarView speakerLGain = new SeekBarView();
+        speakerLGain.setTitle(getString(R.string.speaker_l_gain));
+        speakerLGain.setItems(Sound.getVolumeGainLimits());
+        speakerLGain.setProgress(Sound.getVolumeGainLimits().indexOf(Sound.getSpeakerLGain()));
+        speakerLGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setSpeakerLGain(value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        items.add(speakerLGain);
+    }
+
+    private void speakerRGainInit(List<RecyclerViewItem> items) {
+        SeekBarView speakerRGain = new SeekBarView();
+        speakerRGain.setTitle(getString(R.string.speaker_r_gain));
+        speakerRGain.setItems(Sound.getVolumeGainLimits());
+        speakerRGain.setProgress(Sound.getVolumeGainLimits().indexOf(Sound.getSpeakerRGain()));
+        speakerRGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setSpeakerRGain(value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        items.add(speakerRGain);
+    }
+
+    private void cameraMicGainInit(List<RecyclerViewItem> items) {
+        SeekBarView cameraMicGain = new SeekBarView();
+        cameraMicGain.setTitle(getString(R.string.cam_microphone_gain));
+        cameraMicGain.setItems(Sound.getVolumeGainLimits());
+        cameraMicGain.setProgress(Sound.getVolumeGainLimits().indexOf(Sound.getCameraMicGain()));
+        cameraMicGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setCameraMicGain(value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        items.add(cameraMicGain);
     }
 
 }

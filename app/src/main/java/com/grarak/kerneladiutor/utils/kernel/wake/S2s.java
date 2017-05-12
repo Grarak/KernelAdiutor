@@ -43,6 +43,7 @@ public class S2s {
     private static final List<Integer> sGenericMenu = new ArrayList<>();
 
     static {
+        sS2s2Menu.add(R.string.disabled);
         sS2s2Menu.add(R.string.s2s_right);
         sS2s2Menu.add(R.string.s2s_left);
         sS2s2Menu.add(R.string.s2s_any);
@@ -50,7 +51,7 @@ public class S2s {
         sGenericMenu.add(R.string.disabled);
         sGenericMenu.add(R.string.enabled);
 
-        sFiles.put(S2S, sGenericMenu);
+        sFiles.put(S2S, sS2s2Menu);
         sFiles.put(S2S_2, sS2s2Menu);
     }
 
