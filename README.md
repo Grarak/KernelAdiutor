@@ -3,9 +3,13 @@
 [![Build Status](https://travis-ci.org/Grarak/KernelAdiutor.svg?branch=master)](https://travis-ci.org/Grarak/KernelAdiutor)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/kernel-adiutor/localized.png)](https://crowdin.com/project/kernel-adiutor)
 
-* [Join Google+ Community](https://plus.google.com/communities/108445529270785762340) (Beta Testing)
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/app/com.grarak.kerneladiutor)
+<a href="https://play.google.com/store/apps/details?id=com.grarak.kerneladiutor"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
 
-[![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.grarak.kerneladiutor)
+## Beta testing
+[Join Google+ Community](https://plus.google.com/communities/108445529270785762340)
+
+## Support development with a donation
 [![PayPal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G3643L52LJQ7G)
 
 ## Kernel Downloader
@@ -29,7 +33,7 @@ You can report a bug or request a feature by [opening an issue](https://github.c
 * How to apply a new value
 * Make sure there are no similar feature requests already
 
-## Download & Build
+## Build
 
 Clone the project and come in:
 
