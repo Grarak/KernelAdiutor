@@ -57,6 +57,9 @@ public class GammaProfiles {
         }
     }
 
+
+
+
     public GammaControlProfiles getGammaControl() {
         try {
             if (gammaControlProfiles == null && JSON != null) {

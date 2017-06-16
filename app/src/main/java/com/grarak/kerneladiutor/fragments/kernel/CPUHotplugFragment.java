@@ -19,6 +19,8 @@
  */
 package com.grarak.kerneladiutor.fragments.kernel;
 
+import android.provider.MediaStore;
+
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
@@ -36,6 +38,7 @@ import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MSMHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MakoHotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.ThunderPlug;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.ZenDecision;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MtStrategy;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
@@ -101,6 +104,9 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
         if (CoreCtl.supported()) {
             coreCtlInit(items);
         }
+        if (MtStrategy.supported()) {
+            mtStrategyInit(items);
+        }
 
         for (SwitchView view : mEnableViews) {
             view.addOnSwitchListener(new SwitchView.OnSwitchListener() {
@@ -136,6 +142,139 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
 
         items.add(mpdecision);
         mEnableViews.add(mpdecision);
+    }
+
+    private void mtStrategyInit(List<RecyclerViewItem> items) {
+        TitleView MediatekTitle = new TitleView();
+        MediatekTitle.setText("MediatekStrategy Hotplug");
+        SwitchView mtStrategy = new SwitchView();
+        mtStrategy.setTitle(getString(R.string.mtStrategy));
+        mtStrategy.setSummary(getString(R.string.mtStrategy_summary));
+        mtStrategy.setChecked(MtStrategy.isMtStrategyEnabled());
+        mtStrategy.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchView, boolean isChecked) {
+                MtStrategy.enableMtStrategy(isChecked, getActivity());
+            }
+        });
+
+        SeekBarView ultra_power_saving = new SeekBarView();
+        ultra_power_saving.setTitle("Limit cpus online");
+        ultra_power_saving.setSummary("Limit cpus online to increase battery life, but decrease performance");
+        ultra_power_saving.setMin(0);
+        ultra_power_saving.setMax(CPUFreq.getCpuCount());
+        ultra_power_saving.setProgress(MtStrategy.getUltraPowerSaving());
+        ultra_power_saving.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                                                    @Override
+                                                    public void onMove(SeekBarView seekBarView, int position, String value) {
+                                                    }
+
+                                                    @Override
+                                                    public void onStop(SeekBarView seekBarView, int position, String value) {
+                                                        MtStrategy.setUltraPowerSaving(position, getActivity());
+                                                    }
+                                                });
+
+        SwitchView rushboost = new SwitchView();
+        rushboost.setTitle("RushBoost");
+        rushboost.setSummary("Immediately bring more cores online if current load is above the threshold");
+        rushboost.setChecked(MtStrategy.getRushBoost());
+        rushboost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchView, boolean isChecked) {
+                MtStrategy.setRushBoost(isChecked, getActivity());
+            }
+        });
+
+        SwitchView inputboost = new SwitchView();
+        inputboost.setTitle("InputBoost");
+        inputboost.setSummary("Brings the specified number of cores online when an input event is detected");
+        inputboost.setChecked(MtStrategy.getInputBoost());
+        inputboost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchView, boolean isChecked) {
+                MtStrategy.setInputBoost(isChecked, getActivity());
+            }
+        });
+
+        SeekBarView inputboost_cpus = new SeekBarView();
+        inputboost_cpus.setTitle("InputBoost Core Number");
+        inputboost_cpus.setSummary("Number of cores to bring online with InputBoost");
+        inputboost_cpus.setMin(1);
+        inputboost_cpus.setMax(CPUFreq.getCpuCount());
+        inputboost_cpus.setProgress(MtStrategy.getInputBoostCpu());
+        inputboost_cpus.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                MtStrategy.setInputBoostCpu(position, getActivity());
+            }
+        });
+
+        SeekBarView rushboost_threshold = new SeekBarView();
+        rushboost_threshold.setTitle("RushBoost Threshold");
+        rushboost_threshold.setSummary("Threshold for RushBoost");
+        rushboost_threshold.setMin(1);
+        rushboost_threshold.setMax(100);
+        rushboost_threshold.setProgress(MtStrategy.getRushBoostThreshold());
+        rushboost_threshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                MtStrategy.setRushBoostThreshold(position, getActivity());
+            }
+        });
+
+        SeekBarView up_threshold = new SeekBarView();
+        up_threshold.setTitle("Up Threshold");
+        up_threshold.setSummary("Usage threshold before new cores get turned on");
+        up_threshold.setMin(1);
+        up_threshold.setMax(100);
+        up_threshold.setProgress(MtStrategy.getUpThreshold());
+        up_threshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                MtStrategy.setUpThreshold(position, getActivity());
+            }
+        });
+
+        SeekBarView down_threshold = new SeekBarView();
+        down_threshold.setTitle("Down Threshold");
+        down_threshold.setSummary("Usage threshold before cores get shutdown");
+        down_threshold.setMin(1);
+        down_threshold.setMax(100);
+        down_threshold.setProgress(MtStrategy.getDownThreshold());
+        down_threshold.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                MtStrategy.setDownThreshold(position, getActivity());
+            }
+        });
+
+        items.add(MediatekTitle);
+        items.add(mtStrategy);
+        items.add(up_threshold);
+        items.add(down_threshold);
+        items.add(ultra_power_saving);
+        items.add(rushboost);
+        items.add(rushboost_threshold);
+        items.add(inputboost);
+        items.add(inputboost_cpus);
+        mEnableViews.add(mtStrategy);
     }
 
     private void intelliPlugInit(List<RecyclerViewItem> items) {

@@ -58,6 +58,10 @@ public class ScreenFragment extends RecyclerViewFragment {
     private GenericSelectView mKGammaGreen;
     private GenericSelectView mKGammaRed;
 
+    private GenericSelectView mMTKGammaBlue;
+    private GenericSelectView mMTKGammaGreen;
+    private GenericSelectView mMTKGammaRed;
+
     private GenericSelectView mGammaControlRedGreys;
     private GenericSelectView mGammaControlRedMids;
     private GenericSelectView mGammaControlRedBlacks;
@@ -98,6 +102,8 @@ public class ScreenFragment extends RecyclerViewFragment {
             kgammaInit(gammas);
         } else if (Gamma.hasGammaControl()) {
             gammacontrolInit(gammas);
+        } else if (Gamma.hasMTKGamma()) {
+            mtkgammaInit(gammas);
         } else if (Gamma.hasDsiPanel()) {
             dsipanelInit(gammas);
         }
@@ -115,7 +121,7 @@ public class ScreenFragment extends RecyclerViewFragment {
             negativeToggleInit(items);
         }
         mdnieGlobalInit(items);
-        if (Misc.hasGloveMode()) {
+        if (Misc.hasGloveMode() || Misc.hasTpdGloveMode()) {
             gloveModeInit(items);
         }
     }
@@ -420,6 +426,66 @@ public class ScreenFragment extends RecyclerViewFragment {
             items.add(profiles);
         }
     }
+
+    private void mtkgammaInit(List<RecyclerViewItem> items) {
+        if (mMTKGammaBlue == null) {
+            mMTKGammaBlue = new GenericSelectView();
+            mMTKGammaBlue.setSummary(getString(R.string.blue));
+            mMTKGammaBlue.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
+                @Override
+                public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
+                    Gamma.setMTKGammaBlue(value, getActivity());
+                    mtkgammaInit(null);
+                }
+            });
+        }
+        String blue = Gamma.getMTKGammaBlue();
+        mMTKGammaBlue.setValue(blue);
+        mMTKGammaBlue.setValueRaw(blue);
+
+        if (items != null) {
+            items.add(mMTKGammaBlue);
+        }
+
+        if (mMTKGammaGreen == null) {
+            mMTKGammaGreen = new GenericSelectView();
+            mMTKGammaGreen.setSummary(getString(R.string.green));
+            mMTKGammaGreen.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
+                @Override
+                public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
+                    Gamma.setMTKGammaGreen(value, getActivity());
+                    mtkgammaInit(null);
+                }
+            });
+        }
+        String green = Gamma.getMTKGammaGreen();
+        mMTKGammaGreen.setValue(green);
+        mMTKGammaGreen.setValueRaw(green);
+
+        if (items != null) {
+            items.add(mMTKGammaGreen);
+        }
+
+        if (mMTKGammaRed == null) {
+            mMTKGammaRed = new GenericSelectView();
+            mMTKGammaRed.setSummary(getString(R.string.red));
+            mMTKGammaRed.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
+                @Override
+                public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
+                    Gamma.setMTKGammaRed(value, getActivity());
+                    mtkgammaInit(null);
+                }
+            });
+        }
+        String red = Gamma.getMTKGammaRed();
+        mMTKGammaRed.setValue(red);
+        mMTKGammaRed.setValueRaw(red);
+
+        if (items != null) {
+            items.add(mMTKGammaRed);
+        }
+    }
+
 
     private void gammacontrolInit(List<RecyclerViewItem> items) {
         if (mGammaControlRedGreys == null) {
@@ -1110,7 +1176,7 @@ public class ScreenFragment extends RecyclerViewFragment {
         SwitchView glove = new SwitchView();
         glove.setTitle(getString(R.string.glove_mode));
         glove.setSummary(getString(R.string.glove_mode_summary));
-        glove.setChecked(Misc.isGloveModeEnabled());
+        glove.setChecked(Misc.isGloveModeEnabled() || Misc.isTpdGloveModeEnabled());
         glove.addOnSwitchListener(new SwitchView.OnSwitchListener() {
             @Override
             public void onChanged(SwitchView switchView, boolean isChecked) {

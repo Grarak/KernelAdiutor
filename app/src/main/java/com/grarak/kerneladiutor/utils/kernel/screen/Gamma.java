@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.utils.kernel.screen;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -36,6 +37,9 @@ public class Gamma {
     private static final String K_GAMMA_R = "/sys/devices/platform/mipi_lgit.1537/kgamma_r";
     private static final String K_GAMMA_G = "/sys/devices/platform/mipi_lgit.1537/kgamma_g";
     private static final String K_GAMMA_B = "/sys/devices/platform/mipi_lgit.1537/kgamma_b";
+
+    //]784
+    private static final String MTK_GAMMA_RGB = "/sys/devices/platform/mtk_disp_mgr.0/rgb";
 
     private static final String K_GAMMA_RED = "/sys/devices/platform/mipi_lgit.1537/kgamma_red";
     private static final String K_GAMMA_GREEN = "/sys/devices/platform/mipi_lgit.1537/kgamma_green";
@@ -409,8 +413,59 @@ public class Gamma {
         return false;
     }
 
+    public static boolean hasMTKGamma() {
+        if (Utils.existFile(MTK_GAMMA_RGB)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static String[] getMTKGammaRGB() {
+        String rgb = Utils.readFile(MTK_GAMMA_RGB);
+        String split [] = rgb.split(" ");
+        return split;
+    }
+
+    public static String getMTKGammaBlue() {
+        String split[] = getMTKGammaRGB();
+        return split[2];
+
+    }
+
+    public static String getMTKGammaGreen() {
+        String split[] = getMTKGammaRGB();
+        return split[1];
+    }
+
+    public static String getMTKGammaRed() {
+        String split[] = getMTKGammaRGB();
+        return split[0];
+    }
+
+    public static void setMTKGammaBlue(String value, Context context) {
+        String split[] = getMTKGammaRGB();
+        split[2] = value;
+        String converted = TextUtils.join(" ",split);
+        run(Control.write(converted, MTK_GAMMA_RGB), MTK_GAMMA_RGB, context);
+    }
+
+    public static void setMTKGammaGreen(String value, Context context) {
+        String split[] = getMTKGammaRGB();
+        split[1] = value;
+        String converted = TextUtils.join(" ",split);
+        run(Control.write(converted, MTK_GAMMA_RGB), MTK_GAMMA_RGB, context);
+    }
+
+    public static void setMTKGammaRed(String value, Context context) {
+        String split[] = getMTKGammaRGB();
+        split[0] = value;
+        String converted = TextUtils.join(" ",split);
+        run(Control.write(converted, MTK_GAMMA_RGB), MTK_GAMMA_RGB, context);
+    }
+
     public static boolean supported() {
-        return hasKGamma() || hasGammaControl() || hasDsiPanel();
+        return hasKGamma() || hasGammaControl() || hasDsiPanel() || hasMTKGamma();
     }
 
     private static void run(String command, String id, Context context) {

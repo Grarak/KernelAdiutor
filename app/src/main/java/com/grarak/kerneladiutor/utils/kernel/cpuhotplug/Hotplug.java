@@ -28,7 +28,7 @@ public class Hotplug {
         return MPDecision.supported() || IntelliPlug.supported() || LazyPlug.supported()
                 || BluPlug.supported() || MSMHotplug.supported() || MakoHotplug.supported()
                 || MBHotplug.supported() || AlucardHotplug.supported() || ThunderPlug.supported()
-                || ZenDecision.supported() || AutoSmp.supported() || CoreCtl.supported();
+                || ZenDecision.supported() || AutoSmp.supported() || CoreCtl.supported() || MtStrategy.supported();
     }
 
 }
