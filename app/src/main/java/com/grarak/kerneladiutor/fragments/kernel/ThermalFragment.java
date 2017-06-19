@@ -679,6 +679,98 @@ public class ThermalFragment extends RecyclerViewFragment {
 
             items.add(shutDownTemp);
         }
+        
+        if (MSMThermal.hasFrancoThermalStep()) {
+		    List<String> list = new ArrayList<>();
+            for (int i = 1; i < 7; i++){ 
+		    list.add(String.valueOf(i));}
+            SeekBarView francothermalstep = new SeekBarView();
+            francothermalstep.setTitle(getString(R.string.franco_thermal_step));
+            francothermalstep.setSummary(getString(R.string.franco_thermal_step_summary));
+            francothermalstep.setMax(10);
+            francothermalstep.setMin(0);
+            francothermalstep.setProgress(MSMThermal.getFrancoThermalStep());
+            francothermalstep.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    MSMThermal.setFrancoThermalStep(position, getActivity());
+                }
+            });
+
+            items.add(francothermalstep);
+        }
+       
+        if (MSMThermal.hasFrancoThermalStageOne()) {
+			List<String> freqs = new ArrayList<>();
+            SelectView mFrancoThermalStageOneCard = new SelectView();
+            mFrancoThermalStageOneCard.setTitle(getString(R.string.thermal_franco_stage_one));
+            mFrancoThermalStageOneCard.setSummary(getString(R.string.throttle_at) + (MSMThermal.getCurTempLimit()) + getString(R.string.throttle_tempc));
+            mFrancoThermalStageOneCard.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+            mFrancoThermalStageOneCard.setItem((MSMThermal.getFrancoThermalStageOne() / 1000) + getString(R.string.mhz));
+            mFrancoThermalStageOneCard.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    MSMThermal.setFrancoThermalStageOne(CPUFreq.getFreqs().get(position), getActivity());
+                }
+            });
+
+            items.add(mFrancoThermalStageOneCard);
+        }
+        
+        if (MSMThermal.hasFrancoThermalStageTwo()) {
+			List<String> freqs = new ArrayList<>();
+            SelectView mFrancoThermalStageTwoCard = new SelectView();
+            mFrancoThermalStageTwoCard.setTitle(getString(R.string.thermal_franco_stage_two));
+            mFrancoThermalStageTwoCard.setSummary(getString(R.string.throttle_at) + ((MSMThermal.getCurTempLimit()) + (MSMThermal.getFrancoThermalStep())) + getString(R.string.throttle_tempc));
+            mFrancoThermalStageTwoCard.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+            mFrancoThermalStageTwoCard.setItem((MSMThermal.getFrancoThermalStageTwo() / 1000) + getString(R.string.mhz));
+            mFrancoThermalStageTwoCard.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    MSMThermal.setFrancoThermalStageTwo(CPUFreq.getFreqs().get(position), getActivity());
+                }
+            });
+
+            items.add(mFrancoThermalStageTwoCard);
+        }
+        
+         if (MSMThermal.hasFrancoThermalStageThree()) {
+			List<String> freqs = new ArrayList<>();
+            SelectView mFrancoThermalStageThreeCard = new SelectView();
+            mFrancoThermalStageThreeCard.setTitle(getString(R.string.thermal_franco_stage_three));
+            mFrancoThermalStageThreeCard.setSummary(getString(R.string.throttle_at) + ((MSMThermal.getCurTempLimit()) + (MSMThermal.getFrancoThermalStep() * 2)) + getString(R.string.throttle_tempc));
+            mFrancoThermalStageThreeCard.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+            mFrancoThermalStageThreeCard.setItem((MSMThermal.getFrancoThermalStageThree() / 1000) + getString(R.string.mhz));
+            mFrancoThermalStageThreeCard.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    MSMThermal.setFrancoThermalStageThree(CPUFreq.getFreqs().get(position), getActivity());
+                }
+            });
+
+            items.add(mFrancoThermalStageThreeCard);
+        }
+        if (MSMThermal.hasFrancoThermalStageFour()) {
+			List<String> freqs = new ArrayList<>();
+            SelectView mFrancoThermalStageFourCard = new SelectView();
+            mFrancoThermalStageFourCard.setTitle(getString(R.string.thermal_franco_stage_four));
+            mFrancoThermalStageFourCard.setSummary(getString(R.string.throttle_at) + ((MSMThermal.getCurTempLimit()) + (MSMThermal.getFrancoThermalStep() * 3)) + getString(R.string.throttle_tempc));
+            mFrancoThermalStageFourCard.setItems(CPUFreq.getAdjustedFreq(getActivity()));
+            mFrancoThermalStageFourCard.setItem((MSMThermal.getFrancoThermalStageFour() / 1000) + getString(R.string.mhz));
+            mFrancoThermalStageFourCard.setOnItemSelected(new SelectView.OnItemSelected() {
+                @Override
+                public void onItemSelected(SelectView selectView, int position, String item) {
+                    MSMThermal.setFrancoThermalStageFour(CPUFreq.getFreqs().get(position), getActivity());
+                }
+            });
+
+            items.add(mFrancoThermalStageFourCard);
+        }
+
 
     }
 

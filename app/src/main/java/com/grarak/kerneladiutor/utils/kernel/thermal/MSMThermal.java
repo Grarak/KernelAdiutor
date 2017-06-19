@@ -53,6 +53,11 @@ public class MSMThermal {
     private static final String PARAMETERS_THERMAL_LIMIT_HIGH = "parameters/thermal_limit_high";
     private static final String PARAMETERS_TEMP_SAFETY = "parameters/temp_safety";
     private static final String MSM_THERMAL_TEMP_THROTTLE = MSM_THERMAL + "/" + PARAMETERS_ENABLED;
+    private static final String THERMAL_FRANCO_STEP = "/sys/module/msm_thermal/parameters/temp_step";
+    private static final String THERMAL_FRANCO_STAGE_ONE = "/sys/module/msm_thermal/parameters/freq_warm";
+    private static final String THERMAL_FRANCO_STAGE_TWO = "/sys/module/msm_thermal/parameters/freq_hot";
+    private static final String THERMAL_FRANCO_STAGE_THREE = "/sys/module/msm_thermal/parameters/freq_very_hot";
+    private static final String THERMAL_FRANCO_STAGE_FOUR = "/sys/module/msm_thermal/parameters/freq_hell";
 
     private static final String MSM_THERMAL_THROTTLE_TEMP = MSM_THERMAL + "/parameters/throttle_temp";
     private static final String MSM_THERMAL_TEMP_MAX = MSM_THERMAL + "/parameters/temp_max";
@@ -524,6 +529,71 @@ public class MSMThermal {
 
     private static void run(String command, String id, Context context) {
         Control.runSetting(command, ApplyOnBootFragment.THERMAL, id, context);
+    }
+    
+    public static void setFrancoThermalStep(int value, Context context) {
+    run(Control.write(String.valueOf(value), THERMAL_FRANCO_STEP),
+                THERMAL_FRANCO_STEP, context);
+    }
+
+    public static int getFrancoThermalStep() {
+    return Utils.strToInt(Utils.readFile(THERMAL_FRANCO_STEP));
+    }
+
+    public static boolean hasFrancoThermalStep() {
+        return Utils.existFile(THERMAL_FRANCO_STEP);
+    }
+    
+    public static void setFrancoThermalStageOne(int freq, Context context) {
+        run(Control.write(String.valueOf(freq), THERMAL_FRANCO_STAGE_ONE),
+               THERMAL_FRANCO_STAGE_ONE, context);
+    }
+
+    public static int getFrancoThermalStageOne() {
+        return Utils.strToInt(Utils.readFile(THERMAL_FRANCO_STAGE_ONE));
+    }
+
+    public static boolean hasFrancoThermalStageOne() {
+        return Utils.existFile(THERMAL_FRANCO_STAGE_ONE);
+    }
+    
+    public static void setFrancoThermalStageTwo(int freq, Context context) {
+        run(Control.write(String.valueOf(freq), THERMAL_FRANCO_STAGE_TWO),
+               THERMAL_FRANCO_STAGE_TWO, context);
+    }
+
+    public static int getFrancoThermalStageTwo() {
+        return Utils.strToInt(Utils.readFile(THERMAL_FRANCO_STAGE_TWO));
+    }
+
+    public static boolean hasFrancoThermalStageTwo() {
+        return Utils.existFile(THERMAL_FRANCO_STAGE_TWO);
+    }
+    
+    public static void setFrancoThermalStageThree(int freq, Context context) {
+        run(Control.write(String.valueOf(freq), THERMAL_FRANCO_STAGE_THREE),
+               THERMAL_FRANCO_STAGE_THREE, context);
+    }
+
+    public static int getFrancoThermalStageThree() {
+        return Utils.strToInt(Utils.readFile(THERMAL_FRANCO_STAGE_THREE));
+    }
+
+    public static boolean hasFrancoThermalStageThree() {
+        return Utils.existFile(THERMAL_FRANCO_STAGE_THREE);
+    }
+    
+    public static void setFrancoThermalStageFour(int freq, Context context) {
+        run(Control.write(String.valueOf(freq), THERMAL_FRANCO_STAGE_FOUR),
+               THERMAL_FRANCO_STAGE_FOUR, context);
+    }
+
+    public static int getFrancoThermalStageFour() {
+        return Utils.strToInt(Utils.readFile(THERMAL_FRANCO_STAGE_FOUR));
+    }
+
+    public static boolean hasFrancoThermalStageFour() {
+        return Utils.existFile(THERMAL_FRANCO_STAGE_FOUR);
     }
 
 }

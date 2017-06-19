@@ -386,8 +386,17 @@
     <string name="allowed_max_freq">Phase 3: Allowed Max Frequency</string>
     <string name="check_interval">Check Interval</string>
     <string name="shutdown_temp">Shutdown Temperature</string>
-
-    <!-- GPU -->
+    <string name="franco_thermal_step">Thermal Step Value</string>
+    <string name="franco_thermal_step_summary">This value is added on top of threshold to create trigger thresholds between each stage</string> 
+    <string name="thermal_franco_stage_one">First stage limiting Frequency</string>
+    <string name="thermal_franco_stage_two">Second stage limiting Frequency</string>
+    <string name="thermal_franco_stage_three">Third stage limiting Frequency</string>
+    <string name="thermal_franco_stage_four">Fourth stage limiting Frequency</string>
+    <string name="throttle_at">This frequency is set as max frequency at :</string>
+    <string name="throttle_tempc">°C</string>
+    
+    
+     <!-- GPU -->
     <string name="frequencies">Frequencies</string>
     <string name="gpu_2d_freq">GPU 2D Frequency</string>
     <string name="gpu_2d_max_freq">GPU 2D Maximum Frequency</string>
