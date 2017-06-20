@@ -357,11 +357,15 @@ public class GPUFragment extends RecyclerViewFragment {
         List<RecyclerViewItem> adrenoboost = new ArrayList<>();
 
         if (Adrenoboost.supported()) {
+            List<String> list = new ArrayList<>();
+            list.add("Off");
+            list.add("Low");
+            list.add("Medium");
+            list.add("High");
             SeekBarView boost = new SeekBarView();
             boost.setTitle(getString(R.string.adrenoboost));
             boost.setSummary(getString(R.string.adrenoboost_summary));
-            boost.setMax(3);
-            boost.setMin(0);
+            boost.setItems(list);
             boost.setProgress(Adrenoboost.getAdrenoBoost());
             boost.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
