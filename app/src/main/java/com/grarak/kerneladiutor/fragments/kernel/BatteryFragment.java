@@ -177,7 +177,7 @@ public class BatteryFragment extends RecyclerViewFragment {
             USBchargingCurrent.setTitle(getString(R.string.usb_charging_current));
             USBchargingCurrent.setSummary(getString(R.string.usb_charging_current_summary));
             USBchargingCurrent.setUnit(getString(R.string.ma));
-            USBchargingCurrent.setMax(1500);
+            USBchargingCurrent.setMax(1000);
             USBchargingCurrent.setMin(100);
             USBchargingCurrent.setOffset(10);
             USBchargingCurrent.setProgress(Battery.getUSBChargingCurrent() / 10 - 10);
