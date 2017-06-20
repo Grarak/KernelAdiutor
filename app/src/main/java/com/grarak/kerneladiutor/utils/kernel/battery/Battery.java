@@ -39,6 +39,7 @@ public class Battery {
     private static final String CHARGE_RATE = "/sys/kernel/thundercharge_control";
     private static final String CHARGE_RATE_ENABLE = CHARGE_RATE + "/enabled";
     private static final String CUSTOM_CURRENT = CHARGE_RATE + "/custom_current";
+    private static final String CUSTOM_USB_CURRENT = CHARGE_RATE + "/custom_usb_current";
 
     private static Integer sCapacity;
 
@@ -52,6 +53,18 @@ public class Battery {
 
     public static boolean hasChargingCurrent() {
         return Utils.existFile(CUSTOM_CURRENT);
+    }
+
+    public static void setUSBChargingCurrent(int value, Context context) {
+        run(Control.write(String.valueOf(value), CUSTOM_USB_CURRENT), CUSTOM_USB_CURRENT, context);
+    }
+
+    public static int getUSBChargingCurrent() {
+        return Utils.strToInt(Utils.readFile(CUSTOM_USB_CURRENT));
+    }
+
+    public static boolean hasUSBChargingCurrent() {
+        return Utils.existFile(CUSTOM_USB_CURRENT);
     }
 
     public static void enableChargeRate(boolean enable, Context context) {

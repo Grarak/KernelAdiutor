@@ -172,6 +172,29 @@ public class BatteryFragment extends RecyclerViewFragment {
             chargeRateCard.addItem(chargingCurrent);
         }
 
+        if (Battery.hasUSBChargingCurrent()) {
+            SeekBarView USBchargingCurrent = new SeekBarView();
+            USBchargingCurrent.setTitle(getString(R.string.usb_charging_current));
+            USBchargingCurrent.setSummary(getString(R.string.usb_charging_current_summary));
+            USBchargingCurrent.setUnit(getString(R.string.ma));
+            USBchargingCurrent.setMax(1500);
+            USBchargingCurrent.setMin(100);
+            USBchargingCurrent.setOffset(10);
+            USBchargingCurrent.setProgress(Battery.getUSBChargingCurrent() / 10 - 10);
+            USBchargingCurrent.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    Battery.setUSBChargingCurrent((position + 10) * 10, getActivity());
+                }
+
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+            });
+
+            chargeRateCard.addItem(USBchargingCurrent);
+        }
+
         if (chargeRateCard.size() > 0) {
             items.add(chargeRateCard);
         }

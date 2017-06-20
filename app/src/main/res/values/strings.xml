@@ -554,6 +554,8 @@
     <string name="charge_rate">Charge Rate</string>
     <string name="charging_current">Charging Current</string>
     <string name="charging_current_summary">Set charging current. Caution: Exceeding 1250mA may damage your charging driver.</string>
+    <string name="usb_charging_current">Charging Current (USB)</string>
+    <string name="usb_charging_current_summary">Set the Current (mA) at which the Battery will be Charged when a USB is Connected.</string>
 
     <!-- LED -->
     <string name="fade">Fade</string>
