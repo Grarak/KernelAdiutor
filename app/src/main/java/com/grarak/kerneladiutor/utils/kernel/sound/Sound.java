@@ -36,6 +36,7 @@ public class Sound {
 
     private static final String SOUND_CONTROL_ENABLE = "/sys/module/snd_soc_wcd9320/parameters/enable_fs";
     private static final String HIGHPERF_MODE_ENABLE = "/sys/devices/virtual/misc/soundcontrol/highperf_enabled";
+    private static final String PDESIREAUDIO_ENABLE = "/sys/module/snd_soc_wcd9330/parameters/uhqa_mode_pdesireaudio";
     private static final String HEADPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_headphone_gain";
     private static final String HANDSET_MICROPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_mic_gain";
     private static final String CAM_MICROPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_cam_mic_gain";
@@ -334,6 +335,18 @@ public class Sound {
     public static boolean hasHighPerfModeEnable() {
         return Utils.existFile(HIGHPERF_MODE_ENABLE);
     }
+    
+    public static void enablePDesireAudio(boolean enable, Context context) {
+        run(Control.write(enable ? "1" : "0", PDESIREAUDIO_ENABLE), PDESIREAUDIO_ENABLE, context);
+    }
+    
+    public static boolean isPDesireAudioEnabled() {
+        return Utils.readFile(PDESIREAUDIO_ENABLE).equals("1");
+    }
+    
+    public static boolean hasPDesireAudio() {
+        return Utils.existFile(PDESIREAUDIO_ENABLE);
+    }
 
     public static void enableSoundControl(boolean enable, Context context) {
         run(Control.write(enable ? "Y" : "N", SOUND_CONTROL_ENABLE), SOUND_CONTROL_ENABLE, context);
@@ -351,7 +364,7 @@ public class Sound {
         return hasSoundControlEnable() || hasHighPerfModeEnable() || hasHeadphoneGain()
                 || hasHandsetMicrophoneGain() || hasCamMicrophoneGain() || hasSpeakerGain()
                 || hasHeadphonePowerAmpGain() || hasLockOutputGain() || hasLockMicGain()
-                || hasMicrophoneGain() || hasVolumeGain();
+                || hasMicrophoneGain() || hasPDesireAudio() || hasVolumeGain();
     }
 
     private static long getChecksum(int a, int b) {

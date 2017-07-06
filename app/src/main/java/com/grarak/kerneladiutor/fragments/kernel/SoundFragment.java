@@ -46,6 +46,9 @@ public class SoundFragment extends RecyclerViewFragment {
         if (Sound.hasSoundControlEnable()) {
             soundControlEnableInit(items);
         }
+        if (Sound.hasPDesireAudio()) {
+            PDesireAudioInit(items);
+        }
         if (Sound.hasHighPerfModeEnable()) {
             highPerfModeEnableInit(items);
         }
@@ -93,6 +96,20 @@ public class SoundFragment extends RecyclerViewFragment {
         });
 
         items.add(soundControl);
+    }
+    
+    private void PDesireAudioInit(List<RecyclerViewItem> items) {
+        SwitchView PDesireAudio = new SwitchView();
+        PDesireAudio.setSummary(getString(R.string.headset_pdesireaudio));
+        PDesireAudio.setChecked(Sound.isPDesireAudioEnabled());
+        PDesireAudio.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchView, boolean isChecked) {
+                Sound.enablePDesireAudio(isChecked, getActivity());
+            }
+        });
+
+        items.add(PDesireAudio);
     }
 
     private void highPerfModeEnableInit(List<RecyclerViewItem> items) {
