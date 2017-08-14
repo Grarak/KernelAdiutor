@@ -118,6 +118,9 @@ public class ScreenFragment extends RecyclerViewFragment {
         if (Misc.hasGloveMode()) {
             gloveModeInit(items);
         }
+        if (Misc.hasLenovoGloveMode()) {
+            lenovoGloveModeInit(items);
+        }
     }
 
     private void screenColorInit(List<RecyclerViewItem> items) {
@@ -1119,6 +1122,21 @@ public class ScreenFragment extends RecyclerViewFragment {
         });
 
         items.add(glove);
+    }
+
+    private void lenovoGloveModeInit(List<RecyclerViewItem> items) {
+        SwitchView lenovoGlove = new SwitchView();
+        lenovoGlove.setTitle(getString(R.string.glove_mode));
+        lenovoGlove.setSummary(getString(R.string.glove_mode_summary));
+        lenovoGlove.setChecked(Misc.isLenovoGloveModeEnabled());
+        lenovoGlove.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchView, boolean isChecked) {
+                Misc.enableLenovoGloveMode(isChecked, getActivity());
+            }
+        });
+
+        items.add(lenovoGlove);
     }
 
     public static class ColorTableFragment extends BaseFragment {
