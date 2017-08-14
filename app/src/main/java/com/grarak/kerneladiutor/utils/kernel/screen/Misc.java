@@ -52,6 +52,7 @@ public class Misc {
     private static final String MASTER_SEQUENCE = "/sys/class/misc/mdnie/sequence_intercept";
 
     private static final String GLOVE_MODE = "/sys/devices/virtual/touchscreen/touchscreen_dev/mode";
+    private static final String LENOVO_GLOVE_MODE = "/sys/lenovo_tp_gestures/tpd_glove_status";
 
     private static final List<String> sBackLightDimmer = new ArrayList<>();
     private static final HashMap<String, Integer> sMinBrightnessFiles = new HashMap<>();
@@ -78,6 +79,18 @@ public class Misc {
 
     public static boolean hasGloveMode() {
         return Utils.existFile(GLOVE_MODE);
+    }
+
+    public static void enableLenovoGloveMode(boolean enable, Context context) {
+        run(Control.write(enable ? "1" : "0", LENOVO_GLOVE_MODE), LENOVO_GLOVE_MODE, context);
+    }
+
+    public static boolean isLenovoGloveModeEnabled () {
+        return Utils.readFile(LENOVO_GLOVE_MODE).equals("1");
+    }
+
+    public static boolean hasLenovoGloveMode() {
+        return Utils.existFile(LENOVO_GLOVE_MODE);
     }
 
     public static void enableMasterSequence(boolean enable, Context context) {
@@ -225,7 +238,7 @@ public class Misc {
         return hasBrightnessMode() || hasLcdMinBrightness() || hasLcdMaxBrightness()
                 || hasBackLightDimmerEnable() || hasMinBrightness() || hasBackLightDimmerThreshold()
                 || hasBackLightDimmerOffset() || hasNegativeToggle() || hasRegisterHook()
-                || hasMasterSequence() || hasGloveMode();
+                || hasMasterSequence() || hasGloveMode() || hasLenovoGloveMode();
     }
 
     private static void run(String command, String id, Context context) {
