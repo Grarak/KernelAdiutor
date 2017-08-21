@@ -415,6 +415,8 @@
     <string name="idle_wait_summary">Number of events to wait before ramping down the frequency. The idlewait\'th events before current one must be all idle before Adreno idler ramps down the frequency. This implementation is to prevent micro-lags on scrolling or playing games. Adreno idler will more actively try to ramp down the frequency if this is set to a lower value.</string>
     <string name="workload">Workload</string>
     <string name="workload_summary">Adreno idler will more actively try to ramp down the frequency if this is set to a higher value.</string>
+    <string name="adrenoboost">Adrenoboost</string>
+    <string name="adrenoboost_summary">A governor for adreno gpus (0 - off, 3 - best performance)</string>
 
     <!-- Screen -->
     <string name="screen_color">Screen Color</string>
@@ -554,6 +556,8 @@
     <string name="charge_rate">Charge Rate</string>
     <string name="charging_current">Charging Current</string>
     <string name="charging_current_summary">Set charging current. Caution: Exceeding 1250mA may damage your charging driver.</string>
+    <string name="usb_charging_current">Charging Current (USB)</string>
+    <string name="usb_charging_current_summary">Set the Current (mA) at which the Battery will be Charged when a USB is Connected.</string>
 
     <!-- LED -->
     <string name="fade">Fade</string>

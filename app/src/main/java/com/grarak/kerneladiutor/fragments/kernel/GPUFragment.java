@@ -23,9 +23,12 @@ import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
+import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MSMHotplug;
 import com.grarak.kerneladiutor.utils.kernel.gpu.AdrenoIdler;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.gpu.SimpleGPU;
+import com.grarak.kerneladiutor.utils.kernel.gpu.Adrenoboost;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -69,6 +72,9 @@ public class GPUFragment extends RecyclerViewFragment {
         }
         if (AdrenoIdler.supported()) {
             adrenoIdlerInit(items);
+        }
+        if (Adrenoboost.supported()) {
+            adrenoboostInit(items);
         }
     }
 
@@ -346,6 +352,41 @@ public class GPUFragment extends RecyclerViewFragment {
             items.addAll(adrenoIdler);
         }
     }
+
+    private void adrenoboostInit(List<RecyclerViewItem> items) {
+        List<RecyclerViewItem> adrenoboost = new ArrayList<>();
+
+        if (Adrenoboost.supported()) {
+            List<String> list = new ArrayList<>();
+            list.add("Off");
+            list.add("Low");
+            list.add("Medium");
+            list.add("High");
+            SeekBarView boost = new SeekBarView();
+            boost.setTitle(getString(R.string.adrenoboost));
+            boost.setSummary(getString(R.string.adrenoboost_summary));
+            boost.setItems(list);
+            boost.setProgress(Adrenoboost.getAdrenoBoost());
+            boost.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    Adrenoboost.setAdrenoBoost(position, getActivity());
+                }
+            });
+
+            adrenoboost.add(boost);
+        }
+
+        if (adrenoboost.size() > 0) {
+            items.addAll(adrenoboost);
+        }
+    }
+
+
 
     @Override
     protected void refresh() {
