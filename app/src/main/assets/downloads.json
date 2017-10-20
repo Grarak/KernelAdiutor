@@ -302,6 +302,18 @@
       "X509"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/x3.json"
-  }
-]
+  },
+ 
+   {
+    "vendor": [
+     "Motorola",
+     "motorola"
+   ],
+   "device": [
+     "athene"
+    ],
+   "link": 
+  "https://raw.githubusercontent.com/krypticallusion/misc/master/KA/athene.json"
 
+      }
+]
