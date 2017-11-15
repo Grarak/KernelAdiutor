@@ -566,7 +566,13 @@
     <string name="blx_summary">Set a limit for the capacity to which the battery will be charged by passing a value between 0 and 100.</string>
     <string name="charge_rate">Charge Rate</string>
     <string name="charging_current">Charging Current</string>
-    <string name="charging_current_summary">Set charging current. Caution: Exceeding 1250mA may damage your charging driver.</string>
+    <string name="charging_current_summary">Adjust ChargeRate for ThunderCharge: Exceeding 1250mA may damage your charging driver.</string>
+    <string name="quick_charge">Quick Charge</string>
+    <string name="charge_profile">Charge Speed</string>
+    <string name="charge_profile_summary">Speed at which device charges.</string>
+    <string name="slowcharge">Slow (safe)</string>
+    <string name="balancedcharge">Balanced</string>
+    <string name="thundercharge">ThunderCharge (Constant)</string>
 
     <!-- LED -->
     <string name="fade">Fade</string>

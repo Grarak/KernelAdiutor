@@ -25,9 +25,12 @@ import android.support.annotation.NonNull;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.root.Control;
+import com.grarak.kerneladiutor.R;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by willi on 26.06.16.
@@ -49,6 +52,12 @@ public class Battery {
     private static final String CHARGE_RATE = "/sys/kernel/thundercharge_control";
     private static final String CHARGE_RATE_ENABLE = CHARGE_RATE + "/enabled";
     private static final String CUSTOM_CURRENT = CHARGE_RATE + "/custom_current";
+
+    private static final String QUICK_CHARGE = "/sys/kernel/Quick_Charge";
+    private static final String QC_ENABLE = QUICK_CHARGE + "/QC_Toggle";
+    private static final String CURRENT_NOW = "/sys/class/power_supply/battery/current_now";
+    private static final String QC_CURRENT = QUICK_CHARGE + "/custom_current";
+    private static final String CHARGE_PROFILE = QUICK_CHARGE + "/Charging_Profile";
 
     private int mCapacity;
 
@@ -90,6 +99,56 @@ public class Battery {
     public boolean hasChargeRateEnable() {
         return Utils.existFile(CHARGE_RATE_ENABLE);
     }
+
+    public int getCurrentNow() {
+        return Utils.strToInt(Utils.readFile(CURRENT_NOW));
+    }
+
+    public void setQCCurrent(int value, Context context) {
+        run(Control.write(String.valueOf(value), QC_CURRENT), QC_CURRENT, context);
+    }
+
+    public int getQCCurrent() {
+       return Utils.strToInt(Utils.readFile(QC_CURRENT));
+    }
+
+    public boolean hasQCCurrent() {
+        return Utils.existFile(QC_CURRENT);
+    }
+
+    public void enableQuickCharge(boolean enable, Context context) {
+         run(Control.write(enable ? "1" : "0", QC_ENABLE), QC_ENABLE, context);
+    }
+
+    public boolean isQuickChargeEnabled() {
+         return Utils.readFile(QC_ENABLE).equals("1");
+    }
+
+    public boolean hasQuickChargeEnable() {
+         return Utils.existFile(QC_ENABLE);
+    }
+
+    public boolean hasChargeProfile() {
+        return Utils.existFile(CHARGE_PROFILE);
+    }
+
+    public int getProfiles() {
+        String file = CHARGE_PROFILE;
+        return Utils.strToInt(Utils.readFile(file));
+    }
+
+    public List<String> getProfilesMenu(Context context) {
+        List<String> list = new ArrayList<>();
+        list.add(context.getString(R.string.slowcharge));
+        list.add(context.getString(R.string.balancedcharge));
+        list.add(context.getString(R.string.thundercharge));
+        return list;
+    }
+
+    public void setchargeProfile(int value, Context context) {
+        String file = CHARGE_PROFILE;
+        run(Control.write(String.valueOf(value), file), file, context);
+   }
 
     public void setBlx(int value, Context context) {
         run(Control.write(String.valueOf(value == 0 ? 101 : value - 1), BLX), BLX, context);
