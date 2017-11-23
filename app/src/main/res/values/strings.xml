@@ -37,6 +37,7 @@
     <string name="apply_on_boot_text">Applying settings in %d seconds.</string>
     <string name="apply_on_boot_complete">Applying settings completed.</string>
     <string name="apply_on_boot_canceled">Applying settings canceled.</string>
+    <string name="channel_name_onboot">OnBoot</string>
 
     <string name="not_in_range">Not in range</string>
     <string name="options">Options</string>
