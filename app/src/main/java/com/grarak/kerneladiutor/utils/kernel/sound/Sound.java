@@ -145,13 +145,35 @@ public class Sound {
         return Utils.existFile(LOCK_OUTPUT_GAIN);
     }
 
-    public static void setHeadphonePowerAmpGain(String value, Context context) {
+    public static void setHeadphonePowerAmpGain(String channel, String value, Context context) {
         value = String.valueOf(38 - Utils.strToInt(value));
-        fauxRun(value + " " + value, HEADPHONE_POWERAMP_GAIN, HEADPHONE_POWERAMP_GAIN, context);
+        switch (channel) {
+            case "all":
+                fauxRun(value + " " + value, HEADPHONE_POWERAMP_GAIN, HEADPHONE_POWERAMP_GAIN, context);
+                break;
+            case "left":
+                String currentGainRight = getHeadphonePowerAmpGain("right");
+                fauxRun(value + " " + currentGainRight, HEADPHONE_POWERAMP_GAIN, HEADPHONE_POWERAMP_GAIN, context);
+                break;
+            case "right":
+                String currentGainLeft = getHeadphonePowerAmpGain("left");
+                fauxRun(currentGainLeft + " " + value, HEADPHONE_POWERAMP_GAIN, HEADPHONE_POWERAMP_GAIN, context);
+                break;
+        }
     }
 
-    public static String getHeadphonePowerAmpGain() {
-        return String.valueOf(38 - Utils.strToInt(Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ")[0]));
+    public static String getHeadphonePowerAmpGain(String channel) {
+        String[] values = Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ");
+        String gainLeft = String.valueOf(38 - Utils.strToInt(values[0])),
+            gainRight = String.valueOf(38 - Utils.strToInt(values[1]));
+        switch (channel) {
+            case "all":
+            case "left":
+                return gainLeft;
+            case "right":
+                return gainRight;
+        }
+        return "";
     }
 
     public static List<String> getHeadphonePowerAmpGainLimits() {
@@ -317,23 +339,63 @@ public class Sound {
         return Utils.existFile(HANDSET_MICROPHONE_GAIN);
     }
 
-    public static void setHeadphoneGain(String value, Context context) {
+    public static void setHeadphoneGain(String channel, String value, Context context) {
         int newGain = Utils.strToInt(value);
-        if (newGain >= 0 && newGain <= 20) {
-            fauxRun(value + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
-        } else if (newGain <= -1 && newGain >= -30) {
-            value = String.valueOf(newGain + 256);
-            fauxRun(value + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+        switch (channel) {
+            case "all":
+                if (newGain >= 0 && newGain <= 20) {
+                    // Zero / 1 to 20 (positive gain range)
+                    fauxRun(value + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+                } else if (newGain <= -1 && newGain >= -30) {
+                    // -1 to -30 (negative gain range)
+                    value = String.valueOf(newGain + 256);
+                    fauxRun(value + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+                }
+                break;
+            case "left":
+                String currentGainRight = getHeadphoneGain("right");
+                if (newGain >= 0 && newGain <= 20) {
+                    // Zero / 1 to 20 (positive gain range)
+                    fauxRun(value + " " + currentGainRight, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+                } else if (newGain <= -1 && newGain >= -30) {
+                    // -1 to -30 (negative gain range)
+                    value = String.valueOf(newGain + 256);
+                    fauxRun(value + " " + currentGainRight, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+                }
+                break;
+            case "right":
+                String currentGainLeft = getHeadphoneGain("left");
+                if (newGain >= 0 && newGain <= 20) {
+                    // Zero / 1 to 20 (positive gain range)
+                    fauxRun(currentGainLeft + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+                } else if (newGain <= -1 && newGain >= -30) {
+                    // -1 to -30 (negative gain range)
+                    value = String.valueOf(newGain + 256);
+                    fauxRun(currentGainLeft + " " + value, HEADPHONE_GAIN, HEADPHONE_GAIN, context);
+                }
+                break;
         }
     }
 
-    public static String getHeadphoneGain() {
-        String value = Utils.readFile(HEADPHONE_GAIN);
-        int gain = Utils.strToInt(value.contains(" ") ? value.split(" ")[0] : value);
-        if (gain >= 0 && gain <= 20) {
-            return String.valueOf(gain);
-        } else if (gain >= 226 && gain <= 255) {
-            return String.valueOf(gain - 256);
+    public static String getHeadphoneGain(String channel) {
+        String[] values = Utils.readFile(HEADPHONE_GAIN).split(" ");
+        int gainLeft = Utils.strToInt(values[0]),
+            gainRight = Utils.strToInt(values[1]);
+        switch (channel) {
+            case "all":
+            case "left":
+                if (gainLeft >= 0 && gainLeft <= 20) {
+                    return String.valueOf(gainLeft);
+                } else if (gainLeft >= 226 && gainLeft <= 255) {
+                    return String.valueOf(gainLeft - 256);
+                }
+                break;
+            case "right":
+                if (gainRight >= 0 && gainRight <= 20) {
+                    return String.valueOf(gainRight);
+                } else if (gainRight >= 226 && gainRight <= 255) {
+                    return String.valueOf(gainRight - 256);
+                }
         }
         return "";
     }
