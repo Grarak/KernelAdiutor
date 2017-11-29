@@ -378,12 +378,12 @@ public class Sound {
                 || hasMicrophoneFlar();
     }
 
-    private static long getChecksum(int a, int b) {
-        return (Integer.MAX_VALUE * 2L + 1L) ^ (a + b);
+    private static int getChecksum(int arg0, int arg1) {
+        return 0xff & (Integer.MAX_VALUE ^ (arg0 & 0xff) + (arg1 & 0xff));
     }
 
     private static void fauxRun(String value, String path, String id, Context context) {
-        long checksum = value.contains(" ") ?
+        int checksum = value.contains(" ") ?
                 getChecksum(Utils.strToInt(value.split(" ")[0]),
                         Utils.strToInt(value.split(" ")[1])) :
                 getChecksum(Utils.strToInt(value), 0);
@@ -395,20 +395,48 @@ public class Sound {
         Control.runSetting(command, ApplyOnBootFragment.SOUND, id, context);
     }
 
-    public static void setHeadphoneFlar(String value, Context context) {
+    public static void setHeadphoneFlar(String channel, String value, Context context) {
         int newGain = Utils.strToInt(value);
-        if (newGain >= -40 && newGain <= 20) {
-            fauxRun(value + " " + value, HEADPHONE_FLAR, HEADPHONE_FLAR, context);
+        switch (channel) {
+            case "all":
+                if (newGain >= -40 && newGain <= 20) {
+                    fauxRun(value + " " + value, HEADPHONE_FLAR, HEADPHONE_FLAR, context);
+                }
+                break;
+            case "left":
+                String currentGainLeft = getHeadphoneFlar("right");
+                if (newGain >= -40 && newGain <= 20) {
+                    fauxRun(value + " " + currentGainLeft, HEADPHONE_FLAR, HEADPHONE_FLAR, context);
+                }
+                break;
+            case "right":
+                String currentGainRight = getHeadphoneFlar("left");
+                if (newGain >= -40 && newGain <= 20) {
+                    fauxRun(value + " " + currentGainRight, HEADPHONE_FLAR, HEADPHONE_FLAR, context);
+                }
+                break;
         }
     }
 
-    public static String getHeadphoneFlar() {
-        String value = Utils.readFile(HEADPHONE_FLAR);
-        int gain = Utils.strToInt(value.contains(" ") ? value.split(" ")[0] : value);
-        if (gain >= 0 && gain <= 20) {
-            return String.valueOf(gain);
-        } else if (gain >= 216 && gain <= 255) {
-            return String.valueOf(gain - 256);
+    public static String getHeadphoneFlar(String channel) {
+        String[] values = Utils.readFile(HEADPHONE_FLAR).split(" ");
+        int gainLeft = Utils.strToInt(values[0]),
+            gainRight = Utils.strToInt(values[1]);
+        switch (channel) {
+            case "all":
+            case "left":
+                if (gainLeft >= 0 && gainLeft <= 20) {
+                    return String.valueOf(gainLeft);
+                } else if (gainLeft >= 216 && gainLeft <= 255) {
+                    return String.valueOf(gainLeft - 256);
+                }
+                break;
+            case "right":
+                if (gainRight >= 0 && gainRight <= 20) {
+                    return String.valueOf(gainRight);
+                } else if (gainRight >= 216 && gainRight <= 255) {
+                    return String.valueOf(gainRight - 256);
+                }
         }
         return "";
     }
