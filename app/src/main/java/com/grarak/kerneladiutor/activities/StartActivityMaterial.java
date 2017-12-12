@@ -31,7 +31,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by willi on 02.08.16.
  */
-public class StartActivity extends Activity {
+public class StartActivityMaterial extends Activity {
 
     /*
      * This activity only existed, so the user can toggle between

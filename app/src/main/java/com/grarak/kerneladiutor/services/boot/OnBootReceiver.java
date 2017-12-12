@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2017 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -25,20 +25,26 @@ import android.content.Intent;
 
 import com.grarak.kerneladiutor.services.monitor.Monitor;
 import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.Utils;
+import com.grarak.kerneladiutor.utils.root.RootUtils;
 
 /**
  * Created by willi on 03.05.16.
  */
-public class Receiver extends BroadcastReceiver {
+public class OnBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            context.startService(new Intent(context, Service.class));
-            if (Prefs.getBoolean("data_sharing", true, context)) {
-                context.startService(new Intent(context, Monitor.class));
+            RootUtils.SU su = new RootUtils.SU();
+            su.runCommand("echo /testRoot/");
+            if (!su.denied) {
+                Utils.startService(context, new Intent(context, ApplyOnBootService.class));
+                if (Prefs.getBoolean("data_sharing", true, context)) {
+                    Utils.startService(context, new Intent(context, Monitor.class));
+                }
             }
+            su.close();
         }
     }
-
 }
