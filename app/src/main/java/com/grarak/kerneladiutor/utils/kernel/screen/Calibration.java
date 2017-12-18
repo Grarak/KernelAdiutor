@@ -28,6 +28,8 @@ import com.grarak.kerneladiutor.utils.root.Control;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.os.Build.VERSION_CODES.M;
+
 /**
  * Created by willi on 01.06.16.
  */
@@ -60,6 +62,9 @@ public class Calibration {
     private static final String FB0_RGB = "/sys/class/graphics/fb0/rgb";
     private static final String FB_KCAL = "/sys/class/graphics/fb0/kcal";
 
+    private static final String MTK_CTRL = "sys/devices/platform/pp_control.0/enable";
+    private static final String MTK_COLORS = "sys/devices/platform/pp_control.0/ccor";
+
     private static final String HBM = "/sys/class/graphics/fb0/hbm";
 
     private static final List<String> sSRGB = new ArrayList<>();
@@ -78,11 +83,13 @@ public class Calibration {
         sColors.add(SAMOLED_COLOR);
         sColors.add(FB0_RGB);
         sColors.add(FB_KCAL);
+        sColors.add(MTK_COLORS);
 
         sColorEnables.add(KCAL_CTRL_CTRL);
         sColorEnables.add(KCAL_CTRL_ENABLE);
         sColorEnables.add(DIAG0_POWER_CTRL);
         sColorEnables.add(COLOR_CONTROL_CTRL);
+        sColorEnables.add(MTK_CTRL);
 
         sNewKCAL.add(KCAL_CTRL_ENABLE);
         sNewKCAL.add(KCAL_CTRL_INVERT);
@@ -270,6 +277,10 @@ public class Calibration {
                     list.add(String.valueOf(i));
                 }
                 break;
+            case MTK_COLORS:
+                for (int i = 0; i <= 255; i++) {
+                    list.add(String.valueOf(i));
+                }
             default:
                 int max = hasNewKCAL() ? 256 : 255;
                 for (int i = 0; i <= max; i++) {
