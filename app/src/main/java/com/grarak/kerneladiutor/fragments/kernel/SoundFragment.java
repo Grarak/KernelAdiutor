@@ -22,7 +22,9 @@ package com.grarak.kerneladiutor.fragments.kernel;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.kernel.sound.Sound;
+import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
@@ -53,6 +55,9 @@ public class SoundFragment extends RecyclerViewFragment {
         if (Sound.hasHeadphoneGain()) {
             headphoneGainInit(items);
         }
+        if (Sound.hasHeadphonePowerAmpGain()) {
+            headphonePowerAmpGainInit(items);
+        }
         if (Sound.hasHandsetMicrophoneGain()) {
             handsetMicrophoneGainInit(items);
         }
@@ -67,9 +72,6 @@ public class SoundFragment extends RecyclerViewFragment {
         }
         if (Sound.hasMicrophoneFlar()) {
             microphoneFlarInit(items);
-        }        
-        if (Sound.hasHeadphonePowerAmpGain()) {
-            headphonePowerAmpGainInit(items);
         }
         if (Sound.hasHeadphoneTpaGain()) {
             headphoneTpaGainInit(items);
@@ -117,14 +119,26 @@ public class SoundFragment extends RecyclerViewFragment {
     }
 
     private void headphoneGainInit(List<RecyclerViewItem> items) {
-        SeekBarView headphoneGain = new SeekBarView();
-        headphoneGain.setTitle(getString(R.string.headphone_gain));
+        final CardView hpGainCard = new CardView(getActivity());
+        hpGainCard.setTitle(getString(R.string.headphone_gain));
+
+        if (!(Prefs.getBoolean("fauxsound_perchannel_headphone_gain", false, getActivity())))
+        	Prefs.saveBoolean("fauxsound_perchannel_headphone_gain", false, getActivity());
+
+        final SwitchView perChannel = new SwitchView();
+        perChannel.setTitle(getString(R.string.per_channel_controls));
+        perChannel.setSummary(getString(R.string.per_channel_controls_summary));
+        perChannel.setChecked(Prefs.getBoolean("fauxsound_perchannel_headphone_gain", false, getActivity()));
+        hpGainCard.addItem(perChannel);
+
+        final SeekBarView headphoneGain = new SeekBarView();
+        headphoneGain.setTitle(getString(R.string.all_channels));
         headphoneGain.setItems(Sound.getHeadphoneGainLimits());
-        headphoneGain.setProgress(Sound.getHeadphoneGainLimits().indexOf(Sound.getHeadphoneGain()));
+        headphoneGain.setProgress(Sound.getHeadphoneGainLimits().indexOf(Sound.getHeadphoneGain("all")));
         headphoneGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                Sound.setHeadphoneGain(value, getActivity());
+                Sound.setHeadphoneGain("all", value, getActivity());
             }
 
             @Override
@@ -132,7 +146,65 @@ public class SoundFragment extends RecyclerViewFragment {
             }
         });
 
-        items.add(headphoneGain);
+        final SeekBarView headphoneGainLeft = new SeekBarView();
+        headphoneGainLeft.setTitle(getString(R.string.left_channel));
+        headphoneGainLeft.setItems(Sound.getHeadphoneGainLimits());
+        headphoneGainLeft.setProgress(Sound.getHeadphoneGainLimits().indexOf(Sound.getHeadphoneGain("left")));
+        headphoneGainLeft.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setHeadphoneGain("left", value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        final SeekBarView headphoneGainRight = new SeekBarView();
+        headphoneGainRight.setTitle(getString(R.string.right_channel));
+        headphoneGainRight.setItems(Sound.getHeadphoneGainLimits());
+        headphoneGainRight.setProgress(Sound.getHeadphoneGainLimits().indexOf(Sound.getHeadphoneGain("right")));
+        headphoneGainRight.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setHeadphoneGain("right", value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        class SeekBarManager {
+        	public void showPerChannelSeekbars (boolean enable) {
+        		if (enable == true) {
+        			hpGainCard.removeItem(headphoneGain);
+        			hpGainCard.addItem(headphoneGainLeft);
+        			hpGainCard.addItem(headphoneGainRight);
+        		} else {
+        			hpGainCard.removeItem(headphoneGainLeft);
+        			hpGainCard.removeItem(headphoneGainRight);
+        			hpGainCard.addItem(headphoneGain);
+        		}
+        	}
+        }
+
+        final SeekBarManager manager = new SeekBarManager();
+        if (Prefs.getBoolean("fauxsound_perchannel_headphone_gain", false, getActivity()) == true) {
+        	manager.showPerChannelSeekbars(true);
+        } else {
+        	manager.showPerChannelSeekbars(false);
+        }
+        perChannel.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+        	@Override
+        	public void onChanged(SwitchView switchview, boolean isChecked) {
+        		Prefs.saveBoolean("fauxsound_perchannel_headphone_gain", isChecked, getActivity());
+        		manager.showPerChannelSeekbars(isChecked);
+        	}
+        });
+
+        items.add(hpGainCard);
     }
 
     private void handsetMicrophoneGainInit(List<RecyclerViewItem> items) {
@@ -194,15 +266,26 @@ public class SoundFragment extends RecyclerViewFragment {
     }
 
     private void headphonePowerAmpGainInit(List<RecyclerViewItem> items) {
-        SeekBarView headphonePowerAmpGain = new SeekBarView();
-        headphonePowerAmpGain.setTitle(getString(R.string.headphone_poweramp_gain));
-        headphonePowerAmpGain.setItems(Sound.getHeadphonePowerAmpGainLimits());
-        headphonePowerAmpGain.setProgress(Sound.getHeadphonePowerAmpGainLimits()
-                .indexOf(Sound.getHeadphonePowerAmpGain()));
-        headphonePowerAmpGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+        final CardView hpPAGainCard = new CardView(getActivity());
+        hpPAGainCard.setTitle(getString(R.string.headphone_poweramp_gain));
+
+        if (!(Prefs.getBoolean("fauxsound_perchannel_headphone_pa_gain", false, getActivity())))
+            Prefs.saveBoolean("fauxsound_perchannel_headphone_pa_gain", false, getActivity());
+
+        final SwitchView perChannel = new SwitchView();
+        perChannel.setTitle(getString(R.string.per_channel_controls));
+        perChannel.setSummary(getString(R.string.per_channel_controls_summary));
+        perChannel.setChecked(Prefs.getBoolean("fauxsound_perchannel_headphone_pa_gain", false, getActivity()));
+        hpPAGainCard.addItem(perChannel);
+
+        final SeekBarView headphonePAGain = new SeekBarView();
+        headphonePAGain.setTitle(getString(R.string.all_channels));
+        headphonePAGain.setItems(Sound.getHeadphonePowerAmpGainLimits());
+        headphonePAGain.setProgress(Sound.getHeadphonePowerAmpGainLimits().indexOf(Sound.getHeadphonePowerAmpGain("all")));
+        headphonePAGain.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                Sound.setHeadphonePowerAmpGain(value, getActivity());
+                Sound.setHeadphonePowerAmpGain("all", value, getActivity());
             }
 
             @Override
@@ -210,7 +293,65 @@ public class SoundFragment extends RecyclerViewFragment {
             }
         });
 
-        items.add(headphonePowerAmpGain);
+        final SeekBarView headphonePAGainLeft = new SeekBarView();
+        headphonePAGainLeft.setTitle(getString(R.string.left_channel));
+        headphonePAGainLeft.setItems(Sound.getHeadphonePowerAmpGainLimits());
+        headphonePAGainLeft.setProgress(Sound.getHeadphonePowerAmpGainLimits().indexOf(Sound.getHeadphonePowerAmpGain("left")));
+        headphonePAGainLeft.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setHeadphonePowerAmpGain("left", value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        final SeekBarView headphonePAGainRight = new SeekBarView();
+        headphonePAGainRight.setTitle(getString(R.string.right_channel));
+        headphonePAGainRight.setItems(Sound.getHeadphonePowerAmpGainLimits());
+        headphonePAGainRight.setProgress(Sound.getHeadphonePowerAmpGainLimits().indexOf(Sound.getHeadphonePowerAmpGain("right")));
+        headphonePAGainRight.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setHeadphonePowerAmpGain("right", value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        class SeekBarManager {
+            public void showPerChannelSeekbars (boolean enable) {
+                if (enable == true) {
+                    hpPAGainCard.removeItem(headphonePAGain);
+                    hpPAGainCard.addItem(headphonePAGainLeft);
+                    hpPAGainCard.addItem(headphonePAGainRight);
+                } else {
+                    hpPAGainCard.removeItem(headphonePAGainLeft);
+                    hpPAGainCard.removeItem(headphonePAGainRight);
+                    hpPAGainCard.addItem(headphonePAGain);
+                }
+            }
+        }
+
+        final SeekBarManager manager = new SeekBarManager();
+        if (Prefs.getBoolean("fauxsound_perchannel_headphone_pa_gain", false, getActivity()) == true) {
+            manager.showPerChannelSeekbars(true);
+        } else {
+            manager.showPerChannelSeekbars(false);
+        }
+        perChannel.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchview, boolean isChecked) {
+                Prefs.saveBoolean("fauxsound_perchannel_headphone_pa_gain", isChecked, getActivity());
+                manager.showPerChannelSeekbars(isChecked);
+            }
+        });
+
+        items.add(hpPAGainCard);
     }
 
     private void headphoneTpaGainInit(List<RecyclerViewItem> items) {
@@ -303,25 +444,92 @@ public class SoundFragment extends RecyclerViewFragment {
 
    private void headphoneFlarInit(List<RecyclerViewItem> items) {
 
-        TitleView title = new TitleView();
-        title.setText(getString(R.string.sound_control));
+        final CardView hpFlarCard = new CardView(getActivity());
+        hpFlarCard.setTitle(getString(R.string.headphone_gain));
 
-        SeekBarView headphoneFlar = new SeekBarView();
-        headphoneFlar.setTitle(getString(R.string.headphone_gain));
+        if (!(Prefs.getBoolean("headphoneflar_perchannel", false, getActivity())))
+            Prefs.saveBoolean("headphoneflar_perchannel", false, getActivity());
+
+        final SwitchView perChannel = new SwitchView();
+        perChannel.setTitle(getString(R.string.per_channel_controls));
+        perChannel.setSummary(getString(R.string.per_channel_controls_summary));
+        perChannel.setChecked(Prefs.getBoolean("headphoneflar_perchannel", false, getActivity()));
+        hpFlarCard.addItem(perChannel);
+
+        final SeekBarView headphoneFlar = new SeekBarView();
+        headphoneFlar.setTitle(getString(R.string.all_channels));
         headphoneFlar.setItems(Sound.getHeadphoneFlarLimits());
-        headphoneFlar.setProgress(Sound.getHeadphoneFlarLimits().indexOf(Sound.getHeadphoneFlar()));
+        headphoneFlar.setProgress(Sound.getHeadphoneFlarLimits().indexOf(Sound.getHeadphoneFlar("all")));
         headphoneFlar.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                Sound.setHeadphoneFlar(value, getActivity());
+                Sound.setHeadphoneFlar("all", value, getActivity());
             }
 
             @Override
             public void onMove(SeekBarView seekBarView, int position, String value) {
             }
         });
-        items.add(title);
-        items.add(headphoneFlar);
+
+        final SeekBarView headphoneFlarLeft = new SeekBarView();
+        headphoneFlarLeft.setTitle(getString(R.string.left_channel));
+        headphoneFlarLeft.setItems(Sound.getHeadphoneFlarLimits());
+        headphoneFlarLeft.setProgress(Sound.getHeadphoneFlarLimits().indexOf(Sound.getHeadphoneFlar("left")));
+        headphoneFlarLeft.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setHeadphoneFlar("left", value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        final SeekBarView headphoneFlarRight = new SeekBarView();
+        headphoneFlarRight.setTitle(getString(R.string.right_channel));
+        headphoneFlarRight.setItems(Sound.getHeadphoneFlarLimits());
+        headphoneFlarRight.setProgress(Sound.getHeadphoneFlarLimits().indexOf(Sound.getHeadphoneFlar("right")));
+        headphoneFlarRight.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+            @Override
+            public void onStop(SeekBarView seekBarView, int position, String value) {
+                Sound.setHeadphoneFlar("right", value, getActivity());
+            }
+
+            @Override
+            public void onMove(SeekBarView seekBarView, int position, String value) {
+            }
+        });
+
+        class SeekBarManager {
+            public void showPerChannelSeekbars (boolean enable) {
+                if (enable == true) {
+                    hpFlarCard.removeItem(headphoneFlar);
+                    hpFlarCard.addItem(headphoneFlarLeft);
+                    hpFlarCard.addItem(headphoneFlarRight);
+                } else {
+                    hpFlarCard.removeItem(headphoneFlarLeft);
+                    hpFlarCard.removeItem(headphoneFlarRight);
+                    hpFlarCard.addItem(headphoneFlar);
+                }
+            }
+        }
+
+        final SeekBarManager manager = new SeekBarManager();
+        if (Prefs.getBoolean("headphoneflar_perchannel", false, getActivity()) == true) {
+            manager.showPerChannelSeekbars(true);
+        } else {
+            manager.showPerChannelSeekbars(false);
+        }
+        perChannel.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchview, boolean isChecked) {
+                Prefs.saveBoolean("headphoneflar_perchannel", isChecked, getActivity());
+                manager.showPerChannelSeekbars(isChecked);
+            }
+        });
+
+        items.add(hpFlarCard);
     }
 
     private void microphoneFlarInit(List<RecyclerViewItem> items) {
