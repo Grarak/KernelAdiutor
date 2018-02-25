@@ -302,6 +302,21 @@
       "X509"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/x3.json"
+  },
+  { 
+    "vendor": [
+      "Sony",	
+      "SONY"
+    ],
+   "device": [
+      "flamingo",
+      "FLAMINGO",
+      "D2202",
+      "D2203",
+      "D2206",
+      "D2243"
+   ],
+   "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/flamingo.json"
   }
 ]
 
