@@ -506,6 +506,7 @@
   <string name="height">Höhe</string>
   <string name="vibration">Vibration</string>
   <string name="vibration_strength">Vibrationsstärke</string>
+  <string name="charging_mode">Auflademodus</string>
   <!-- Sound -->
   <string name="sound_control">Lautstärken-Kontrolle</string>
   <string name="headset_highperf_mode">Kopfhörer High Performance-Modus</string>
@@ -661,10 +662,20 @@ kann etwas Akku sparen. </string>
   <string name="msm_hsic_wakelock_divider">hsic host Controller Wakelock minimieren</string>
   <string name="bcmdhd_wakelock_divider">WiFi Treiber Wakelock minimieren</string>
   <!-- Data Sharing -->
+  <string name="data_sharing_summary_notification">Da­ten­wei­ter­ga­be ist aktiv! Klicke um mehr über diese Funktion zu erfahren.</string>
   <string name="data_sharing_summary">Teile deine Einstellungen mit anderen! Kernel Adiutor sammelt automatisch Informationen um eine Liste mit Werten, für allle Menschen zugänglich zu machen.</string>
   <string name="data_sharing_summary_link">Die Liste ist unter  https://www.grarak.com/kerneladiutor aufrufbar
  </string>
   <string name="sharing_enable">Austausch aktivieren</string>
+  <string name="filter">Filter</string>
+  <string name="show_all">Alle anzeigen</string>
+  <string name="previous">Vorherige</string>
+  <string name="page">Seite</string>
+  <string name="next">Weiter</string>
+  <string name="kernel_version">Kernel-Version</string>
+  <string name="potential_sot">Potenzielle SOT</string>
+  <string name="cpu_information">CPU-Information</string>
+  <string name="default_settings">Standard (keine Änderungen vorgenommen)</string>
   <!-- Custom Controls -->
   <string name="welcome">Willkommen</string>
   <string name="custom_controls_summary">In diesem Abschnitt können Sie benutzerdefinierte Steuerelemente erstellen oder importieren welche es in der App (noch) nicht gibt.</string>

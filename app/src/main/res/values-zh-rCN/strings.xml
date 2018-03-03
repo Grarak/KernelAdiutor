@@ -510,6 +510,7 @@
   <string name="vibration">震动</string>
   <string name="vibration_strength">振动强度</string>
   <string name="key_power_mode">电源键模式</string>
+  <string name="key_power_mode_summary">当您使用电源键使设备进入休眠状态时, 唤醒控件才会激活。</string>
   <string name="charging_mode">充电模式</string>
   <string name="charging_mode_summary">唤醒控制只在设备充电时启用</string>
   <!-- Sound -->
@@ -671,7 +672,9 @@
   <string name="data_sharing_summary_link">你可以在&lt;a href=\"https://www.grarak.com/kerneladiutor\"&gt;grarak.com&lt;/a&gt;访问此列表。</string>
   <string name="sharing_enable">共享启用</string>
   <string name="filter">筛选</string>
+  <string name="board">处理器</string>
   <string name="show_all">显示全部</string>
+  <string name="failed_board">无法加载主板。</string>
   <string name="failed_devices">加载设备失败。</string>
   <string name="previous">上一步</string>
   <string name="page">页</string>
@@ -680,6 +683,7 @@
   <string name="potential_sot">预估亮屏时间</string>
   <string name="screen_always_on">屏幕常亮时</string>
   <string name="lower_better">数值越低越好</string>
+  <string name="cpu_score">CPU 评分</string>
   <string name="cpu_information">CPU 信息</string>
   <string name="default_settings">默认（不做任何更改）</string>
   <!-- Custom Controls -->

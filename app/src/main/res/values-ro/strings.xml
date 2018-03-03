@@ -9,6 +9,7 @@
   <string name="no_root">Nu este acces la root</string>
   <string name="no_busybox">Nu este instalat busybox</string>
   <string name="open">Deschideţi %s</string>
+  <string name="disable">Dezactivare</string>
   <!-- Security -->
   <string name="password">Parolă</string>
   <string name="password_wrong">Parola este greşită</string>
@@ -22,7 +23,7 @@
   <string name="license_invalid">Vă mulțumesc pentru achiziționarea aplicației de donare! Din păcate verificarea licienţei nu a fost finalizată. Vă rugăm încercați din nou mai târziu. Dacă tot nu funcţionează, contactaţi-ne. Aveţi nevoie de acces la internet!</string>
   <string name="pirated">Se pare ca aplicaţia donaţie nu a fost cumparată prin Play Store. Dacă aţi piratat-o, apoi ruşine!</string>
   <string name="donate">Donați</string>
-  <string name="donate_summary">Această caracteristică este disponibilă numai atunci când aplicaţia de donatie este instalat! Nu vă faceţi griji deşi. Deoarece această app este open source cu uşurinţă pot construi singur şi scoateţi această verificare. Dar sper că veţi sprijini dezvoltatorii oricum. Vă mulţumim pentru utilizarea Kernel Adiutor! Odată ce aţi cumpărat app de donaţie trebuie să reporniţi Adiutor kernel-ului pentru a permite toate caracteristicile.</string>
+  <string name="donate_summary">Această caracteristică este disponibilă numai în aplicaţia de donatie! Nu vă faceţi griji, deoarece această aplicaţie este open source şi cu uşurinţă o puteţi compila de unul singur şi scoate această verificare. Dar sper că veţi sprijini dezvoltatorii oricum. Vă mulţumim pentru utilizarea Kernel Adiutor! Odată ce aţi cumpărat aplicaţia de donaţie trebuie să reporniţi Kernel Adiutor pentru a activa toate caracteristicile.</string>
   <string name="donate_nope">Eu nu voi cădea la aceasta înşelatorie!</string>
   <string name="donate_yes">Îmi place aplicaţia. Vreau să donez!</string>
   <string name="ad_here">Reclama ta poate fi aici</string>
@@ -83,11 +84,12 @@
   <string name="virtual_memory">Memorie virtuală</string>
   <string name="entropy">Entropie</string>
   <string name="misc">Diverse</string>
+  <string name="data_sharing">Partajare date</string>
   <string name="custom_controls">Controale personalizate</string>
   <string name="downloads">Descărcări</string>
   <string name="backup">Copie de rezervă</string>
-  <string name="build_prop_editor">Construirea prop Editor</string>
-  <string name="profile">Profilul</string>
+  <string name="build_prop_editor">Editor prop</string>
+  <string name="profile">Profil</string>
   <string name="recovery">Mod Recuperare</string>
   <string name="initd">Init.d</string>
   <string name="on_boot">La deschidere</string>
@@ -115,7 +117,7 @@
   <string name="android_api_level">Android SDK</string>
   <string name="android_codename">Nume de cod Android</string>
   <string name="fingerprint">Amprentă</string>
-  <string name="build_display_id">ID Display</string>
+  <string name="build_display_id">Identificator</string>
   <string name="baseband">Baseband</string>
   <string name="rom">ROM</string>
   <string name="bootloader">Bootloader</string>
@@ -126,8 +128,13 @@
   <string name="product">Produs</string>
   <string name="version">Versiune</string>
   <!-- CPU -->
+  <string name="cores_string">%s nuclee</string>
+  <string name="frequencies_string">%s frecvenţe</string>
+  <string name="governors_string">%s regulatoare</string>
+  <string name="cores_singular">%d nucleu</string>
   <string name="cores">%d nuclee</string>
   <string name="cpu_usage">Utilizare CPU</string>
+  <string name="cpu_usage_string">Utilizare procesor %s</string>
   <string name="no_offline_core">Nu puteți opri acest nucleu!</string>
   <string name="cpu_max_freq">Frecvenţă maximă CPU</string>
   <string name="cpu_max_freq_summary">Stabiliți frecvența maximă pe care CPU o ajustează.</string>
@@ -229,6 +236,10 @@
   <string name="msm_hotplug">MSM Hotplug</string>
   <string name="msm_hotplug_summary">Un înlocuitor în nucleu pentru Qualcomms MPDecision. Dezvoltat de myfluxi.</string>
   <string name="history_size">Dimensiune istoric</string>
+  <string name="update_rate">Rata de actualizare</string>
+  <string name="update_rate_summary">Intervalul obţinerii eșantioanelor de sarcină între nuclee. Mai puţin înseamnă mai rapid/mai neregulat.</string>
+  <string name="io_is_busy">IO este ocupat</string>
+  <string name="mako_hotplug">Mako Hotplug</string>
   <string name="mako_hotplug_summary">Un înlocuitor în nucleu pentru Qualcomm\'s MPDecision. Dezvoltat de franciscofranco.</string>
   <string name="cpus_on_touch">Nuclee la atingere</string>
   <string name="cpus_on_touch_summary">Numărul de nuclee online atunci când atingeţi ecranul sau apăsaţi un buton.</string>
@@ -274,12 +285,18 @@
   <string name="core_control">Control Nucleu</string>
   <string name="hcube">H-Cube</string>
   <string name="offline_delay">Întârziere offline</string>
+  <string name="online_delay">Întârziere online</string>
   <string name="aio_hotplug">AiO Hotplug</string>
   <string name="aio_hotplug_summary">HotPlug Totul-în-Unu pentru dispozitivele Qualcomm. Dezvoltat de Shoaib0597.</string>
   <!--Thermal-->
   <string name="intellithermal">Intellithermal</string>
   <string name="intellithermal_summary">Un înlocuitor în nucleu pentru Qualcomms Thermald. Dezvoltat de faux123.</string>
   <string name="vdd_restriction">Restricţionare VDD</string>
+  <string name="freq_step">Pas de frecvenţă</string>
+  <string name="poll">Interogare</string>
+  <string name="thermal_limit_low">Limita termică de jos</string>
+  <string name="thermal_limit_high">Limita termică de sus</string>
+  <string name="temp_safety">Temperatura de siguranţă</string>
   <string name="temp_limit">Limita de temperatură</string>
   <string name="temp_limit_summary">Dacă temperatura creşte, frecvența procesorului va fi micşorată pentru a reduce temperatura.</string>
   <string name="shutdown_temp">Temperatura de închidere</string>
@@ -295,17 +312,29 @@
   <string name="gpu_2d_governor_summary">Set regulatorul 2D al GPU-ului.</string>
   <string name="gpu_governor">Regulator GPU</string>
   <string name="gpu_governor_summary">Set regulatorul GPU.</string>
+  <string name="gpu_governor_tunables">Variabilele regulatorului GPU</string>
   <string name="simple_gpu_algorithm">Algoritmul simplu GPU</string>
   <string name="simple_gpu_algorithm_summary">Un add-on pentru MSM Adreno TZ GPU Governor. Creat de faux123.</string>
   <string name="laziness">Laziness</string>
   <!-- Screen -->
+  <string name="screen_color">Culoare ecran</string>
   <string name="red">Roșu</string>
   <string name="green">Verde</string>
   <string name="blue">Albastru</string>
+  <string name="min_rgb">Valoarea minimă RGB</string>
+  <string name="screen_value">Valoare ecran</string>
   <string name="screen_contrast">Contrastul ecranului</string>
+  <string name="high_brightness_mode">Mod luminozitate ridicată</string>
+  <string name="srgb">sRGB</string>
+  <string name="gamma">Gamma</string>
   <string name="max_brightness">Luminozitate maximă</string>
   <string name="threshold">Valoarea Threshold</string>
   <!-- Wake -->
+  <string name="center">Centru</string>
+  <string name="full">Complet</string>
+  <string name="bottom_half">Jumătatea de jos</string>
+  <string name="top_half">Jumătatea superioară</string>
+  <string name="half">Jumătate</string>
   <string name="t2w_summary">Trezește telefonul bătând ecranul.</string>
   <string name="dt2s">Dublă Bătaie pentru Adormire</string>
   <string name="slide_up">Gliseză în sus</string>
@@ -317,26 +346,102 @@
   <string name="draw_w">Desenează un W</string>
   <string name="draw_c">Desenează un C</string>
   <string name="draw_m">Desenează un M</string>
+  <string name="area">Suprafață</string>
+  <string name="width">Lățime</string>
+  <string name="height">Înălţime</string>
+  <string name="vibration">Vibrare</string>
+  <string name="vibration_strength">Puterea vibrației</string>
+  <string name="charging_mode">Modul de Încărcare</string>
   <!-- Sound -->
   <string name="sound_control">Controlul Sunetului</string>
   <!-- Battery -->
+  <string name="level">Nivel</string>
+  <string name="voltage">Tensiune</string>
+  <string name="capacity">Capacitate</string>
+  <string name="usb_fast_charge">Încărcare rapidă USB</string>
   <!-- LED -->
+  <string name="fade">Estompare</string>
+  <string name="intensity">Intensitate</string>
+  <string name="speed">Viteză</string>
+  <string name="stock">Stoc</string>
+  <string name="notification">Notificare</string>
   <!-- I/O Scheduler -->
+  <string name="rq_affitiny">Afinitate RQ</string>
   <!-- Kernel Samepage Merging -->
+  <string name="pages_shared">Pagini partajate</string>
+  <string name="pages_sharing">Partajare pagini</string>
+  <string name="pages_unshared">Pagini nepartajate</string>
+  <string name="pages_volatile">Pagini volatile</string>
+  <string name="pages_to_scan">Pagini de scanat</string>
+  <string name="sleep_milliseconds">Pauză între scanări</string>
+  <string name="deferred_timer">Timp întârziere</string>
+  <string name="max_cpu_usage">Utilizare maximă procesor</string>
   <!-- Low Memory Killer -->
+  <string name="foreground_app">Aplicații de prim-plan</string>
+  <string name="visible_app">Aplicaţii vizibile</string>
+  <string name="secondary_server">Server secundar</string>
+  <string name="hidden_app">Aplicații ascunse</string>
+  <string name="content_providers">Furnizori de conţinut</string>
+  <string name="empty_app">Aplicații goale</string>
+  <string name="very_light">Foarte uşor</string>
+  <string name="light">Uşor</string>
+  <string name="medium">Mediu</string>
+  <string name="very_aggressive">Foarte agresiv</string>
   <!-- Virtual Memory -->
+  <string name="zram">Z-RAM</string>
+  <string name="disksize">Dimensiune disc</string>
+  <string name="disksize_summary">Încercări de a spori performanța prin evitarea paginării pe spațiul de stocare fizic, folosind în schimb un dispozitiv virtual comprimat în RAM. Paginarea are loc în memoria RAM până când este necesar să se folosească spațiul de stocare în memoria fizică.</string>
+  <string name="zswap">ZSWAP</string>
+  <string name="maximum_compression_ratio">Rată de compresie maximă</string>
   <!-- Entropy -->
+  <string name="available">Disponibil</string>
+  <string name="read">Citire</string>
   <!-- Misc -->
+  <string name="smb135x_wakelock">smb135x Wakelock</string>
+  <string name="sensor_ind_wakelock">wakelock sensor_ind</string>
+  <string name="sensor_ind_wakelock_summary">Prevenire wakelock când Afişare Ambient este dezactivată.</string>
   <!-- Data Sharing -->
+  <string name="filter">Filtrare</string>
+  <string name="page">Pagină</string>
+  <string name="kernel_version">Versiune nucleu</string>
+  <string name="cpu_information">Informaţii CPU</string>
   <!-- Custom Controls -->
+  <string name="welcome">Bun venit</string>
+  <string name="example">Exemple</string>
+  <string name="create">Creare</string>
+  <string name="import_item">Import</string>
+  <string name="control_switch">Comutare</string>
+  <string name="title">Titlu</string>
+  <string name="description">Descriere</string>
+  <string name="applying">Se aplică</string>
+  <string name="seekbar_min">Min</string>
+  <string name="name">Nume</string>
+  <string name="name_empty">Numele este gol!</string>
   <!-- Downloads -->
+  <string name="check_md5">Verificare md5</string>
+  <string name="install">Instalare</string>
+  <string name="cwm_recovery">CWM Recovery</string>
+  <string name="twrp">TWRP</string>
+  <string name="manual_flashing">O voi face manual</string>
+  <string name="file_location">Fişierul descărcat este în %s</string>
+  <string name="backing_up">Creare copie de rezervă</string>
+  <string name="restoring">Se restabileşte</string>
   <!-- Backup -->
+  <string name="boot_partition">Partiţia de boot</string>
+  <string name="recovery_partition">Partiţia de recuperare</string>
+  <string name="fota_partition">Partiţia Fota</string>
   <!-- Build prop Editor -->
+  <string name="add">Adăugaţi</string>
+  <string name="key">Cheie</string>
+  <string name="value">Valoare</string>
   <!-- Profile -->
+  <string name="details">Detalii</string>
+  <string name="applied">Aplicat</string>
   <!-- Recovery -->
   <!-- Init.d -->
   <!-- On Boot -->
   <!-- Settings -->
+  <string name="force_english">Utilizare forţată a limbii engleze</string>
   <!-- About -->
   <!-- Contributors -->
   <!-- Help -->

@@ -9,6 +9,7 @@
   <string name="no_root">無 Root 權限</string>
   <string name="no_busybox">沒有 Busybox 指令</string>
   <string name="open">開啟 %s</string>
+  <string name="disable">停用</string>
   <!-- Security -->
   <string name="password">密碼</string>
   <string name="password_wrong">密碼錯誤</string>
@@ -128,9 +129,12 @@
   <string name="version">版本</string>
   <string name="handlers">管理者</string>
   <!-- CPU -->
+  <string name="cores_string">%s 核心</string>
+  <string name="frequencies_string">%s 頻率</string>
   <string name="cores_singular">%d 核心</string>
   <string name="cores">%d 核心</string>
   <string name="cpu_usage">CPU 使用率</string>
+  <string name="cpu_usage_string">%s CPU 使用率</string>
   <string name="no_offline_core">您不能將此核心離線！</string>
   <string name="cpu_max_freq">CPU 最大頻率</string>
   <string name="cpu_max_freq_summary">設定 CPU 可提升的最大頻率</string>
@@ -150,7 +154,8 @@
   <string name="disabled">已停用</string>
   <string name="enabled">已啟用</string>
   <string name="aggressive">積極的</string>
-  <string name="power_saving_wq">Schedule workqueues on awake CPUs to save power.</string>
+  <string name="power_saving_wq">在未休眠的核心上分配工作隊列以節省電力
+停用時將只分配在同一個核心上</string>
   <string name="cfs_scheduler_policy">CFS 排程策略</string>
   <string name="cfs_scheduler_policy_summary">決定 CFS 排程器在不同 CPU 單元上如何平衡任務的策略。</string>
   <string name="cpu_quiet">CPUQuiet</string>
@@ -492,6 +497,8 @@
   <string name="pocket_mode_summary">啟用此選項，將關閉之後控制項該設備在口袋裡。</string>
   <string name="timeout">逾時</string>
   <string name="timeout_summary">在螢幕關閉之後，設定將喚醒控制停用的時間。</string>
+  <string name="charge_timeout">充電逾時</string>
+  <string name="charge_timeout_summary">當充電時，在螢幕關閉之後，設定將喚醒控制停用的時間。</string>
   <string name="power_key_suspend">電源鍵暫停</string>
   <string name="power_key_suspend_summary">開啟這項目當您按電源鍵關閉螢幕，將會關閉喚醒控制。</string>
   <string name="area">區域</string>
@@ -499,6 +506,8 @@
   <string name="height">高度</string>
   <string name="vibration">震動</string>
   <string name="vibration_strength">震動強度</string>
+  <string name="key_power_mode">電源鍵模式</string>
+  <string name="charging_mode">充電模式</string>
   <!-- Sound -->
   <string name="sound_control">聲音控制</string>
   <string name="headset_highperf_mode">耳機高效能模式</string>
@@ -556,14 +565,16 @@
   <string name="scheduler_tunable_summary">這些配置項目與您使用的排程有關。</string>
   <string name="read_ahead">預讀</string>
   <string name="read_ahead_summary">在手機記憶體預讀取值。</string>
-  <string name="rotational">旋轉存儲</string>
-  <string name="rotational_summary">將裝置作為旋轉存儲。</string>
+  <string name="rotational">旋轉儲存裝置(Hdd機械硬碟)</string>
+  <string name="rotational_summary">將本裝置視為旋轉儲存裝置(Hdd機械硬碟)。</string>
   <string name="iostats">I/O 統計資料</string>
-  <string name="iostats_summary">維護此儲存設備的 I/O 統計資料。停用將中斷 I/O 監控程式。</string>
+  <string name="iostats_summary">維護此儲存設備的 I/O 統計資料。停用將中斷 I/O 監控程式。
+(提升I/O效能但增加I/O錯誤的可能)</string>
   <string name="add_random">添加隨機</string>
-  <string name="add_random_summary">從熵旋轉 （旋轉） 存儲。</string>
-  <string name="rq_affitiny">Wlan喚醒鎖</string>
-  <string name="rq_affinity_summary">想要擁有調度程式請求完成它們由CPU核心。更高的價值是更具侵略性。</string>
+  <string name="add_random_summary">從旋轉儲存裝置(Hdd機械硬碟) 獲取熵</string>
+  <string name="rq_affitiny">請求(Request) 隊列(Queue) 親和性(Affinity)
+絕對不是wlan喚醒鎖</string>
+  <string name="rq_affinity_summary">盡可能讓核心完成自己發出的調度程序請求，而非給其他的核心來完成，數值越高越積極</string>
   <!-- Kernel Samepage Merging -->
   <string name="full_scans">完整掃描</string>
   <string name="pages_shared">共享的頁面</string>
@@ -656,6 +667,11 @@
   <string name="data_sharing_summary">與他人分享您的設置！內核Adiutor將自動收集信息並編譯可供所有人使用的分數列表。</string>
   <string name="data_sharing_summary_link">您可以訪問＆lt; a href =“https://www.grarak.com/kerneladiutor”＆gt; grarak.com＆lt; / a＆gt;上的列表。</string>
   <string name="sharing_enable">共享啟用</string>
+  <string name="show_all">顯示全部</string>
+  <string name="failed_devices">未能載入裝置</string>
+  <string name="kernel_version">核心版本</string>
+  <string name="screen_always_on">當屏幕常亮</string>
+  <string name="lower_better">越低越好</string>
   <!-- Custom Controls -->
   <string name="welcome">歡迎</string>
   <string name="custom_controls_summary">在本節中，你可以創建或導入 （尚） 的應用程式中不存在的自訂控制項。</string>

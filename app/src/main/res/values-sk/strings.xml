@@ -68,10 +68,10 @@
   <string name="device">Zariadenie</string>
   <string name="memory">Pamäť</string>
   <string name="inputs">Vstupy</string>
-  <string name="cpu">CPU</string>
+  <string name="cpu">Procesor (CPU)</string>
   <string name="cpu_voltage">Napätie procesora</string>
   <string name="cpu_hotplug">CPU Hotplug</string>
-  <string name="thermal">Tepelná</string>
+  <string name="thermal">Riadenie teploty</string>
   <string name="gpu">Grafika (GPU)</string>
   <string name="screen">Obrazovka</string>
   <string name="wake">Prebudenie</string>
@@ -87,11 +87,11 @@
   <string name="data_sharing">Zdieľanie dát</string>
   <string name="custom_controls">Vlastné ovládacie prvky</string>
   <string name="downloads">Prevzatia</string>
-  <string name="backup">Zálohovať</string>
+  <string name="backup">Zálohovanie</string>
   <string name="build_prop_editor">Editor Build.prop</string>
   <string name="profile">Profily</string>
-  <string name="recovery">Obnova</string>
-  <string name="initd">Init.d</string>
+  <string name="recovery">Recovery menu</string>
+  <string name="initd">Emulácia Init.d</string>
   <string name="on_boot">Pri štarte</string>
   <string name="settings">Nastavenia</string>
   <string name="about">O aplikácií</string>
@@ -352,7 +352,7 @@
   <string name="temp_safety">Bezpečná teplota</string>
   <string name="temp_throttle">Teplotná škrtiaca klapka</string>
   <string name="temp_throttle_summary">Hranica prepínača teploty SoC.</string>
-  <string name="temp_limit">Teplotový limit</string>
+  <string name="temp_limit">Obmedzenie teploty</string>
   <string name="temp_limit_summary">Ak teplota prekročí stanovený limit, bude znížená frekvencia procesora s cieľom ochladenia.</string>
   <string name="freq_limit_debug">Limit ladenie frekvencie</string>
   <string name="freq_limit_debug_summary">Toto umožňuje ladenie obmedzovania frekvencie procesora pri dosiahnutí maximálnej teploty.</string>
@@ -795,7 +795,7 @@
   <string name="disable_question">Zakázať %s?</string>
   <!-- Settings -->
   <string name="open_settings">Otvoriť nastavenia</string>
-  <string name="fahrenheit_title">Fahrenheita</string>
+  <string name="fahrenheit_title">Stupne Fahrenheita</string>
   <string name="fahrenheit_summary">Používať stupne Fahrenheita pre meranie teploty.</string>
   <string name="force_english">Vynútiť používanie angličtiny</string>
   <string name="user_interface">Používateľské rozhranie</string>
@@ -813,7 +813,7 @@
   <string name="ten_sec">10 sekúnd</string>
   <string name="twenty_sec">20 sekúnd</string>
   <string name="fifty_sec">50 sekúnd</string>
-  <string name="apply_on_boot_test_summary">Test sa aplikuje pri zavádzaní. To zahŕňa všetky druhy vecí, ktoré sa používajú pri zavádzaní, ako sú vlastné ovládacie prvky, profily, init.d atď.</string>
+  <string name="apply_on_boot_test_summary">Test sa aplikuje pri zavádzaní. To zahŕňa všetky druhy činností, ktoré sa používajú pri zavádzaní, ako sú vlastné ovládacie prvky, profily, init.d atď.</string>
   <string name="apply_on_boot_running">Služba aplikovania pri spustení už beží. Počkajte, kým skončí.</string>
   <string name="nothing_apply">Pre aplikovanie sa nič nenašlo!</string>
   <string name="hide">Skryť</string>
@@ -846,7 +846,7 @@
   <string name="fingerprint_summary">Pre bezpečnostnú kontrolu použiť odtlačok prsta. Funkcia bude aktivovaná len keď nastavíte odtlačok prsta.</string>
   <string name="sections">Sekcie</string>
   <!-- About -->
-  <string name="about_me">Ahoj, já som Willi Ye aka Grarak, 19 ročný student žijúci vo Viedni. Vyvíjam na pre Android už pomerne dlho. Okrem Kernel Adiutoru tiež spravujem LineageOS pre niekoľko zariadení a pracujem na Paranoid Androide. Tak prosím pochopte, ak nebudem mať čas túto aplikáciu aktualizovať.</string>
+  <string name="about_me">Ahoj, volám sa Willi Ye aka Grarak, som 19 ročný student žijúci vo Viedni. Vyvíjam pre Android už pomerne dlho. Okrem Kernel Adiutoru tiež spravujem LineageOS pre niekoľko zariadení a pracujem na Paranoid Androide. Tak pochopte prosím, ak nebudem mať dostatok času pre časté aktualizácie tejto aplikácie.</string>
   <string name="libraries_used">Použité knižnice</string>
   <!-- Contributors -->
   <string name="commits">Zmeny: %d</string>
