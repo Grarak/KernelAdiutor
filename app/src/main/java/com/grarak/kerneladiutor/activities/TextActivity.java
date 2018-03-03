@@ -21,7 +21,6 @@ package com.grarak.kerneladiutor.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
@@ -46,12 +45,8 @@ public class TextActivity extends BaseActivity {
         if (message != null)
             ((TextView) findViewById(R.id.message_text)).setText(message);
         if (url != null)
-            findViewById(R.id.help_fab).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Utils.launchUrl(url, TextActivity.this);
-                }
-            });
+            findViewById(R.id.help_fab).setOnClickListener(
+                    v -> Utils.launchUrl(url, TextActivity.this));
     }
 
 }

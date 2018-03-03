@@ -51,8 +51,8 @@ public class DataSharingFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getBottomFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(
-                getActivity(), R.drawable.ic_search));
+        Drawable drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(getActivity(), R.drawable.ic_search));
         DrawableCompat.setTint(drawable, Color.WHITE);
         return drawable;
     }
@@ -84,16 +84,13 @@ public class DataSharingFragment extends RecyclerViewFragment {
         SwitchView datasharing = new SwitchView();
         datasharing.setSummary(getString(R.string.sharing_enable));
         datasharing.setChecked(Prefs.getBoolean("data_sharing", true, getActivity()));
-        datasharing.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                if (isChecked) {
-                    Utils.startService(getActivity(), new Intent(getActivity(), Monitor.class));
-                } else {
-                    getActivity().stopService(new Intent(getActivity(), Monitor.class));
-                }
-                Prefs.saveBoolean("data_sharing", isChecked, getActivity());
+        datasharing.addOnSwitchListener((switchView, isChecked) -> {
+            if (isChecked) {
+                Utils.startService(getActivity(), new Intent(getActivity(), Monitor.class));
+            } else {
+                getActivity().stopService(new Intent(getActivity(), Monitor.class));
             }
+            Prefs.saveBoolean("data_sharing", isChecked, getActivity());
         });
 
         items.add(datasharing);

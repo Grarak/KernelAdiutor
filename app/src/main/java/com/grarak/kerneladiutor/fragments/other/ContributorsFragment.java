@@ -94,9 +94,11 @@ public class ContributorsFragment extends RecyclerViewFragment {
     }
 
     private void error() {
-        hideProgress();
-        mErrorBar = Snackbar.make(getRootView(), R.string.no_internet, Snackbar.LENGTH_INDEFINITE);
-        mErrorBar.show();
+        if (isAdded()) {
+            hideProgress();
+            mErrorBar = Snackbar.make(getRootView(), R.string.no_internet, Snackbar.LENGTH_INDEFINITE);
+            mErrorBar.show();
+        }
     }
 
     @Override

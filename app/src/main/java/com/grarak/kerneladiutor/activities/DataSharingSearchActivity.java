@@ -19,11 +19,9 @@
  */
 package com.grarak.kerneladiutor.activities;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.View;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
@@ -99,22 +97,16 @@ public class DataSharingSearchActivity extends BaseActivity {
             ButtonView filterBtn = new ButtonView();
             filterBtn.setText(getString(R.string.filter));
             filterBtn.setFullSpan(true);
-            filterBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mBoards != null) {
-                        new Dialog(getActivity())
-                                .setTitle(getString(R.string.board))
-                                .setItems(mBoards.toArray(new String[mBoards.size()]),
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                loadDevices(1, i == 0 ? null : mBoards.get(i));
-                                                ((BaseActivity) getActivity()).getSupportActionBar()
-                                                        .setTitle(mSelection = mBoards.get(i));
-                                            }
-                                        }).show();
-                    }
+            filterBtn.setOnClickListener(view -> {
+                if (mBoards != null) {
+                    new Dialog(getActivity())
+                            .setTitle(getString(R.string.board))
+                            .setItems(mBoards.toArray(new String[mBoards.size()]),
+                                    (dialogInterface, i) -> {
+                                        loadDevices(1, i == 0 ? null : mBoards.get(i));
+                                        ((BaseActivity) getActivity()).getSupportActionBar()
+                                                .setTitle(mSelection = mBoards.get(i));
+                                    }).show();
                 }
             });
             addItem(filterBtn);

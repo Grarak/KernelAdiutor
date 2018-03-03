@@ -21,12 +21,13 @@ package com.grarak.kerneladiutor.fragments.tools;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
@@ -53,7 +54,6 @@ import java.util.List;
  */
 public class BackupFragment extends RecyclerViewFragment {
 
-    private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
     private boolean mPermissionDenied;
 
     private Dialog mOptionsDialog;
@@ -63,8 +63,6 @@ public class BackupFragment extends RecyclerViewFragment {
     private Dialog mDeleteDialog;
     private Dialog mRestoreDialog;
 
-    private boolean mLoaded;
-
     @Override
     protected boolean showTopFab() {
         return true;
@@ -72,7 +70,8 @@ public class BackupFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getTopFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
+        Drawable drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
         DrawableCompat.setTint(drawable, Color.WHITE);
         return drawable;
     }
@@ -127,50 +126,22 @@ public class BackupFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        if (!mLoaded) {
-            mLoaded = true;
-            requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
+        requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     private void reload() {
-        if (mLoader == null) {
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    clearItems();
-                    mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
-
-                        @Override
-                        protected void onPreExecute() {
-                            super.onPreExecute();
-                            showProgress();
-                        }
-
-                        @Override
-                        protected List<RecyclerViewItem> doInBackground(Void... voids) {
-                            List<RecyclerViewItem> items = new ArrayList<>();
-                            load(items);
-                            return items;
-                        }
-
-                        @Override
-                        protected void onPostExecute(List<RecyclerViewItem> items) {
-                            super.onPostExecute(items);
-                            for (RecyclerViewItem item : items) {
-                                addItem(item);
-                            }
-                            hideProgress();
-                            mLoader = null;
-                        }
-                    };
-                    mLoader.execute();
-                }
+        if (!isReloading()) {
+            getHandler().postDelayed(() -> {
+                clearItems();
+                reload(new ReloadHandler<>());
             }, 250);
         }
     }
 
-    private void load(List<RecyclerViewItem> items) {
+    @Override
+    protected void load(List<RecyclerViewItem> items) {
+        super.load(items);
+
         if (Backup.getBootPartition() != null) {
             List<RecyclerViewItem> boot = new ArrayList<>();
             itemInit(boot, Backup.PARTITION.BOOT);
@@ -211,32 +182,21 @@ public class BackupFragment extends RecyclerViewFragment {
                     DescriptionView descriptionView = new DescriptionView();
                     descriptionView.setTitle(image.getName().replace(".img", ""));
                     descriptionView.setSummary((image.length() / 1024L / 1024L) + getString(R.string.mb));
-                    descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                        @Override
-                        public void onClick(RecyclerViewItem item) {
-                            mItemOptionsDialog = new Dialog(getActivity())
-                                    .setItems(getResources().getStringArray(R.array.backup_item_options),
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    switch (i) {
-                                                        case 0:
-                                                            restore(partition, image, false);
-                                                            break;
-                                                        case 1:
-                                                            delete(image);
-                                                            break;
-                                                    }
-                                                }
-                                            })
-                                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialogInterface) {
-                                            mItemOptionsDialog = null;
-                                        }
-                                    });
-                            mItemOptionsDialog.show();
-                        }
+                    descriptionView.setOnItemClickListener(item -> {
+                        mItemOptionsDialog = new Dialog(getActivity())
+                                .setItems(getResources().getStringArray(R.array.backup_item_options),
+                                        (dialogInterface, i) -> {
+                                            switch (i) {
+                                                case 0:
+                                                    restore(partition, image, false);
+                                                    break;
+                                                case 1:
+                                                    delete(image);
+                                                    break;
+                                            }
+                                        })
+                                .setOnDismissListener(dialogInterface -> mItemOptionsDialog = null);
+                        mItemOptionsDialog.show();
                     });
 
                     items.add(descriptionView);
@@ -254,116 +214,98 @@ public class BackupFragment extends RecyclerViewFragment {
         }
 
         mOptionsDialog = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.backup_options), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        showBackupFlashingDialog(null);
-                        break;
-                    case 1:
-                        Intent intent = new Intent(getActivity(), FilePickerActivity.class);
-                        intent.putExtra(FilePickerActivity.PATH_INTENT, "/sdcard");
-                        intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".img");
-                        startActivityForResult(intent, 0);
-                        break;
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mOptionsDialog = null;
-            }
-        });
+                R.array.backup_options),
+                (dialogInterface, i) -> {
+                    switch (i) {
+                        case 0:
+                            showBackupFlashingDialog(null);
+                            break;
+                        case 1:
+                            Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                            intent.putExtra(FilePickerActivity.PATH_INTENT,
+                                    Environment.getExternalStorageDirectory().toString());
+                            intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".img");
+                            startActivityForResult(intent, 0);
+                            break;
+                    }
+                })
+                .setOnDismissListener(dialogInterface -> mOptionsDialog = null);
         mOptionsDialog.show();
     }
 
     private void showBackupFlashingDialog(final File file) {
         final LinkedHashMap<String, Backup.PARTITION> menu = getPartitionMenu();
         mBackupFlashingDialog = new Dialog(getActivity()).setItems(menu.keySet().toArray(
-                new String[menu.size()]), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Backup.PARTITION partition = menu.values().toArray(new Backup.PARTITION[menu.size()])[i];
-                if (file != null) {
-                    restore(partition, file, true);
-                } else {
-                    backup(partition);
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mBackupFlashingDialog = null;
-            }
-        });
+                new String[menu.size()]),
+                (dialogInterface, i) -> {
+                    Backup.PARTITION partition = menu.values().toArray(new Backup.PARTITION[menu.size()])[i];
+                    if (file != null) {
+                        restore(partition, file, true);
+                    } else {
+                        backup(partition);
+                    }
+                })
+                .setOnDismissListener(dialogInterface -> mBackupFlashingDialog = null);
         mBackupFlashingDialog.show();
     }
 
     private void restore(final Backup.PARTITION partition, final File file, final boolean flashing) {
-        mRestoreDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                new AsyncTask<Void, Void, Void>() {
-
-                    private ProgressDialog mProgressDialog;
-
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        mProgressDialog = new ProgressDialog(getActivity());
-                        mProgressDialog.setMessage(getString(flashing ? R.string.flashing : R.string.restoring));
-                        mProgressDialog.setCancelable(false);
-                        mProgressDialog.show();
-                    }
-
-                    @Override
-                    protected Void doInBackground(Void... voids) {
-                        Backup.restore(file, partition);
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        super.onPostExecute(aVoid);
-                        try {
-                            mProgressDialog.dismiss();
-                        } catch (IllegalArgumentException ignored) {
-                        }
-                    }
-                }.execute();
-            }
-        }, new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mRestoreDialog = null;
-            }
-        }, getActivity());
+        mRestoreDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
+                (dialogInterface, i) -> {
+                },
+                (dialogInterface, i)
+                        -> new RestoreTask(getActivity(), flashing, file, partition).execute(),
+                dialogInterface -> mRestoreDialog = null, getActivity());
         mRestoreDialog.show();
+    }
+
+    private static class RestoreTask extends AsyncTask<Void, Void, Void> {
+
+        private ProgressDialog mProgressDialog;
+        private File mFile;
+        private Backup.PARTITION mPartition;
+
+        private RestoreTask(Context context, boolean flashing,
+                            File file, Backup.PARTITION partition) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(context.getString(flashing ? R.string.flashing : R.string.restoring));
+            mProgressDialog.setCancelable(false);
+
+            mFile = file;
+            mPartition = partition;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Backup.restore(mFile, mPartition);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            try {
+                mProgressDialog.dismiss();
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
     }
 
     private void delete(final File file) {
         mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        file.delete();
-                        reload();
-                    }
-                }, new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        mDeleteDialog = null;
-                    }
-                }, getActivity());
+                (dialogInterface, i) -> {
+                },
+                (dialogInterface, i) -> {
+                    file.delete();
+                    reload();
+                },
+                dialogInterface -> mDeleteDialog = null, getActivity());
         mDeleteDialog.show();
     }
 
@@ -388,64 +330,64 @@ public class BackupFragment extends RecyclerViewFragment {
     private void backup(final Backup.PARTITION partition) {
         mBackupPartition = partition;
         ViewUtils.dialogEditText(partition == Backup.PARTITION.BOOT ? Device.getKernelVersion(false) : null,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                (dialogInterface, i) -> {
+                },
+                text -> {
+                    if (text.isEmpty()) {
+                        Utils.toast(R.string.name_empty, getActivity());
+                        return;
                     }
-                }, new ViewUtils.OnDialogEditTextListener() {
-                    @Override
-                    public void onClick(String text) {
-                        if (text.isEmpty()) {
-                            Utils.toast(R.string.name_empty, getActivity());
-                            return;
-                        }
 
-                        if (!text.endsWith(".img")) {
-                            text += ".img";
-                        }
-                        if (Utils.existFile(Backup.getPath(partition) + "/" + text)) {
-                            Utils.toast(getString(R.string.already_exists, text), getActivity());
-                            return;
-                        }
-
-                        final String path = text;
-                        new AsyncTask<Void, Void, Void>() {
-
-                            private ProgressDialog mProgressDialog;
-
-                            @Override
-                            protected void onPreExecute() {
-                                super.onPreExecute();
-                                mProgressDialog = new ProgressDialog(getActivity());
-                                mProgressDialog.setMessage(getString(R.string.backing_up));
-                                mProgressDialog.setCancelable(false);
-                                mProgressDialog.setOwnerActivity(getActivity());
-                                mProgressDialog.show();
-                            }
-
-                            @Override
-                            protected Void doInBackground(Void... voids) {
-                                Backup.backup(path, partition);
-                                return null;
-                            }
-
-                            @Override
-                            protected void onPostExecute(Void aVoid) {
-                                super.onPostExecute(aVoid);
-                                try {
-                                    mProgressDialog.dismiss();
-                                } catch (IllegalArgumentException ignored) {
-                                }
-                                reload();
-                            }
-                        }.execute();
+                    if (!text.endsWith(".img")) {
+                        text += ".img";
                     }
-                }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mBackupPartition = null;
+                    if (Utils.existFile(Backup.getPath(partition) + "/" + text)) {
+                        Utils.toast(getString(R.string.already_exists, text), getActivity());
+                        return;
+                    }
+
+                    new BackupTask(getActivity(), text, partition).execute();
+                }, getActivity())
+                .setOnDismissListener(dialogInterface
+                        -> mBackupPartition = null).show();
+    }
+
+    private static class BackupTask extends AsyncTask<BackupFragment, Void, BackupFragment> {
+
+        private ProgressDialog mProgressDialog;
+        private String mName;
+        private Backup.PARTITION mPartition;
+
+        private BackupTask(Context context, String name, Backup.PARTITION partition) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(context.getString(R.string.backing_up));
+            mProgressDialog.setCancelable(false);
+
+            mName = name;
+            mPartition = partition;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected BackupFragment doInBackground(BackupFragment... backupFragments) {
+            Backup.backup(mName, mPartition);
+            return backupFragments[0];
+        }
+
+        @Override
+        protected void onPostExecute(BackupFragment fragment) {
+            super.onPostExecute(fragment);
+            try {
+                mProgressDialog.dismiss();
+            } catch (IllegalArgumentException ignored) {
             }
-        }).show();
+            fragment.reload();
+        }
     }
 
     private LinkedHashMap<String, Backup.PARTITION> getPartitionMenu() {
@@ -474,11 +416,7 @@ public class BackupFragment extends RecyclerViewFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mLoader != null) {
-            mLoader.cancel(true);
-        }
         mPermissionDenied = false;
-        mLoaded = false;
     }
 
     @Override

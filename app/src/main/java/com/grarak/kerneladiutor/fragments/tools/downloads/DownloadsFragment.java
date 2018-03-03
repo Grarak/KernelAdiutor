@@ -125,12 +125,9 @@ public class DownloadsFragment extends RecyclerViewFragment {
                                     && content.getShortDescription() != null
                                     && content.getLongDescription() != null) {
                                 KernelItemView kernelItemView = new KernelItemView(content);
-                                kernelItemView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                                    @Override
-                                    public void onClick(RecyclerViewItem item) {
-                                        mKernelContent = content;
-                                        requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                                    }
+                                kernelItemView.setOnItemClickListener(item -> {
+                                    mKernelContent = content;
+                                    requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                                 });
                                 addItem(kernelItemView);
                             }

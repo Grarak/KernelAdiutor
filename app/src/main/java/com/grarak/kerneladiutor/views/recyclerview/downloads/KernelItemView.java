@@ -49,21 +49,18 @@ public class KernelItemView extends RecyclerViewItem {
     public void onCreateView(View view) {
         super.onCreateView(view);
 
-        final ImageView icon = (ImageView) view.findViewById(R.id.icon);
-        TextView title = (TextView) view.findViewById(R.id.title);
-        TextView summary = (TextView) view.findViewById(R.id.summary);
+        final ImageView icon = view.findViewById(R.id.icon);
+        TextView title = view.findViewById(R.id.title);
+        TextView summary = view.findViewById(R.id.summary);
 
         ViewUtils.loadImagefromUrl(mKernelContent.getLogo(), icon, 300, 300);
 
         title.setText(Utils.htmlFrom(mKernelContent.getName()).toString());
         summary.setText(Utils.htmlFrom(mKernelContent.getShortDescription()));
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getOnItemClickListener() != null) {
-                    getOnItemClickListener().onClick(KernelItemView.this);
-                }
+        view.setOnClickListener(view1 -> {
+            if (getOnItemClickListener() != null) {
+                getOnItemClickListener().onClick(KernelItemView.this);
             }
         });
     }

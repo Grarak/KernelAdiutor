@@ -20,7 +20,6 @@
 package com.grarak.kerneladiutor.views;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
@@ -82,17 +81,13 @@ public class AdNativeExpress extends LinearLayout {
         super(context, attrs, defStyleAttr);
 
         LayoutInflater.from(context).inflate(R.layout.ad_native_express_view, this);
-        mNativeAdLayout = (FrameLayout) findViewById(R.id.ad_layout);
+        mNativeAdLayout = findViewById(R.id.ad_layout);
         mProgress = findViewById(R.id.progress);
         mAdText = findViewById(R.id.ad_text);
-        mGHImage = (AppCompatImageView) findViewById(R.id.gh_image);
+        mGHImage = findViewById(R.id.gh_image);
 
-        findViewById(R.id.remove_ad).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewUtils.dialogDonate(v.getContext()).show();
-            }
-        });
+        findViewById(R.id.remove_ad).setOnClickListener(v
+                -> ViewUtils.dialogDonate(v.getContext()).show());
 
         mNativeExpressAdView = new NativeExpressAdView(context);
         mNativeExpressAdView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -194,20 +189,11 @@ public class AdNativeExpress extends LinearLayout {
                 }
             });
 
-            mGHImage.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new Dialog(getContext()).setTitle(R.string.warning)
-                            .setMessage(R.string.gh_ad)
-                            .setPositiveButton(R.string.open_ad_anyway,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Utils.launchUrl(link, getContext());
-                                        }
-                                    }).show();
-                }
-            });
+            mGHImage.setOnClickListener(v
+                    -> new Dialog(getContext()).setTitle(R.string.warning)
+                    .setMessage(R.string.gh_ad)
+                    .setPositiveButton(R.string.open_ad_anyway,
+                            (dialog, which) -> Utils.launchUrl(link, getContext())).show());
         } else {
             mGHImage.setVisibility(GONE);
             mProgress.setVisibility(GONE);

@@ -66,57 +66,55 @@ public class DataSharingDeviceView extends RecyclerViewItem {
         board.setText(mDeviceInfo.getBoard());
         fingerprint.setText(mDeviceInfo.getFingerprint());
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ViewGroup parent = (ViewGroup) mDialogView.getParent();
-                if (parent != null) parent.removeView(mDialogView);
-                new Dialog(view.getContext())
-                        .setView(mDialogView).show();
-            }
+        view.setOnClickListener(view1 -> {
+            ViewGroup parent = (ViewGroup) mDialogView.getParent();
+            if (parent != null) parent.removeView(mDialogView);
+            new Dialog(view1.getContext())
+                    .setView(mDialogView).show();
         });
 
         super.onCreateView(view);
 
-        if (mDialogView != null) return;
-        mDialogView = LayoutInflater.from(view.getContext()).inflate(
-                R.layout.dialog_datasharing_device, null, false);
+        if (mDialogView == null) {
+            mDialogView = LayoutInflater.from(view.getContext()).inflate(
+                    R.layout.dialog_datasharing_device, null, false);
 
-        TextView title = mDialogView.findViewById(R.id.title);
-        TextView androidVersion = mDialogView.findViewById(R.id.android_version);
-        TextView kernelVersion = mDialogView.findViewById(R.id.kernel_version);
-        board = mDialogView.findViewById(R.id.board);
-        fingerprint = mDialogView.findViewById(R.id.fingerprint);
-        TextView sot = mDialogView.findViewById(R.id.sot);
-        TextView cpuScore = mDialogView.findViewById(R.id.cpu_score);
-        TextView cpuInfo = mDialogView.findViewById(R.id.cpu_information);
-        TextView settings = mDialogView.findViewById(R.id.settings);
+            TextView title = mDialogView.findViewById(R.id.title);
+            TextView androidVersion = mDialogView.findViewById(R.id.android_version);
+            TextView kernelVersion = mDialogView.findViewById(R.id.kernel_version);
+            board = mDialogView.findViewById(R.id.board);
+            fingerprint = mDialogView.findViewById(R.id.fingerprint);
+            TextView sot = mDialogView.findViewById(R.id.sot);
+            TextView cpuScore = mDialogView.findViewById(R.id.cpu_score);
+            TextView cpuInfo = mDialogView.findViewById(R.id.cpu_information);
+            TextView settings = mDialogView.findViewById(R.id.settings);
 
-        title.setText(vendor + " " + mDeviceInfo.getModel());
-        androidVersion.setText(mDeviceInfo.getAndroidVersion());
-        kernelVersion.setText(mDeviceInfo.getKernelVersion());
-        board.setText(mDeviceInfo.getBoard());
-        fingerprint.setText(mDeviceInfo.getFingerprint());
+            title.setText(vendor + " " + mDeviceInfo.getModel());
+            androidVersion.setText(mDeviceInfo.getAndroidVersion());
+            kernelVersion.setText(mDeviceInfo.getKernelVersion());
+            board.setText(mDeviceInfo.getBoard());
+            fingerprint.setText(mDeviceInfo.getFingerprint());
 
-        long seconds = mDeviceInfo.getAverageSOT();
-        int h = (int) seconds / 60 / 60;
-        int m = (int) seconds / 60 % 60;
-        int s = (int) seconds % 60;
+            long seconds = mDeviceInfo.getAverageSOT();
+            int h = (int) seconds / 60 / 60;
+            int m = (int) seconds / 60 % 60;
+            int s = (int) seconds % 60;
 
-        sot.setText(h + ":" + m + ":" + s + " (" + view.getContext().getString(
-                R.string.screen_always_on) + ")");
-        cpuScore.setText(mDeviceInfo.getCpu() + " (" + view.getContext().getString(
-                R.string.lower_better) + ")");
-        cpuInfo.setText(mDeviceInfo.getCpuInfo());
-        if (mDeviceInfo.getCommands().size() == 0) {
-            settings.setText(view.getContext().getString(R.string.default_settings));
-        } else {
-            StringBuilder commands = new StringBuilder();
-            for (String command : mDeviceInfo.getCommands()) {
-                commands.append(command).append("\n");
+            sot.setText(h + ":" + m + ":" + s + " (" + view.getContext().getString(
+                    R.string.screen_always_on) + ")");
+            cpuScore.setText(mDeviceInfo.getCpu() + " (" + view.getContext().getString(
+                    R.string.lower_better) + ")");
+            cpuInfo.setText(mDeviceInfo.getCpuInfo());
+            if (mDeviceInfo.getCommands().size() == 0) {
+                settings.setText(view.getContext().getString(R.string.default_settings));
+            } else {
+                StringBuilder commands = new StringBuilder();
+                for (String command : mDeviceInfo.getCommands()) {
+                    commands.append(command).append("\n");
+                }
+                commands.setLength(commands.length() - 1);
+                settings.setText(commands.toString());
             }
-            commands.setLength(commands.length() - 1);
-            settings.setText(commands.toString());
         }
     }
 

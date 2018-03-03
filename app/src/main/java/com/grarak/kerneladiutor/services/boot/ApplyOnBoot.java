@@ -270,12 +270,7 @@ public class ApplyOnBoot {
                 su.close();
 
                 if (toast) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Utils.toast(R.string.apply_on_boot_complete, context);
-                        }
-                    });
+                    handler.post(() -> Utils.toast(R.string.apply_on_boot_complete, context));
                 }
 
                 listener.onFinish();

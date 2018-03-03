@@ -95,12 +95,8 @@ public class SoundFragment extends RecyclerViewFragment {
         SwitchView soundControl = new SwitchView();
         soundControl.setSummary(getString(R.string.sound_control));
         soundControl.setChecked(mSound.isSoundControlEnabled());
-        soundControl.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mSound.enableSoundControl(isChecked, getActivity());
-            }
-        });
+        soundControl.addOnSwitchListener((switchView, isChecked)
+                -> mSound.enableSoundControl(isChecked, getActivity()));
 
         items.add(soundControl);
     }
@@ -109,12 +105,8 @@ public class SoundFragment extends RecyclerViewFragment {
         SwitchView highPerfMode = new SwitchView();
         highPerfMode.setSummary(getString(R.string.headset_highperf_mode));
         highPerfMode.setChecked(mSound.isHighPerfModeEnabled());
-        highPerfMode.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mSound.enableHighPerfMode(isChecked, getActivity());
-            }
-        });
+        highPerfMode.addOnSwitchListener((switchView, isChecked)
+                -> mSound.enableHighPerfMode(isChecked, getActivity()));
 
         items.add(highPerfMode);
     }
@@ -241,12 +233,8 @@ public class SoundFragment extends RecyclerViewFragment {
         lockOutputGain.setTitle(getString(R.string.lock_output_gain));
         lockOutputGain.setSummary(getString(R.string.lock_output_gain_summary));
         lockOutputGain.setChecked(mSound.isLockOutputGainEnabled());
-        lockOutputGain.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mSound.enableLockOutputGain(isChecked, getActivity());
-            }
-        });
+        lockOutputGain.addOnSwitchListener((switchView, isChecked)
+                -> mSound.enableLockOutputGain(isChecked, getActivity()));
 
         items.add(lockOutputGain);
     }
@@ -256,12 +244,8 @@ public class SoundFragment extends RecyclerViewFragment {
         lockMicGain.setTitle(getString(R.string.lock_mic_gain));
         lockMicGain.setSummary(getString(R.string.lock_mic_gain_summary));
         lockMicGain.setChecked(mSound.isLockMicGainEnabled());
-        lockMicGain.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mSound.enableLockMicGain(isChecked, getActivity());
-            }
-        });
+        lockMicGain.addOnSwitchListener((switchView, isChecked)
+                -> mSound.enableLockMicGain(isChecked, getActivity()));
 
         items.add(lockMicGain);
     }

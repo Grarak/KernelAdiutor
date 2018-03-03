@@ -40,7 +40,7 @@ public class ErrorView extends RecyclerViewItem {
 
     @Override
     public void onCreateView(View view) {
-        mText = (TextView) view.findViewById(R.id.text);
+        mText = view.findViewById(R.id.text);
 
         super.onCreateView(view);
     }

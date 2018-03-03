@@ -55,7 +55,7 @@ public class DownloadsActivity extends BaseActivity {
         SupportedDownloads.KernelContent content = new SupportedDownloads.KernelContent(getIntent().getStringExtra(JSON_INTENT));
         getSupportActionBar().setTitle(Utils.htmlFrom(content.getName()).toString());
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        final ViewPager viewPager = findViewById(R.id.viewpager);
 
         LinkedHashMap<String, Fragment> items = new LinkedHashMap<>();
 
@@ -78,7 +78,7 @@ public class DownloadsActivity extends BaseActivity {
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), items);
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        TabLayout tabLayout = findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

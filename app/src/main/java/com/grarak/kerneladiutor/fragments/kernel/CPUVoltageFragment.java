@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.fragments.kernel;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -73,12 +74,8 @@ public class CPUVoltageFragment extends RecyclerViewFragment {
             overrideVmin.setSummary(getString(R.string.override_vmin_summary));
             overrideVmin.setChecked(mVoltage.isOverrideVminEnabled());
             overrideVmin.setFullSpan(true);
-            overrideVmin.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mVoltage.enableOverrideVmin(isChecked, getActivity());
-                }
-            });
+            overrideVmin.addOnSwitchListener((switchView, isChecked)
+                    -> mVoltage.enableOverrideVmin(isChecked, getActivity()));
 
             items.add(overrideVmin);
         }
@@ -112,17 +109,9 @@ public class CPUVoltageFragment extends RecyclerViewFragment {
         view.setValue("");
         view.setValueRaw(voltage);
         view.setInputType(InputType.TYPE_CLASS_NUMBER);
-        view.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
-            @Override
-            public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
-                mVoltage.setVoltage(freq, value, getActivity());
-                getHandler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        reload();
-                    }
-                }, 200);
-            }
+        view.setOnGenericValueListener((genericSelectView, value) -> {
+            mVoltage.setVoltage(freq, value, getActivity());
+            getHandler().postDelayed(this::reload, 200);
         });
     }
 
@@ -139,41 +128,27 @@ public class CPUVoltageFragment extends RecyclerViewFragment {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                                 @Nullable Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater,
+                                 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_global_offset, container, false);
-            final TextView offset = (TextView) rootView.findViewById(R.id.offset);
+            final TextView offset = rootView.findViewById(R.id.offset);
             offset.setText(Utils.strFormat("%d" + getString(R.string.mv), mGlobaloffset));
-            rootView.findViewById(R.id.button_minus).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mGlobaloffset -= 5;
-                    offset.setText(Utils.strFormat("%d" + getString(R.string.mv), mGlobaloffset));
-                    Voltage.getInstance().setGlobalOffset(-5, getActivity());
-                    if (mCPUVoltageFragment != null) {
-                        mCPUVoltageFragment.getHandler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mCPUVoltageFragment.reload();
-                            }
-                        }, 200);
-                    }
+            rootView.findViewById(R.id.button_minus).setOnClickListener(v -> {
+                mGlobaloffset -= 5;
+                offset.setText(Utils.strFormat("%d" + getString(R.string.mv), mGlobaloffset));
+                Voltage.getInstance().setGlobalOffset(-5, getActivity());
+                if (mCPUVoltageFragment != null) {
+                    mCPUVoltageFragment.getHandler().postDelayed(() ->
+                            mCPUVoltageFragment.reload(), 200);
                 }
             });
-            rootView.findViewById(R.id.button_plus).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mGlobaloffset += 5;
-                    offset.setText(Utils.strFormat("%d" + getString(R.string.mv), mGlobaloffset));
-                    Voltage.getInstance().setGlobalOffset(5, getActivity());
-                    if (mCPUVoltageFragment != null) {
-                        mCPUVoltageFragment.getHandler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mCPUVoltageFragment.reload();
-                            }
-                        }, 200);
-                    }
+            rootView.findViewById(R.id.button_plus).setOnClickListener(v -> {
+                mGlobaloffset += 5;
+                offset.setText(Utils.strFormat("%d" + getString(R.string.mv), mGlobaloffset));
+                Voltage.getInstance().setGlobalOffset(5, getActivity());
+                if (mCPUVoltageFragment != null) {
+                    mCPUVoltageFragment.getHandler().postDelayed(()
+                            -> mCPUVoltageFragment.reload(), 200);
                 }
             });
             return rootView;

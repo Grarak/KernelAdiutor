@@ -20,12 +20,12 @@
 package com.grarak.kerneladiutor.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
@@ -110,12 +110,13 @@ public class ApplyOnBootFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (getActivity() instanceof ProfileActivity) {
             View rootView = inflater.inflate(R.layout.fragment_description, container, false);
 
-            TextView title = (TextView) rootView.findViewById(R.id.title);
-            TextView summary = (TextView) rootView.findViewById(R.id.summary);
+            TextView title = rootView.findViewById(R.id.title);
+            TextView summary = rootView.findViewById(R.id.summary);
 
             title.setText(getString(R.string.apply_on_boot));
             summary.setText(getString(R.string.apply_on_boot_not_available));
@@ -125,14 +126,10 @@ public class ApplyOnBootFragment extends BaseFragment {
             View rootView = inflater.inflate(R.layout.fragment_apply_on_boot, container, false);
 
             final String category = getArguments().getString("category");
-            SwitchCompat switcher = (SwitchCompat) rootView.findViewById(R.id.switcher);
+            SwitchCompat switcher = rootView.findViewById(R.id.switcher);
             switcher.setChecked(Prefs.getBoolean(category, false, getActivity()));
-            switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Prefs.saveBoolean(category, isChecked, getActivity());
-                }
-            });
+            switcher.setOnCheckedChangeListener((buttonView, isChecked) ->
+                    Prefs.saveBoolean(category, isChecked, getActivity()));
             return rootView;
         }
     }

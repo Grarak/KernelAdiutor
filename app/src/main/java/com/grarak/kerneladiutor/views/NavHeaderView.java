@@ -21,7 +21,6 @@ package com.grarak.kerneladiutor.views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,7 +30,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -84,7 +82,7 @@ public class NavHeaderView extends LinearLayout {
         };
 
         LayoutInflater.from(context).inflate(R.layout.nav_header_view, this);
-        mImage = (ImageView) findViewById(R.id.nav_header_pic);
+        mImage = findViewById(R.id.nav_header_pic);
 
         boolean noPic;
         try {
@@ -101,31 +99,25 @@ public class NavHeaderView extends LinearLayout {
 
         if (noPic) Prefs.saveString("previewpicture", "nopicture", mImage.getContext());
 
-        findViewById(R.id.nav_header_fab).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                new Dialog(context).setItems(v.getResources()
-                        .getStringArray(R.array.main_header_picture_items), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                v.getContext().startActivity(new Intent(v.getContext(),
-                                        MainHeaderActivity.class));
-                                break;
-                            case 1:
-                                if (Prefs.getString("previewpicture", null, v.getContext())
-                                        .equals("nopicture"))
-                                    return;
-                                Prefs.saveString("previewpicture", "nopicture", v.getContext());
-                                mImage.setImageDrawable(null);
-                                animateBg();
-                                break;
-                        }
+        findViewById(R.id.nav_header_fab).setOnClickListener(v
+                -> new Dialog(context).setItems(v.getResources()
+                        .getStringArray(R.array.main_header_picture_items),
+                (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            v.getContext().startActivity(new Intent(v.getContext(),
+                                    MainHeaderActivity.class));
+                            break;
+                        case 1:
+                            if (Prefs.getString("previewpicture", null, v.getContext())
+                                    .equals("nopicture"))
+                                return;
+                            Prefs.saveString("previewpicture", "nopicture", v.getContext());
+                            mImage.setImageDrawable(null);
+                            animateBg();
+                            break;
                     }
-                }).show();
-            }
-        });
+                }).show());
     }
 
     public static class MainHeaderActivity extends Activity {

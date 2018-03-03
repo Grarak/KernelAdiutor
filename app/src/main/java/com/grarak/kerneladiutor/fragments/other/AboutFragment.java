@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.fragments.other;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,12 +81,8 @@ public class AboutFragment extends RecyclerViewFragment {
             DescriptionView descriptionView = new DescriptionView();
             descriptionView.setTitle(lib.split(",")[1]);
             descriptionView.setSummary(lib.split(",")[0]);
-            descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    Utils.launchUrl(sLibraries.get(lib), getActivity());
-                }
-            });
+            descriptionView.setOnItemClickListener(item
+                    -> Utils.launchUrl(sLibraries.get(lib), getActivity()));
 
             cardView.addItem(descriptionView);
         }
@@ -95,15 +92,11 @@ public class AboutFragment extends RecyclerViewFragment {
     public static class InfoFragment extends BaseFragment {
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                                 @Nullable Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater,
+                                 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_info, container, false);
-            rootView.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Utils.launchUrl("https://github.com/Grarak", getActivity());
-                }
-            });
+            rootView.findViewById(R.id.image).setOnClickListener(view
+                    -> Utils.launchUrl("https://github.com/Grarak", getActivity()));
             return rootView;
         }
     }

@@ -20,27 +20,17 @@
 package com.grarak.kerneladiutor.fragments.tools;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.SwitchCompat;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.EditorActivity;
-import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.SwitcherFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
@@ -53,16 +43,12 @@ import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by willi on 16.07.16.
  */
 public class InitdFragment extends RecyclerViewFragment {
-
-    private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
-    private boolean mLoaded;
 
     private Dialog mExecuteDialog;
     private Dialog mResultDialog;
@@ -75,7 +61,8 @@ public class InitdFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getTopFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
+        Drawable drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
         DrawableCompat.setTint(drawable, Color.WHITE);
         return drawable;
     }
@@ -93,12 +80,7 @@ public class InitdFragment extends RecyclerViewFragment {
                 getString(R.string.emulate_initd),
                 getString(R.string.emulate_initd_summary),
                 Prefs.getBoolean("initd_onboot", false, getActivity()),
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        Prefs.saveBoolean("initd_onboot", b, getActivity());
-                    }
-                }));
+                (compoundButton, b) -> Prefs.saveBoolean("initd_onboot", b, getActivity())));
 
         if (mExecuteDialog != null) {
             mExecuteDialog.show();
@@ -116,120 +98,64 @@ public class InitdFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        if (!mLoaded) {
-            load(items);
-            mLoaded = true;
-        }
+        load(items);
     }
 
     private void reload() {
-        if (mLoader == null) {
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    clearItems();
-                    mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
-
-                        @Override
-                        protected void onPreExecute() {
-                            super.onPreExecute();
-                            showProgress();
-                        }
-
-                        @Override
-                        protected List<RecyclerViewItem> doInBackground(Void... voids) {
-                            List<RecyclerViewItem> items = new ArrayList<>();
-                            load(items);
-                            return items;
-                        }
-
-                        @Override
-                        protected void onPostExecute(List<RecyclerViewItem> recyclerViewItems) {
-                            super.onPostExecute(recyclerViewItems);
-                            for (RecyclerViewItem item : recyclerViewItems) {
-                                addItem(item);
-                            }
-                            hideProgress();
-                            mLoader = null;
-                        }
-                    };
-                    mLoader.execute();
-                }
+        if (!isReloading()) {
+            getHandler().postDelayed(() -> {
+                clearItems();
+                reload(new ReloadHandler<>());
             }, 250);
         }
     }
 
-    private void load(List<RecyclerViewItem> items) {
+    @Override
+    protected void load(List<RecyclerViewItem> items) {
+        super.load(items);
+
         for (final String initd : Initd.list()) {
             CardView cardView = new CardView(getActivity());
-            cardView.setOnMenuListener(new CardView.OnMenuListener() {
-                @Override
-                public void onMenuReady(CardView cardView, PopupMenu popupMenu) {
-                    Menu menu = popupMenu.getMenu();
-                    menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));
-                    menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.delete));
+            cardView.setOnMenuListener((cardView1, popupMenu) -> {
+                Menu menu = popupMenu.getMenu();
+                menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));
+                menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.delete));
 
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case 0:
-                                    mEditInitd = initd;
-                                    Intent intent = new Intent(getActivity(), EditorActivity.class);
-                                    intent.putExtra(EditorActivity.TITLE_INTENT, initd);
-                                    intent.putExtra(EditorActivity.TEXT_INTENT, Initd.read(initd));
-                                    startActivityForResult(intent, 0);
-                                    break;
-                                case 1:
-                                    mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                }
-                                            }, new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    Initd.delete(initd);
-                                                    reload();
-                                                }
-                                            }, new DialogInterface.OnDismissListener() {
-                                                @Override
-                                                public void onDismiss(DialogInterface dialogInterface) {
-                                                    mDeleteDialog = null;
-                                                }
-                                            }, getActivity());
-                                    mDeleteDialog.show();
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                }
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case 0:
+                            mEditInitd = initd;
+                            Intent intent = new Intent(getActivity(), EditorActivity.class);
+                            intent.putExtra(EditorActivity.TITLE_INTENT, initd);
+                            intent.putExtra(EditorActivity.TEXT_INTENT, Initd.read(initd));
+                            startActivityForResult(intent, 0);
+                            break;
+                        case 1:
+                            mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
+                                    (dialogInterface, i) -> {
+                                    },
+                                    (dialogInterface, i) -> {
+                                        Initd.delete(initd);
+                                        reload();
+                                    },
+                                    dialogInterface -> mDeleteDialog = null, getActivity());
+                            mDeleteDialog.show();
+                            break;
+                    }
+                    return false;
+                });
             });
 
             DescriptionView descriptionView = new DescriptionView();
             descriptionView.setSummary(initd);
-            descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    mExecuteDialog = ViewUtils.dialogBuilder(getString(R.string.exceute_question, initd),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                }
-                            }, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    execute(initd);
-                                }
-                            }, new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    mExecuteDialog = null;
-                                }
-                            }, getActivity());
-                    mExecuteDialog.show();
-                }
+            descriptionView.setOnItemClickListener(item -> {
+                mExecuteDialog = ViewUtils.dialogBuilder(getString(R.string.exceute_question, initd),
+                        (dialogInterface, i) -> {
+                        },
+                        (dialogInterface, i) -> execute(initd),
+                        dialogInterface -> mExecuteDialog = null,
+                        getActivity());
+                mExecuteDialog.show();
             });
 
             cardView.addItem(descriptionView);
@@ -238,44 +164,52 @@ public class InitdFragment extends RecyclerViewFragment {
     }
 
     private void execute(final String initd) {
-        new AsyncTask<Void, Void, String>() {
+        new ExecuteTask(getActivity(), initd).execute(this);
+    }
 
-            private ProgressDialog mProgressDialog;
+    private static class ExecuteTask extends AsyncTask<InitdFragment, Void, InitdFragment> {
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+        private ProgressDialog mProgressDialog;
+        private String mInitd;
+        private String mResult;
 
-                mProgressDialog = new ProgressDialog(getActivity());
-                mProgressDialog.setMessage(getString(R.string.executing));
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
+        private ExecuteTask(Context context, String initd) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(context.getString(R.string.executing));
+            mProgressDialog.setCancelable(false);
+
+            mInitd = initd;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected InitdFragment doInBackground(InitdFragment... initdFragments) {
+            mResult = Initd.execute(mInitd);
+            return initdFragments[0];
+        }
+
+        @Override
+        protected void onPostExecute(InitdFragment initdFragment) {
+            super.onPostExecute(initdFragment);
+            try {
+                mProgressDialog.dismiss();
+            } catch (IllegalArgumentException ignored) {
             }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-                return Initd.execute(initd);
+            if (mResult != null && !mResult.isEmpty()) {
+                initdFragment.mResultDialog = ViewUtils.dialogBuilder(mResult,
+                        null,
+                        null,
+                        dialogInterface -> initdFragment.mResultDialog = null,
+                        initdFragment.getActivity()).setTitle(
+                        initdFragment.getString(R.string.result));
+                initdFragment.mResultDialog.show();
             }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                if (s != null && !s.isEmpty()) {
-                    mResultDialog = ViewUtils.dialogBuilder(s, null, null,
-                            new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    mResultDialog = null;
-                                }
-                            }, getActivity()).setTitle(getString(R.string.result));
-                    mResultDialog.show();
-                }
-            }
-        }.execute();
+        }
     }
 
     @Override
@@ -302,47 +236,34 @@ public class InitdFragment extends RecyclerViewFragment {
 
     private void showCreateDialog() {
         mShowCreateNameDialog = true;
-        ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }, new ViewUtils.OnDialogEditTextListener() {
-            @Override
-            public void onClick(String text) {
-                if (text.isEmpty()) {
-                    Utils.toast(R.string.name_empty, getActivity());
-                    return;
-                }
-
-                if (Initd.list().indexOf(text) > -1) {
-                    Utils.toast(getString(R.string.already_exists, text), getActivity());
-                    return;
-                }
-
-                mCreateName = text;
-                Intent intent = new Intent(getActivity(), EditorActivity.class);
-                intent.putExtra(EditorActivity.TITLE_INTENT, mCreateName);
-                intent.putExtra(EditorActivity.TEXT_INTENT, "#!/system/bin/sh\n\n");
-                startActivityForResult(intent, 1);
-            }
-        }, getActivity()).setTitle(getString(R.string.name)).setOnDismissListener(
-                new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        mShowCreateNameDialog = false;
+        ViewUtils.dialogEditText(null,
+                (dialogInterface, i) -> {
+                },
+                text -> {
+                    if (text.isEmpty()) {
+                        Utils.toast(R.string.name_empty, getActivity());
+                        return;
                     }
-                }).show();
+
+                    if (Initd.list().indexOf(text) > -1) {
+                        Utils.toast(getString(R.string.already_exists, text), getActivity());
+                        return;
+                    }
+
+                    mCreateName = text;
+                    Intent intent = new Intent(getActivity(), EditorActivity.class);
+                    intent.putExtra(EditorActivity.TITLE_INTENT, mCreateName);
+                    intent.putExtra(EditorActivity.TEXT_INTENT, "#!/system/bin/sh\n\n");
+                    startActivityForResult(intent, 1);
+                }, getActivity()).setTitle(getString(R.string.name))
+                .setOnDismissListener(
+                        dialogInterface -> mShowCreateNameDialog = false).show();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         RootUtils.mount(false, "/system");
-        if (mLoader != null) {
-            mLoader.cancel(true);
-            mLoader = null;
-        }
-        mLoaded = false;
     }
 
     @Override

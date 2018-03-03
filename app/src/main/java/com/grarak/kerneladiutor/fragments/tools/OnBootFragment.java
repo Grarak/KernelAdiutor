@@ -19,9 +19,6 @@
  */
 package com.grarak.kerneladiutor.fragments.tools;
 
-import android.content.DialogInterface;
-import android.os.AsyncTask;
-
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.Settings;
 import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
@@ -48,10 +45,6 @@ public class OnBootFragment extends RecyclerViewFragment {
     private Controls mControls;
     private Profiles mProfiles;
 
-    private boolean mLoaded;
-
-    private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
-
     private Dialog mDeleteDialog;
 
     @Override
@@ -64,10 +57,7 @@ public class OnBootFragment extends RecyclerViewFragment {
         if (mDeleteDialog != null) {
             mDeleteDialog.show();
         }
-    }
 
-    @Override
-    protected void addItems(List<RecyclerViewItem> items) {
         if (mSettings == null) {
             mSettings = new Settings(getActivity());
         }
@@ -77,49 +67,26 @@ public class OnBootFragment extends RecyclerViewFragment {
         if (mProfiles == null) {
             mProfiles = new Profiles(getActivity());
         }
-        if (!mLoaded) {
-            mLoaded = true;
-            load(items);
-        }
+    }
+
+    @Override
+    protected void addItems(List<RecyclerViewItem> items) {
+        load(items);
     }
 
     private void reload() {
-        if (mLoader == null) {
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
-                        @Override
-                        protected void onPreExecute() {
-                            super.onPreExecute();
-                            clearItems();
-                            showProgress();
-                        }
-
-                        @Override
-                        protected List<RecyclerViewItem> doInBackground(Void... voids) {
-                            List<RecyclerViewItem> items = new ArrayList<>();
-                            load(items);
-                            return items;
-                        }
-
-                        @Override
-                        protected void onPostExecute(List<RecyclerViewItem> recyclerViewItems) {
-                            super.onPostExecute(recyclerViewItems);
-                            for (RecyclerViewItem item : recyclerViewItems) {
-                                addItem(item);
-                            }
-                            hideProgress();
-                            mLoader = null;
-                        }
-                    };
-                    mLoader.execute();
-                }
+        if (!isReloading()) {
+            getHandler().postDelayed(() -> {
+                clearItems();
+                reload(new ReloadHandler<>());
             }, 250);
         }
     }
 
-    private void load(List<RecyclerViewItem> items) {
+    @Override
+    protected void load(List<RecyclerViewItem> items) {
+        super.load(items);
+
         List<RecyclerViewItem> applyOnBoot = new ArrayList<>();
         TitleView applyOnBootTitle = new TitleView();
         applyOnBootTitle.setText(getString(R.string.apply_on_boot));
@@ -144,30 +111,18 @@ public class OnBootFragment extends RecyclerViewFragment {
             applyOnBootView.setSummary((i + 1) + ". " + applyOnBootItem.mCategory.replace("_onboot", "")
                     + ": " + applyOnBootItem.mCommand);
 
-            applyOnBootView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.delete_question,
-                            applyOnBootItem.mCommand),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                }
-                            }, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    mSettings.delete(applyOnBootItem.mPosition);
-                                    mSettings.commit();
-                                    reload();
-                                }
-                            }, new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    mDeleteDialog = null;
-                                }
-                            }, getActivity());
-                    mDeleteDialog.show();
-                }
+            applyOnBootView.setOnItemClickListener(item -> {
+                mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.delete_question,
+                        applyOnBootItem.mCommand),
+                        (dialogInterface, i1) -> {
+                        },
+                        (dialogInterface, i1) -> {
+                            mSettings.delete(applyOnBootItem.mPosition);
+                            mSettings.commit();
+                            reload();
+                        },
+                        dialogInterface -> mDeleteDialog = null, getActivity());
+                mDeleteDialog.show();
             });
 
             applyOnBoot.add(applyOnBootView);
@@ -187,30 +142,18 @@ public class OnBootFragment extends RecyclerViewFragment {
                 DescriptionView controlView = new DescriptionView();
                 controlView.setTitle(controlItem.getTitle());
                 controlView.setSummary(getString(R.string.arguments, controlItem.getArguments()));
-                controlView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                    @Override
-                    public void onClick(RecyclerViewItem item) {
-                        mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.disable_question,
-                                controlItem.getTitle()),
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                    }
-                                }, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        controlItem.enableOnBoot(false);
-                                        mControls.commit();
-                                        reload();
-                                    }
-                                }, new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialogInterface) {
-                                        mDeleteDialog = null;
-                                    }
-                                }, getActivity());
-                        mDeleteDialog.show();
-                    }
+                controlView.setOnItemClickListener(item -> {
+                    mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.disable_question,
+                            controlItem.getTitle()),
+                            (dialogInterface, i) -> {
+                            },
+                            (dialogInterface, i) -> {
+                                controlItem.enableOnBoot(false);
+                                mControls.commit();
+                                reload();
+                            },
+                            dialogInterface -> mDeleteDialog = null, getActivity());
+                    mDeleteDialog.show();
                 });
 
                 customControls.add(controlView);
@@ -230,30 +173,18 @@ public class OnBootFragment extends RecyclerViewFragment {
             if (profileItem.isOnBootEnabled()) {
                 DescriptionView profileView = new DescriptionView();
                 profileView.setSummary(profileItem.getName());
-                profileView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                    @Override
-                    public void onClick(RecyclerViewItem item) {
-                        mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.disable_question,
-                                profileItem.getName()),
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                    }
-                                }, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        profileItem.enableOnBoot(false);
-                                        mProfiles.commit();
-                                        reload();
-                                    }
-                                }, new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialogInterface) {
-                                        mDeleteDialog = null;
-                                    }
-                                }, getActivity());
-                        mDeleteDialog.show();
-                    }
+                profileView.setOnItemClickListener(item -> {
+                    mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.disable_question,
+                            profileItem.getName()),
+                            (dialogInterface, i) -> {
+                            },
+                            (dialogInterface, i) -> {
+                                profileItem.enableOnBoot(false);
+                                mProfiles.commit();
+                                reload();
+                            },
+                            dialogInterface -> mDeleteDialog = null, getActivity());
+                    mDeleteDialog.show();
                 });
 
                 profiles.add(profileView);
@@ -272,29 +203,17 @@ public class OnBootFragment extends RecyclerViewFragment {
 
             DescriptionView emulateInitd = new DescriptionView();
             emulateInitd.setSummary(getString(R.string.emulate_initd));
-            emulateInitd.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.disable_question,
-                            getString(R.string.emulate_initd)),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                }
-                            }, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Prefs.saveBoolean("initd_onboot", false, getActivity());
-                                    reload();
-                                }
-                            }, new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    mDeleteDialog = null;
-                                }
-                            }, getActivity());
-                    mDeleteDialog.show();
-                }
+            emulateInitd.setOnItemClickListener(item -> {
+                mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.disable_question,
+                        getString(R.string.emulate_initd)),
+                        (dialogInterface, i) -> {
+                        },
+                        (dialogInterface, i) -> {
+                            Prefs.saveBoolean("initd_onboot", false, getActivity());
+                            reload();
+                        },
+                        dialogInterface -> mDeleteDialog = null, getActivity());
+                mDeleteDialog.show();
             });
 
             items.add(emulateInitd);
@@ -319,11 +238,6 @@ public class OnBootFragment extends RecyclerViewFragment {
         mSettings = null;
         mControls = null;
         mProfiles = null;
-        mLoaded = false;
-        if (mLoader != null) {
-            mLoader.cancel(true);
-            mLoader = null;
-        }
     }
 
     @Override

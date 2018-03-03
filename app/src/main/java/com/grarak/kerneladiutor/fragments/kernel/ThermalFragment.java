@@ -69,12 +69,8 @@ public class ThermalFragment extends RecyclerViewFragment {
         thermald.setTitle(getString(R.string.thermald));
         thermald.setSummary(getString(R.string.thermald_summary));
         thermald.setChecked(Thermald.isThermaldEnabled());
-        thermald.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                Thermald.enableThermald(isChecked, getActivity());
-            }
-        });
+        thermald.addOnSwitchListener((switchView, isChecked)
+                -> Thermald.enableThermald(isChecked, getActivity()));
 
         items.add(thermald);
     }
@@ -85,12 +81,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             intelliThermal.setTitle(getString(R.string.intellithermal));
             intelliThermal.setSummary(getString(R.string.intellithermal_summary));
             intelliThermal.setChecked(mMSMThermal.isIntelliThermalEnabled());
-            intelliThermal.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableIntelliThermal(isChecked, getActivity());
-                }
-            });
+            intelliThermal.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableIntelliThermal(isChecked, getActivity()));
 
             items.add(intelliThermal);
         }
@@ -100,12 +92,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             intelliThermalOptimized.setTitle(getString(R.string.intellithermal_optimized));
             intelliThermalOptimized.setSummary(getString(R.string.intellithermal_optimized_summary));
             intelliThermalOptimized.setChecked(mMSMThermal.isIntelliThermalOptimizedEnabled());
-            intelliThermalOptimized.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableIntelliThermalOptimized(isChecked, getActivity());
-                }
-            });
+            intelliThermalOptimized.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableIntelliThermalOptimized(isChecked, getActivity()));
 
             items.add(intelliThermalOptimized);
         }
@@ -115,12 +103,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             debugMode.setTitle(getString(R.string.debug_mask));
             debugMode.setSummary(getString(R.string.thermal_debug_mask_summary));
             debugMode.setChecked(mMSMThermal.isThermalDebugModeEnabled());
-            debugMode.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableThermalDebugMode(isChecked, getActivity());
-                }
-            });
+            debugMode.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableThermalDebugMode(isChecked, getActivity()));
 
             items.add(debugMode);
         }
@@ -129,12 +113,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             SwitchView coreControl = new SwitchView();
             coreControl.setSummary(getString(R.string.core_control));
             coreControl.setChecked(mMSMThermal.isCoreControlEnabled());
-            coreControl.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableCoreControl(isChecked, getActivity());
-                }
-            });
+            coreControl.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableCoreControl(isChecked, getActivity()));
 
             items.add(coreControl);
         }
@@ -143,12 +123,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             SwitchView vddRestriction = new SwitchView();
             vddRestriction.setSummary(getString(R.string.vdd_restriction));
             vddRestriction.setChecked(mMSMThermal.isVddRestrictionEnabled());
-            vddRestriction.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableVddRestriction(isChecked, getActivity());
-                }
-            });
+            vddRestriction.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableVddRestriction(isChecked, getActivity()));
 
             items.add(vddRestriction);
         }
@@ -257,12 +233,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             SwitchView immediatelyLimitStop = new SwitchView();
             immediatelyLimitStop.setSummary(getString(R.string.immediately_limit_stop));
             immediatelyLimitStop.setChecked(mMSMThermal.isImmediatelyLimitStopEnabled());
-            immediatelyLimitStop.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableImmediatelyLimitStop(isChecked, getActivity());
-                }
-            });
+            immediatelyLimitStop.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableImmediatelyLimitStop(isChecked, getActivity()));
 
             items.add(immediatelyLimitStop);
         }
@@ -358,12 +330,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             SwitchView tempSafety = new SwitchView();
             tempSafety.setSummary(getString(R.string.temp_safety));
             tempSafety.setChecked(mMSMThermal.isTempSafetyEnabled());
-            tempSafety.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableTempSafety(isChecked, getActivity());
-                }
-            });
+            tempSafety.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableTempSafety(isChecked, getActivity()));
 
             items.add(tempSafety);
         }
@@ -373,12 +341,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             tempThrottle.setTitle(getString(R.string.temp_throttle));
             tempThrottle.setSummary(getString(R.string.temp_throttle_summary));
             tempThrottle.setChecked(mMSMThermal.isTempThrottleEnabled());
-            tempThrottle.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableTempThrottle(isChecked, getActivity());
-                }
-            });
+            tempThrottle.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableTempThrottle(isChecked, getActivity()));
 
             items.add(tempThrottle);
         }
@@ -411,12 +375,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             freqLimitDebug.setTitle(getString(R.string.freq_limit_debug));
             freqLimitDebug.setSummary(getString(R.string.freq_limit_debug_summary));
             freqLimitDebug.setChecked(mMSMThermal.isFreqLimitDebugEnabled());
-            freqLimitDebug.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMThermal.enableFreqLimitDebug(isChecked, getActivity());
-                }
-            });
+            freqLimitDebug.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMThermal.enableFreqLimitDebug(isChecked, getActivity()));
 
             items.add(freqLimitDebug);
         }
@@ -427,12 +387,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             minFreqIndex.setSummary(getString(R.string.temp_limit_min_freq_summary));
             minFreqIndex.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             minFreqIndex.setItem((mMSMThermal.getMinFreqIndex() / 1000) + getString(R.string.mhz));
-            minFreqIndex.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMSMThermal.setMinFreqIndex(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            minFreqIndex.setOnItemSelected((selectView, position, item)
+                    -> mMSMThermal.setMinFreqIndex(mCPUFreq.getFreqs().get(position), getActivity()));
 
             items.add(minFreqIndex);
         }
@@ -494,12 +450,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             allowedLowFreq.setSummary(getString(R.string.allowed_low_freq));
             allowedLowFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             allowedLowFreq.setItem((mMSMThermal.getAllowedLowFreq() / 1000) + getString(R.string.mhz));
-            allowedLowFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMSMThermal.setAllowedLowFreq(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            allowedLowFreq.setOnItemSelected((selectView, position, item)
+                    -> mMSMThermal.setAllowedLowFreq(mCPUFreq.getFreqs().get(position), getActivity()));
 
             items.add(allowedLowFreq);
         }
@@ -561,12 +513,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             allowedMidFreq.setSummary(getString(R.string.allowed_mid_freq));
             allowedMidFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             allowedMidFreq.setItem((mMSMThermal.getAllowedMidFreq() / 1000) + getString(R.string.mhz));
-            allowedMidFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMSMThermal.setAllowedMidFreq(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            allowedMidFreq.setOnItemSelected((selectView, position, item)
+                    -> mMSMThermal.setAllowedMidFreq(mCPUFreq.getFreqs().get(position), getActivity()));
 
             items.add(allowedMidFreq);
         }
@@ -628,12 +576,8 @@ public class ThermalFragment extends RecyclerViewFragment {
             allowedMaxFreq.setSummary(getString(R.string.allowed_max_freq));
             allowedMaxFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             allowedMaxFreq.setItem((mMSMThermal.getAllowedMaxFreq() / 1000) + getString(R.string.mhz));
-            allowedMaxFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMSMThermal.setAllowedMaxFreq(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            allowedMaxFreq.setOnItemSelected((selectView, position, item)
+                    -> mMSMThermal.setAllowedMaxFreq(mCPUFreq.getFreqs().get(position), getActivity()));
 
             items.add(allowedMaxFreq);
         }

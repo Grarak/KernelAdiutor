@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -51,12 +52,10 @@ public class SwitcherFragment extends BaseFragment {
     private boolean mChecked;
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
 
-    private SwitchCompat mSwitch;
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_switcher, container, false);
         if (mTitle != null) {
             ((TextView) view.findViewById(R.id.title)).setText(mTitle);
@@ -64,7 +63,7 @@ public class SwitcherFragment extends BaseFragment {
         if (mSummary != null) {
             ((TextView) view.findViewById(R.id.summary)).setText(mSummary);
         }
-        mSwitch = view.findViewById(R.id.switcher);
+        SwitchCompat mSwitch = view.findViewById(R.id.switcher);
         mSwitch.setChecked(mChecked);
         mSwitch.setOnCheckedChangeListener(mOnCheckedChangeListener);
         return view;

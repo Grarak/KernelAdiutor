@@ -90,9 +90,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         View splashBackground = findViewById(R.id.splash_background);
-        mRootAccess = (TextView) findViewById(R.id.root_access_text);
-        mBusybox = (TextView) findViewById(R.id.busybox_text);
-        mCollectInfo = (TextView) findViewById(R.id.info_collect_text);
+        mRootAccess = findViewById(R.id.root_access_text);
+        mBusybox = findViewById(R.id.busybox_text);
+        mCollectInfo = findViewById(R.id.info_collect_text);
 
         // Hide huge banner in landscape mode
         if (Utils.getOrientation(this) == Configuration.ORIENTATION_LANDSCAPE) {

@@ -99,12 +99,9 @@ public class MiscFragment extends RecyclerViewFragment {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
                 mVibration.setVibration(Math.round(position * offset + min), getActivity());
-                getHandler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (vibrator != null) {
-                            vibrator.vibrate(300);
-                        }
+                getHandler().postDelayed(() -> {
+                    if (vibrator != null) {
+                        vibrator.vibrate(300);
                     }
                 }, 250);
             }
@@ -121,12 +118,8 @@ public class MiscFragment extends RecyclerViewFragment {
         SwitchView logger = new SwitchView();
         logger.setSummary(getString(R.string.android_logger));
         logger.setChecked(mMisc.isLoggerEnabled());
-        logger.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mMisc.enableLogger(isChecked, getActivity());
-            }
-        });
+        logger.addOnSwitchListener((switchView, isChecked)
+                -> mMisc.enableLogger(isChecked, getActivity()));
 
         items.add(logger);
     }
@@ -136,12 +129,8 @@ public class MiscFragment extends RecyclerViewFragment {
         crc.setTitle(getString(R.string.crc));
         crc.setSummary(getString(R.string.crc_summary));
         crc.setChecked(mMisc.isCrcEnabled());
-        crc.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mMisc.enableCrc(isChecked, getActivity());
-            }
-        });
+        crc.addOnSwitchListener((switchView, isChecked)
+                -> mMisc.enableCrc(isChecked, getActivity()));
 
         items.add(crc);
     }
@@ -152,12 +141,8 @@ public class MiscFragment extends RecyclerViewFragment {
             fsync.setTitle(getString(R.string.fsync));
             fsync.setSummary(getString(R.string.fsync_summary));
             fsync.setChecked(mMisc.isFsyncEnabled());
-            fsync.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMisc.enableFsync(isChecked, getActivity());
-                }
-            });
+            fsync.addOnSwitchListener((switchView, isChecked)
+                    -> mMisc.enableFsync(isChecked, getActivity()));
 
             items.add(fsync);
         }
@@ -167,12 +152,8 @@ public class MiscFragment extends RecyclerViewFragment {
             dynamicFsync.setTitle(getString(R.string.dynamic_fsync));
             dynamicFsync.setSummary(getString(R.string.dynamic_fsync_summary));
             dynamicFsync.setChecked(mMisc.isDynamicFsyncEnabled());
-            dynamicFsync.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMisc.enableDynamicFsync(isChecked, getActivity());
-                }
-            });
+            dynamicFsync.addOnSwitchListener((switchView, isChecked)
+                    -> mMisc.enableDynamicFsync(isChecked, getActivity()));
 
             items.add(dynamicFsync);
         }
@@ -183,12 +164,8 @@ public class MiscFragment extends RecyclerViewFragment {
         gentleFairSleepers.setTitle(getString(R.string.gentlefairsleepers));
         gentleFairSleepers.setSummary(getString(R.string.gentlefairsleepers_summary));
         gentleFairSleepers.setChecked(mMisc.isGentleFairSleepersEnabled());
-        gentleFairSleepers.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mMisc.enableGentleFairSleepers(isChecked, getActivity());
-            }
-        });
+        gentleFairSleepers.addOnSwitchListener((switchView, isChecked)
+                -> mMisc.enableGentleFairSleepers(isChecked, getActivity()));
 
         items.add(gentleFairSleepers);
     }
@@ -198,12 +175,8 @@ public class MiscFragment extends RecyclerViewFragment {
         archPower.setTitle(getString(R.string.arch_power));
         archPower.setSummary(getString(R.string.arch_power_summary));
         archPower.setChecked(mMisc.isArchPowerEnabled());
-        archPower.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                mMisc.enableArchPower(isChecked, getActivity());
-            }
-        });
+        archPower.addOnSwitchListener((switchView, isChecked)
+                -> mMisc.enableArchPower(isChecked, getActivity()));
 
         items.add(archPower);
     }
@@ -215,12 +188,8 @@ public class MiscFragment extends RecyclerViewFragment {
             mode.setSummary(getString(R.string.power_suspend_mode_summary));
             mode.setItems(Arrays.asList(getResources().getStringArray(R.array.powersuspend_items)));
             mode.setItem(PowerSuspend.getMode());
-            mode.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    PowerSuspend.setMode(position, getActivity());
-                }
-            });
+            mode.setOnItemSelected((selectView, position, item)
+                    -> PowerSuspend.setMode(position, getActivity()));
 
             items.add(mode);
         }
@@ -230,12 +199,8 @@ public class MiscFragment extends RecyclerViewFragment {
             state.setTitle(getString(R.string.power_suspend_state));
             state.setSummary(getString(R.string.power_suspend_state_summary));
             state.setChecked(PowerSuspend.isOldStateEnabled());
-            state.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    PowerSuspend.enableOldState(isChecked, getActivity());
-                }
-            });
+            state.addOnSwitchListener((switchView, isChecked)
+                    -> PowerSuspend.enableOldState(isChecked, getActivity()));
 
             items.add(state);
         }
@@ -271,12 +236,8 @@ public class MiscFragment extends RecyclerViewFragment {
             tcp.setSummary(getString(R.string.tcp_summary));
             tcp.setItems(mMisc.getTcpAvailableCongestions());
             tcp.setItem(mMisc.getTcpCongestion());
-            tcp.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMisc.setTcpCongestion(item, getActivity());
-                }
-            });
+            tcp.setOnItemSelected((selectView, position, item)
+                    -> mMisc.setTcpCongestion(item, getActivity()));
 
             networkCard.addItem(tcp);
         } catch (Exception ignored) {
@@ -286,12 +247,8 @@ public class MiscFragment extends RecyclerViewFragment {
         hostname.setSummary(getString(R.string.hostname));
         hostname.setValue(mMisc.getHostname());
         hostname.setValueRaw(hostname.getValue());
-        hostname.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
-            @Override
-            public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
-                mMisc.setHostname(value, getActivity());
-            }
-        });
+        hostname.setOnGenericValueListener((genericSelectView, value)
+                -> mMisc.setHostname(value, getActivity()));
 
         networkCard.addItem(hostname);
 
@@ -314,12 +271,8 @@ public class MiscFragment extends RecyclerViewFragment {
                 switchView.setSummary(description);
             }
             switchView.setChecked(wakelock.isEnabled());
-            switchView.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    wakelock.enable(isChecked, getActivity());
-                }
-            });
+            switchView.addOnSwitchListener((switchView1, isChecked)
+                    -> wakelock.enable(isChecked, getActivity()));
 
             wakelocks.add(switchView);
         }

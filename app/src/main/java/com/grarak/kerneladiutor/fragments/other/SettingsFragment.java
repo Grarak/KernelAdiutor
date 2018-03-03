@@ -21,7 +21,6 @@ package com.grarak.kerneladiutor.fragments.other;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -288,17 +287,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 }
                 return true;
             case KEY_LOGCAT:
-                new Execute().execute("logcat -d > /sdcard/logcat.txt");
+                new Execute(getActivity()).execute("logcat -d > /sdcard/logcat.txt");
                 return true;
             case KEY_LAST_KMSG:
                 if (Utils.existFile("/proc/last_kmsg")) {
-                    new Execute().execute("cat /proc/last_kmsg > /sdcard/last_kmsg.txt");
+                    new Execute(getActivity()).execute("cat /proc/last_kmsg > /sdcard/last_kmsg.txt");
                 } else if (Utils.existFile("/sys/fs/pstore/console-ramoops")) {
-                    new Execute().execute("cat /sys/fs/pstore/console-ramoops > /sdcard/last_kmsg.txt");
+                    new Execute(getActivity()).execute("cat /sys/fs/pstore/console-ramoops > /sdcard/last_kmsg.txt");
                 }
                 return true;
             case KEY_DMESG:
-                new Execute().execute("dmesg > /sdcard/dmesg.txt");
+                new Execute(getActivity()).execute("dmesg > /sdcard/dmesg.txt");
                 return true;
             case KEY_SET_PASSWORD:
                 editPasswordDialog(Prefs.getString("password", "", getActivity()));
@@ -310,15 +309,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         return false;
     }
 
-    private class Execute extends AsyncTask<String, Void, Void> {
+    private static class Execute extends AsyncTask<String, Void, Void> {
         private ProgressDialog mProgressDialog;
+
+        private Execute(Context context) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(context.getString(R.string.executing));
+            mProgressDialog.setCancelable(false);
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.executing));
-            mProgressDialog.setCancelable(false);
             mProgressDialog.show();
         }
 
@@ -364,48 +366,38 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         linearLayout.addView(confirmNewPassword);
 
         new Dialog(getActivity()).setView(linearLayout)
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                })
+                .setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
+                    if (!oldPass.isEmpty() && !oldPassword.getText().toString().equals(Utils
+                            .decodeString(oldPass))) {
+                        Utils.toast(getString(R.string.old_password_wrong), getActivity());
+                        return;
+                    }
+
+                    if (newPassword.getText().toString().isEmpty()) {
+                        Utils.toast(getString(R.string.password_empty), getActivity());
+                        return;
+                    }
+
+                    if (!newPassword.getText().toString().equals(confirmNewPassword.getText()
+                            .toString())) {
+                        Utils.toast(getString(R.string.password_not_match), getActivity());
+                        return;
+                    }
+
+                    if (newPassword.getText().toString().length() > 32) {
+                        Utils.toast(getString(R.string.password_too_long), getActivity());
+                        return;
+                    }
+
+                    Prefs.saveString("password", Utils.encodeString(newPassword.getText()
+                            .toString()), getActivity());
+                    if (mFingerprint != null) {
+                        mFingerprint.setEnabled(true);
                     }
                 })
-                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (!oldPass.isEmpty() && !oldPassword.getText().toString().equals(Utils
-                                .decodeString(oldPass))) {
-                            Utils.toast(getString(R.string.old_password_wrong), getActivity());
-                            return;
-                        }
-
-                        if (newPassword.getText().toString().isEmpty()) {
-                            Utils.toast(getString(R.string.password_empty), getActivity());
-                            return;
-                        }
-
-                        if (!newPassword.getText().toString().equals(confirmNewPassword.getText()
-                                .toString())) {
-                            Utils.toast(getString(R.string.password_not_match), getActivity());
-                            return;
-                        }
-
-                        if (newPassword.getText().toString().length() > 32) {
-                            Utils.toast(getString(R.string.password_too_long), getActivity());
-                            return;
-                        }
-
-                        Prefs.saveString("password", Utils.encodeString(newPassword.getText()
-                                .toString()), getActivity());
-                        if (mFingerprint != null) {
-                            mFingerprint.setEnabled(true);
-                        }
-                    }
-                }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mOldPassword = null;
-            }
-        }).show();
+                .setOnDismissListener(dialogInterface -> mOldPassword = null).show();
     }
 
     private void deletePasswordDialog(final String password) {
@@ -428,25 +420,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         linearLayout.addView(mPassword);
 
         new Dialog(getActivity()).setView(linearLayout)
-                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (!mPassword.getText().toString().equals(Utils.decodeString(password))) {
-                            Utils.toast(getString(R.string.password_wrong), getActivity());
-                            return;
-                        }
-
-                        Prefs.saveString("password", "", getActivity());
-                        if (mFingerprint != null) {
-                            mFingerprint.setEnabled(false);
-                        }
+                .setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
+                    if (!mPassword.getText().toString().equals(Utils.decodeString(password))) {
+                        Utils.toast(getString(R.string.password_wrong), getActivity());
+                        return;
                     }
-                }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mDeletePassword = null;
-            }
-        }).show();
+
+                    Prefs.saveString("password", "", getActivity());
+                    if (mFingerprint != null) {
+                        mFingerprint.setEnabled(false);
+                    }
+                })
+                .setOnDismissListener(dialogInterface -> mDeletePassword = null).show();
     }
 
     private void colorDialog(int selection) {
@@ -477,16 +462,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             int margin = (int) getResources().getDimension(R.dimen.color_dialog_margin);
             params.setMargins(margin, margin, margin, margin);
             circle.setLayoutParams(params);
-            circle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (BorderCircleView borderCircleView : circles) {
-                        if (v == borderCircleView) {
-                            borderCircleView.setChecked(true);
-                            mColorSelection = circles.indexOf(borderCircleView);
-                        } else {
-                            borderCircleView.setChecked(false);
-                        }
+            circle.setOnClickListener(v -> {
+                for (BorderCircleView borderCircleView : circles) {
+                    if (v == borderCircleView) {
+                        borderCircleView.setChecked(true);
+                        mColorSelection = circles.indexOf(borderCircleView);
+                    } else {
+                        borderCircleView.setChecked(false);
                     }
                 }
             });
@@ -496,29 +478,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         }
 
         new Dialog(getActivity()).setView(linearLayout)
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                .setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
                 })
-                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (mColorSelection >= 0) {
-                            Prefs.saveString(KEY_ACCENT_COLOR,
-                                    BorderCircleView.sAccentColors.valueAt(mColorSelection), getActivity());
-                        }
-                        getActivity().finish();
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
+                    if (mColorSelection >= 0) {
+                        Prefs.saveString(KEY_ACCENT_COLOR,
+                                BorderCircleView.sAccentColors.valueAt(mColorSelection), getActivity());
                     }
-                }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mColorSelection = -1;
-            }
-        }).show();
+                    getActivity().finish();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                })
+                .setOnDismissListener(dialog -> mColorSelection = -1).show();
     }
 
 }

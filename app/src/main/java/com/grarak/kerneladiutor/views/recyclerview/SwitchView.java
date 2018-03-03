@@ -22,7 +22,6 @@ package com.grarak.kerneladiutor.views.recyclerview;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import com.grarak.kerneladiutor.R;
 
@@ -55,28 +54,20 @@ public class SwitchView extends RecyclerViewItem {
 
     @Override
     public void onCreateView(View view) {
-        mTitle = (AppCompatTextView) view.findViewById(R.id.title);
-        mSummary = (AppCompatTextView) view.findViewById(R.id.summary);
-        mSwitcher = (SwitchCompat) view.findViewById(R.id.switcher);
+        mTitle = view.findViewById(R.id.title);
+        mSummary = view.findViewById(R.id.summary);
+        mSwitcher = view.findViewById(R.id.switcher);
 
         super.onCreateView(view);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSwitcher.setChecked(!mChecked);
-            }
-        });
-        mSwitcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mChecked = isChecked;
-                List<OnSwitchListener> applied = new ArrayList<>();
-                for (OnSwitchListener onSwitchListener : mOnSwitchListeners) {
-                    if (applied.indexOf(onSwitchListener) == -1) {
-                        onSwitchListener.onChanged(SwitchView.this, isChecked);
-                        applied.add(onSwitchListener);
-                    }
+        view.setOnClickListener(v -> mSwitcher.setChecked(!mChecked));
+        mSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mChecked = isChecked;
+            List<OnSwitchListener> applied = new ArrayList<>();
+            for (OnSwitchListener onSwitchListener : mOnSwitchListeners) {
+                if (applied.indexOf(onSwitchListener) == -1) {
+                    onSwitchListener.onChanged(SwitchView.this, isChecked);
+                    applied.add(onSwitchListener);
                 }
             }
         });
