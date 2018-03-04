@@ -34,9 +34,14 @@
             android:key="forcecards"
             android:summary="@string/force_cards_summary"
             android:title="@string/force_cards" />
-        <com.grarak.kerneladiutor.views.preference.ColorPreference
+        <Preference
+            android:key="primary_color"
+            android:summary="@string/primary_color"
+            android:widgetLayout="@layout/preference_primary_color_view" />
+        <Preference
             android:key="accent_color"
-            android:summary="@string/accent_color" />
+            android:summary="@string/accent_color"
+            android:widgetLayout="@layout/preference_accent_color_view" />
         <SwitchPreferenceCompat
             android:key="section_icons"
             android:summary="@string/section_icons_summary"

@@ -38,6 +38,7 @@ import android.support.annotation.Nullable;
 import com.grarak.kerneladiutor.BuildConfig;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.MainActivity;
+import com.grarak.kerneladiutor.activities.NavigationActivity;
 import com.grarak.kerneladiutor.database.Settings;
 import com.grarak.kerneladiutor.fragments.tools.DataSharingFragment;
 import com.grarak.kerneladiutor.utils.Device;
@@ -203,7 +204,8 @@ public class Monitor extends Service {
 
             Intent launchIntent = new Intent(this, MainActivity.class);
             launchIntent.setAction(Intent.ACTION_VIEW);
-            launchIntent.putExtra("section", DataSharingFragment.class.getCanonicalName());
+            launchIntent.putExtra(NavigationActivity.INTENT_SECTION,
+                    DataSharingFragment.class.getCanonicalName());
             launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                     launchIntent, 0);

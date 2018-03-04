@@ -3,8 +3,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="discreteSeekBarStyle">@style/Widget.DiscreteSeekBar</item>
         <item name="banner_frame_drawable">@drawable/drawable_frame_light</item>
@@ -19,8 +17,6 @@
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="discreteSeekBarStyle">@style/Widget.DiscreteSeekBar</item>
         <item name="banner_frame_drawable">@drawable/drawable_frame_dark</item>

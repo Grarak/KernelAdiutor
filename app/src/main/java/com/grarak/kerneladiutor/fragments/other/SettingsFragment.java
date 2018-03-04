@@ -51,6 +51,7 @@ import com.grarak.kerneladiutor.activities.MainActivity;
 import com.grarak.kerneladiutor.activities.NavigationActivity;
 import com.grarak.kerneladiutor.services.boot.ApplyOnBootService;
 import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.Themes;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -74,6 +75,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     private static final String KEY_MATERIAL_ICON = "materialicon";
     private static final String KEY_BANNER_RESIZER = "banner_resizer";
     private static final String KEY_HIDE_BANNER = "hide_banner";
+    private static final String KEY_PRIMARY_COLOR = "primary_color";
     private static final String KEY_ACCENT_COLOR = "accent_color";
     private static final String KEY_SECTIONS_ICON = "section_icons";
     private static final String KEY_APPLY_ON_BOOT_TEST = "applyonboottest";
@@ -91,16 +93,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     private String mOldPassword;
     private String mDeletePassword;
-    private int mColorSelection = -1;
+    private int mColorSelection;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!Utils.DONATED) {
-            Prefs.remove(KEY_HIDE_BANNER, getActivity());
-            Prefs.remove(KEY_ACCENT_COLOR, getActivity());
-            Prefs.remove(KEY_SECTIONS_ICON, getActivity());
-        }
         setRetainInstance(true);
     }
 
@@ -121,9 +118,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         }
         if (mDeletePassword != null) {
             deletePasswordDialog(mDeletePassword);
-        }
-        if (mColorSelection >= 0) {
-            colorDialog(mColorSelection);
         }
     }
 
@@ -152,6 +146,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         findPreference(KEY_DARK_THEME).setOnPreferenceChangeListener(this);
         findPreference(KEY_BANNER_RESIZER).setOnPreferenceClickListener(this);
         findPreference(KEY_HIDE_BANNER).setOnPreferenceChangeListener(this);
+        findPreference(KEY_PRIMARY_COLOR).setOnPreferenceClickListener(this);
         findPreference(KEY_ACCENT_COLOR).setOnPreferenceClickListener(this);
         findPreference(KEY_SECTIONS_ICON).setOnPreferenceChangeListener(this);
         findPreference(KEY_APPLY_ON_BOOT_TEST).setOnPreferenceClickListener(this);
@@ -207,6 +202,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 getActivity().finish();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(NavigationActivity.INTENT_SECTION,
+                        SettingsFragment.class.getCanonicalName());
                 startActivity(intent);
                 return true;
             case KEY_MATERIAL_ICON:
@@ -263,16 +260,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     ViewUtils.dialogDonate(getActivity()).show();
                 }
                 return true;
+            case KEY_PRIMARY_COLOR:
+                if (Utils.DONATED) {
+                    colorDialog(true);
+                } else {
+                    ViewUtils.dialogDonate(getActivity()).show();
+                }
+                return true;
             case KEY_ACCENT_COLOR:
                 if (Utils.DONATED) {
-                    List<Integer> sColors = new ArrayList<>();
-                    for (int i = 0; i < BorderCircleView.sAccentColors.size(); i++) {
-                        sColors.add(BorderCircleView.sAccentColors.keyAt(i));
-                    }
-                    for (int i = 0; i < sColors.size(); i++) {
-                        sColors.set(i, ContextCompat.getColor(getActivity(), sColors.get(i)));
-                    }
-                    colorDialog(sColors.indexOf(ViewUtils.getThemeAccentColor(getActivity())));
+                    colorDialog(false);
                 } else {
                     ViewUtils.dialogDonate(getActivity()).show();
                 }
@@ -434,7 +431,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 .setOnDismissListener(dialogInterface -> mDeletePassword = null).show();
     }
 
-    private void colorDialog(int selection) {
+    private void colorDialog(boolean primaryColor) {
+        mColorSelection = -1;
+        List<String> colors = primaryColor ? Themes.sPrimaryColors : Themes.sAccentColors;
+        int selection = colors.indexOf(primaryColor ?
+                Themes.getPrimaryColor(getActivity())
+                : Themes.getAccentColor(getActivity()));
+
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -445,7 +448,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         final List<BorderCircleView> circles = new ArrayList<>();
 
         LinearLayout subView = null;
-        for (int i = 0; i < BorderCircleView.sAccentColors.size(); i++) {
+        for (int i = 0; i < colors.size(); i++) {
             if (subView == null || i % 5 == 0) {
                 subView = new LinearLayout(getActivity());
                 subView.setLayoutParams(new ViewGroup.LayoutParams(
@@ -456,7 +459,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             BorderCircleView circle = new BorderCircleView(getActivity());
             circle.setChecked(i == selection);
             circle.setBackgroundColor(ContextCompat.getColor(getActivity(),
-                    BorderCircleView.sAccentColors.keyAt(i)));
+                    Themes.getColor(colors.get(i), getActivity())));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
             int margin = (int) getResources().getDimension(R.dimen.color_dialog_margin);
@@ -482,12 +485,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 })
                 .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
                     if (mColorSelection >= 0) {
-                        Prefs.saveString(KEY_ACCENT_COLOR,
-                                BorderCircleView.sAccentColors.valueAt(mColorSelection), getActivity());
+                        if (primaryColor) {
+                            Themes.savePrimaryColor(colors.get(mColorSelection), getActivity());
+                        } else {
+                            Themes.saveAccentColor(colors.get(mColorSelection), getActivity());
+                        }
                     }
                     getActivity().finish();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra(NavigationActivity.INTENT_SECTION,
+                            SettingsFragment.class.getCanonicalName());
                     startActivity(intent);
                 })
                 .setOnDismissListener(dialog -> mColorSelection = -1).show();
