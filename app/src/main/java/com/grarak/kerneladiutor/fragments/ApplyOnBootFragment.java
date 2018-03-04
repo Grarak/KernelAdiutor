@@ -55,6 +55,9 @@ import java.util.HashMap;
  */
 public class ApplyOnBootFragment extends BaseFragment {
 
+    private static final String PACKAGE = ApplyOnBootFragment.class.getCanonicalName();
+    private static final String INTENT_CATEGORY = PACKAGE + ".INTENT.CATEGORY";
+
     public static final String CPU = "cpu_onboot";
     public static final String CPU_VOLTAGE = "cpuvoltage_onboot";
     public static final String CPU_HOTPLUG = "cpuhotplug_onboot";
@@ -102,7 +105,7 @@ public class ApplyOnBootFragment extends BaseFragment {
 
     public static ApplyOnBootFragment newInstance(RecyclerViewFragment recyclerViewFragment) {
         Bundle args = new Bundle();
-        args.putString("category", getAssignment(recyclerViewFragment.getClass()));
+        args.putString(INTENT_CATEGORY, getAssignment(recyclerViewFragment.getClass()));
         ApplyOnBootFragment fragment = new ApplyOnBootFragment();
         fragment.setArguments(args);
         return fragment;
@@ -125,7 +128,7 @@ public class ApplyOnBootFragment extends BaseFragment {
         } else {
             View rootView = inflater.inflate(R.layout.fragment_apply_on_boot, container, false);
 
-            final String category = getArguments().getString("category");
+            final String category = getArguments().getString(INTENT_CATEGORY);
             SwitchCompat switcher = rootView.findViewById(R.id.switcher);
             switcher.setChecked(Prefs.getBoolean(category, false, getActivity()));
             switcher.setOnCheckedChangeListener((buttonView, isChecked) ->

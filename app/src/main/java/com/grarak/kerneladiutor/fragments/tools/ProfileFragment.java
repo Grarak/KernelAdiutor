@@ -104,7 +104,9 @@ public class ProfileFragment extends RecyclerViewFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTaskerMode = getArguments().getBoolean(TASKER_KEY);
+        if (getArguments() != null) {
+            mTaskerMode = getArguments().getBoolean(TASKER_KEY);
+        }
     }
 
     @Override
@@ -144,7 +146,6 @@ public class ProfileFragment extends RecyclerViewFragment {
     @Override
     protected void init() {
         super.init();
-        if (!isAdded()) return;
 
         if (mTaskerMode) {
             addViewPagerFragment(new TaskerToastFragment());

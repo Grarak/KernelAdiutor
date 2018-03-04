@@ -37,19 +37,23 @@ import com.grarak.kerneladiutor.R;
 
 public class SwitcherFragment extends BaseFragment {
 
+    private static final String PACKAGE = SwitcherFragment.class.getCanonicalName();
+    private static final String INTENT_TITLE = PACKAGE + ".INTENT.TITLE";
+    private static final String INTENT_SUMMARY = PACKAGE + ".INTENT.SUMMARY";
+    private static final String INTENT_CHECKED = PACKAGE + ".INTENT.CHECKED";
+
     public static SwitcherFragment newInstance(String title, String summary, boolean checked,
                                                CompoundButton.OnCheckedChangeListener onCheckedChangeListener) {
+        Bundle args = new Bundle();
+        args.putString(INTENT_TITLE, title);
+        args.putString(INTENT_SUMMARY, summary);
+        args.putBoolean(INTENT_CHECKED, checked);
         SwitcherFragment fragment = new SwitcherFragment();
-        fragment.mTitle = title;
-        fragment.mSummary = summary;
-        fragment.mChecked = checked;
+        fragment.setArguments(args);
         fragment.mOnCheckedChangeListener = onCheckedChangeListener;
         return fragment;
     }
 
-    private String mTitle;
-    private String mSummary;
-    private boolean mChecked;
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
 
     @Nullable
@@ -57,14 +61,15 @@ public class SwitcherFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_switcher, container, false);
-        if (mTitle != null) {
-            ((TextView) view.findViewById(R.id.title)).setText(mTitle);
-        }
-        if (mSummary != null) {
-            ((TextView) view.findViewById(R.id.summary)).setText(mSummary);
-        }
+
+        String title = getArguments().getString(INTENT_TITLE);
+        String summary = getArguments().getString(INTENT_SUMMARY);
+        boolean checked = getArguments().getBoolean(INTENT_CHECKED);
+
+        ((TextView) view.findViewById(R.id.title)).setText(title);
+        ((TextView) view.findViewById(R.id.summary)).setText(summary);
         SwitchCompat mSwitch = view.findViewById(R.id.switcher);
-        mSwitch.setChecked(mChecked);
+        mSwitch.setChecked(checked);
         mSwitch.setOnCheckedChangeListener(mOnCheckedChangeListener);
         return view;
     }

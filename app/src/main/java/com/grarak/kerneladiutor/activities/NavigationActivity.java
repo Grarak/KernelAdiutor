@@ -491,7 +491,7 @@ public class NavigationActivity extends BaseActivity
         super.onSaveInstanceState(outState);
 
         outState.putParcelableArrayList("fragments", mFragments);
-        outState.putInt("selection", mSelection);
+        outState.putInt(INTENT_SECTION, mSelection);
         outState.putBoolean("license", mLicenseDialog);
         outState.putBoolean("fetching_ads", mFetchingAds);
     }

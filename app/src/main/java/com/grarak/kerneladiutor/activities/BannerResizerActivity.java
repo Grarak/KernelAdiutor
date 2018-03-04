@@ -56,7 +56,8 @@ public class BannerResizerActivity extends BaseActivity {
         getSupportActionBar().setTitle(getString(R.string.banner_resizer));
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, getFragment(),
                 BannerResizerFragment.class.getSimpleName()).commit();
-        findViewById(R.id.content_frame).setPadding(0, Math.round(ViewUtils.getActionBarSize(this)), 0, 0);
+        findViewById(R.id.content_frame).setPadding(0,
+                Math.round(ViewUtils.getActionBarSize(this)), 0, 0);
     }
 
     private Fragment getFragment() {
