@@ -156,18 +156,13 @@ std::string getStyleColor(const std::string &name, const std::string &value) {
     return ret;
 }
 
-void createColorPairs(const Color *prevColor, std::vector<ColorPair> *colorPairs) {
-    if (prevColor != nullptr) {
-        for (const auto &color : colors) {
-            if (prevColor->name != color.name) {
-                colorPairs->push_back(ColorPair(*prevColor, color));
+void createColorPairs(std::vector<ColorPair> *colorPairs) {
+    for (const auto &primaryColor : colors) {
+        for (const auto &accentColor : colors) {
+            if (primaryColor.name != accentColor.name) {
+                colorPairs->push_back(ColorPair(primaryColor, accentColor));
             }
         }
-        return;
-    }
-
-    for (const auto &color : colors) {
-        createColorPairs(&color, colorPairs);
     }
 }
 
@@ -190,7 +185,7 @@ int main(int argc, char **argv) {
     }
 
     std::vector<ColorPair> colorPairs;
-    createColorPairs(nullptr, &colorPairs);
+    createColorPairs(&colorPairs);
 
     std::vector<Theme> themes;
     createThemes(colorPairs, &themes);
