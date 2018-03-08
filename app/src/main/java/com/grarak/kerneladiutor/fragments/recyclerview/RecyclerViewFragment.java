@@ -17,7 +17,7 @@
  * along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.grarak.kerneladiutor.fragments;
+package com.grarak.kerneladiutor.fragments.recyclerview;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -50,12 +50,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.BaseActivity;
 import com.grarak.kerneladiutor.activities.NavigationActivity;
+import com.grarak.kerneladiutor.fragments.BaseFragment;
+import com.grarak.kerneladiutor.fragments.LoadingFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -109,13 +112,17 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
     AsyncTask<Void, Void, List<RecyclerViewItem>> mReloader;
+    AsyncTask<Void, Void, Void> mDialogLoader;
 
-    private ValueAnimator mForegroundAnimator;
-    private boolean mForegroundVisible;
+    private Animation mSlideInOutAnimation;
+
+    private Fragment mForegroundFragment;
     private View mForegroundParent;
     private TextView mForegroundText;
-    private float mForegroundHeight;
     private CharSequence mForegroundStrText;
+
+    private Fragment mDialogFragment;
+    private View mDialogParent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -212,15 +219,27 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             }
         }
 
-        BaseFragment foregroundFragment = getForegroundFragment();
-        mForegroundVisible = false;
-        if (foregroundFragment != null) {
+        if (mForegroundFragment == null) {
+            mForegroundFragment = getForegroundFragment();
+        }
+        if (mForegroundFragment != null) {
             mForegroundParent = mRootView.findViewById(R.id.foreground_parent);
             mForegroundText = mRootView.findViewById(R.id.foreground_text);
-            mForegroundText.setOnClickListener(v -> dismissForeground());
             getChildFragmentManager().beginTransaction().replace(R.id.foreground_content,
-                    foregroundFragment).commit();
-            mForegroundHeight = getResources().getDisplayMetrics().heightPixels;
+                    mForegroundFragment).commit();
+            mForegroundParent.setOnClickListener(v -> dismissForeground());
+        }
+
+        if (mDialogFragment == null) {
+            mDialogFragment = getDialogFragment();
+        }
+        if (mDialogFragment != null) {
+            mDialogParent = mRootView.findViewById(R.id.dialog_parent);
+            getChildFragmentManager().beginTransaction().replace(R.id.dialog_content,
+                    mDialogFragment).commit();
+            if (mDialogLoader != null) {
+                mDialogParent.setVisibility(View.VISIBLE);
+            }
         }
 
         if (itemsSize() == 0) {
@@ -326,70 +345,43 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     }
 
     protected <T extends RecyclerViewFragment> void reload(ReloadHandler<T> listener) {
-        mReloader = new ReloadTask<>((T) this, listener);
-        mReloader.execute();
+        if (mReloader == null) {
+            mReloader = new LoadAsyncTask<>((T) this, listener);
+            mReloader.execute();
+        }
     }
 
-    public static class ReloadHandler<T extends RecyclerViewFragment> {
-        public List<RecyclerViewItem> onReload(T fragment) {
+    public static class ReloadHandler<T extends RecyclerViewFragment>
+            extends LoadAsyncTask.LoadHandler<T, List<RecyclerViewItem>> {
+
+        @Override
+        public void onPreExecute(T fragment) {
+            super.onPreExecute(fragment);
+
+            fragment.showProgress();
+        }
+
+        @Override
+        public List<RecyclerViewItem> doInBackground(T fragment) {
             List<RecyclerViewItem> items = new ArrayList<>();
             fragment.load(items);
             return items;
         }
 
-        public void onPostExecute(T fragment) {
+        @Override
+        public void onPostExecute(T fragment,
+                                  List<RecyclerViewItem> items) {
+            super.onPostExecute(fragment, items);
+
+            for (RecyclerViewItem item : items) {
+                fragment.addItem(item);
+            }
+            fragment.hideProgress();
+            fragment.mReloader = null;
         }
     }
 
     protected void load(List<RecyclerViewItem> items) {
-    }
-
-    private static class ReloadTask<T extends RecyclerViewFragment> extends AsyncTask<Void, Void, List<RecyclerViewItem>> {
-
-        private WeakReference<T> mRefFragment;
-        private ReloadHandler<T> mListener;
-
-        private ReloadTask(T fragment, @NonNull ReloadHandler<T> listener) {
-            mRefFragment = new WeakReference<>(fragment);
-            mListener = listener;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            T fragment = mRefFragment.get();
-            if (fragment != null) {
-                fragment.showProgress();
-            }
-        }
-
-        @Override
-        protected List<RecyclerViewItem> doInBackground(Void... voids) {
-            T fragment = mRefFragment.get();
-            if (fragment != null) {
-                return mListener.onReload(fragment);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<RecyclerViewItem> items) {
-            super.onPostExecute(items);
-            T fragment = mRefFragment.get();
-            if (fragment != null) {
-                for (RecyclerViewItem item : items) {
-                    fragment.addItem(item);
-                }
-                fragment.hideProgress();
-                fragment.mReloader = null;
-
-                mListener.onPostExecute(fragment);
-            }
-        }
-    }
-
-    protected boolean isReloading() {
-        return mReloader != null;
     }
 
     @Override
@@ -720,46 +712,60 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mForegroundStrText = text;
     }
 
+    private void showViewAnimation(View view) {
+        if (mSlideInOutAnimation != null) {
+            mSlideInOutAnimation.cancel();
+        }
+
+        mSlideInOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_bottom);
+        mSlideInOutAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        view.startAnimation(mSlideInOutAnimation);
+    }
+
+    public void hideViewAnimation(View view) {
+        if (mSlideInOutAnimation != null) {
+            mSlideInOutAnimation.cancel();
+        }
+        mSlideInOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out_top);
+        mSlideInOutAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        view.startAnimation(mSlideInOutAnimation);
+    }
+
     public void showForeground() {
         if (mForegroundStrText != null) {
             mForegroundText.setText(mForegroundStrText);
         }
-        if (mForegroundAnimator != null) mForegroundAnimator.cancel();
-        mForegroundAnimator = ValueAnimator.ofFloat(mForegroundHeight, 0f);
-        mForegroundAnimator.addUpdateListener(animation
-                -> mForegroundParent.setTranslationY((float) animation.getAnimatedValue()));
-        mForegroundAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                mForegroundParent.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mForegroundVisible = true;
-                mForegroundAnimator = null;
-            }
-        });
-        mForegroundAnimator.start();
+        showViewAnimation(mForegroundParent);
     }
 
     public void dismissForeground() {
-        float translation = mForegroundParent.getTranslationY();
-        mForegroundAnimator = ValueAnimator.ofFloat(translation, mForegroundHeight);
-        mForegroundAnimator.addUpdateListener(animation
-                -> mForegroundParent.setTranslationY((float) animation.getAnimatedValue()));
-        mForegroundAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mForegroundParent.setVisibility(View.GONE);
-                mForegroundVisible = false;
-                mForegroundAnimator = null;
-            }
-        });
-        mForegroundAnimator.start();
+        hideViewAnimation(mForegroundParent);
     }
 
     @Override
@@ -846,17 +852,76 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         return mRootView;
     }
 
-    protected Fragment getViewPagerFragment(int position) {
+    protected Fragment getChildFragment(int position) {
         if (hideBanner()) {
             return mViewPagerFragments.get(position);
         }
         return getChildFragmentManager().getFragments().get(position);
     }
 
+    protected int childFragmentCount() {
+        return getChildFragmentManager().getFragments().size();
+    }
+
+    protected Fragment getDialogFragment() {
+        return new LoadingFragment();
+    }
+
+    void showDialog(String title, String summary) {
+        if (mDialogFragment instanceof LoadingFragment) {
+            LoadingFragment loadingFragment = (LoadingFragment) mDialogFragment;
+            loadingFragment.setTitle(title);
+            loadingFragment.setSummary(summary);
+        }
+        showViewAnimation(mDialogParent);
+    }
+
+    void dismissDialog() {
+        hideViewAnimation(mDialogParent);
+    }
+
+    protected <T extends RecyclerViewFragment> void showDialog(
+            DialogLoadHandler<T> dialogLoadHandler) {
+        if (mDialogLoader == null) {
+            mDialogLoader = new LoadAsyncTask<>((T) this, dialogLoadHandler);
+            mDialogLoader.execute();
+        }
+    }
+
+    public abstract static class DialogLoadHandler<T extends RecyclerViewFragment>
+            extends LoadAsyncTask.LoadHandler<T, Void> {
+        private String mTitle;
+        private String mSummary;
+
+        public DialogLoadHandler(String title, String summary) {
+            mTitle = title;
+            mSummary = summary;
+        }
+
+        @Override
+        public void onPreExecute(T fragment) {
+            super.onPreExecute(fragment);
+
+            fragment.showDialog(mTitle, mSummary);
+        }
+
+        @Override
+        public void onPostExecute(T fragment, Void aVoid) {
+            super.onPostExecute(fragment, aVoid);
+
+            fragment.dismissDialog();
+            fragment.mDialogLoader = null;
+        }
+    }
+
     @Override
     public boolean onBackPressed() {
-        if (mForegroundVisible) {
+        if (mForegroundParent != null
+                && mForegroundParent.getVisibility() == View.VISIBLE) {
             dismissForeground();
+            return true;
+        } else if (mDialogParent != null
+                && mDialogParent.getVisibility() == View.VISIBLE) {
             return true;
         }
         return false;
@@ -933,6 +998,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             mReloader.cancel(true);
             mReloader = null;
         }
+        if (mDialogLoader != null) {
+            mDialogLoader.cancel(true);
+            mDialogLoader = null;
+        }
         mAdView = null;
         for (RecyclerViewItem item : mItems) {
             item.onDestroy();
@@ -942,5 +1011,4 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     protected Handler getHandler() {
         return mHandler;
     }
-
 }

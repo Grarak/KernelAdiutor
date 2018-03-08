@@ -24,7 +24,7 @@ import com.grarak.kerneladiutor.database.Settings;
 import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
@@ -75,12 +75,10 @@ public class OnBootFragment extends RecyclerViewFragment {
     }
 
     private void reload() {
-        if (!isReloading()) {
-            getHandler().postDelayed(() -> {
-                clearItems();
-                reload(new ReloadHandler<>());
-            }, 250);
-        }
+        getHandler().postDelayed(() -> {
+            clearItems();
+            reload(new ReloadHandler<>());
+        }, 250);
     }
 
     @Override

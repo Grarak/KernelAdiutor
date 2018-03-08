@@ -52,7 +52,7 @@ import com.grarak.kerneladiutor.database.tools.profiles.ImportProfile;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.SwitcherFragment;
 import com.grarak.kerneladiutor.services.boot.ApplyOnBoot;
 import com.grarak.kerneladiutor.services.profile.Tile;
@@ -192,12 +192,10 @@ public class ProfileFragment extends RecyclerViewFragment {
     }
 
     private void reload() {
-        if (!isReloading()) {
-            getHandler().postDelayed(() -> {
-                clearItems();
-                reload(new ReloadHandler<>());
-            }, 250);
-        }
+        getHandler().postDelayed(() -> {
+            clearItems();
+            reload(new ReloadHandler<>());
+        }, 250);
     }
 
     @Override

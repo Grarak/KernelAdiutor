@@ -25,7 +25,7 @@ import android.support.design.widget.Snackbar;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.tools.DownloadsActivity;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.WebpageReader;
 import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;

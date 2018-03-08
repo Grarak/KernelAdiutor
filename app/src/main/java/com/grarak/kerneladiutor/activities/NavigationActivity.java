@@ -46,7 +46,7 @@ import android.view.SubMenu;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.kernel.BatteryFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplugFragment;
@@ -180,7 +180,9 @@ public class NavigationActivity extends BaseActivity
         if (Device.MemInfo.getInstance().getItems().size() > 0) {
             mFragments.add(new NavigationActivity.NavigationFragment(R.string.memory, MemoryFragment.class, R.drawable.ic_save));
         }
-        mFragments.add(new NavigationActivity.NavigationFragment(R.string.inputs, InputsFragment.class, R.drawable.ic_keyboard));
+        if (Device.Input.getInstance().supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.inputs, InputsFragment.class, R.drawable.ic_keyboard));
+        }
         mFragments.add(new NavigationActivity.NavigationFragment(R.string.kernel));
         mFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu, CPUFragment.class, R.drawable.ic_cpu));
         if (Voltage.getInstance().supported()) {
@@ -503,7 +505,7 @@ public class NavigationActivity extends BaseActivity
     }
 
     private void onItemSelected(final int res, boolean saveOpened) {
-        mDrawer.closeDrawer(GravityCompat.START);
+        mDrawer.postDelayed(() -> mDrawer.closeDrawer(GravityCompat.START), 250);
         getSupportActionBar().setTitle(getString(res));
         mNavigationView.setCheckedItem(res);
         mSelection = res;

@@ -20,13 +20,11 @@
 package com.grarak.kerneladiutor.fragments.tools;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -34,7 +32,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.FilePickerActivity;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -130,12 +128,10 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     private void reload() {
-        if (!isReloading()) {
-            getHandler().postDelayed(() -> {
-                clearItems();
-                reload(new ReloadHandler<>());
-            }, 250);
-        }
+        getHandler().postDelayed(() -> {
+            clearItems();
+            reload(new ReloadHandler<>());
+        }, 250);
     }
 
     @Override
@@ -254,46 +250,26 @@ public class BackupFragment extends RecyclerViewFragment {
                 (dialogInterface, i) -> {
                 },
                 (dialogInterface, i)
-                        -> new RestoreTask(getActivity(), flashing, file, partition).execute(),
+                        -> showDialog(new RestoreTask(getActivity(), flashing, file, partition)),
                 dialogInterface -> mRestoreDialog = null, getActivity());
         mRestoreDialog.show();
     }
 
-    private static class RestoreTask extends AsyncTask<Void, Void, Void> {
-
-        private ProgressDialog mProgressDialog;
+    private static class RestoreTask extends DialogLoadHandler<BackupFragment> {
         private File mFile;
         private Backup.PARTITION mPartition;
 
         private RestoreTask(Context context, boolean flashing,
                             File file, Backup.PARTITION partition) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(context.getString(flashing ? R.string.flashing : R.string.restoring));
-            mProgressDialog.setCancelable(false);
-
+            super(null, context.getString(flashing ? R.string.flashing : R.string.restoring));
             mFile = file;
             mPartition = partition;
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
+        public Void doInBackground(BackupFragment fragment) {
             Backup.restore(mFile, mPartition);
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            try {
-                mProgressDialog.dismiss();
-            } catch (IllegalArgumentException ignored) {
-            }
         }
     }
 
@@ -346,46 +322,31 @@ public class BackupFragment extends RecyclerViewFragment {
                         return;
                     }
 
-                    new BackupTask(getActivity(), text, partition).execute();
+                    showDialog(new BackupTask(getActivity(), text, partition));
                 }, getActivity())
                 .setOnDismissListener(dialogInterface
                         -> mBackupPartition = null).show();
     }
 
-    private static class BackupTask extends AsyncTask<BackupFragment, Void, BackupFragment> {
-
-        private ProgressDialog mProgressDialog;
+    private static class BackupTask extends DialogLoadHandler<BackupFragment> {
         private String mName;
         private Backup.PARTITION mPartition;
 
         private BackupTask(Context context, String name, Backup.PARTITION partition) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(context.getString(R.string.backing_up));
-            mProgressDialog.setCancelable(false);
-
+            super(null, context.getString(R.string.backing_up));
             mName = name;
             mPartition = partition;
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected BackupFragment doInBackground(BackupFragment... backupFragments) {
+        public Void doInBackground(BackupFragment fragment) {
             Backup.backup(mName, mPartition);
-            return backupFragments[0];
+            return null;
         }
 
         @Override
-        protected void onPostExecute(BackupFragment fragment) {
-            super.onPostExecute(fragment);
-            try {
-                mProgressDialog.dismiss();
-            } catch (IllegalArgumentException ignored) {
-            }
+        public void onPostExecute(BackupFragment fragment, Void aVoid) {
+            super.onPostExecute(fragment, aVoid);
             fragment.reload();
         }
     }

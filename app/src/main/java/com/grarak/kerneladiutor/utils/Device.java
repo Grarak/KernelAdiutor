@@ -52,6 +52,7 @@ public class Device {
 
         private Input() {
             String value = Utils.readFile(BUS_INPUT);
+            if (value == null) return;
             List<String> input = new ArrayList<>();
             for (String line : value.split("\\r?\\n")) {
                 if (line.isEmpty()) {
@@ -65,6 +66,10 @@ public class Device {
 
         public List<Item> getItems() {
             return mItems;
+        }
+
+        public boolean supported() {
+            return mItems.size() > 0;
         }
 
         public static class Item {

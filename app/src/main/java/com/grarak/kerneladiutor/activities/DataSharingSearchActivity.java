@@ -24,7 +24,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.server.DeviceInfo;
 import com.grarak.kerneladiutor.utils.server.ServerSearchDevice;

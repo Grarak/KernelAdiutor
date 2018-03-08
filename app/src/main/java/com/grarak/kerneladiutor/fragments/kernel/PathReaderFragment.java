@@ -23,7 +23,7 @@ import android.support.design.widget.Snackbar;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
@@ -77,20 +77,16 @@ public class PathReaderFragment extends RecyclerViewFragment {
     }
 
     private void reload() {
-        if (!isReloading()) {
-            getHandler().postDelayed(() -> {
-                clearItems();
-                reload(new ReloadHandler());
-            }, 250);
-        }
+        getHandler().postDelayed(() -> {
+            clearItems();
+            reload(new ReloadHandler());
+        }, 250);
     }
 
-    private static class ReloadHandler
-            extends RecyclerViewFragment.ReloadHandler<PathReaderFragment> {
+    private static class ReloadHandler extends RecyclerViewFragment.ReloadHandler<PathReaderFragment> {
         @Override
-        public void onPostExecute(PathReaderFragment fragment) {
-            super.onPostExecute(fragment);
-
+        public void onPostExecute(PathReaderFragment fragment, List<RecyclerViewItem> items) {
+            super.onPostExecute(fragment, items);
             if (fragment.itemsSize() < 1 && fragment.mError != null) {
                 Snackbar.make(fragment.getRootView(),
                         fragment.mError, Snackbar.LENGTH_SHORT).show();

@@ -40,7 +40,7 @@ import android.widget.LinearLayout;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.FilePickerActivity;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;

@@ -27,7 +27,7 @@ import android.support.v4.app.Fragment;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.BaseActivity;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
@@ -132,12 +132,10 @@ public class ProfileEditActivity extends BaseActivity {
         }
 
         private void reload() {
-            if (!isReloading()) {
-                getHandler().postDelayed(() -> {
-                    clearItems();
-                    reload(new ReloadHandler<>());
-                }, 250);
-            }
+            getHandler().postDelayed(() -> {
+                clearItems();
+                reload(new ReloadHandler<>());
+            }, 250);
         }
 
         @Override

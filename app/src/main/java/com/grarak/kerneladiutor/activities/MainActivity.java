@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity {
         if (savedInstanceState == null) {
             /*
              * Launch password activity when one is set,
-             * otherwise run {@link CheckingTask}
+             * otherwise run {@link #CheckingTask}
              */
             String password;
             if (!(password = Prefs.getString("password", "", this)).isEmpty()) {

@@ -19,20 +19,18 @@
  */
 package com.grarak.kerneladiutor.fragments.tools;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.Menu;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.EditorActivity;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.SwitcherFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -102,12 +100,10 @@ public class InitdFragment extends RecyclerViewFragment {
     }
 
     private void reload() {
-        if (!isReloading()) {
-            getHandler().postDelayed(() -> {
-                clearItems();
-                reload(new ReloadHandler<>());
-            }, 250);
-        }
+        getHandler().postDelayed(() -> {
+            clearItems();
+            reload(new ReloadHandler<>());
+        }, 250);
     }
 
     @Override
@@ -164,50 +160,36 @@ public class InitdFragment extends RecyclerViewFragment {
     }
 
     private void execute(final String initd) {
-        new ExecuteTask(getActivity(), initd).execute(this);
+        showDialog(new ExecuteTask(getActivity(), initd));
     }
 
-    private static class ExecuteTask extends AsyncTask<InitdFragment, Void, InitdFragment> {
-
-        private ProgressDialog mProgressDialog;
+    private static class ExecuteTask extends DialogLoadHandler<InitdFragment> {
         private String mInitd;
         private String mResult;
 
         private ExecuteTask(Context context, String initd) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(context.getString(R.string.executing));
-            mProgressDialog.setCancelable(false);
-
+            super(null, context.getString(R.string.executing));
             mInitd = initd;
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected InitdFragment doInBackground(InitdFragment... initdFragments) {
+        public Void doInBackground(InitdFragment fragment) {
             mResult = Initd.execute(mInitd);
-            return initdFragments[0];
+            return null;
         }
 
         @Override
-        protected void onPostExecute(InitdFragment initdFragment) {
-            super.onPostExecute(initdFragment);
-            try {
-                mProgressDialog.dismiss();
-            } catch (IllegalArgumentException ignored) {
-            }
+        public void onPostExecute(InitdFragment fragment, Void aVoid) {
+            super.onPostExecute(fragment, aVoid);
+
             if (mResult != null && !mResult.isEmpty()) {
-                initdFragment.mResultDialog = ViewUtils.dialogBuilder(mResult,
+                fragment.mResultDialog = ViewUtils.dialogBuilder(mResult,
                         null,
                         null,
-                        dialogInterface -> initdFragment.mResultDialog = null,
-                        initdFragment.getActivity()).setTitle(
-                        initdFragment.getString(R.string.result));
-                initdFragment.mResultDialog.show();
+                        dialogInterface -> fragment.mResultDialog = null,
+                        fragment.getActivity()).setTitle(
+                        fragment.getString(R.string.result));
+                fragment.mResultDialog.show();
             }
         }
     }

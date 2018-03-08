@@ -61,6 +61,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Monitor extends Service {
 
+    private static final String PACKAGE = Monitor.class.getCanonicalName();
+    public static final String ACTION_DISABLE = PACKAGE + ".ACTION.DISABLE";
+
     private static final String CHANNEL_ID = "monitor_notification_channel";
 
     private int mLevel;
@@ -243,6 +246,8 @@ public class Monitor extends Service {
         public void onReceive(final Context context, Intent intent) {
             Prefs.saveBoolean("data_sharing", false, context);
             context.stopService(new Intent(context, Monitor.class));
+
+            context.sendBroadcast(new Intent(ACTION_DISABLE));
         }
 
     }

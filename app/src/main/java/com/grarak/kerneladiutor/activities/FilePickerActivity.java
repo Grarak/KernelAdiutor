@@ -29,7 +29,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootFile;
@@ -129,11 +129,13 @@ public class FilePickerActivity extends BaseActivity {
             }
             int accentColor = ViewUtils.getThemeAccentColor(getContext());
             if (mDirImage == null) {
-                mDirImage = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_dir));
+                mDirImage = DrawableCompat.wrap(
+                        ContextCompat.getDrawable(getActivity(), R.drawable.ic_dir));
                 DrawableCompat.setTint(mDirImage, accentColor);
             }
             if (mFileImage == null) {
-                mFileImage = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_file));
+                mFileImage = DrawableCompat.wrap(
+                        ContextCompat.getDrawable(getActivity(), R.drawable.ic_file));
                 DrawableCompat.setTint(mFileImage, ViewUtils.getTextSecondaryColor(getContext()));
             }
             if (mPickDialog != null) {
@@ -161,17 +163,15 @@ public class FilePickerActivity extends BaseActivity {
         }
 
         private void reload() {
-            if (!isReloading()) {
-                clearItems();
-                reload(new ReloadHandler());
-            }
+            clearItems();
+            reload(new ReloadHandler());
         }
 
         private static class ReloadHandler
                 extends RecyclerViewFragment.ReloadHandler<FilePickerFragment> {
             @Override
-            public void onPostExecute(FilePickerFragment fragment) {
-                super.onPostExecute(fragment);
+            public void onPostExecute(FilePickerFragment fragment, List<RecyclerViewItem> items) {
+                super.onPostExecute(fragment, items);
 
                 BaseActivity activity = (BaseActivity) fragment.getActivity();
                 ActionBar actionBar;
@@ -189,7 +189,11 @@ public class FilePickerActivity extends BaseActivity {
             RootFile path = new RootFile(mPath).getRealPath();
             mPath = path.toString();
 
-            if (!path.isDirectory()) path = path.getParentFile();
+            if (!path.isDirectory()) {
+                mPath = path.getParentFile().toString();
+                reload();
+                return;
+            }
             List<RootFile> dirs = new ArrayList<>();
             List<RootFile> files = new ArrayList<>();
             for (RootFile file : path.listFiles()) {
@@ -200,7 +204,7 @@ public class FilePickerActivity extends BaseActivity {
                 }
             }
 
-            final RootFile returnDir = new RootFile(mPath).getParentFile();
+            final RootFile returnDir = path.getParentFile();
             if (returnDir.isDirectory()) {
                 DescriptionView descriptionViewParent = new DescriptionView();
                 descriptionViewParent.setSummary("..");

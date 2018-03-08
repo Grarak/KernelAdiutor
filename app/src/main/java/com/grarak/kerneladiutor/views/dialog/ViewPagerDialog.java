@@ -31,7 +31,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.List;

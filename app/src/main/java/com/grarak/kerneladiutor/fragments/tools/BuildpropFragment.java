@@ -39,7 +39,7 @@ import android.widget.Toast;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -108,12 +108,10 @@ public class BuildpropFragment extends RecyclerViewFragment {
     }
 
     private void reload(boolean read) {
-        if (!isReloading()) {
-            getHandler().postDelayed(() -> {
-                clearItems();
-                reload(new ReloadHandler(read));
-            }, 250);
-        }
+        getHandler().postDelayed(() -> {
+            clearItems();
+            reload(new ReloadHandler(read));
+        }, 250);
     }
 
     private static class ReloadHandler extends RecyclerViewFragment.ReloadHandler<BuildpropFragment> {
@@ -124,11 +122,11 @@ public class BuildpropFragment extends RecyclerViewFragment {
         }
 
         @Override
-        public List<RecyclerViewItem> onReload(BuildpropFragment fragment) {
+        public List<RecyclerViewItem> doInBackground(BuildpropFragment fragment) {
             if (mRead) {
                 fragment.mProps = Buildprop.getProps();
             }
-            return super.onReload(fragment);
+            return super.doInBackground(fragment);
         }
     }
 
@@ -189,9 +187,12 @@ public class BuildpropFragment extends RecyclerViewFragment {
         if (mSearchFragment != null && (activity = getActivity()) != null) {
             activity.runOnUiThread(() -> {
                 if (isAdded()) {
-                    SearchFragment fragment = (SearchFragment)
-                            getViewPagerFragment(0);
-                    fragment.setCount(items.size());
+                    for (int i = 0; i < childFragmentCount(); i++) {
+                        Fragment fragment = getChildFragment(i);
+                        if (fragment instanceof SearchFragment) {
+                            ((SearchFragment) fragment).setCount(items.size());
+                        }
+                    }
                 }
             });
         }

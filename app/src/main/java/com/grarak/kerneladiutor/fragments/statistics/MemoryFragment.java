@@ -22,7 +22,7 @@ package com.grarak.kerneladiutor.fragments.statistics;
 import android.content.res.Configuration;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
