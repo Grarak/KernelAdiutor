@@ -847,7 +847,6 @@
   <string name="sections">Sekcie</string>
   <!-- About -->
   <string name="about_me">Ahoj, volám sa Willi Ye aka Grarak, som 19 ročný student žijúci vo Viedni. Vyvíjam pre Android už pomerne dlho. Okrem Kernel Adiutoru tiež spravujem LineageOS pre niekoľko zariadení a pracujem na Paranoid Androide. Tak pochopte prosím, ak nebudem mať dostatok času pre časté aktualizácie tejto aplikácie.</string>
-  <string name="libraries_used">Použité knižnice</string>
   <!-- Contributors -->
   <string name="commits">Zmeny: %d</string>
   <string name="no_internet">Skontrolujte internetové pripojenie!</string>

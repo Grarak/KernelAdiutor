@@ -777,7 +777,6 @@
   <string name="fingerprint_summary">Використовувати відбиток пальця для проходження перевірки безпеки. Це буде працювати до тих пір, поки у вас є зареєстровані відбитки.</string>
   <string name="sections">Розділи</string>
   <!-- About -->
-  <string name="libraries_used">Використані бібліотеки</string>
   <!-- Contributors -->
   <string name="commits">Зміни: %d</string>
   <string name="no_internet">Будь-ласка, перевірте інтернет-з\'єднання!</string>

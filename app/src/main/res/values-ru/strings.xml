@@ -847,7 +847,6 @@
   <string name="sections">Разделы</string>
   <!-- About -->
   <string name="about_me">Привет, я Вилли Йе aka Grarak, 19-летний студент из Вены. Я занимаюсь Android-разработкой достаточно долгое время. Помимо Kernel Adiutor, я также поддерживаю LineageOS для нескольких устройств и работаю с ParanoidAndroid. Поэтому прошу отнестись с пониманием, когда я не нахожу время обновить приложение.</string>
-  <string name="libraries_used">Использованые библиотеки</string>
   <!-- Contributors -->
   <string name="commits">Изменения: %d</string>
   <string name="no_internet">Пожалуйста, проверьте интернет-соединение!</string>

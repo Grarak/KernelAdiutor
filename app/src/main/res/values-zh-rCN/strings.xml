@@ -848,7 +848,6 @@
   <string name="sections">分区</string>
   <!-- About -->
   <string name="about_me">你好，我是 Willie Ye，也称@Grarak，一个住在奥地利维也纳的19岁学生。我在 Android 平台开发已有相当长时间了，除 Kernel Adiutor 以外我还在维护一些设备的 LineageOS，同时也花时间在 ParanoidAndroid 上。所以如果我没有时间更新这个应用，也请理解。</string>
-  <string name="libraries_used">使用的程序库</string>
   <!-- Contributors -->
   <string name="commits">%d 次提交</string>
   <string name="no_internet">请检查您的互联网连接！</string>

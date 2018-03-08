@@ -818,7 +818,6 @@
   <string name="sections">Sezioni</string>
   <!-- About -->
   <string name="about_me">Ciao, sono Willi Ye aka Grarak, uno studente di 19 anni che vive a Vienna. Sviluppo su Android da un tempo abbastanza lungo. Oltre a Kernel Adiutor sto anche mantenendo la LineageOS per alcuni dispositivi e lavorando su ParanoidAndroid. Quindi ti prego di capire se non trovo il tempo per aggiornare questa app.</string>
-  <string name="libraries_used">Librerie usate</string>
   <!-- Contributors -->
   <string name="commits">%d commit</string>
   <string name="no_internet">Verifica la connessione internet!</string>

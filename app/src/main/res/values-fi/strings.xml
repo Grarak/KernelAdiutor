@@ -761,7 +761,6 @@
   <string name="fingerprint_summary">Käytä sormenjälkeä suojauksen avaamiseen. Tämä toimii, jos sinulla on sormenjälki rekisteröitynä.</string>
   <string name="sections">Alueet</string>
   <!-- About -->
-  <string name="libraries_used">Käytet kirjastot</string>
   <!-- Contributors -->
   <string name="commits">%d on samaa mieltä</string>
   <string name="no_internet">Tarkista verkkoyhteytesi!</string>

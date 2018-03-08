@@ -704,7 +704,6 @@
   <string name="password_too_long">비밀번호가 너무 깁니다 (최대 32글자)</string>
   <string name="set_password_first">먼저 비밀번호를 설정해 주세요</string>
   <!-- About -->
-  <string name="libraries_used">사용된 라이브러리</string>
   <!-- Contributors -->
   <string name="no_internet">인터넷 연결 상태를 확인해주십시오!</string>
   <!-- Help -->
