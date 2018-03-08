@@ -53,7 +53,7 @@ public class KernelItemView extends RecyclerViewItem {
         TextView title = view.findViewById(R.id.title);
         TextView summary = view.findViewById(R.id.summary);
 
-        ViewUtils.loadImagefromUrl(mKernelContent.getLogo(), icon, 300, 300);
+        ViewUtils.loadImagefromUrl(mKernelContent.getLogo(), icon);
 
         title.setText(Utils.htmlFrom(mKernelContent.getName()).toString());
         summary.setText(Utils.htmlFrom(mKernelContent.getShortDescription()));

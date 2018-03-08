@@ -44,7 +44,6 @@ import com.grarak.kerneladiutor.views.recyclerview.XYGraphView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -545,6 +544,7 @@ public class CPUFragment extends RecyclerViewFragment {
     @Override
     protected void refreshThread() {
         super.refreshThread();
+        if (mCoresBig.size() == 0) return;
 
         try {
             mCPUUsages = mCPUFreq.getCpuUsage();
@@ -654,28 +654,25 @@ public class CPUFragment extends RecyclerViewFragment {
     }
 
     private void refreshCores(SparseArray<SwitchView> array, int[] freqs) {
-        try {
-            for (int i = 0; i < array.size(); i++) {
-                SwitchView switchView = array.valueAt(i);
-                if (switchView != null) {
-                    final int core = array.keyAt(i);
-                    int freq = freqs[core];
+        for (int i = 0; i < array.size(); i++) {
+            SwitchView switchView = array.valueAt(i);
+            if (switchView != null) {
+                final int core = array.keyAt(i);
+                int freq = freqs[core];
 
-                    String freqText = freq == 0 ? getString(R.string.offline) : (freq / 1000)
-                            + getString(R.string.mhz);
-                    switchView.clearOnSwitchListener();
-                    switchView.setChecked(freq != 0);
-                    switchView.setSummary(getString(R.string.core, core + 1) + " - " + freqText);
-                    switchView.addOnSwitchListener((switchView1, isChecked) -> {
-                        if (core == 0) {
-                            Utils.toast(R.string.no_offline_core, getActivity());
-                        } else {
-                            mCPUFreq.onlineCpu(core, isChecked, true, getActivity());
-                        }
-                    });
-                }
+                String freqText = freq == 0 ? getString(R.string.offline) : (freq / 1000)
+                        + getString(R.string.mhz);
+                switchView.clearOnSwitchListener();
+                switchView.setChecked(freq != 0);
+                switchView.setSummary(getString(R.string.core, core + 1) + " - " + freqText);
+                switchView.addOnSwitchListener((switchView1, isChecked) -> {
+                    if (core == 0) {
+                        Utils.toast(R.string.no_offline_core, getActivity());
+                    } else {
+                        mCPUFreq.onlineCpu(core, isChecked, true, getActivity());
+                    }
+                });
             }
-        } catch (ConcurrentModificationException ignored) {
         }
     }
 }

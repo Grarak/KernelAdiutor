@@ -20,8 +20,9 @@
 package com.grarak.kerneladiutor.views;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -30,6 +31,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -39,8 +43,6 @@ import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -161,20 +163,15 @@ public class AdNativeExpress extends LinearLayout {
             final String name = ad.getName();
             final String link = ad.getLink();
             final int totalShown = min + 1;
-            Picasso.with(getContext()).load(ad.getBanner()).into(new Target() {
+            Glide.with(this).load(ad.getBanner()).into(new SimpleTarget<Drawable>() {
                 @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    mGHImage.setVisibility(VISIBLE);
-                    mProgress.setVisibility(GONE);
-                    mAdText.setVisibility(GONE);
-                    mGHImage.setImageBitmap(bitmap);
-                    Prefs.saveInt(name + "_shown", totalShown, getContext());
-                    mGHLoaded = true;
-                    mGHLoading = false;
+                public void onLoadStarted(@Nullable Drawable placeholder) {
+                    mGHImage.setVisibility(GONE);
+                    mProgress.setVisibility(VISIBLE);
                 }
 
                 @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
                     mGHImage.setVisibility(GONE);
                     mProgress.setVisibility(GONE);
                     mAdText.setVisibility(VISIBLE);
@@ -183,9 +180,14 @@ public class AdNativeExpress extends LinearLayout {
                 }
 
                 @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    mGHImage.setVisibility(GONE);
-                    mProgress.setVisibility(VISIBLE);
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    mGHImage.setVisibility(VISIBLE);
+                    mProgress.setVisibility(GONE);
+                    mAdText.setVisibility(GONE);
+                    mGHImage.setImageDrawable(resource);
+                    Prefs.saveInt(name + "_shown", totalShown, getContext());
+                    mGHLoaded = true;
+                    mGHLoading = false;
                 }
             });
 

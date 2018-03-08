@@ -79,8 +79,8 @@ public class AboutFragment extends RecyclerViewFragment {
 
         for (final String lib : sLibraries.keySet()) {
             DescriptionView descriptionView = new DescriptionView();
-            descriptionView.setTitle(lib.split(",")[1]);
-            descriptionView.setSummary(lib.split(",")[0]);
+            descriptionView.setTitle(lib.substring(0, lib.indexOf(',')));
+            descriptionView.setSummary(lib.substring(lib.indexOf(',') + 1));
             descriptionView.setOnItemClickListener(item
                     -> Utils.launchUrl(sLibraries.get(lib), getActivity()));
 

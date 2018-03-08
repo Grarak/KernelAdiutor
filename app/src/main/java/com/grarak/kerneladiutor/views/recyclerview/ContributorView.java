@@ -52,7 +52,7 @@ public class ContributorView extends RecyclerViewItem {
         TextView name = view.findViewById(R.id.name);
         TextView contributions = view.findViewById(R.id.contributions);
 
-        ViewUtils.loadImagefromUrl(mContributor.getAvatarUrl(), image, 200, 200);
+        ViewUtils.loadImagefromUrl(mContributor.getAvatarUrl(), image);
         name.setText(mContributor.getLogin());
         contributions.setText(view.getResources().getString(R.string.commits, mContributor.getContributions()));
 

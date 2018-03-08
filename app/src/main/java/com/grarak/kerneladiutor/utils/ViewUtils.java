@@ -35,13 +35,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by willi on 16.04.16.
@@ -250,39 +246,8 @@ public class ViewUtils {
         return dialog;
     }
 
-    private static final Set<CustomTarget> mProtectedFromGarbageCollectorTargets = new HashSet<>();
-
-    public static void loadImagefromUrl(String url, ImageView imageView, int maxWidth, int maxHeight) {
-        CustomTarget target = new CustomTarget(imageView, maxWidth, maxHeight);
-        mProtectedFromGarbageCollectorTargets.add(target);
-        Picasso.with(imageView.getContext()).load(url).into(target);
-    }
-
-    private static class CustomTarget implements Target {
-        private ImageView mImageView;
-        private int mMaxWidth;
-        private int mMaxHeight;
-
-        private CustomTarget(ImageView imageView, int maxWidth, int maxHeight) {
-            mImageView = imageView;
-            mMaxWidth = maxWidth;
-            mMaxHeight = maxHeight;
-        }
-
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            mImageView.setImageBitmap(scaleDownBitmap(bitmap, mMaxWidth, mMaxHeight));
-            mProtectedFromGarbageCollectorTargets.remove(this);
-        }
-
-        @Override
-        public void onBitmapFailed(Drawable errorDrawable) {
-            mProtectedFromGarbageCollectorTargets.remove(this);
-        }
-
-        @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
-        }
+    public static void loadImagefromUrl(String url, ImageView imageView) {
+        Glide.with(imageView.getContext()).load(url).into(imageView);
     }
 
     public static Bitmap scaleDownBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {

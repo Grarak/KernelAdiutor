@@ -505,7 +505,7 @@ public class NavigationActivity extends BaseActivity
     }
 
     private void onItemSelected(final int res, boolean saveOpened) {
-        mDrawer.postDelayed(() -> mDrawer.closeDrawer(GravityCompat.START), 250);
+        mDrawer.closeDrawer(GravityCompat.START);
         getSupportActionBar().setTitle(getString(res));
         mNavigationView.setCheckedItem(res);
         mSelection = res;
@@ -517,8 +517,10 @@ public class NavigationActivity extends BaseActivity
         }
         setShortcuts();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment,
-                res + "_key").commitAllowingStateLoss();
+        mDrawer.postDelayed(()
+                        -> getSupportFragmentManager().beginTransaction().replace(
+                R.id.content_frame, fragment, res + "_key").commitAllowingStateLoss(),
+                250);
     }
 
     private Fragment getFragment(int res) {
