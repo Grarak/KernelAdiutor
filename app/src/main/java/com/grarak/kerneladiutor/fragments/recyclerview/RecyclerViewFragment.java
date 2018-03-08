@@ -123,6 +123,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     private Fragment mDialogFragment;
     private View mDialogParent;
+    boolean mDialogForceShow;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -240,6 +241,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             if (mDialogLoader != null) {
                 mDialogParent.setVisibility(View.VISIBLE);
             }
+            mDialogParent.setOnClickListener(v -> dismissDialog(false));
         }
 
         if (itemsSize() == 0) {
@@ -866,7 +868,11 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         return new LoadingFragment();
     }
 
-    void showDialog(String title, String summary) {
+    protected void showDialog() {
+        showDialog(null, null);
+    }
+
+    protected void showDialog(String title, String summary) {
         if (mDialogFragment instanceof LoadingFragment) {
             LoadingFragment loadingFragment = (LoadingFragment) mDialogFragment;
             loadingFragment.setTitle(title);
@@ -875,13 +881,16 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         showViewAnimation(mDialogParent);
     }
 
-    void dismissDialog() {
-        hideViewAnimation(mDialogParent);
+    void dismissDialog(boolean force) {
+        if (!mDialogForceShow || force) {
+            hideViewAnimation(mDialogParent);
+        }
     }
 
     protected <T extends RecyclerViewFragment> void showDialog(
             DialogLoadHandler<T> dialogLoadHandler) {
         if (mDialogLoader == null) {
+            mDialogForceShow = false;
             mDialogLoader = new LoadAsyncTask<>((T) this, dialogLoadHandler);
             mDialogLoader.execute();
         }
@@ -902,13 +911,14 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             super.onPreExecute(fragment);
 
             fragment.showDialog(mTitle, mSummary);
+            fragment.mDialogForceShow = true;
         }
 
         @Override
         public void onPostExecute(T fragment, Void aVoid) {
             super.onPostExecute(fragment, aVoid);
 
-            fragment.dismissDialog();
+            fragment.dismissDialog(true);
             fragment.mDialogLoader = null;
         }
     }
@@ -921,6 +931,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             return true;
         } else if (mDialogParent != null
                 && mDialogParent.getVisibility() == View.VISIBLE) {
+            dismissDialog(false);
             return true;
         }
         return false;

@@ -65,10 +65,12 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
     implementation 'org.adw.library:discrete-seekbar:1.0.1'
     implementation 'org.cyanogenmod:platform.sdk:5.0.1'
+
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
 
     testImplementation 'junit:junit:4.12'
 }
 
+apply plugin: 'com.cookpad.android.licensetools'
 apply plugin: 'com.google.gms.google-services'

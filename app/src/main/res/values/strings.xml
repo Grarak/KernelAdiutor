@@ -895,7 +895,8 @@
 
     <!-- About -->
     <string name="about_me">Hi, I\'m Willi Ye aka Grarak, a 19 year old student living in Vienna. I\'ve been developing on Android for quite a long time. Beside Kernel Adiutor I\'m also maintaining LineageOS for few devices and working on ParanoidAndroid. So please understand if I don\'t find the time to update this application.</string>
-    <string name="libraries_used">Libraries used</string>
+    <string name="software_licenses">Software Licenses</string>
+    <string name="software_licenses_summary">View licenses</string>
 
     <!-- Contributors -->
     <string name="commits">%d commits</string>

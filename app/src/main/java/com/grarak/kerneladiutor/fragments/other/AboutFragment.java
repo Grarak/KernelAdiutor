@@ -22,19 +22,19 @@ package com.grarak.kerneladiutor.fragments.other;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
-import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -42,23 +42,9 @@ import java.util.List;
  */
 public class AboutFragment extends RecyclerViewFragment {
 
-    private static final LinkedHashMap<String, String> sLibraries = new LinkedHashMap<>();
-
-    static {
-        sLibraries.put("Google,v4 Support Library", "https://developer.android.com/topic/libraries/support-library/features.html#v4");
-        sLibraries.put("Google,v7 appcompat library", "https://developer.android.com/topic/libraries/support-library/features.html#v7");
-        sLibraries.put("Google,v7 cardview library", "https://developer.android.com/topic/libraries/support-library/features.html#v7");
-        sLibraries.put("Google,Design Support Library", "https://developer.android.com/topic/libraries/support-library/features.html#design");
-        sLibraries.put("Google,v7/v14 Preference", "https://developer.android.com/reference/android/support/v7/preference/package-summary.html");
-        sLibraries.put("Google,v7 recyclerview library", "https://developer.android.com/topic/libraries/support-library/features.html#v7");
-        sLibraries.put("Ozodrukh,CircularReveal", "https://github.com/ozodrukh/CircularReveal");
-        sLibraries.put("Roman Nurik,dashclock", "https://github.com/romannurik/dashclock");
-        sLibraries.put("Google,AdMob", "https://developers.google.com/android/guides/setup");
-        sLibraries.put("Matthew Precious,swirl", "https://github.com/mattprecious/swirl");
-        sLibraries.put("Lopez Mikhael,CircularImageView", "https://github.com/lopspower/CircularImageView");
-        sLibraries.put("Square,picasso", "https://github.com/square/picasso");
-        sLibraries.put("CyanogenMod,CyanogenMod Platform SDK", "https://github.com/CyanogenMod/cm_platform_sdk");
-        sLibraries.put("Twitter,Fabric", "https://get.fabric.io");
+    @Override
+    protected Fragment getDialogFragment() {
+        return new LicenseFragment();
     }
 
     @Override
@@ -74,19 +60,12 @@ public class AboutFragment extends RecyclerViewFragment {
     }
 
     private void librariesInit(List<RecyclerViewItem> items) {
-        CardView cardView = new CardView(getActivity());
-        cardView.setTitle(getString(R.string.libraries_used));
+        DescriptionView licenses = new DescriptionView();
+        licenses.setTitle(getString(R.string.software_licenses));
+        licenses.setSummary(getString(R.string.software_licenses_summary));
+        licenses.setOnItemClickListener(item -> showDialog());
 
-        for (final String lib : sLibraries.keySet()) {
-            DescriptionView descriptionView = new DescriptionView();
-            descriptionView.setTitle(lib.substring(0, lib.indexOf(',')));
-            descriptionView.setSummary(lib.substring(lib.indexOf(',') + 1));
-            descriptionView.setOnItemClickListener(item
-                    -> Utils.launchUrl(sLibraries.get(lib), getActivity()));
-
-            cardView.addItem(descriptionView);
-        }
-        items.add(cardView);
+        items.add(licenses);
     }
 
     public static class InfoFragment extends BaseFragment {
@@ -101,4 +80,15 @@ public class AboutFragment extends RecyclerViewFragment {
         }
     }
 
+    public static class LicenseFragment extends BaseFragment {
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater,
+                                 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            WebView webView = new WebView(getActivity());
+            webView.loadUrl("file:///android_asset/licenses.html");
+
+            return webView;
+        }
+    }
 }
