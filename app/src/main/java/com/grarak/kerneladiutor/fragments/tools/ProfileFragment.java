@@ -57,7 +57,7 @@ import com.grarak.kerneladiutor.fragments.SwitcherFragment;
 import com.grarak.kerneladiutor.services.boot.ApplyOnBoot;
 import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.services.profile.Widget;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
@@ -155,9 +155,9 @@ public class ProfileFragment extends RecyclerViewFragment {
             if (Utils.hasCMSDK()) {
                 addViewPagerFragment(SwitcherFragment.newInstance(getString(R.string.profile_tile),
                         getString(R.string.profile_tile_summary),
-                        Prefs.getBoolean("profiletile", false, getActivity()),
+                        AppSettings.isProfileTile(getActivity()),
                         (compoundButton, b) -> {
-                            Prefs.saveBoolean("profiletile", b, getActivity());
+                            AppSettings.saveProfileTile(b, getActivity());
                             Tile.publishProfileTile(mProfiles.getAllProfiles(), getActivity());
                         }));
             }
@@ -581,9 +581,9 @@ public class ProfileFragment extends RecyclerViewFragment {
 
             ((TextView) rootView.findViewById(R.id.title)).setText(getString(R.string.profile_tasker_toast));
             SwitchCompat switchCompat = rootView.findViewById(R.id.switcher);
-            switchCompat.setChecked(Prefs.getBoolean("showtaskertoast", true, getActivity()));
+            switchCompat.setChecked(AppSettings.isShowTaskerToast(getActivity()));
             switchCompat.setOnCheckedChangeListener((compoundButton, b)
-                    -> Prefs.saveBoolean("showtaskertoast", b, getActivity()));
+                    -> AppSettings.saveShowTaskerToast(b, getActivity()));
 
             return rootView;
         }

@@ -19,13 +19,14 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,8 +62,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mItems.size();
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         RecyclerViewItem item = mItems.get(viewType);
         View view;
@@ -81,9 +83,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (viewGroup != null) {
             viewGroup.removeView(view);
         }
-        if (item.cardCompatible()
-                && Prefs.getBoolean("forcecards", false, view.getContext())) {
-            android.support.v7.widget.CardView cardView = new android.support.v7.widget.CardView(view.getContext());
+        if (item.cardCompatible() && AppSettings.isForceCards(parent.getContext())) {
+            android.support.v7.widget.CardView cardView =
+                    new android.support.v7.widget.CardView(view.getContext());
             cardView.setRadius(view.getResources().getDimension(R.dimen.cardview_radius));
             cardView.setCardElevation(view.getResources().getDimension(R.dimen.cardview_elevation));
             cardView.setUseCompatPadding(true);

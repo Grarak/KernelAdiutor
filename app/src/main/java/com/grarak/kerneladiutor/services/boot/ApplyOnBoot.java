@@ -37,8 +37,8 @@ import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplugFragment;
 import com.grarak.kerneladiutor.services.profile.Tile;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.NotificationId;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.cpu.MSMPerformance;
@@ -66,8 +66,9 @@ public class ApplyOnBoot {
     }
 
     public static boolean apply(final Context context, final ApplyOnBootListener listener) {
-        if (!Prefs.getBoolean(ApplyOnBootFragment.getAssignment(CPUHotplugFragment.class), false, context)) {
-            Prefs.remove("core_ctl_min_cpus_big", context);
+        if (!AppSettings.getBoolean(ApplyOnBootFragment
+                .getAssignment(CPUHotplugFragment.class), false, context)) {
+            AppSettings.resetCoreCtlMinCpusBig(context);
         }
 
         boolean enabled = false;
@@ -83,7 +84,8 @@ public class ApplyOnBoot {
 
         for (Settings.SettingsItem item : settings.getAllSettings()) {
             if (!mCategoryEnabled.containsKey(item.getCategory())) {
-                boolean categoryEnabled = Prefs.getBoolean(item.getCategory(), false, context);
+                boolean categoryEnabled = AppSettings.getBoolean(
+                        item.getCategory(), false, context);
                 mCategoryEnabled.put(item.getCategory(), categoryEnabled);
                 if (!enabled && categoryEnabled) {
                     enabled = true;
@@ -103,18 +105,18 @@ public class ApplyOnBoot {
             }
         }
 
-        final boolean initdEnabled = Prefs.getBoolean("initd_onboot", false, context);
+        final boolean initdEnabled = AppSettings.isInitdOnBoot(context);
         enabled = enabled || mCustomControls.size() > 0 || mProfiles.size() > 0 || initdEnabled;
         if (!enabled) {
             return false;
         }
 
-        final int seconds = Utils.strToInt(Prefs.getString("applyonbootdelay", "10", context));
-        final boolean hideNotification = Prefs.getBoolean("applyonboothide", false, context);
-        final boolean confirmationNotification = Prefs.getBoolean("applyonbootconfirmationnotification",
-                true, context);
-        final boolean toast = Prefs.getBoolean("applyonboottoast", false, context);
-        final boolean script = Prefs.getBoolean("applyonbootscript", false, context);
+        final int seconds = AppSettings.getApplyOnBootDelay(context);
+        final boolean hideNotification = AppSettings.isApplyOnBootHide(context);
+        final boolean confirmationNotification = AppSettings
+                .isApplyOnBootConfirmationNotification(context);
+        final boolean toast = AppSettings.isApplyOnBootToast(context);
+        final boolean script = AppSettings.isApplyOnBootScript(context);
 
         PendingIntent cancelIntent = PendingIntent.getBroadcast(context, 1,
                 new Intent(context, CancelReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -325,8 +327,9 @@ public class ApplyOnBoot {
 
                 if (coreCtlMinPath != null) {
                     commands.add(Control.write(String.valueOf(context == null ?
-                            CPUFreq.getInstance().mCoreCtlMinCpu : Prefs.getInt("core_ctl_min_cpus_big",
-                            applyCpu.getCoreCtlMin(), context)), coreCtlMinPath));
+                                    CPUFreq.getInstance().mCoreCtlMinCpu :
+                                    AppSettings.getCoreCtlMinCpusBig(context)),
+                            coreCtlMinPath));
                 }
                 if (msmPerformanceMinPath != null) {
                     commands.add(Control.write("-1:-1", msmPerformanceMinPath));

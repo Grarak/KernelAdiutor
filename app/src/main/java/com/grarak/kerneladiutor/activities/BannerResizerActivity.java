@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 
@@ -82,7 +82,7 @@ public class BannerResizerActivity extends BaseActivity {
             int maxHeight = Math.round(getResources().getDimension(R.dimen.banner_max_height));
 
             final View banner = rootView.findViewById(R.id.banner_view);
-            final int px = Prefs.getInt("banner_size", defaultHeight, getActivity());
+            final int px = AppSettings.getBannerSize(getActivity());
             setHeight(banner, px);
 
             final TextView text = rootView.findViewById(R.id.seekbar_text);
@@ -110,7 +110,7 @@ public class BannerResizerActivity extends BaseActivity {
             rootView.findViewById(R.id.cancel).setOnClickListener(v -> seekBar.setProgress(px - minHeight));
 
             rootView.findViewById(R.id.done).setOnClickListener(v -> {
-                Prefs.saveInt("banner_size", seekBar.getProgress() + minHeight, getActivity());
+                AppSettings.saveBannerSize(seekBar.getProgress() + minHeight, getActivity());
                 getActivity().finish();
             });
 

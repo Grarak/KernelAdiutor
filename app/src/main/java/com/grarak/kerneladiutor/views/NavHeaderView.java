@@ -34,7 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
@@ -86,8 +86,8 @@ public class NavHeaderView extends LinearLayout {
 
         boolean noPic;
         try {
-            String uri = Prefs.getString("previewpicture", null, mImage.getContext());
-            if (uri == null || uri.equals("nopicture")) noPic = true;
+            String uri = AppSettings.getPreviewPicture(getContext());
+            if (uri == null) noPic = true;
             else {
                 setImage(Uri.parse(uri));
                 noPic = false;
@@ -97,7 +97,9 @@ public class NavHeaderView extends LinearLayout {
             noPic = true;
         }
 
-        if (noPic) Prefs.saveString("previewpicture", "nopicture", mImage.getContext());
+        if (noPic) {
+            AppSettings.resetPreviewPicture(getContext());
+        }
 
         findViewById(R.id.nav_header_fab).setOnClickListener(v
                 -> new Dialog(context).setItems(v.getResources()
@@ -109,10 +111,7 @@ public class NavHeaderView extends LinearLayout {
                                     MainHeaderActivity.class));
                             break;
                         case 1:
-                            if (Prefs.getString("previewpicture", null, v.getContext())
-                                    .equals("nopicture"))
-                                return;
-                            Prefs.saveString("previewpicture", "nopicture", v.getContext());
+                            AppSettings.resetPreviewPicture(getContext());
                             mImage.setImageDrawable(null);
                             animateBg();
                             break;
@@ -144,7 +143,7 @@ public class NavHeaderView extends LinearLayout {
                 try {
                     Uri selectedImageUri = data.getData();
                     sCallback.setImage(selectedImageUri);
-                    Prefs.saveString("previewpicture", selectedImageUri.toString(), this);
+                    AppSettings.savePreviewPicture(selectedImageUri.toString(), this);
                     sCallback.animate();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -152,7 +151,6 @@ public class NavHeaderView extends LinearLayout {
                 }
             finish();
         }
-
     }
 
     public void animateBg() {

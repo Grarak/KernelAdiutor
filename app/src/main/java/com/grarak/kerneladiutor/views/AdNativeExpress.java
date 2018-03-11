@@ -19,8 +19,10 @@
  */
 package com.grarak.kerneladiutor.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
@@ -39,7 +41,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
@@ -153,7 +155,7 @@ public class AdNativeExpress extends LinearLayout {
             GHAds.GHAd ad = null;
             int min = -1;
             for (GHAds.GHAd ghAd : ghAdList) {
-                int shown = Prefs.getInt(ghAd.getName() + "_shown", 0, getContext());
+                int shown = AppSettings.getGHAdShown(ghAd.getName(), getContext());
                 if (min < 0 || shown < min) {
                     min = shown;
                     ad = ghAd;
@@ -163,7 +165,12 @@ public class AdNativeExpress extends LinearLayout {
             final String name = ad.getName();
             final String link = ad.getLink();
             final int totalShown = min + 1;
-            Glide.with(this).load(ad.getBanner()).into(new SimpleTarget<Drawable>() {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
+                    && getContext() instanceof Activity) {
+                if (((Activity) getContext()).isDestroyed()) return;
+            }
+            Glide.with(getContext()).load(ad.getBanner()).into(new SimpleTarget<Drawable>() {
                 @Override
                 public void onLoadStarted(@Nullable Drawable placeholder) {
                     mGHImage.setVisibility(GONE);
@@ -185,7 +192,7 @@ public class AdNativeExpress extends LinearLayout {
                     mProgress.setVisibility(GONE);
                     mAdText.setVisibility(GONE);
                     mGHImage.setImageDrawable(resource);
-                    Prefs.saveInt(name + "_shown", totalShown, getContext());
+                    AppSettings.saveGHAdShown(name, totalShown, getContext());
                     mGHLoaded = true;
                     mGHLoading = false;
                 }

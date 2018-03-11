@@ -36,8 +36,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.FingerprintUiHelper;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.mattprecious.swirl.SwirlView;
 
@@ -103,7 +103,7 @@ public class SecurityActivity extends BaseActivity {
         });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && Prefs.getBoolean("fingerprint", false, this)) {
+                && AppSettings.isFingerprint(this)) {
             mFingerprintManagerCompat = FingerprintManagerCompat.from(this);
             if (mFingerprintManagerCompat.isHardwareDetected()
                     && mFingerprintManagerCompat.hasEnrolledFingerprints()

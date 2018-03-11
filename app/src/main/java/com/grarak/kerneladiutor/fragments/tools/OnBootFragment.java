@@ -25,7 +25,7 @@ import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
@@ -93,21 +93,28 @@ public class OnBootFragment extends RecyclerViewFragment {
         HashMap<String, Boolean> applyOnBootEnabled = new HashMap<>();
         List<ApplyOnBootItem> applyOnBootItems = new ArrayList<>();
         for (int i = 0; i < settings.size(); i++) {
-            if (!applyOnBootEnabled.containsKey(settings.get(i).getCategory())) {
-                applyOnBootEnabled.put(settings.get(i).getCategory(),
-                        Prefs.getBoolean(settings.get(i).getCategory(), false, getActivity()));
+            Settings.SettingsItem item = settings.get(i);
+            boolean enabled;
+            if (applyOnBootEnabled.containsKey(item.getCategory())) {
+                enabled = applyOnBootEnabled.get(item.getCategory());
+            } else {
+                applyOnBootEnabled.put(item.getCategory(),
+                        enabled = AppSettings.getBoolean(settings.get(i).getCategory(),
+                                false, getActivity()));
             }
-            if (applyOnBootEnabled.get(settings.get(i).getCategory())) {
-                applyOnBootItems.add(new ApplyOnBootItem(settings.get(i).getSetting(),
-                        settings.get(i).getCategory(), i));
+            if (enabled) {
+                applyOnBootItems.add(new ApplyOnBootItem(item.getSetting(),
+                        item.getCategory(), i));
             }
         }
 
         for (int i = 0; i < applyOnBootItems.size(); i++) {
             final ApplyOnBootItem applyOnBootItem = applyOnBootItems.get(i);
             DescriptionView applyOnBootView = new DescriptionView();
-            applyOnBootView.setSummary((i + 1) + ". " + applyOnBootItem.mCategory.replace("_onboot", "")
-                    + ": " + applyOnBootItem.mCommand);
+            applyOnBootView.setSummary(
+                    (i + 1)
+                            + ". " + applyOnBootItem.mCategory.replace("_onboot", "")
+                            + ": " + applyOnBootItem.mCommand);
 
             applyOnBootView.setOnItemClickListener(item -> {
                 mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.delete_question,
@@ -194,7 +201,7 @@ public class OnBootFragment extends RecyclerViewFragment {
             items.addAll(profiles);
         }
 
-        if (Prefs.getBoolean("initd_onboot", false, getActivity())) {
+        if (AppSettings.isInitdOnBoot(getActivity())) {
             TitleView initdTitle = new TitleView();
             initdTitle.setText(getString(R.string.initd));
             items.add(initdTitle);
@@ -207,7 +214,7 @@ public class OnBootFragment extends RecyclerViewFragment {
                         (dialogInterface, i) -> {
                         },
                         (dialogInterface, i) -> {
-                            Prefs.saveBoolean("initd_onboot", false, getActivity());
+                            AppSettings.saveInitdOnBoot(false, getActivity());
                             reload();
                         },
                         dialogInterface -> mDeleteDialog = null, getActivity());

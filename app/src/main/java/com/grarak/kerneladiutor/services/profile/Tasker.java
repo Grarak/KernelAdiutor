@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.services.boot.ApplyOnBoot;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -59,7 +59,7 @@ public class Tasker extends BroadcastReceiver {
             if (commands != null) {
                 String[] cs = commands.split(DIVIDER);
                 Log.i(TAG + ": " + getClass().getSimpleName(), "Applying " + cs[0]);
-                if (Prefs.getBoolean("showtaskertoast", true, context)) {
+                if (AppSettings.isShowTaskerToast(context)) {
                     Utils.toast(context.getString(R.string.applying_profile, cs[0]), context, Toast.LENGTH_LONG);
                 }
 

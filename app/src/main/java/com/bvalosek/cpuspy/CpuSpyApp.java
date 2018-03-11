@@ -11,7 +11,7 @@ package com.bvalosek.cpuspy;
 import android.content.Context;
 import android.util.SparseArray;
 
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 
 /**
@@ -19,7 +19,8 @@ import com.grarak.kerneladiutor.utils.Utils;
  */
 public class CpuSpyApp {
 
-    private final String PREF_OFFSETS;
+    private final int mCore;
+    private final Context mContext;
 
     /**
      * the long-living object used to monitor the system frequency states
@@ -27,9 +28,10 @@ public class CpuSpyApp {
     private final CpuStateMonitor mMonitor;
 
     public CpuSpyApp(int core, Context context) {
-        PREF_OFFSETS = "offsets" + core;
+        mCore = core;
+        mContext = context;
         mMonitor = new CpuStateMonitor(core);
-        loadOffsets(context);
+        loadOffsets();
     }
 
     /**
@@ -43,8 +45,8 @@ public class CpuSpyApp {
      * Load the saved string of offsets from preferences and put it into the
      * state monitor
      */
-    private void loadOffsets(Context context) {
-        String prefs = Prefs.getString(PREF_OFFSETS, "", context);
+    private void loadOffsets() {
+        String prefs = AppSettings.getCpuSpyOffsets(mCore, mContext);
 
         if (prefs.isEmpty()) return;
         // split the string by peroids and then the info by commas and load
@@ -62,7 +64,7 @@ public class CpuSpyApp {
      * Save the state-time offsets as a string e.g. "100 24, 200 251, 500 124
      * etc
      */
-    public void saveOffsets(Context context) {
+    public void saveOffsets() {
         // build the string by iterating over the freq->duration map
         StringBuilder str = new StringBuilder();
         SparseArray<Long> offsets = mMonitor.getOffsets();
@@ -70,6 +72,6 @@ public class CpuSpyApp {
             str.append(offsets.keyAt(i)).append(" ").append(offsets.valueAt(i)).append(",");
         }
 
-        Prefs.saveString(PREF_OFFSETS, str.toString(), context);
+        AppSettings.saveCpuSpyOffsets(str.toString(), mCore, mContext);
     }
 }

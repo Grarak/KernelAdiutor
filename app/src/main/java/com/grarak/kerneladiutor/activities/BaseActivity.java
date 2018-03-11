@@ -35,7 +35,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Themes;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -70,7 +70,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        if (Prefs.getBoolean("forceenglish", false, newBase)) {
+        if (AppSettings.isForceEnglish(newBase)) {
             super.attachBaseContext(wrap(newBase, new Locale("en_US")));
         } else {
             super.attachBaseContext(newBase);

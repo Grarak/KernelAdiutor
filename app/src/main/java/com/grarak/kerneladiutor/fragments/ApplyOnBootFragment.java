@@ -47,7 +47,7 @@ import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
 import com.grarak.kerneladiutor.fragments.kernel.WakeFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 
 import java.util.HashMap;
 
@@ -131,9 +131,9 @@ public class ApplyOnBootFragment extends BaseFragment {
 
             final String category = getArguments().getString(INTENT_CATEGORY);
             SwitchCompat switcher = rootView.findViewById(R.id.switcher);
-            switcher.setChecked(Prefs.getBoolean(category, false, getActivity()));
+            switcher.setChecked(AppSettings.getBoolean(category, false, getActivity()));
             switcher.setOnCheckedChangeListener((buttonView, isChecked) ->
-                    Prefs.saveBoolean(category, isChecked, getActivity()));
+                    AppSettings.saveBoolean(category, isChecked, getActivity()));
             return rootView;
         }
     }

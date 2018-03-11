@@ -41,9 +41,9 @@ import com.grarak.kerneladiutor.activities.MainActivity;
 import com.grarak.kerneladiutor.activities.NavigationActivity;
 import com.grarak.kerneladiutor.database.Settings;
 import com.grarak.kerneladiutor.fragments.tools.DataSharingFragment;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.NotificationId;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.server.ServerCreateDevice;
 
@@ -122,7 +122,7 @@ public class Monitor extends Service {
     };
 
     private void postCreate(final Long[] times) {
-        if (mLevel < 15 || !Prefs.getBoolean("data_sharing", true, this)) return;
+        if (mLevel < 15 || !AppSettings.isDataSharing(this)) return;
 
         new Thread(() -> {
             try {
@@ -244,7 +244,7 @@ public class Monitor extends Service {
 
         @Override
         public void onReceive(final Context context, Intent intent) {
-            Prefs.saveBoolean("data_sharing", false, context);
+            AppSettings.saveDataSharing(false, context);
             context.stopService(new Intent(context, Monitor.class));
 
             context.sendBroadcast(new Intent(ACTION_DISABLE));

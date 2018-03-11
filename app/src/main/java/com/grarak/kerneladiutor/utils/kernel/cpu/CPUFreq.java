@@ -24,8 +24,8 @@ import android.util.SparseArray;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Device;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.CoreCtl;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.MPDecision;
@@ -90,7 +90,7 @@ public class CPUFreq {
 
     private CPUFreq(Context context) {
         if (context != null) {
-            mCoreCtlMinCpu = Prefs.getInt("core_ctl_min_cpus_big", 2, context);
+            mCoreCtlMinCpu = AppSettings.getCoreCtlMinCpusBig(context);
         }
     }
 

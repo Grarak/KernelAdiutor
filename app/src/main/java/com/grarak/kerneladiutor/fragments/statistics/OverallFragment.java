@@ -124,9 +124,9 @@ public class OverallFragment extends RecyclerViewFragment {
                 }
             } catch (CpuStateMonitor.CpuStateMonitorException ignored) {
             }
-            mCpuSpyBig.saveOffsets(getActivity());
+            mCpuSpyBig.saveOffsets();
             if (mCpuSpyLITTLE != null) {
-                mCpuSpyLITTLE.saveOffsets(getActivity());
+                mCpuSpyLITTLE.saveOffsets();
             }
             updateView(cpuStateMonitor, mFreqBig);
             if (cpuStateMonitorLITTLE != null) {
@@ -144,9 +144,9 @@ public class OverallFragment extends RecyclerViewFragment {
             if (cpuStateMonitorLITTLE != null) {
                 cpuStateMonitorLITTLE.removeOffsets();
             }
-            mCpuSpyBig.saveOffsets(getActivity());
+            mCpuSpyBig.saveOffsets();
             if (mCpuSpyLITTLE != null) {
-                mCpuSpyLITTLE.saveOffsets(getActivity());
+                mCpuSpyLITTLE.saveOffsets();
             }
             updateView(cpuStateMonitor, mFreqBig);
             if (mCpuSpyLITTLE != null) {

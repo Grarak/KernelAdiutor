@@ -30,7 +30,7 @@ import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.screen.Calibration;
 import com.grarak.kerneladiutor.utils.kernel.screen.Gamma;
@@ -391,11 +391,11 @@ public class ScreenFragment extends RecyclerViewFragment {
             profiles.setTitle(getString(R.string.profile));
             profiles.setSummary(getString(R.string.gamma_profiles_summary));
             profiles.setItems(profileList);
-            profiles.setSelection(Prefs.getInt("kgamma_profile", -1, getActivity()));
+            profiles.setSelection(AppSettings.getKGammaProfile(getActivity()));
             profiles.setOnDropDownListener((dropDownView, position, value) -> {
                 Gamma.setKGammaProfile(position, gammaProfiles, getActivity());
                 kgammaInit(null);
-                Prefs.saveInt("kgamma_profile", position, getActivity());
+                AppSettings.saveKGammaProfile(position, getActivity());
             });
 
             items.add(profiles);
@@ -669,11 +669,11 @@ public class ScreenFragment extends RecyclerViewFragment {
             profiles.setTitle(getString(R.string.profile));
             profiles.setSummary(getString(R.string.gamma_profiles_summary));
             profiles.setItems(profileList);
-            profiles.setSelection(Prefs.getInt("gamma_control_profile", -1, getActivity()));
+            profiles.setSelection(AppSettings.getGammaControlProfile(getActivity()));
             profiles.setOnDropDownListener((dropDownView, position, value) -> {
                 Gamma.setGammaControlProfile(position, gammaProfiles, getActivity());
                 gammacontrolInit(null);
-                Prefs.saveInt("gamma_control_profile", position, getActivity());
+                AppSettings.saveGammaControlProfile(position, getActivity());
             });
 
             items.add(profiles);
@@ -797,11 +797,11 @@ public class ScreenFragment extends RecyclerViewFragment {
             profiles.setTitle(getString(R.string.profile));
             profiles.setSummary(getString(R.string.gamma_profiles_summary));
             profiles.setItems(profileList);
-            profiles.setSelection(Prefs.getInt("dsi_panel_profile", -1, getActivity()));
+            profiles.setSelection(AppSettings.getDsiPanelProfile(getActivity()));
             profiles.setOnDropDownListener((dropDownView, position, value) -> {
                 Gamma.setDsiPanelProfile(position, gammaProfiles, getActivity());
                 dsipanelInit(null);
-                Prefs.saveInt("dsi_panel_profile", position, getActivity());
+                AppSettings.saveDsiPanelProfile(position, getActivity());
             });
 
             items.add(profiles);

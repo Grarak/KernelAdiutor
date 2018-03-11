@@ -50,7 +50,7 @@ import com.grarak.kerneladiutor.activities.BannerResizerActivity;
 import com.grarak.kerneladiutor.activities.MainActivity;
 import com.grarak.kerneladiutor.activities.NavigationActivity;
 import com.grarak.kerneladiutor.services.boot.ApplyOnBootService;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Themes;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
@@ -169,7 +169,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     findPreference(KEY_FINGERPRINT));
         } else {
             mFingerprint = findPreference(KEY_FINGERPRINT);
-            mFingerprint.setEnabled(!Prefs.getString("password", "", getActivity()).isEmpty());
+            mFingerprint.setEnabled(!AppSettings.getPassword(getActivity()).isEmpty());
         }
 
         NavigationActivity activity = (NavigationActivity) getActivity();
@@ -183,10 +183,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         new ContextThemeWrapper(getActivity(), R.style.Preference_SwitchPreferenceCompat_Material));
                 switchPreference.setSummary(getString(id));
                 switchPreference.setKey(fragmentClass.getSimpleName() + "_enabled");
-                switchPreference.setChecked(Prefs.getBoolean(fragmentClass.getSimpleName()
-                        + "_enabled", true, getActivity()));
+                switchPreference.setChecked(AppSettings.isFragmentEnabled(fragmentClass, getActivity()));
                 switchPreference.setOnPreferenceChangeListener(this);
-                switchPreference.setPersistent(false);
+                switchPreference.setPersistent(true);
                 sectionsCategory.addPreference(switchPreference);
             }
         }
@@ -215,13 +214,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     return false;
                 }
                 return true;
+            case KEY_SECTIONS_ICON:
+                if (key.equals(KEY_SECTIONS_ICON) && !Utils.DONATED) {
+                    ViewUtils.dialogDonate(getActivity()).show();
+                    return false;
+                }
+                ((NavigationActivity) getActivity()).appendFragments();
+                return true;
             default:
-                if (key.equals(KEY_SECTIONS_ICON) || key.endsWith("_enabled")) {
-                    if (key.equals(KEY_SECTIONS_ICON) && !Utils.DONATED) {
-                        ViewUtils.dialogDonate(getActivity()).show();
-                        return false;
-                    }
-                    Prefs.saveBoolean(key, checked, getActivity());
+                if (key.endsWith("_enabled")) {
                     ((NavigationActivity) getActivity()).appendFragments();
                     return true;
                 }
@@ -297,10 +298,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 new Execute(getActivity()).execute("dmesg > /sdcard/dmesg.txt");
                 return true;
             case KEY_SET_PASSWORD:
-                editPasswordDialog(Prefs.getString("password", "", getActivity()));
+                editPasswordDialog(AppSettings.getPassword(getActivity()));
                 return true;
             case KEY_DELETE_PASSWORD:
-                deletePasswordDialog(Prefs.getString("password", "", getActivity()));
+                deletePasswordDialog(AppSettings.getPassword(getActivity()));
                 return true;
         }
         return false;
@@ -388,7 +389,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         return;
                     }
 
-                    Prefs.saveString("password", Utils.encodeString(newPassword.getText()
+                    AppSettings.savePassword(Utils.encodeString(newPassword.getText()
                             .toString()), getActivity());
                     if (mFingerprint != null) {
                         mFingerprint.setEnabled(true);
@@ -423,7 +424,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         return;
                     }
 
-                    Prefs.saveString("password", "", getActivity());
+                    AppSettings.resetPassword(getActivity());
                     if (mFingerprint != null) {
                         mFingerprint.setEnabled(false);
                     }

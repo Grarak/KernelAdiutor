@@ -22,7 +22,7 @@ package com.grarak.kerneladiutor.utils.kernel.cpuhotplug;
 import android.content.Context;
 
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.Control;
@@ -146,7 +146,7 @@ public class CoreCtl {
 
     public void setMinCpus(int min, int cpu, String category, Context context) {
         if (context != null) {
-            Prefs.saveInt("core_ctl_min_cpus_big", min, context);
+            AppSettings.saveCoreCtlMinCpusBig(min, context);
             CPUFreq.getInstance(context).mCoreCtlMinCpu = min;
         }
         Control.runSetting(Control.write(String.valueOf(min), Utils.strFormat(PARENT + MIN_CPUS,

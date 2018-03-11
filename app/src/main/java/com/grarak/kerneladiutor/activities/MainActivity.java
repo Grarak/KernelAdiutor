@@ -41,7 +41,7 @@ import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.utils.Device;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.battery.Battery;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity {
              * otherwise run {@link #CheckingTask}
              */
             String password;
-            if (!(password = Prefs.getString("password", "", this)).isEmpty()) {
+            if (!(password = AppSettings.getPassword(this)).isEmpty()) {
                 Intent intent = new Intent(this, SecurityActivity.class);
                 intent.putExtra(SecurityActivity.PASSWORD_INTENT, password);
                 startActivityForResult(intent, 1);
@@ -171,7 +171,6 @@ public class MainActivity extends BaseActivity {
         if (getIntent().getExtras() != null) {
             intent.putExtras(getIntent().getExtras());
         }
-        Prefs.saveInt("license", code, this);
         startActivity(intent);
         finish();
     }

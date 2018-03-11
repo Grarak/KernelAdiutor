@@ -31,7 +31,7 @@ import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.EditorActivity;
 import com.grarak.kerneladiutor.fragments.SwitcherFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -77,8 +77,8 @@ public class InitdFragment extends RecyclerViewFragment {
         addViewPagerFragment(SwitcherFragment.newInstance(
                 getString(R.string.emulate_initd),
                 getString(R.string.emulate_initd_summary),
-                Prefs.getBoolean("initd_onboot", false, getActivity()),
-                (compoundButton, b) -> Prefs.saveBoolean("initd_onboot", b, getActivity())));
+                AppSettings.isInitdOnBoot(getActivity()),
+                (compoundButton, b) -> AppSettings.saveInitdOnBoot(b, getActivity())));
 
         if (mExecuteDialog != null) {
             mExecuteDialog.show();

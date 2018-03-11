@@ -33,7 +33,7 @@ import com.grarak.kerneladiutor.activities.DataSharingSearchActivity;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.services.monitor.Monitor;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -88,14 +88,14 @@ public class DataSharingFragment extends RecyclerViewFragment {
     protected void addItems(List<RecyclerViewItem> items) {
         mDataSharingSwitch = new SwitchView();
         mDataSharingSwitch.setSummary(getString(R.string.sharing_enable));
-        mDataSharingSwitch.setChecked(Prefs.getBoolean("data_sharing", true, getActivity()));
+        mDataSharingSwitch.setChecked(AppSettings.isDataSharing(getActivity()));
         mDataSharingSwitch.addOnSwitchListener((switchView, isChecked) -> {
             if (isChecked) {
                 Utils.startService(getActivity(), new Intent(getActivity(), Monitor.class));
             } else {
                 getActivity().stopService(new Intent(getActivity(), Monitor.class));
             }
-            Prefs.saveBoolean("data_sharing", isChecked, getActivity());
+            AppSettings.saveDataSharing(isChecked, getActivity());
         });
 
         items.add(mDataSharingSwitch);

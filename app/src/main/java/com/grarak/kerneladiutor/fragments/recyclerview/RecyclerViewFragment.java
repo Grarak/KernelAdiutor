@@ -59,7 +59,7 @@ import com.grarak.kerneladiutor.activities.BaseActivity;
 import com.grarak.kerneladiutor.activities.NavigationActivity;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.LoadingFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.ViewPagerDialog;
@@ -476,27 +476,11 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     public void resizeBanner() {
         if (showViewPager() && !hideBanner() && Utils.DONATED) {
             ViewGroup.LayoutParams layoutParams = mViewPagerParent.getLayoutParams();
-            layoutParams.height = getBannerHeight();
+            layoutParams.height = AppSettings.getBannerSize(getActivity());
             mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), layoutParams.height,
                     mRecyclerView.getPaddingRight(), mRecyclerView.getPaddingBottom());
             mViewPagerParent.requestLayout();
         }
-    }
-
-    private int getBannerHeight() {
-        int min = Math.round(getResources().getDimension(R.dimen.banner_min_height));
-        int max = Math.round(getResources().getDimension(R.dimen.banner_max_height));
-
-        int height = Prefs.getInt("banner_size", Math.round(getResources().getDimension(
-                R.dimen.banner_default_height)), getActivity());
-        if (height > max) {
-            height = max;
-            Prefs.saveInt("banner_size", max, getActivity());
-        } else if (height < min) {
-            height = min;
-            Prefs.saveInt("banner_size", min, getActivity());
-        }
-        return height;
     }
 
     protected void removeItem(RecyclerViewItem recyclerViewItem) {
@@ -717,11 +701,11 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     private void showViewAnimation(View view) {
         if (mSlideInOutAnimation != null) return;
 
+        view.setVisibility(View.VISIBLE);
         mSlideInOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_bottom);
         mSlideInOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                view.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -796,7 +780,8 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         switch (item.getItemId()) {
             case 0:
                 ViewUtils.showDialog(getChildFragmentManager(),
-                        ViewPagerDialog.newInstance(getBannerHeight(), mViewPagerFragments));
+                        ViewPagerDialog.newInstance(AppSettings.getBannerSize(getActivity()),
+                                mViewPagerFragments));
                 return true;
             case 1:
                 if (showTopFab()) {
@@ -810,9 +795,8 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     }
 
     private boolean hideBanner() {
-        return Prefs.getBoolean("hide_banner", false, getActivity())
-                && getActivity() instanceof NavigationActivity
-                && Utils.DONATED;
+        return AppSettings.isHideBanner(getActivity())
+                && getActivity() instanceof NavigationActivity;
     }
 
     protected boolean showViewPager() {

@@ -46,7 +46,6 @@ import android.view.SubMenu;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.kernel.BatteryFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplugFragment;
@@ -67,6 +66,7 @@ import com.grarak.kerneladiutor.fragments.other.AboutFragment;
 import com.grarak.kerneladiutor.fragments.other.ContributorsFragment;
 import com.grarak.kerneladiutor.fragments.other.HelpFragment;
 import com.grarak.kerneladiutor.fragments.other.SettingsFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.MemoryFragment;
@@ -81,8 +81,8 @@ import com.grarak.kerneladiutor.fragments.tools.RecoveryFragment;
 import com.grarak.kerneladiutor.fragments.tools.customcontrols.CustomControlsFragment;
 import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadsFragment;
 import com.grarak.kerneladiutor.services.monitor.Monitor;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Device;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.WebpageReader;
@@ -314,7 +314,7 @@ public class NavigationActivity extends BaseActivity
         }
         onItemSelected(mSelection, false);
 
-        if (Prefs.getBoolean("data_sharing", true, this)) {
+        if (AppSettings.isDataSharing(this)) {
             startService(new Intent(this, Monitor.class));
         }
 
@@ -366,15 +366,14 @@ public class NavigationActivity extends BaseActivity
 
             Drawable drawable = ContextCompat.getDrawable(this,
                     Utils.DONATED
-                            && Prefs.getBoolean("section_icons", false, this)
+                            && AppSettings.isSectionIcons(this)
                             && navigationFragment.mDrawable != 0 ? navigationFragment.mDrawable :
                             R.drawable.ic_blank);
 
             if (fragmentClass == null) {
                 lastSubMenu = menu.addSubMenu(id);
                 mActualFragments.put(id, null);
-            } else if (Prefs.getBoolean(fragmentClass.getSimpleName() + "_enabled",
-                    true, this)) {
+            } else if (AppSettings.isFragmentEnabled(fragmentClass, this)) {
                 MenuItem menuItem = lastSubMenu == null ? menu.add(0, id, 0, id) :
                         lastSubMenu.add(0, id, 0, id);
                 menuItem.setIcon(drawable);
@@ -405,10 +404,8 @@ public class NavigationActivity extends BaseActivity
 
         PriorityQueue<Class<? extends Fragment>> queue = new PriorityQueue<>(
                 (o1, o2) -> {
-                    int opened1 = Prefs.getInt(o1.getSimpleName() + "_opened",
-                            0, NavigationActivity.this);
-                    int opened2 = Prefs.getInt(o2.getSimpleName() + "_opened",
-                            0, NavigationActivity.this);
+                    int opened1 = AppSettings.getFragmentOpened(o1, this);
+                    int opened2 = AppSettings.getFragmentOpened(o2, this);
                     return opened2 - opened1;
                 });
 
@@ -512,8 +509,9 @@ public class NavigationActivity extends BaseActivity
         final Fragment fragment = getFragment(res);
 
         if (saveOpened) {
-            String openedName = fragment.getClass().getSimpleName() + "_opened";
-            Prefs.saveInt(openedName, Prefs.getInt(openedName, 0, this) + 1, this);
+            AppSettings.saveFragmentOpened(fragment.getClass(),
+                    AppSettings.getFragmentOpened(fragment.getClass(), this) + 1,
+                    this);
         }
         setShortcuts();
 
