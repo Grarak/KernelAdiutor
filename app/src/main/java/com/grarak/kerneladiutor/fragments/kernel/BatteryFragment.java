@@ -135,7 +135,7 @@ public class BatteryFragment extends RecyclerViewFragment {
     }
 
     private void chargeRateInit(List<RecyclerViewItem> items) {
-        CardView chargeRateCard = new CardView(getActivity());
+        CardView chargeRateCard = new CardView();
         chargeRateCard.setTitle(getString(R.string.charge_rate));
 
         if (mBattery.hasChargeRateEnable()) {

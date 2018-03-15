@@ -125,7 +125,7 @@ public class CPUFragment extends RecyclerViewFragment {
 
         items.add(mCPUUsageBig);
 
-        CardView bigCoresCard = new CardView(getActivity());
+        CardView bigCoresCard = new CardView();
         if (mCPUFreq.isBigLITTLE()) {
             bigCoresCard.setTitle(getString(R.string.cores_string, getString(R.string.cluster_big)));
         }
@@ -141,7 +141,7 @@ public class CPUFragment extends RecyclerViewFragment {
             bigCoresCard.addItem(coreSwitch);
         }
 
-        CardView bigFrequenciesCard = new CardView(getActivity());
+        CardView bigFrequenciesCard = new CardView();
         if (mCPUFreq.isBigLITTLE()) {
             bigFrequenciesCard.setTitle(getString(R.string.frequencies_string, getString(R.string.cluster_big)));
         }
@@ -175,7 +175,7 @@ public class CPUFragment extends RecyclerViewFragment {
             bigFrequenciesCard.addItem(mCPUMaxScreenOffBig);
         }
 
-        CardView bigGovernorsCard = new CardView(getActivity());
+        CardView bigGovernorsCard = new CardView();
         if (mCPUFreq.isBigLITTLE()) {
             bigGovernorsCard.setTitle(getString(R.string.governors_string, getString(R.string.cluster_big)));
         }
@@ -206,7 +206,7 @@ public class CPUFragment extends RecyclerViewFragment {
 
             items.add(mCPUUsageLITTLE);
 
-            CardView LITTLECoresCard = new CardView(getActivity());
+            CardView LITTLECoresCard = new CardView();
             LITTLECoresCard.setTitle(getString(R.string.cores_string, getString(R.string.cluster_little)));
 
             final List<Integer> LITTLECores = mCPUFreq.getLITTLECpuRange();
@@ -220,7 +220,7 @@ public class CPUFragment extends RecyclerViewFragment {
                 LITTLECoresCard.addItem(coreSwitch);
             }
 
-            CardView LITTLEFrequenciesCard = new CardView(getActivity());
+            CardView LITTLEFrequenciesCard = new CardView();
             LITTLEFrequenciesCard.setTitle(getString(R.string.frequencies_string, getString(R.string.cluster_little)));
 
             mCPUMaxLITTLE = new SelectView();
@@ -252,7 +252,7 @@ public class CPUFragment extends RecyclerViewFragment {
                 LITTLEFrequenciesCard.addItem(mCPUMaxScreenOffLITTLE);
             }
 
-            CardView LITTLEGovernorsCard = new CardView(getActivity());
+            CardView LITTLEGovernorsCard = new CardView();
             LITTLEGovernorsCard.setTitle(getString(R.string.governors_string, getString(R.string.cluster_little)));
 
             mCPUGovernorLITTLE = new SelectView();
@@ -338,7 +338,7 @@ public class CPUFragment extends RecyclerViewFragment {
 
     private void cpuQuietInit(List<RecyclerViewItem> items) {
         List<RecyclerViewItem> views = new ArrayList<>();
-        CardView cpuQuietCard = new CardView(getActivity());
+        CardView cpuQuietCard = new CardView();
         cpuQuietCard.setTitle(getString(R.string.cpu_quiet));
 
         if (Misc.hasCpuQuietEnable()) {

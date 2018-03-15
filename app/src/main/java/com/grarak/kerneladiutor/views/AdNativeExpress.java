@@ -21,6 +21,7 @@ package com.grarak.kerneladiutor.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -143,6 +144,19 @@ public class AdNativeExpress extends LinearLayout {
         mNativeExpressAdView.loadAd(new AdRequest.Builder().build());
     }
 
+    private boolean isActivityDestroyed(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (context instanceof Activity) {
+                return ((Activity) context).isDestroyed();
+            } else if (context instanceof ContextWrapper) {
+                return isActivityDestroyed(
+                        ((ContextWrapper) context).getBaseContext());
+            }
+        }
+
+        return false;
+    }
+
     public void loadGHAd() {
         if (!mNativeFailedLoading || mGHLoading || mGHLoaded) {
             return;
@@ -166,10 +180,7 @@ public class AdNativeExpress extends LinearLayout {
             final String link = ad.getLink();
             final int totalShown = min + 1;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
-                    && getContext() instanceof Activity) {
-                if (((Activity) getContext()).isDestroyed()) return;
-            }
+            if (isActivityDestroyed(getContext())) return;
             Glide.with(getContext()).load(ad.getBanner()).into(new SimpleTarget<Drawable>() {
                 @Override
                 public void onLoadStarted(@Nullable Drawable placeholder) {

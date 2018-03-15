@@ -315,7 +315,7 @@ public class WakeFragment extends RecyclerViewFragment {
     }
 
     private void areaInit(List<RecyclerViewItem> items) {
-        CardView areaCard = new CardView(getActivity());
+        CardView areaCard = new CardView();
         areaCard.setTitle(getString(R.string.area));
 
         if (mDt2s.hasWidth()) {

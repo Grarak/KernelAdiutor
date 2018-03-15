@@ -101,7 +101,7 @@ public class LEDFragment extends RecyclerViewFragment {
     }
 
     private void brightnessInit(List<RecyclerViewItem> items) {
-        CardView brightnessCard = new CardView(getActivity());
+        CardView brightnessCard = new CardView();
         brightnessCard.setTitle(getString(R.string.brightness));
 
         if (Sec.hasHighpowerCurrent()) {
@@ -154,7 +154,7 @@ public class LEDFragment extends RecyclerViewFragment {
     }
 
     private void delayInit(List<RecyclerViewItem> items) {
-        CardView delayCard = new CardView(getActivity());
+        CardView delayCard = new CardView();
         delayCard.setTitle(getString(R.string.delay));
 
         if (Sec.hasNotificationDelayOn()) {
@@ -216,7 +216,7 @@ public class LEDFragment extends RecyclerViewFragment {
             items.add(fade);
         }
 
-        CardView fadeCard = new CardView(getActivity());
+        CardView fadeCard = new CardView();
         fadeCard.setTitle(getString(R.string.fade));
 
         if (Sec.hasNotificationRampControl()) {

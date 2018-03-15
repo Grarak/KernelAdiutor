@@ -156,7 +156,7 @@ public class OverallFragment extends RecyclerViewFragment {
         });
         items.add(frequencyButtonView);
 
-        mFreqBig = new CardView(getActivity());
+        mFreqBig = new CardView();
         if (mCPUFreq.isBigLITTLE()) {
             mFreqBig.setTitle(getString(R.string.cluster_big));
         } else {
@@ -165,7 +165,7 @@ public class OverallFragment extends RecyclerViewFragment {
         items.add(mFreqBig);
 
         if (mCPUFreq.isBigLITTLE()) {
-            mFreqLITTLE = new CardView(getActivity());
+            mFreqLITTLE = new CardView();
             mFreqLITTLE.setTitle(getString(R.string.cluster_little));
             items.add(mFreqLITTLE);
         }

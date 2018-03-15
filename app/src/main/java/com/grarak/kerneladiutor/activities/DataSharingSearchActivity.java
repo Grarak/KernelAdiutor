@@ -176,7 +176,9 @@ public class DataSharingSearchActivity extends BaseActivity {
 
                 @Override
                 public void onBoardFailure() {
-                    failure(getString(R.string.failed_board));
+                    if (isAdded()) {
+                        failure(getString(R.string.failed_board));
+                    }
                 }
             });
         }
