@@ -845,6 +845,9 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     }
 
     protected int childFragmentCount() {
+        if (hideBanner()) {
+            return mViewPagerFragments.size();
+        }
         return getChildFragmentManager().getFragments().size();
     }
 

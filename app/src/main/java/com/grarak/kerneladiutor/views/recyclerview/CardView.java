@@ -184,7 +184,11 @@ public class CardView extends RecyclerViewItem {
     }
 
     public int size() {
-        return mViews.size();
+        synchronized (mAsyncSemaphore) {
+            return mInflaterQueue.size()
+                    + mInflaterNotReadyQueue.size()
+                    + mViews.size();
+        }
     }
 
     public void removeItem(RecyclerViewItem item) {

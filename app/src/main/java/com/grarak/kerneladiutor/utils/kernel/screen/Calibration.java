@@ -318,7 +318,8 @@ public class Calibration {
         List<String> list = new ArrayList<>();
         switch (COLOR) {
             case COLOR_CONTROL_MUILTIPLIER:
-                for (String color : Utils.readFile(COLOR_CONTROL_MUILTIPLIER).split(" ")) {
+                String[] colors = Utils.readFile(COLOR_CONTROL_MUILTIPLIER).split(" ");
+                for (String color : colors) {
                     list.add(String.valueOf(Utils.strToLong(color) / 10000000L));
                 }
                 break;

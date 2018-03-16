@@ -55,7 +55,6 @@ public class ScreenFragment extends RecyclerViewFragment {
     private Calibration mCalibration;
     private Misc mMisc;
 
-    private SeekBarView mColors[];
     private SeekBarView mMinColor;
 
     private GenericSelectView mKGammaBlue;
@@ -134,13 +133,13 @@ public class ScreenFragment extends RecyclerViewFragment {
 
             List<String> colors = mCalibration.getColors();
             final List<String> limits = mCalibration.getLimits();
-            mColors = new SeekBarView[colors.size()];
+            final SeekBarView[] colorViews = new SeekBarView[colors.size()];
             for (int i = 0; i < colors.size(); i++) {
-                mColors[i] = new SeekBarView();
-                mColors[i].setTitle(getResources().getStringArray(R.array.colors)[i]);
-                mColors[i].setItems(limits);
-                mColors[i].setProgress(limits.indexOf(colors.get(i)));
-                mColors[i].setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                colorViews[i] = new SeekBarView();
+                colorViews[i].setTitle(getResources().getStringArray(R.array.colors)[i]);
+                colorViews[i].setItems(limits);
+                colorViews[i].setProgress(limits.indexOf(colors.get(i)));
+                colorViews[i].setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                     @Override
                     public void onMove(SeekBarView seekBarView, int position, String value) {
                         if (mMinColor != null && position < mMinColor.getProgress()) {
@@ -157,15 +156,16 @@ public class ScreenFragment extends RecyclerViewFragment {
                             }
                         }
 
-                        int r = mColors[0].getProgress();
-                        int g = mColors[1].getProgress();
-                        int b = mColors[2].getProgress();
+                        // TODO: Avoid hardcoding index
+                        int r = colorViews[0].getProgress();
+                        int g = colorViews[1].getProgress();
+                        int b = colorViews[2].getProgress();
                         mCalibration.setColors(limits.get(r) + " " + limits.get(g) + " " + limits.get(b),
                                 getActivity());
                     }
                 });
 
-                screenColor.addItem(mColors[i]);
+                screenColor.addItem(colorViews[i]);
             }
 
             if (screenColor.size() > 0) {
@@ -196,7 +196,7 @@ public class ScreenFragment extends RecyclerViewFragment {
 
                     @Override
                     public void onMove(SeekBarView seekBarView, int position, String value) {
-                        for (SeekBarView color : mColors) {
+                        for (SeekBarView color : colorViews) {
                             if (position > color.getProgress()) {
                                 color.setProgress(position);
                             }
