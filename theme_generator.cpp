@@ -136,6 +136,7 @@ const Color colors[] = { // NOLINT
         Color("lime", "#CDDC39", "#AFB42B", "#EEFF41"),
         Color("indigo", "#3F51B5", "#303F9F", "#536DFE"),
         Color("cyan", "#00BCD4", "#0097A7", "#18FFFF"),
+        Color("deep_orange", "#FF5722", "#E64A19", "#FF6E40"),
 };
 
 std::string getStyleItem(const std::string &name, const std::string &value) {

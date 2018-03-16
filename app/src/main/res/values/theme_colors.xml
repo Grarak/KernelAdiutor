@@ -45,4 +45,7 @@
     <color name="cyanPrimary">#00BCD4</color>
     <color name="cyanPrimaryDark">#0097A7</color>
     <color name="cyanAccent">#18FFFF</color>
+    <color name="deep_orangePrimary">#FF5722</color>
+    <color name="deep_orangePrimaryDark">#E64A19</color>
+    <color name="deep_orangeAccent">#FF6E40</color>
 </resources>

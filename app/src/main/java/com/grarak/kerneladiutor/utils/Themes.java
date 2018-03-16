@@ -112,6 +112,7 @@ public class Themes {
         sPrimaryColors.add("limePrimary");
         sPrimaryColors.add("indigoPrimary");
         sPrimaryColors.add("cyanPrimary");
+        sPrimaryColors.add("deep_orangePrimary");
 
         sAccentColors.add("defaultAccent");
         sAccentColors.add("redAccent");
@@ -128,6 +129,7 @@ public class Themes {
         sAccentColors.add("limeAccent");
         sAccentColors.add("indigoAccent");
         sAccentColors.add("cyanAccent");
+        sAccentColors.add("deep_orangeAccent");
 
         sThemes.put("defaultPrimary;redAccent", new Theme("defaultPrimary", "redAccent", R.style.Theme_Default_Red));
         sThemes.put("defaultPrimary;pinkAccent", new Theme("defaultPrimary", "pinkAccent", R.style.Theme_Default_Pink));
@@ -143,6 +145,7 @@ public class Themes {
         sThemes.put("defaultPrimary;limeAccent", new Theme("defaultPrimary", "limeAccent", R.style.Theme_Default_Lime));
         sThemes.put("defaultPrimary;indigoAccent", new Theme("defaultPrimary", "indigoAccent", R.style.Theme_Default_Indigo));
         sThemes.put("defaultPrimary;cyanAccent", new Theme("defaultPrimary", "cyanAccent", R.style.Theme_Default_Cyan));
+        sThemes.put("defaultPrimary;deep_orangeAccent", new Theme("defaultPrimary", "deep_orangeAccent", R.style.Theme_Default_Deep_Orange));
         sThemes.put("redPrimary;defaultAccent", new Theme("redPrimary", "defaultAccent", R.style.Theme_Red_Default));
         sThemes.put("redPrimary;pinkAccent", new Theme("redPrimary", "pinkAccent", R.style.Theme_Red_Pink));
         sThemes.put("redPrimary;purpleAccent", new Theme("redPrimary", "purpleAccent", R.style.Theme_Red_Purple));
@@ -157,6 +160,7 @@ public class Themes {
         sThemes.put("redPrimary;limeAccent", new Theme("redPrimary", "limeAccent", R.style.Theme_Red_Lime));
         sThemes.put("redPrimary;indigoAccent", new Theme("redPrimary", "indigoAccent", R.style.Theme_Red_Indigo));
         sThemes.put("redPrimary;cyanAccent", new Theme("redPrimary", "cyanAccent", R.style.Theme_Red_Cyan));
+        sThemes.put("redPrimary;deep_orangeAccent", new Theme("redPrimary", "deep_orangeAccent", R.style.Theme_Red_Deep_Orange));
         sThemes.put("pinkPrimary;defaultAccent", new Theme("pinkPrimary", "defaultAccent", R.style.Theme_Pink_Default));
         sThemes.put("pinkPrimary;redAccent", new Theme("pinkPrimary", "redAccent", R.style.Theme_Pink_Red));
         sThemes.put("pinkPrimary;purpleAccent", new Theme("pinkPrimary", "purpleAccent", R.style.Theme_Pink_Purple));
@@ -171,6 +175,7 @@ public class Themes {
         sThemes.put("pinkPrimary;limeAccent", new Theme("pinkPrimary", "limeAccent", R.style.Theme_Pink_Lime));
         sThemes.put("pinkPrimary;indigoAccent", new Theme("pinkPrimary", "indigoAccent", R.style.Theme_Pink_Indigo));
         sThemes.put("pinkPrimary;cyanAccent", new Theme("pinkPrimary", "cyanAccent", R.style.Theme_Pink_Cyan));
+        sThemes.put("pinkPrimary;deep_orangeAccent", new Theme("pinkPrimary", "deep_orangeAccent", R.style.Theme_Pink_Deep_Orange));
         sThemes.put("purplePrimary;defaultAccent", new Theme("purplePrimary", "defaultAccent", R.style.Theme_Purple_Default));
         sThemes.put("purplePrimary;redAccent", new Theme("purplePrimary", "redAccent", R.style.Theme_Purple_Red));
         sThemes.put("purplePrimary;pinkAccent", new Theme("purplePrimary", "pinkAccent", R.style.Theme_Purple_Pink));
@@ -185,6 +190,7 @@ public class Themes {
         sThemes.put("purplePrimary;limeAccent", new Theme("purplePrimary", "limeAccent", R.style.Theme_Purple_Lime));
         sThemes.put("purplePrimary;indigoAccent", new Theme("purplePrimary", "indigoAccent", R.style.Theme_Purple_Indigo));
         sThemes.put("purplePrimary;cyanAccent", new Theme("purplePrimary", "cyanAccent", R.style.Theme_Purple_Cyan));
+        sThemes.put("purplePrimary;deep_orangeAccent", new Theme("purplePrimary", "deep_orangeAccent", R.style.Theme_Purple_Deep_Orange));
         sThemes.put("bluePrimary;defaultAccent", new Theme("bluePrimary", "defaultAccent", R.style.Theme_Blue_Default));
         sThemes.put("bluePrimary;redAccent", new Theme("bluePrimary", "redAccent", R.style.Theme_Blue_Red));
         sThemes.put("bluePrimary;pinkAccent", new Theme("bluePrimary", "pinkAccent", R.style.Theme_Blue_Pink));
@@ -199,6 +205,7 @@ public class Themes {
         sThemes.put("bluePrimary;limeAccent", new Theme("bluePrimary", "limeAccent", R.style.Theme_Blue_Lime));
         sThemes.put("bluePrimary;indigoAccent", new Theme("bluePrimary", "indigoAccent", R.style.Theme_Blue_Indigo));
         sThemes.put("bluePrimary;cyanAccent", new Theme("bluePrimary", "cyanAccent", R.style.Theme_Blue_Cyan));
+        sThemes.put("bluePrimary;deep_orangeAccent", new Theme("bluePrimary", "deep_orangeAccent", R.style.Theme_Blue_Deep_Orange));
         sThemes.put("greenPrimary;defaultAccent", new Theme("greenPrimary", "defaultAccent", R.style.Theme_Green_Default));
         sThemes.put("greenPrimary;redAccent", new Theme("greenPrimary", "redAccent", R.style.Theme_Green_Red));
         sThemes.put("greenPrimary;pinkAccent", new Theme("greenPrimary", "pinkAccent", R.style.Theme_Green_Pink));
@@ -213,6 +220,7 @@ public class Themes {
         sThemes.put("greenPrimary;limeAccent", new Theme("greenPrimary", "limeAccent", R.style.Theme_Green_Lime));
         sThemes.put("greenPrimary;indigoAccent", new Theme("greenPrimary", "indigoAccent", R.style.Theme_Green_Indigo));
         sThemes.put("greenPrimary;cyanAccent", new Theme("greenPrimary", "cyanAccent", R.style.Theme_Green_Cyan));
+        sThemes.put("greenPrimary;deep_orangeAccent", new Theme("greenPrimary", "deep_orangeAccent", R.style.Theme_Green_Deep_Orange));
         sThemes.put("orangePrimary;defaultAccent", new Theme("orangePrimary", "defaultAccent", R.style.Theme_Orange_Default));
         sThemes.put("orangePrimary;redAccent", new Theme("orangePrimary", "redAccent", R.style.Theme_Orange_Red));
         sThemes.put("orangePrimary;pinkAccent", new Theme("orangePrimary", "pinkAccent", R.style.Theme_Orange_Pink));
@@ -227,6 +235,7 @@ public class Themes {
         sThemes.put("orangePrimary;limeAccent", new Theme("orangePrimary", "limeAccent", R.style.Theme_Orange_Lime));
         sThemes.put("orangePrimary;indigoAccent", new Theme("orangePrimary", "indigoAccent", R.style.Theme_Orange_Indigo));
         sThemes.put("orangePrimary;cyanAccent", new Theme("orangePrimary", "cyanAccent", R.style.Theme_Orange_Cyan));
+        sThemes.put("orangePrimary;deep_orangeAccent", new Theme("orangePrimary", "deep_orangeAccent", R.style.Theme_Orange_Deep_Orange));
         sThemes.put("brownPrimary;defaultAccent", new Theme("brownPrimary", "defaultAccent", R.style.Theme_Brown_Default));
         sThemes.put("brownPrimary;redAccent", new Theme("brownPrimary", "redAccent", R.style.Theme_Brown_Red));
         sThemes.put("brownPrimary;pinkAccent", new Theme("brownPrimary", "pinkAccent", R.style.Theme_Brown_Pink));
@@ -241,6 +250,7 @@ public class Themes {
         sThemes.put("brownPrimary;limeAccent", new Theme("brownPrimary", "limeAccent", R.style.Theme_Brown_Lime));
         sThemes.put("brownPrimary;indigoAccent", new Theme("brownPrimary", "indigoAccent", R.style.Theme_Brown_Indigo));
         sThemes.put("brownPrimary;cyanAccent", new Theme("brownPrimary", "cyanAccent", R.style.Theme_Brown_Cyan));
+        sThemes.put("brownPrimary;deep_orangeAccent", new Theme("brownPrimary", "deep_orangeAccent", R.style.Theme_Brown_Deep_Orange));
         sThemes.put("greyPrimary;defaultAccent", new Theme("greyPrimary", "defaultAccent", R.style.Theme_Grey_Default));
         sThemes.put("greyPrimary;redAccent", new Theme("greyPrimary", "redAccent", R.style.Theme_Grey_Red));
         sThemes.put("greyPrimary;pinkAccent", new Theme("greyPrimary", "pinkAccent", R.style.Theme_Grey_Pink));
@@ -255,6 +265,7 @@ public class Themes {
         sThemes.put("greyPrimary;limeAccent", new Theme("greyPrimary", "limeAccent", R.style.Theme_Grey_Lime));
         sThemes.put("greyPrimary;indigoAccent", new Theme("greyPrimary", "indigoAccent", R.style.Theme_Grey_Indigo));
         sThemes.put("greyPrimary;cyanAccent", new Theme("greyPrimary", "cyanAccent", R.style.Theme_Grey_Cyan));
+        sThemes.put("greyPrimary;deep_orangeAccent", new Theme("greyPrimary", "deep_orangeAccent", R.style.Theme_Grey_Deep_Orange));
         sThemes.put("blue_greyPrimary;defaultAccent", new Theme("blue_greyPrimary", "defaultAccent", R.style.Theme_Blue_Grey_Default));
         sThemes.put("blue_greyPrimary;redAccent", new Theme("blue_greyPrimary", "redAccent", R.style.Theme_Blue_Grey_Red));
         sThemes.put("blue_greyPrimary;pinkAccent", new Theme("blue_greyPrimary", "pinkAccent", R.style.Theme_Blue_Grey_Pink));
@@ -269,6 +280,7 @@ public class Themes {
         sThemes.put("blue_greyPrimary;limeAccent", new Theme("blue_greyPrimary", "limeAccent", R.style.Theme_Blue_Grey_Lime));
         sThemes.put("blue_greyPrimary;indigoAccent", new Theme("blue_greyPrimary", "indigoAccent", R.style.Theme_Blue_Grey_Indigo));
         sThemes.put("blue_greyPrimary;cyanAccent", new Theme("blue_greyPrimary", "cyanAccent", R.style.Theme_Blue_Grey_Cyan));
+        sThemes.put("blue_greyPrimary;deep_orangeAccent", new Theme("blue_greyPrimary", "deep_orangeAccent", R.style.Theme_Blue_Grey_Deep_Orange));
         sThemes.put("tealPrimary;defaultAccent", new Theme("tealPrimary", "defaultAccent", R.style.Theme_Teal_Default));
         sThemes.put("tealPrimary;redAccent", new Theme("tealPrimary", "redAccent", R.style.Theme_Teal_Red));
         sThemes.put("tealPrimary;pinkAccent", new Theme("tealPrimary", "pinkAccent", R.style.Theme_Teal_Pink));
@@ -283,6 +295,7 @@ public class Themes {
         sThemes.put("tealPrimary;limeAccent", new Theme("tealPrimary", "limeAccent", R.style.Theme_Teal_Lime));
         sThemes.put("tealPrimary;indigoAccent", new Theme("tealPrimary", "indigoAccent", R.style.Theme_Teal_Indigo));
         sThemes.put("tealPrimary;cyanAccent", new Theme("tealPrimary", "cyanAccent", R.style.Theme_Teal_Cyan));
+        sThemes.put("tealPrimary;deep_orangeAccent", new Theme("tealPrimary", "deep_orangeAccent", R.style.Theme_Teal_Deep_Orange));
         sThemes.put("deep_purplePrimary;defaultAccent", new Theme("deep_purplePrimary", "defaultAccent", R.style.Theme_Deep_Purple_Default));
         sThemes.put("deep_purplePrimary;redAccent", new Theme("deep_purplePrimary", "redAccent", R.style.Theme_Deep_Purple_Red));
         sThemes.put("deep_purplePrimary;pinkAccent", new Theme("deep_purplePrimary", "pinkAccent", R.style.Theme_Deep_Purple_Pink));
@@ -297,6 +310,7 @@ public class Themes {
         sThemes.put("deep_purplePrimary;limeAccent", new Theme("deep_purplePrimary", "limeAccent", R.style.Theme_Deep_Purple_Lime));
         sThemes.put("deep_purplePrimary;indigoAccent", new Theme("deep_purplePrimary", "indigoAccent", R.style.Theme_Deep_Purple_Indigo));
         sThemes.put("deep_purplePrimary;cyanAccent", new Theme("deep_purplePrimary", "cyanAccent", R.style.Theme_Deep_Purple_Cyan));
+        sThemes.put("deep_purplePrimary;deep_orangeAccent", new Theme("deep_purplePrimary", "deep_orangeAccent", R.style.Theme_Deep_Purple_Deep_Orange));
         sThemes.put("limePrimary;defaultAccent", new Theme("limePrimary", "defaultAccent", R.style.Theme_Lime_Default));
         sThemes.put("limePrimary;redAccent", new Theme("limePrimary", "redAccent", R.style.Theme_Lime_Red));
         sThemes.put("limePrimary;pinkAccent", new Theme("limePrimary", "pinkAccent", R.style.Theme_Lime_Pink));
@@ -311,6 +325,7 @@ public class Themes {
         sThemes.put("limePrimary;deep_purpleAccent", new Theme("limePrimary", "deep_purpleAccent", R.style.Theme_Lime_Deep_Purple));
         sThemes.put("limePrimary;indigoAccent", new Theme("limePrimary", "indigoAccent", R.style.Theme_Lime_Indigo));
         sThemes.put("limePrimary;cyanAccent", new Theme("limePrimary", "cyanAccent", R.style.Theme_Lime_Cyan));
+        sThemes.put("limePrimary;deep_orangeAccent", new Theme("limePrimary", "deep_orangeAccent", R.style.Theme_Lime_Deep_Orange));
         sThemes.put("indigoPrimary;defaultAccent", new Theme("indigoPrimary", "defaultAccent", R.style.Theme_Indigo_Default));
         sThemes.put("indigoPrimary;redAccent", new Theme("indigoPrimary", "redAccent", R.style.Theme_Indigo_Red));
         sThemes.put("indigoPrimary;pinkAccent", new Theme("indigoPrimary", "pinkAccent", R.style.Theme_Indigo_Pink));
@@ -325,6 +340,7 @@ public class Themes {
         sThemes.put("indigoPrimary;deep_purpleAccent", new Theme("indigoPrimary", "deep_purpleAccent", R.style.Theme_Indigo_Deep_Purple));
         sThemes.put("indigoPrimary;limeAccent", new Theme("indigoPrimary", "limeAccent", R.style.Theme_Indigo_Lime));
         sThemes.put("indigoPrimary;cyanAccent", new Theme("indigoPrimary", "cyanAccent", R.style.Theme_Indigo_Cyan));
+        sThemes.put("indigoPrimary;deep_orangeAccent", new Theme("indigoPrimary", "deep_orangeAccent", R.style.Theme_Indigo_Deep_Orange));
         sThemes.put("cyanPrimary;defaultAccent", new Theme("cyanPrimary", "defaultAccent", R.style.Theme_Cyan_Default));
         sThemes.put("cyanPrimary;redAccent", new Theme("cyanPrimary", "redAccent", R.style.Theme_Cyan_Red));
         sThemes.put("cyanPrimary;pinkAccent", new Theme("cyanPrimary", "pinkAccent", R.style.Theme_Cyan_Pink));
@@ -339,6 +355,22 @@ public class Themes {
         sThemes.put("cyanPrimary;deep_purpleAccent", new Theme("cyanPrimary", "deep_purpleAccent", R.style.Theme_Cyan_Deep_Purple));
         sThemes.put("cyanPrimary;limeAccent", new Theme("cyanPrimary", "limeAccent", R.style.Theme_Cyan_Lime));
         sThemes.put("cyanPrimary;indigoAccent", new Theme("cyanPrimary", "indigoAccent", R.style.Theme_Cyan_Indigo));
+        sThemes.put("cyanPrimary;deep_orangeAccent", new Theme("cyanPrimary", "deep_orangeAccent", R.style.Theme_Cyan_Deep_Orange));
+        sThemes.put("deep_orangePrimary;defaultAccent", new Theme("deep_orangePrimary", "defaultAccent", R.style.Theme_Deep_Orange_Default));
+        sThemes.put("deep_orangePrimary;redAccent", new Theme("deep_orangePrimary", "redAccent", R.style.Theme_Deep_Orange_Red));
+        sThemes.put("deep_orangePrimary;pinkAccent", new Theme("deep_orangePrimary", "pinkAccent", R.style.Theme_Deep_Orange_Pink));
+        sThemes.put("deep_orangePrimary;purpleAccent", new Theme("deep_orangePrimary", "purpleAccent", R.style.Theme_Deep_Orange_Purple));
+        sThemes.put("deep_orangePrimary;blueAccent", new Theme("deep_orangePrimary", "blueAccent", R.style.Theme_Deep_Orange_Blue));
+        sThemes.put("deep_orangePrimary;greenAccent", new Theme("deep_orangePrimary", "greenAccent", R.style.Theme_Deep_Orange_Green));
+        sThemes.put("deep_orangePrimary;orangeAccent", new Theme("deep_orangePrimary", "orangeAccent", R.style.Theme_Deep_Orange_Orange));
+        sThemes.put("deep_orangePrimary;brownAccent", new Theme("deep_orangePrimary", "brownAccent", R.style.Theme_Deep_Orange_Brown));
+        sThemes.put("deep_orangePrimary;greyAccent", new Theme("deep_orangePrimary", "greyAccent", R.style.Theme_Deep_Orange_Grey));
+        sThemes.put("deep_orangePrimary;blue_greyAccent", new Theme("deep_orangePrimary", "blue_greyAccent", R.style.Theme_Deep_Orange_Blue_Grey));
+        sThemes.put("deep_orangePrimary;tealAccent", new Theme("deep_orangePrimary", "tealAccent", R.style.Theme_Deep_Orange_Teal));
+        sThemes.put("deep_orangePrimary;deep_purpleAccent", new Theme("deep_orangePrimary", "deep_purpleAccent", R.style.Theme_Deep_Orange_Deep_Purple));
+        sThemes.put("deep_orangePrimary;limeAccent", new Theme("deep_orangePrimary", "limeAccent", R.style.Theme_Deep_Orange_Lime));
+        sThemes.put("deep_orangePrimary;indigoAccent", new Theme("deep_orangePrimary", "indigoAccent", R.style.Theme_Deep_Orange_Indigo));
+        sThemes.put("deep_orangePrimary;cyanAccent", new Theme("deep_orangePrimary", "cyanAccent", R.style.Theme_Deep_Orange_Cyan));
 
         sThemesDark.put("defaultPrimary;redAccent", new Theme("defaultPrimary", "redAccent", R.style.Theme_Default_Red_Dark));
         sThemesDark.put("defaultPrimary;pinkAccent", new Theme("defaultPrimary", "pinkAccent", R.style.Theme_Default_Pink_Dark));
@@ -354,6 +386,7 @@ public class Themes {
         sThemesDark.put("defaultPrimary;limeAccent", new Theme("defaultPrimary", "limeAccent", R.style.Theme_Default_Lime_Dark));
         sThemesDark.put("defaultPrimary;indigoAccent", new Theme("defaultPrimary", "indigoAccent", R.style.Theme_Default_Indigo_Dark));
         sThemesDark.put("defaultPrimary;cyanAccent", new Theme("defaultPrimary", "cyanAccent", R.style.Theme_Default_Cyan_Dark));
+        sThemesDark.put("defaultPrimary;deep_orangeAccent", new Theme("defaultPrimary", "deep_orangeAccent", R.style.Theme_Default_Deep_Orange_Dark));
         sThemesDark.put("redPrimary;defaultAccent", new Theme("redPrimary", "defaultAccent", R.style.Theme_Red_Default_Dark));
         sThemesDark.put("redPrimary;pinkAccent", new Theme("redPrimary", "pinkAccent", R.style.Theme_Red_Pink_Dark));
         sThemesDark.put("redPrimary;purpleAccent", new Theme("redPrimary", "purpleAccent", R.style.Theme_Red_Purple_Dark));
@@ -368,6 +401,7 @@ public class Themes {
         sThemesDark.put("redPrimary;limeAccent", new Theme("redPrimary", "limeAccent", R.style.Theme_Red_Lime_Dark));
         sThemesDark.put("redPrimary;indigoAccent", new Theme("redPrimary", "indigoAccent", R.style.Theme_Red_Indigo_Dark));
         sThemesDark.put("redPrimary;cyanAccent", new Theme("redPrimary", "cyanAccent", R.style.Theme_Red_Cyan_Dark));
+        sThemesDark.put("redPrimary;deep_orangeAccent", new Theme("redPrimary", "deep_orangeAccent", R.style.Theme_Red_Deep_Orange_Dark));
         sThemesDark.put("pinkPrimary;defaultAccent", new Theme("pinkPrimary", "defaultAccent", R.style.Theme_Pink_Default_Dark));
         sThemesDark.put("pinkPrimary;redAccent", new Theme("pinkPrimary", "redAccent", R.style.Theme_Pink_Red_Dark));
         sThemesDark.put("pinkPrimary;purpleAccent", new Theme("pinkPrimary", "purpleAccent", R.style.Theme_Pink_Purple_Dark));
@@ -382,6 +416,7 @@ public class Themes {
         sThemesDark.put("pinkPrimary;limeAccent", new Theme("pinkPrimary", "limeAccent", R.style.Theme_Pink_Lime_Dark));
         sThemesDark.put("pinkPrimary;indigoAccent", new Theme("pinkPrimary", "indigoAccent", R.style.Theme_Pink_Indigo_Dark));
         sThemesDark.put("pinkPrimary;cyanAccent", new Theme("pinkPrimary", "cyanAccent", R.style.Theme_Pink_Cyan_Dark));
+        sThemesDark.put("pinkPrimary;deep_orangeAccent", new Theme("pinkPrimary", "deep_orangeAccent", R.style.Theme_Pink_Deep_Orange_Dark));
         sThemesDark.put("purplePrimary;defaultAccent", new Theme("purplePrimary", "defaultAccent", R.style.Theme_Purple_Default_Dark));
         sThemesDark.put("purplePrimary;redAccent", new Theme("purplePrimary", "redAccent", R.style.Theme_Purple_Red_Dark));
         sThemesDark.put("purplePrimary;pinkAccent", new Theme("purplePrimary", "pinkAccent", R.style.Theme_Purple_Pink_Dark));
@@ -396,6 +431,7 @@ public class Themes {
         sThemesDark.put("purplePrimary;limeAccent", new Theme("purplePrimary", "limeAccent", R.style.Theme_Purple_Lime_Dark));
         sThemesDark.put("purplePrimary;indigoAccent", new Theme("purplePrimary", "indigoAccent", R.style.Theme_Purple_Indigo_Dark));
         sThemesDark.put("purplePrimary;cyanAccent", new Theme("purplePrimary", "cyanAccent", R.style.Theme_Purple_Cyan_Dark));
+        sThemesDark.put("purplePrimary;deep_orangeAccent", new Theme("purplePrimary", "deep_orangeAccent", R.style.Theme_Purple_Deep_Orange_Dark));
         sThemesDark.put("bluePrimary;defaultAccent", new Theme("bluePrimary", "defaultAccent", R.style.Theme_Blue_Default_Dark));
         sThemesDark.put("bluePrimary;redAccent", new Theme("bluePrimary", "redAccent", R.style.Theme_Blue_Red_Dark));
         sThemesDark.put("bluePrimary;pinkAccent", new Theme("bluePrimary", "pinkAccent", R.style.Theme_Blue_Pink_Dark));
@@ -410,6 +446,7 @@ public class Themes {
         sThemesDark.put("bluePrimary;limeAccent", new Theme("bluePrimary", "limeAccent", R.style.Theme_Blue_Lime_Dark));
         sThemesDark.put("bluePrimary;indigoAccent", new Theme("bluePrimary", "indigoAccent", R.style.Theme_Blue_Indigo_Dark));
         sThemesDark.put("bluePrimary;cyanAccent", new Theme("bluePrimary", "cyanAccent", R.style.Theme_Blue_Cyan_Dark));
+        sThemesDark.put("bluePrimary;deep_orangeAccent", new Theme("bluePrimary", "deep_orangeAccent", R.style.Theme_Blue_Deep_Orange_Dark));
         sThemesDark.put("greenPrimary;defaultAccent", new Theme("greenPrimary", "defaultAccent", R.style.Theme_Green_Default_Dark));
         sThemesDark.put("greenPrimary;redAccent", new Theme("greenPrimary", "redAccent", R.style.Theme_Green_Red_Dark));
         sThemesDark.put("greenPrimary;pinkAccent", new Theme("greenPrimary", "pinkAccent", R.style.Theme_Green_Pink_Dark));
@@ -424,6 +461,7 @@ public class Themes {
         sThemesDark.put("greenPrimary;limeAccent", new Theme("greenPrimary", "limeAccent", R.style.Theme_Green_Lime_Dark));
         sThemesDark.put("greenPrimary;indigoAccent", new Theme("greenPrimary", "indigoAccent", R.style.Theme_Green_Indigo_Dark));
         sThemesDark.put("greenPrimary;cyanAccent", new Theme("greenPrimary", "cyanAccent", R.style.Theme_Green_Cyan_Dark));
+        sThemesDark.put("greenPrimary;deep_orangeAccent", new Theme("greenPrimary", "deep_orangeAccent", R.style.Theme_Green_Deep_Orange_Dark));
         sThemesDark.put("orangePrimary;defaultAccent", new Theme("orangePrimary", "defaultAccent", R.style.Theme_Orange_Default_Dark));
         sThemesDark.put("orangePrimary;redAccent", new Theme("orangePrimary", "redAccent", R.style.Theme_Orange_Red_Dark));
         sThemesDark.put("orangePrimary;pinkAccent", new Theme("orangePrimary", "pinkAccent", R.style.Theme_Orange_Pink_Dark));
@@ -438,6 +476,7 @@ public class Themes {
         sThemesDark.put("orangePrimary;limeAccent", new Theme("orangePrimary", "limeAccent", R.style.Theme_Orange_Lime_Dark));
         sThemesDark.put("orangePrimary;indigoAccent", new Theme("orangePrimary", "indigoAccent", R.style.Theme_Orange_Indigo_Dark));
         sThemesDark.put("orangePrimary;cyanAccent", new Theme("orangePrimary", "cyanAccent", R.style.Theme_Orange_Cyan_Dark));
+        sThemesDark.put("orangePrimary;deep_orangeAccent", new Theme("orangePrimary", "deep_orangeAccent", R.style.Theme_Orange_Deep_Orange_Dark));
         sThemesDark.put("brownPrimary;defaultAccent", new Theme("brownPrimary", "defaultAccent", R.style.Theme_Brown_Default_Dark));
         sThemesDark.put("brownPrimary;redAccent", new Theme("brownPrimary", "redAccent", R.style.Theme_Brown_Red_Dark));
         sThemesDark.put("brownPrimary;pinkAccent", new Theme("brownPrimary", "pinkAccent", R.style.Theme_Brown_Pink_Dark));
@@ -452,6 +491,7 @@ public class Themes {
         sThemesDark.put("brownPrimary;limeAccent", new Theme("brownPrimary", "limeAccent", R.style.Theme_Brown_Lime_Dark));
         sThemesDark.put("brownPrimary;indigoAccent", new Theme("brownPrimary", "indigoAccent", R.style.Theme_Brown_Indigo_Dark));
         sThemesDark.put("brownPrimary;cyanAccent", new Theme("brownPrimary", "cyanAccent", R.style.Theme_Brown_Cyan_Dark));
+        sThemesDark.put("brownPrimary;deep_orangeAccent", new Theme("brownPrimary", "deep_orangeAccent", R.style.Theme_Brown_Deep_Orange_Dark));
         sThemesDark.put("greyPrimary;defaultAccent", new Theme("greyPrimary", "defaultAccent", R.style.Theme_Grey_Default_Dark));
         sThemesDark.put("greyPrimary;redAccent", new Theme("greyPrimary", "redAccent", R.style.Theme_Grey_Red_Dark));
         sThemesDark.put("greyPrimary;pinkAccent", new Theme("greyPrimary", "pinkAccent", R.style.Theme_Grey_Pink_Dark));
@@ -466,6 +506,7 @@ public class Themes {
         sThemesDark.put("greyPrimary;limeAccent", new Theme("greyPrimary", "limeAccent", R.style.Theme_Grey_Lime_Dark));
         sThemesDark.put("greyPrimary;indigoAccent", new Theme("greyPrimary", "indigoAccent", R.style.Theme_Grey_Indigo_Dark));
         sThemesDark.put("greyPrimary;cyanAccent", new Theme("greyPrimary", "cyanAccent", R.style.Theme_Grey_Cyan_Dark));
+        sThemesDark.put("greyPrimary;deep_orangeAccent", new Theme("greyPrimary", "deep_orangeAccent", R.style.Theme_Grey_Deep_Orange_Dark));
         sThemesDark.put("blue_greyPrimary;defaultAccent", new Theme("blue_greyPrimary", "defaultAccent", R.style.Theme_Blue_Grey_Default_Dark));
         sThemesDark.put("blue_greyPrimary;redAccent", new Theme("blue_greyPrimary", "redAccent", R.style.Theme_Blue_Grey_Red_Dark));
         sThemesDark.put("blue_greyPrimary;pinkAccent", new Theme("blue_greyPrimary", "pinkAccent", R.style.Theme_Blue_Grey_Pink_Dark));
@@ -480,6 +521,7 @@ public class Themes {
         sThemesDark.put("blue_greyPrimary;limeAccent", new Theme("blue_greyPrimary", "limeAccent", R.style.Theme_Blue_Grey_Lime_Dark));
         sThemesDark.put("blue_greyPrimary;indigoAccent", new Theme("blue_greyPrimary", "indigoAccent", R.style.Theme_Blue_Grey_Indigo_Dark));
         sThemesDark.put("blue_greyPrimary;cyanAccent", new Theme("blue_greyPrimary", "cyanAccent", R.style.Theme_Blue_Grey_Cyan_Dark));
+        sThemesDark.put("blue_greyPrimary;deep_orangeAccent", new Theme("blue_greyPrimary", "deep_orangeAccent", R.style.Theme_Blue_Grey_Deep_Orange_Dark));
         sThemesDark.put("tealPrimary;defaultAccent", new Theme("tealPrimary", "defaultAccent", R.style.Theme_Teal_Default_Dark));
         sThemesDark.put("tealPrimary;redAccent", new Theme("tealPrimary", "redAccent", R.style.Theme_Teal_Red_Dark));
         sThemesDark.put("tealPrimary;pinkAccent", new Theme("tealPrimary", "pinkAccent", R.style.Theme_Teal_Pink_Dark));
@@ -494,6 +536,7 @@ public class Themes {
         sThemesDark.put("tealPrimary;limeAccent", new Theme("tealPrimary", "limeAccent", R.style.Theme_Teal_Lime_Dark));
         sThemesDark.put("tealPrimary;indigoAccent", new Theme("tealPrimary", "indigoAccent", R.style.Theme_Teal_Indigo_Dark));
         sThemesDark.put("tealPrimary;cyanAccent", new Theme("tealPrimary", "cyanAccent", R.style.Theme_Teal_Cyan_Dark));
+        sThemesDark.put("tealPrimary;deep_orangeAccent", new Theme("tealPrimary", "deep_orangeAccent", R.style.Theme_Teal_Deep_Orange_Dark));
         sThemesDark.put("deep_purplePrimary;defaultAccent", new Theme("deep_purplePrimary", "defaultAccent", R.style.Theme_Deep_Purple_Default_Dark));
         sThemesDark.put("deep_purplePrimary;redAccent", new Theme("deep_purplePrimary", "redAccent", R.style.Theme_Deep_Purple_Red_Dark));
         sThemesDark.put("deep_purplePrimary;pinkAccent", new Theme("deep_purplePrimary", "pinkAccent", R.style.Theme_Deep_Purple_Pink_Dark));
@@ -508,6 +551,7 @@ public class Themes {
         sThemesDark.put("deep_purplePrimary;limeAccent", new Theme("deep_purplePrimary", "limeAccent", R.style.Theme_Deep_Purple_Lime_Dark));
         sThemesDark.put("deep_purplePrimary;indigoAccent", new Theme("deep_purplePrimary", "indigoAccent", R.style.Theme_Deep_Purple_Indigo_Dark));
         sThemesDark.put("deep_purplePrimary;cyanAccent", new Theme("deep_purplePrimary", "cyanAccent", R.style.Theme_Deep_Purple_Cyan_Dark));
+        sThemesDark.put("deep_purplePrimary;deep_orangeAccent", new Theme("deep_purplePrimary", "deep_orangeAccent", R.style.Theme_Deep_Purple_Deep_Orange_Dark));
         sThemesDark.put("limePrimary;defaultAccent", new Theme("limePrimary", "defaultAccent", R.style.Theme_Lime_Default_Dark));
         sThemesDark.put("limePrimary;redAccent", new Theme("limePrimary", "redAccent", R.style.Theme_Lime_Red_Dark));
         sThemesDark.put("limePrimary;pinkAccent", new Theme("limePrimary", "pinkAccent", R.style.Theme_Lime_Pink_Dark));
@@ -522,6 +566,7 @@ public class Themes {
         sThemesDark.put("limePrimary;deep_purpleAccent", new Theme("limePrimary", "deep_purpleAccent", R.style.Theme_Lime_Deep_Purple_Dark));
         sThemesDark.put("limePrimary;indigoAccent", new Theme("limePrimary", "indigoAccent", R.style.Theme_Lime_Indigo_Dark));
         sThemesDark.put("limePrimary;cyanAccent", new Theme("limePrimary", "cyanAccent", R.style.Theme_Lime_Cyan_Dark));
+        sThemesDark.put("limePrimary;deep_orangeAccent", new Theme("limePrimary", "deep_orangeAccent", R.style.Theme_Lime_Deep_Orange_Dark));
         sThemesDark.put("indigoPrimary;defaultAccent", new Theme("indigoPrimary", "defaultAccent", R.style.Theme_Indigo_Default_Dark));
         sThemesDark.put("indigoPrimary;redAccent", new Theme("indigoPrimary", "redAccent", R.style.Theme_Indigo_Red_Dark));
         sThemesDark.put("indigoPrimary;pinkAccent", new Theme("indigoPrimary", "pinkAccent", R.style.Theme_Indigo_Pink_Dark));
@@ -536,6 +581,7 @@ public class Themes {
         sThemesDark.put("indigoPrimary;deep_purpleAccent", new Theme("indigoPrimary", "deep_purpleAccent", R.style.Theme_Indigo_Deep_Purple_Dark));
         sThemesDark.put("indigoPrimary;limeAccent", new Theme("indigoPrimary", "limeAccent", R.style.Theme_Indigo_Lime_Dark));
         sThemesDark.put("indigoPrimary;cyanAccent", new Theme("indigoPrimary", "cyanAccent", R.style.Theme_Indigo_Cyan_Dark));
+        sThemesDark.put("indigoPrimary;deep_orangeAccent", new Theme("indigoPrimary", "deep_orangeAccent", R.style.Theme_Indigo_Deep_Orange_Dark));
         sThemesDark.put("cyanPrimary;defaultAccent", new Theme("cyanPrimary", "defaultAccent", R.style.Theme_Cyan_Default_Dark));
         sThemesDark.put("cyanPrimary;redAccent", new Theme("cyanPrimary", "redAccent", R.style.Theme_Cyan_Red_Dark));
         sThemesDark.put("cyanPrimary;pinkAccent", new Theme("cyanPrimary", "pinkAccent", R.style.Theme_Cyan_Pink_Dark));
@@ -550,5 +596,21 @@ public class Themes {
         sThemesDark.put("cyanPrimary;deep_purpleAccent", new Theme("cyanPrimary", "deep_purpleAccent", R.style.Theme_Cyan_Deep_Purple_Dark));
         sThemesDark.put("cyanPrimary;limeAccent", new Theme("cyanPrimary", "limeAccent", R.style.Theme_Cyan_Lime_Dark));
         sThemesDark.put("cyanPrimary;indigoAccent", new Theme("cyanPrimary", "indigoAccent", R.style.Theme_Cyan_Indigo_Dark));
+        sThemesDark.put("cyanPrimary;deep_orangeAccent", new Theme("cyanPrimary", "deep_orangeAccent", R.style.Theme_Cyan_Deep_Orange_Dark));
+        sThemesDark.put("deep_orangePrimary;defaultAccent", new Theme("deep_orangePrimary", "defaultAccent", R.style.Theme_Deep_Orange_Default_Dark));
+        sThemesDark.put("deep_orangePrimary;redAccent", new Theme("deep_orangePrimary", "redAccent", R.style.Theme_Deep_Orange_Red_Dark));
+        sThemesDark.put("deep_orangePrimary;pinkAccent", new Theme("deep_orangePrimary", "pinkAccent", R.style.Theme_Deep_Orange_Pink_Dark));
+        sThemesDark.put("deep_orangePrimary;purpleAccent", new Theme("deep_orangePrimary", "purpleAccent", R.style.Theme_Deep_Orange_Purple_Dark));
+        sThemesDark.put("deep_orangePrimary;blueAccent", new Theme("deep_orangePrimary", "blueAccent", R.style.Theme_Deep_Orange_Blue_Dark));
+        sThemesDark.put("deep_orangePrimary;greenAccent", new Theme("deep_orangePrimary", "greenAccent", R.style.Theme_Deep_Orange_Green_Dark));
+        sThemesDark.put("deep_orangePrimary;orangeAccent", new Theme("deep_orangePrimary", "orangeAccent", R.style.Theme_Deep_Orange_Orange_Dark));
+        sThemesDark.put("deep_orangePrimary;brownAccent", new Theme("deep_orangePrimary", "brownAccent", R.style.Theme_Deep_Orange_Brown_Dark));
+        sThemesDark.put("deep_orangePrimary;greyAccent", new Theme("deep_orangePrimary", "greyAccent", R.style.Theme_Deep_Orange_Grey_Dark));
+        sThemesDark.put("deep_orangePrimary;blue_greyAccent", new Theme("deep_orangePrimary", "blue_greyAccent", R.style.Theme_Deep_Orange_Blue_Grey_Dark));
+        sThemesDark.put("deep_orangePrimary;tealAccent", new Theme("deep_orangePrimary", "tealAccent", R.style.Theme_Deep_Orange_Teal_Dark));
+        sThemesDark.put("deep_orangePrimary;deep_purpleAccent", new Theme("deep_orangePrimary", "deep_purpleAccent", R.style.Theme_Deep_Orange_Deep_Purple_Dark));
+        sThemesDark.put("deep_orangePrimary;limeAccent", new Theme("deep_orangePrimary", "limeAccent", R.style.Theme_Deep_Orange_Lime_Dark));
+        sThemesDark.put("deep_orangePrimary;indigoAccent", new Theme("deep_orangePrimary", "indigoAccent", R.style.Theme_Deep_Orange_Indigo_Dark));
+        sThemesDark.put("deep_orangePrimary;cyanAccent", new Theme("deep_orangePrimary", "cyanAccent", R.style.Theme_Deep_Orange_Cyan_Dark));
     }
 }

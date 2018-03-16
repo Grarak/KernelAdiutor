@@ -8,4 +8,5 @@
     android:layout_marginRight="10dp"
     android:clickable="false"
     android:focusable="false"
+    app:bordercolor="?attr/colorAccent"
     app:circlecolor="?attr/colorPrimary" />

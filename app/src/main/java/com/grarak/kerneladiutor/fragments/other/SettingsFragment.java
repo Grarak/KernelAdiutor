@@ -434,11 +434,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     private void colorDialog(boolean primaryColor) {
         mColorSelection = -1;
-        List<String> colors = primaryColor ? Themes.sPrimaryColors : Themes.sAccentColors;
-        int selection = colors.indexOf(primaryColor ?
-                Themes.getPrimaryColor(getActivity())
-                : Themes.getAccentColor(getActivity()));
+        List<String> colors = new ArrayList<>(primaryColor ?
+                Themes.sPrimaryColors : Themes.sAccentColors);
+        String counterPartColor = primaryColor ?
+                Themes.getAccentColor(getActivity()) : Themes.getPrimaryColor(getActivity());
+        String counterPartColorName = counterPartColor.replaceAll("[A-Z].+", "");
+        for (int i = 0; i < colors.size(); i++) {
+            if (colors.get(i).contains(counterPartColorName)) {
+                colors.remove(i);
+                break;
+            }
+        }
 
+        int selection = colors.indexOf(primaryColor ?
+                Themes.getPrimaryColor(getActivity()) : Themes.getAccentColor(getActivity()));
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
