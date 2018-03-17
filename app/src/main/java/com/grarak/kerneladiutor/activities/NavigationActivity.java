@@ -102,7 +102,7 @@ import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutor.utils.tools.Backup;
 import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
-import com.grarak.kerneladiutor.views.AdNativeExpress;
+import com.grarak.kerneladiutor.views.AdLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -323,7 +323,7 @@ public class NavigationActivity extends BaseActivity
             mAdsFetcher = new WebpageReader(this, new WebpageReader.WebpageListener() {
                 @Override
                 public void onSuccess(String url, String raw, CharSequence html) {
-                    AdNativeExpress.GHAds ghAds = new AdNativeExpress.GHAds(raw);
+                    AdLayout.GHAds ghAds = new AdLayout.GHAds(raw);
                     if (ghAds.readable()) {
                         ghAds.cache(NavigationActivity.this);
                         Fragment fragment = getFragment(mSelection);
@@ -337,7 +337,7 @@ public class NavigationActivity extends BaseActivity
                 public void onFailure(String url) {
                 }
             });
-            mAdsFetcher.get(AdNativeExpress.ADS_FETCH);
+            mAdsFetcher.get(AdLayout.ADS_FETCH);
         }
     }
 

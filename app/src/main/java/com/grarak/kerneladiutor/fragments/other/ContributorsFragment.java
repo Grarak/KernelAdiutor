@@ -64,8 +64,8 @@ public class ContributorsFragment extends RecyclerViewFragment {
     protected void postInit() {
         super.postInit();
 
-        showProgress();
         if (mWebpageReader == null) {
+            showProgress();
             mWebpageReader = new WebpageReader(getActivity(), new WebpageReader.WebpageListener() {
                 @Override
                 public void onSuccess(String url, String raw, CharSequence html) {
