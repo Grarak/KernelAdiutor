@@ -364,3 +364,45 @@
   license: The Apache Software License, Version 2.0
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
   url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.google.android.gms:play-services-base:+
+  name: play-services-base
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-base:+
+  name: play-services-auth-base
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-base-license:+
+  name: play-services-auth-base-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-api-phone:+
+  name: play-services-auth-api-phone
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-api-phone-license:+
+  name: play-services-auth-api-phone-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth:+
+  name: play-services-auth
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-base-license:+
+  name: play-services-base-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
