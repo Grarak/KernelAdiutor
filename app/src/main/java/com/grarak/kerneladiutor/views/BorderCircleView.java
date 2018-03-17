@@ -75,9 +75,13 @@ public class BorderCircleView extends FrameLayout {
         setWillNotDraw(false);
     }
 
-    @Override
-    public void setBackgroundColor(int color) {
+    public void setCircleColor(int color) {
         mPaint.setColor(color);
+        invalidate();
+    }
+
+    public void setBorderColor(int color) {
+        mPaintBorder.setColor(color);
         invalidate();
     }
 

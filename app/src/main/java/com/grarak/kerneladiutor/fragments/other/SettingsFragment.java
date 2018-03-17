@@ -468,8 +468,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
             BorderCircleView circle = new BorderCircleView(getActivity());
             circle.setChecked(i == selection);
-            circle.setBackgroundColor(ContextCompat.getColor(getActivity(),
+            circle.setCircleColor(ContextCompat.getColor(getActivity(),
                     Themes.getColor(colors.get(i), getActivity())));
+            circle.setBorderColor(ContextCompat.getColor(getActivity(),
+                    Themes.getColor(counterPartColor, getActivity())));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
             int margin = (int) getResources().getDimension(R.dimen.color_dialog_margin);

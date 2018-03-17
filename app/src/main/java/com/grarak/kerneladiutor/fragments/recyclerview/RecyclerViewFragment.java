@@ -910,6 +910,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         }
     }
 
+    public void setViewPagerBackgroundColor(int color) {
+        mViewPager.setBackgroundColor(color);
+    }
+
     @Override
     public boolean onBackPressed() {
         if (mForegroundParent != null

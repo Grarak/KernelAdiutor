@@ -87,6 +87,7 @@ public class OverallFragment extends RecyclerViewFragment {
         mGPUFreq = GPUFreq.getInstance();
 
         addViewPagerFragment(new CPUUsageFragment());
+        setViewPagerBackgroundColor(0);
     }
 
     @Override
