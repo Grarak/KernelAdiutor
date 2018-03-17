@@ -30,6 +30,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * Created by willi on 08.07.16.
  */
@@ -64,93 +66,74 @@ public class DownloadTask {
 
         new File(path).getParentFile().mkdirs();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                InputStream input = null;
-                FileOutputStream fileOutput = null;
+        new Thread(() -> {
+            InputStream input = null;
+            FileOutputStream fileOutput = null;
 
-                try {
-                    mConnection = (HttpURLConnection) new URL(link).openConnection();
-                    mConnection.connect();
+            try {
+                mConnection = (HttpsURLConnection) new URL(link).openConnection();
+                mConnection.connect();
 
-                    if (mConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                        failure(link, path);
-                        releaseWakelock();
-                        return;
-                    }
-
-                    int totalSize = mConnection.getContentLength();
-                    input = mConnection.getInputStream();
-                    fileOutput = new FileOutputStream(path);
-
-                    byte data[] = new byte[4096];
-                    int currentSize = 0;
-                    int count;
-                    while (true) {
-                        if (!mPause) {
-                            if ((count = input.read(data)) != -1) {
-                                currentSize += count;
-                                if (totalSize > 0) {
-                                    final int cs = currentSize;
-                                    final int ts = totalSize;
-                                    mActivity.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (!mActivity.isFinishing()) {
-                                                onDownloadListener.onUpdate(link, cs, ts);
-                                            }
-                                        }
-                                    });
-                                }
-                                fileOutput.write(data, 0, count);
-                            } else {
-                                success(link, path);
-                                break;
-                            }
-                        }
-                    }
-                } catch (IOException ignored) {
-                    if (mCancelled) {
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                onDownloadListener.onCancel(link);
-                            }
-                        });
-                    } else {
-                        failure(link, path);
-                    }
-                    mCancelled = false;
-                } finally {
-                    try {
-                        if (fileOutput != null) fileOutput.close();
-                        if (input != null) input.close();
-                    } catch (IOException ignored) {
-                    }
+                if (mConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    failure(link, path);
+                    releaseWakelock();
+                    return;
                 }
 
-                releaseWakelock();
+                int totalSize = mConnection.getContentLength();
+                input = mConnection.getInputStream();
+                fileOutput = new FileOutputStream(path);
+
+                byte data[] = new byte[4096];
+                int currentSize = 0;
+                int count;
+                while (true) {
+                    if (!mPause) {
+                        if ((count = input.read(data)) != -1) {
+                            currentSize += count;
+                            if (totalSize > 0) {
+                                final int cs = currentSize;
+                                final int ts = totalSize;
+                                mActivity.runOnUiThread(() -> {
+                                    if (!mActivity.isFinishing()) {
+                                        onDownloadListener.onUpdate(link, cs, ts);
+                                    }
+                                });
+                            }
+                            fileOutput.write(data, 0, count);
+                        } else {
+                            success(link, path);
+                            break;
+                        }
+                    }
+                }
+            } catch (IOException ignored) {
+                if (mCancelled) {
+                    mActivity.runOnUiThread(() -> onDownloadListener.onCancel(link));
+                } else {
+                    failure(link, path);
+                }
+                mCancelled = false;
+            } finally {
+                try {
+                    if (fileOutput != null) fileOutput.close();
+                    if (input != null) input.close();
+                } catch (IOException ignored) {
+                }
             }
+
+            releaseWakelock();
         }).start();
     }
 
     private void success(final String url, final String path) {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                onDownloadListener.onSuccess(url, path);
-            }
-        });
+        mActivity.runOnUiThread(() -> onDownloadListener.onSuccess(url, path));
     }
 
     private void failure(final String url, final String path) {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                onDownloadListener.onFailure(url);
-                new File(path).delete();
-            }
+        mActivity.runOnUiThread(() -> {
+            onDownloadListener.onFailure(url);
+            new File(path).delete();
         });
     }
 
@@ -164,12 +147,7 @@ public class DownloadTask {
 
     public void cancel() {
         mCancelled = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mConnection.disconnect();
-            }
-        }).start();
+        new Thread(() -> mConnection.disconnect()).start();
     }
 
     private void releaseWakelock() {

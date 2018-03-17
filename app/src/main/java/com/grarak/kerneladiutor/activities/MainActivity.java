@@ -36,12 +36,15 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.grarak.kerneladiutor.BuildConfig;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.services.profile.Tile;
-import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.AppSettings;
+import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.battery.Battery;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
@@ -235,6 +238,13 @@ public class MainActivity extends BaseActivity {
             Vibration.getInstance();
             Voltage.getInstance();
             Wake.supported();
+
+            try {
+                ProviderInstaller.installIfNeeded(activity);
+            } catch (GooglePlayServicesNotAvailableException
+                    | GooglePlayServicesRepairableException e) {
+                e.printStackTrace();
+            }
 
             if (!BuildConfig.DEBUG) {
                 // Send SoC type to analytics to collect stats
