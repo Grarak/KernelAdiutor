@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2018 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -79,7 +79,9 @@ public class AdLayout extends LinearLayout {
     public AdLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        LayoutInflater.from(context).inflate(R.layout.ad_native_express_view, this);
+        setOrientation(VERTICAL);
+
+        LayoutInflater.from(context).inflate(R.layout.ad_layout_view, this);
         FrameLayout mAdLayout = findViewById(R.id.ad_layout);
         mProgress = findViewById(R.id.progress);
         mAdText = findViewById(R.id.ad_text);
@@ -97,7 +99,9 @@ public class AdLayout extends LinearLayout {
                 super.onAdLoaded();
                 mAdFailedLoading = false;
                 mProgress.setVisibility(GONE);
-                mAdLayout.addView(mAdView);
+                if (mAdView.getParent() == null) {
+                    mAdLayout.addView(mAdView);
+                }
             }
 
             @Override
