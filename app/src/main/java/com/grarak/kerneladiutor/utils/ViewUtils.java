@@ -59,20 +59,13 @@ public class ViewUtils {
 
     public static void showDialog(FragmentManager manager, DialogFragment fragment) {
         FragmentTransaction ft = manager.beginTransaction();
-        Fragment prev = manager.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
         fragment.show(ft, "dialog");
     }
 
     public static void dismissDialog(FragmentManager manager) {
-        FragmentTransaction ft = manager.beginTransaction();
         Fragment fragment = manager.findFragmentByTag("dialog");
-        if (fragment != null) {
-            ft.remove(fragment).commit();
+        if (fragment instanceof DialogFragment) {
+            ((DialogFragment) fragment).dismiss();
         }
     }
 

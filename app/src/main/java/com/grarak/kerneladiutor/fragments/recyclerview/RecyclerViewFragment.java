@@ -158,7 +158,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mCirclePageIndicator = mRootView.findViewById(R.id.indicator);
         resizeBanner();
         mViewPagerParent.setVisibility(View.INVISIBLE);
-        ViewUtils.dismissDialog(getChildFragmentManager());
 
         mProgress = mRootView.findViewById(R.id.progress);
 
@@ -702,7 +701,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         if (mSlideInOutAnimation != null) return;
 
         view.setVisibility(View.VISIBLE);
-        mSlideInOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_bottom);
+        mSlideInOutAnimation = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
         mSlideInOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -723,7 +722,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     public void hideViewAnimation(View view) {
         if (mSlideInOutAnimation != null) return;
 
-        mSlideInOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out_top);
+        mSlideInOutAnimation = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out);
         mSlideInOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -871,6 +870,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     void dismissDialog(boolean force) {
         if (!mDialogForceShow || force) {
             hideViewAnimation(mDialogParent);
+            mDialogForceShow = false;
         }
     }
 
@@ -951,6 +951,12 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         for (RecyclerViewItem item : mItems) {
             item.onPause();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        ViewUtils.dismissDialog(getChildFragmentManager());
+        super.onSaveInstanceState(outState);
     }
 
     private Runnable mScheduler = () -> {

@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         RecyclerViewItem item = mItems.get(position);
         item.onCreateView(holder.itemView);
     }
@@ -64,9 +64,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        RecyclerViewItem item = mItems.get(viewType);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+        RecyclerViewItem item = mItems.get(position);
         View view;
         if (item.cacheable()) {
             if (mViews.containsKey(item)) {
@@ -76,8 +75,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .inflate(item.getLayoutRes(), parent, false));
             }
         } else {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(item.getLayoutRes(), parent, false);
+            try {
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(item.getLayoutRes(), parent, false);
+            } catch (Exception ignored) {
+                throw new IllegalArgumentException("Couldn't inflate " + item.getClass().getSimpleName());
+            }
         }
         ViewGroup viewGroup = (ViewGroup) view.getParent();
         if (viewGroup != null) {
@@ -93,7 +96,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             cardView.addView(view);
             view = cardView;
         }
-        if (viewType == item.getLayoutRes()) {
+        if (position == 0) {
             mFirstItem = view;
         }
         item.setOnViewChangeListener(mOnViewChangedListener);

@@ -19,7 +19,7 @@
  */
 package com.grarak.kerneladiutor.utils.root;
 
-import android.util.Log;
+import com.grarak.kerneladiutor.utils.Log;
 
 import com.grarak.kerneladiutor.utils.Utils;
 

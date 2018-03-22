@@ -24,10 +24,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.grarak.kerneladiutor.database.Settings;
 import com.grarak.kerneladiutor.services.monitor.Monitor;
+import com.grarak.kerneladiutor.utils.Log;
 
 import java.util.LinkedHashMap;
 import java.util.List;

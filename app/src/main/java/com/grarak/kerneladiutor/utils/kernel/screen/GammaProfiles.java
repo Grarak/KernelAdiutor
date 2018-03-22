@@ -19,7 +19,7 @@
  */
 package com.grarak.kerneladiutor.utils.kernel.screen;
 
-import android.util.Log;
+import com.grarak.kerneladiutor.utils.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;

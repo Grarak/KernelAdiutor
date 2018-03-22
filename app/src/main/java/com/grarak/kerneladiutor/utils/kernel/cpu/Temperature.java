@@ -20,7 +20,7 @@
 package com.grarak.kerneladiutor.utils.kernel.cpu;
 
 import android.content.Context;
-import android.util.Log;
+import com.grarak.kerneladiutor.utils.Log;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.Device;
