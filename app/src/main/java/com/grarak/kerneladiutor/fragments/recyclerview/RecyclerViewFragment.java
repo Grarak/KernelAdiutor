@@ -933,8 +933,8 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         super.onResume();
         if (mPoolExecutor == null) {
             mPoolExecutor = new ScheduledThreadPoolExecutor(1);
-            mPoolExecutor.scheduleWithFixedDelay(mScheduler, 0, 500,
-                    TimeUnit.MILLISECONDS);
+            mPoolExecutor.scheduleWithFixedDelay(mScheduler, 1,
+                    1, TimeUnit.SECONDS);
         }
         for (RecyclerViewItem item : mItems) {
             item.onResume();

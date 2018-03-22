@@ -65,27 +65,27 @@ public class ApplyOnBoot {
         void onFinish();
     }
 
-    public static boolean apply(final Context context, final ApplyOnBootListener listener) {
+    public static boolean apply(ApplyOnBootService service, final ApplyOnBootListener listener) {
         if (!AppSettings.getBoolean(ApplyOnBootFragment
-                .getAssignment(CPUHotplugFragment.class), false, context)) {
-            AppSettings.resetCoreCtlMinCpusBig(context);
+                .getAssignment(CPUHotplugFragment.class), false, service)) {
+            AppSettings.resetCoreCtlMinCpusBig(service);
         }
 
         boolean enabled = false;
-        final Settings settings = new Settings(context);
-        Controls controls = new Controls(context);
+        final Settings settings = new Settings(service);
+        Controls controls = new Controls(service);
 
         final HashMap<String, Boolean> mCategoryEnabled = new HashMap<>();
         final HashMap<String, String> mCustomControls = new HashMap<>();
         final List<String> mProfiles = new ArrayList<>();
 
-        List<Profiles.ProfileItem> profiles = new Profiles(context).getAllProfiles();
-        Tile.publishProfileTile(profiles, context);
+        List<Profiles.ProfileItem> profiles = new Profiles(service).getAllProfiles();
+        Tile.publishProfileTile(profiles, service);
 
         for (Settings.SettingsItem item : settings.getAllSettings()) {
             if (!mCategoryEnabled.containsKey(item.getCategory())) {
                 boolean categoryEnabled = AppSettings.getBoolean(
-                        item.getCategory(), false, context);
+                        item.getCategory(), false, service);
                 mCategoryEnabled.put(item.getCategory(), categoryEnabled);
                 if (!enabled && categoryEnabled) {
                     enabled = true;
@@ -105,36 +105,33 @@ public class ApplyOnBoot {
             }
         }
 
-        final boolean initdEnabled = AppSettings.isInitdOnBoot(context);
+        final boolean initdEnabled = AppSettings.isInitdOnBoot(service);
         enabled = enabled || mCustomControls.size() > 0 || mProfiles.size() > 0 || initdEnabled;
         if (!enabled) {
             return false;
         }
 
-        final int seconds = AppSettings.getApplyOnBootDelay(context);
-        final boolean hideNotification = AppSettings.isApplyOnBootHide(context);
+        final int seconds = AppSettings.getApplyOnBootDelay(service);
+        final boolean hideNotification = AppSettings.isApplyOnBootHide(service);
         final boolean confirmationNotification = AppSettings
-                .isApplyOnBootConfirmationNotification(context);
-        final boolean toast = AppSettings.isApplyOnBootToast(context);
-        final boolean script = AppSettings.isApplyOnBootScript(context);
+                .isApplyOnBootConfirmationNotification(service);
+        final boolean toast = AppSettings.isApplyOnBootToast(service);
+        final boolean script = AppSettings.isApplyOnBootScript(service);
 
-        PendingIntent cancelIntent = PendingIntent.getBroadcast(context, 1,
-                new Intent(context, CancelReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent cancelIntent = PendingIntent.getBroadcast(service, 1,
+                new Intent(service, CancelReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent launchIntent = new Intent(context, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, launchIntent, 0);
-
-        final NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent launchIntent = new Intent(service, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(service, 0, launchIntent, 0);
 
         final NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(context, ApplyOnBootService.CHANNEL_ID);
+                new NotificationCompat.Builder(service, ApplyOnBootService.CHANNEL_ID);
 
         if (!hideNotification) {
-            builder.setContentTitle(context.getString(R.string.app_name))
-                    .setContentText(context.getString(R.string.apply_on_boot_text, seconds))
+            builder.setContentTitle(service.getString(R.string.app_name))
+                    .setContentText(service.getString(R.string.apply_on_boot_text, seconds))
                     .setSmallIcon(R.mipmap.ic_launcher)
-                    .addAction(0, context.getString(R.string.cancel), cancelIntent)
+                    .addAction(0, service.getString(R.string.cancel), cancelIntent)
                     .setOngoing(true)
                     .setWhen(0);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -143,9 +140,9 @@ public class ApplyOnBoot {
         }
 
         final NotificationCompat.Builder builderComplete =
-                new NotificationCompat.Builder(context, ApplyOnBootService.CHANNEL_ID);
+                new NotificationCompat.Builder(service, ApplyOnBootService.CHANNEL_ID);
         if (!hideNotification) {
-            builderComplete.setContentTitle(context.getString(R.string.app_name))
+            builderComplete.setContentTitle(service.getString(R.string.app_name))
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true);
@@ -162,9 +159,9 @@ public class ApplyOnBoot {
                         if (sCancel) {
                             break;
                         }
-                        builder.setContentText(context.getString(R.string.apply_on_boot_text, seconds - i));
+                        builder.setContentText(service.getString(R.string.apply_on_boot_text, seconds - i));
                         builder.setProgress(seconds, i, false);
-                        notificationManager.notify(NotificationId.APPLY_ON_BOOT, builder.build());
+                        service.startForeground(NotificationId.APPLY_ON_BOOT, builder.build());
                     }
                     try {
                         Thread.sleep(1000);
@@ -173,11 +170,13 @@ public class ApplyOnBoot {
                     }
                 }
                 if (!hideNotification) {
-                    notificationManager.cancel(NotificationId.APPLY_ON_BOOT);
                     if (confirmationNotification) {
-                        builderComplete.setContentText(context.getString(sCancel ? R.string.apply_on_boot_canceled :
+                        builderComplete.setContentText(service.getString(sCancel ? R.string.apply_on_boot_canceled :
                                 R.string.apply_on_boot_complete));
-                        notificationManager.notify(NotificationId.APPLY_ON_BOOT_CONFIRMATION, builderComplete.build());
+
+                        NotificationManager manager = (NotificationManager)
+                                service.getSystemService(Context.NOTIFICATION_SERVICE);
+                        manager.notify(NotificationId.APPLY_ON_BOOT_CONFIRMATION, builderComplete.build());
                     }
 
                     if (sCancel) {
@@ -208,7 +207,7 @@ public class ApplyOnBoot {
                                 && ((applyCpu =
                                 new CPUFreq.ApplyCpu(setting.substring(1))).toString() != null)) {
                             synchronized (this) {
-                                commands.addAll(getApplyCpu(applyCpu, su, context));
+                                commands.addAll(getApplyCpu(applyCpu, su, service));
                             }
                         } else {
                             commands.add(setting);
@@ -246,7 +245,7 @@ public class ApplyOnBoot {
                             && ((applyCpu =
                             new CPUFreq.ApplyCpu(command.substring(1))).toString() != null)) {
                         synchronized (this) {
-                            profileCommands.addAll(getApplyCpu(applyCpu, su, context));
+                            profileCommands.addAll(getApplyCpu(applyCpu, su, service));
                         }
                     }
                     profileCommands.add(command);
@@ -272,7 +271,7 @@ public class ApplyOnBoot {
                 su.close();
 
                 if (toast) {
-                    handler.post(() -> Utils.toast(R.string.apply_on_boot_complete, context));
+                    handler.post(() -> Utils.toast(R.string.apply_on_boot_complete, service));
                 }
 
                 listener.onFinish();

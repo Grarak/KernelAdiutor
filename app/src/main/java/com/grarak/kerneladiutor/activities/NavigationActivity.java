@@ -83,6 +83,7 @@ import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadsFragment;
 import com.grarak.kerneladiutor.services.monitor.Monitor;
 import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Device;
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.WebpageReader;
@@ -113,6 +114,8 @@ import java.util.PriorityQueue;
 
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = NavigationActivity.class.getSimpleName();
 
     private static final String PACKAGE = NavigationActivity.class.getCanonicalName();
     public static final String INTENT_SECTION = PACKAGE + ".INTENT.SECTION";
@@ -516,8 +519,11 @@ public class NavigationActivity extends BaseActivity
         setShortcuts();
 
         mDrawer.postDelayed(()
-                        -> getSupportFragmentManager().beginTransaction().replace(
-                R.id.content_frame, fragment, res + "_key").commitAllowingStateLoss(),
+                        -> {
+                    Log.crashlyticsI(TAG, "open " + fragment.getClass().getSimpleName());
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.content_frame, fragment, res + "_key").commitAllowingStateLoss();
+                },
                 250);
     }
 

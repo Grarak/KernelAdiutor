@@ -97,15 +97,16 @@ public class CardView extends RecyclerViewItem {
     @Override
     void onCreateHolder(ViewGroup parent, View view) {
         super.onCreateHolder(parent, view);
-        if (mAsyncLayoutInflater == null) {
-            mAsyncLayoutInflater = new AsyncLayoutInflater(parent.getContext());
-            while (mInflaterNotReadyQueue.size() != 0) {
-                addView(mInflaterNotReadyQueue.poll());
-            }
-        }
-
         initLayouts(view);
-        if (mLayout.getChildCount() == 0) {
+
+        if (mAsyncLayoutInflater == null) {
+            parent.getHandler().post(() -> {
+                mAsyncLayoutInflater = new AsyncLayoutInflater(parent.getContext());
+                while (mInflaterNotReadyQueue.size() != 0) {
+                    addView(mInflaterNotReadyQueue.poll());
+                }
+            });
+        } else if (mLayout.getChildCount() == 0) {
             setupLayout();
         }
     }
