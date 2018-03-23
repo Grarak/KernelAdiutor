@@ -27,6 +27,7 @@ import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Device;
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
@@ -50,6 +51,8 @@ import java.util.List;
  * Created by willi on 01.05.16.
  */
 public class CPUFragment extends RecyclerViewFragment {
+
+    private static final String TAG = CPUFragment.class.getSimpleName();
 
     private CPUFreq mCPUFreq;
     private CPUBoost mCPUBoost;
@@ -94,23 +97,30 @@ public class CPUFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
+        Log.crashlyticsI(TAG, "freqInit");
         freqInit(items);
         if (Misc.hasMcPowerSaving()) {
+            Log.crashlyticsI(TAG, "mcPowerSavingInit");
             mcPowerSavingInit(items);
         }
         if (Misc.hasPowerSavingWq()) {
+            Log.crashlyticsI(TAG, "powerSavingWqInit");
             powerSavingWqInit(items);
         }
         if (Misc.hasCFSScheduler()) {
+            Log.crashlyticsI(TAG, "cfsSchedulerInit");
             cfsSchedulerInit(items);
         }
         if (Misc.hasCpuQuiet()) {
+            Log.crashlyticsI(TAG, "cpuQuietInit");
             cpuQuietInit(items);
         }
         if (mCPUBoost.supported()) {
+            Log.crashlyticsI(TAG, "cpuBoostInit");
             cpuBoostInit(items);
         }
         if (Misc.hasCpuTouchBoost()) {
+            Log.crashlyticsI(TAG, "cpuTouchBoostInit");
             cpuTouchBoostInit(items);
         }
     }

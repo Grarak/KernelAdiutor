@@ -58,10 +58,11 @@ public class Log {
 
     private static String getMessage(String tag, String message) {
         StackTraceElement element = Thread.currentThread().getStackTrace()[4];
+        String className = element.getClassName();
+
         return String.format(Locale.getDefault(),
-                "Line %d [%s][%s] %s - %s",
-                element.getLineNumber(),
-                element.getFileName().replace(".java", ""),
+                "[%s][%s] %s - %s",
+                className.substring(className.lastIndexOf(".") + 1),
                 element.getMethodName(),
                 tag,
                 message);

@@ -338,7 +338,15 @@ public class Device {
     }
 
     public static String getKernelVersion(boolean extended, boolean root) {
-        return extended ? Utils.readFile("/proc/version", root) : RootUtils.runCommand("uname -r");
+        String version = Utils.readFile("/proc/version", root);
+        if (extended) {
+            return version;
+        }
+        Matcher matcher = Pattern.compile("Linux version (\\S+).+").matcher(version);
+        if (matcher.matches() && matcher.groupCount() == 1) {
+            return matcher.group(1);
+        }
+        return "unknown";
     }
 
     public static String getArchitecture() {
@@ -389,63 +397,38 @@ public class Device {
     private static HashMap<String, String> sBoardAliases = new HashMap<>();
 
     static {
-        sBoardFormatters.put(".*msm.+.\\d+.*", new BoardFormatter() {
-            @Override
-            public String format(String board) {
-                return "msm" + board.split("msm")[1].trim().split(" ")[0];
+        sBoardFormatters.put(".*msm.+.\\d+.*", board
+                -> "msm" + board.split("msm")[1].trim().split(" ")[0]);
+
+        sBoardFormatters.put("mt\\d*.", board
+                -> "mt" + board.split("mt")[1].trim().split(" ")[0]);
+
+        sBoardFormatters.put(".*apq.+.\\d+.*", board
+                -> "apq" + board.split("apq")[1].trim().split(" ")[0]);
+
+        sBoardFormatters.put(".*omap+\\d.*", board -> {
+            Matcher matcher = Pattern.compile("omap+\\d").matcher(board);
+            if (matcher.find()) {
+                return matcher.group();
             }
+            return null;
         });
 
-        sBoardFormatters.put("mt\\d*.", new BoardFormatter() {
-            @Override
-            public String format(String board) {
-                return "mt" + board.split("mt")[1].trim().split(" ")[0];
-            }
-        });
+        sBoardFormatters.put("sun+\\d.", board -> board);
 
-        sBoardFormatters.put(".*apq.+.\\d+.*", new BoardFormatter() {
-            @Override
-            public String format(String board) {
-                return "apq" + board.split("apq")[1].trim().split(" ")[0];
-            }
-        });
-
-        sBoardFormatters.put(".*omap+\\d.*", new BoardFormatter() {
-            @Override
-            public String format(String board) {
-                Matcher matcher = Pattern.compile("omap+\\d").matcher(board);
-                if (matcher.find()) {
-                    return matcher.group();
-                }
-                return null;
-            }
-        });
-
-        sBoardFormatters.put("sun+\\d.", new BoardFormatter() {
-            @Override
-            public String format(String board) {
-                return board;
-            }
-        });
-
-        sBoardFormatters.put("spyder", new BoardFormatter() {
-            @Override
-            public String format(String board) {
-                return "omap4";
-            }
-        });
-        sBoardFormatters.put("tuna", new BoardFormatter() {
-            @Override
-            public String format(String board) {
-                return "omap4";
-            }
-        });
+        sBoardFormatters.put("spyder", board -> "omap4");
+        sBoardFormatters.put("tuna", board -> "omap4");
 
         sBoardAliases.put("msm8994v2.1", "msm8994");
         sBoardAliases.put("msm8974pro.*", "msm8974pro");
     }
 
+    private static String BOARD;
+
     public static String getBoard() {
+        if (BOARD != null) {
+            return BOARD;
+        }
         String hardware = CPUInfo.getInstance().getVendor().toLowerCase();
         String ret = null;
         for (String boardregex : sBoardFormatters.keySet()) {
@@ -460,7 +443,7 @@ public class Device {
                 }
             }
         }
-        return ret != null ? ret : Build.BOARD.toLowerCase();
+        return BOARD = ret != null ? ret : Build.BOARD.toLowerCase();
     }
 
     public static String getBuildDisplayId() {

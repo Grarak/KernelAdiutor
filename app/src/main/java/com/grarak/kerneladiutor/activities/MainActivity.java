@@ -45,6 +45,7 @@ import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Device;
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.battery.Battery;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUBoost;
@@ -76,6 +77,8 @@ import io.fabric.sdk.android.Fabric;
  * Created by willi on 14.04.16.
  */
 public class MainActivity extends BaseActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private TextView mRootAccess;
     private TextView mBusybox;
@@ -251,6 +254,15 @@ public class MainActivity extends BaseActivity {
                 Answers.getInstance().logCustom(new CustomEvent("SoC")
                         .putCustomAttribute("type", Device.getBoard()));
             }
+
+            Log.crashlyticsI(TAG, "Build Display ID: "
+                    + Device.getBuildDisplayId());
+            Log.crashlyticsI(TAG, "ROM: "
+                    + Device.ROMInfo.getInstance().getVersion());
+            Log.crashlyticsI(TAG, "Kernel version: "
+                    + Device.getKernelVersion(true));
+            Log.crashlyticsI(TAG, "Board: " +
+                    Device.getBoard());
         }
 
         /**
