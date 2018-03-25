@@ -793,8 +793,8 @@ sicher?</string>
   <string name="user_interface">Benutzeroberfläche</string>
   <string name="dark_theme">Dunkles Design</string>
   <string name="material_icon">Icondesign</string>
-  <string name="banner_resizer">Grösse Werbebanner ändern</string>
-  <string name="hide_banner">Werbebanner ausblenden</string>
+  <string name="banner_resizer">Grösse CPU-Frequenzgrafik ändern</string>
+  <string name="hide_banner">CPU-Frequenzgrafik ausblenden</string>
   <string name="force_cards">Karten erzwingen</string>
   <string name="force_cards_summary">Benutze Karten als Symbole wenn möglich </string>
   <string name="accent_color">Farben hervorheben</string>
