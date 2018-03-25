@@ -74,6 +74,15 @@
                 app:srcCompat="@drawable/ic_cancel" />
 
             <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/restore"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"
+                android:tint="?attr/colorAccent"
+                app:srcCompat="@drawable/ic_restore" />
+
+            <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/done"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

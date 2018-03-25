@@ -107,7 +107,11 @@ public class BannerResizerActivity extends BaseActivity {
                 }
             });
 
-            rootView.findViewById(R.id.cancel).setOnClickListener(v -> seekBar.setProgress(px - minHeight));
+            rootView.findViewById(R.id.cancel).setOnClickListener(v
+                    -> seekBar.setProgress(px - minHeight));
+
+            rootView.findViewById(R.id.restore).setOnClickListener(v
+                    -> seekBar.setProgress(defaultHeight - minHeight));
 
             rootView.findViewById(R.id.done).setOnClickListener(v -> {
                 AppSettings.saveBannerSize(seekBar.getProgress() + minHeight, getActivity());

@@ -66,6 +66,7 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -376,7 +377,7 @@ public class Utils {
     }
 
     public static String strFormat(String text, Object... format) {
-        return String.format(text, format);
+        return String.format(Locale.getDefault(), text, format);
     }
 
     public static Float strToFloat(String text) {

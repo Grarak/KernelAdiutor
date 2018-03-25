@@ -22,8 +22,6 @@ package com.grarak.kerneladiutor.utils;
 import com.crashlytics.android.Crashlytics;
 import com.grarak.kerneladiutor.BuildConfig;
 
-import java.util.Locale;
-
 /**
  * Created by willi on 22.03.18.
  */
@@ -60,8 +58,7 @@ public class Log {
         StackTraceElement element = Thread.currentThread().getStackTrace()[4];
         String className = element.getClassName();
 
-        return String.format(Locale.getDefault(),
-                "[%s][%s] %s - %s",
+        return Utils.strFormat("[%s][%s] %s - %s",
                 className.substring(className.lastIndexOf(".") + 1),
                 element.getMethodName(),
                 tag,

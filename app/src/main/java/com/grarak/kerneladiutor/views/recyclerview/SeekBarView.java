@@ -23,6 +23,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.Log;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -33,6 +34,8 @@ import java.util.List;
  * Created by willi on 06.05.16.
  */
 public class SeekBarView extends RecyclerViewItem {
+
+    private static final String TAG = SeekBarView.class.getSimpleName();
 
     public interface OnSeekBarListener {
         void onStop(SeekBarView seekBarView, int position, String value);
@@ -52,7 +55,7 @@ public class SeekBarView extends RecyclerViewItem {
     private int mMax = 100;
     private int mProgress;
     private String mUnit;
-    private List<String> mItems;
+    private List<String> mItems = new ArrayList<>();
     private int mOffset = 1;
     private boolean mEnabled = true;
 
@@ -109,7 +112,8 @@ public class SeekBarView extends RecyclerViewItem {
                         mOnSeekBarListener.onStop(
                                 SeekBarView.this, mProgress, mItems.get(mProgress));
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    Log.crashlyticsE(TAG, e.getMessage());
                 }
             }
         });
@@ -135,30 +139,31 @@ public class SeekBarView extends RecyclerViewItem {
 
     public void setMin(int min) {
         mMin = min;
-        mItems = null;
+        mItems.clear();
         refresh();
     }
 
     public void setUnit(String unit) {
         mUnit = unit;
-        mItems = null;
+        mItems.clear();
         refresh();
     }
 
     public void setMax(int max) {
         mMax = max;
-        mItems = null;
+        mItems.clear();
         refresh();
     }
 
     public void setItems(List<String> items) {
-        mItems = items;
+        mItems.clear();
+        mItems.addAll(items);
         refresh();
     }
 
     public void setOffset(int offset) {
         mOffset = offset;
-        mItems = null;
+        mItems.clear();
         refresh();
     }
 
@@ -189,8 +194,7 @@ public class SeekBarView extends RecyclerViewItem {
         if (mSummary != null && mSummaryText != null) {
             mSummary.setText(mSummaryText);
         }
-        if (mItems == null) {
-            mItems = new ArrayList<>();
+        if (mItems.size() == 0) {
             for (int i = mMin; i <= mMax; i += mOffset) {
                 mItems.add(String.valueOf(i));
             }

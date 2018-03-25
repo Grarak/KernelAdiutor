@@ -32,7 +32,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.MobileAds;
@@ -71,8 +70,6 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import io.fabric.sdk.android.Fabric;
-
 /**
  * Created by willi on 14.04.16.
  */
@@ -87,12 +84,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Don't initialize analytics with debug build
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
-        }
-
         setContentView(R.layout.activity_main);
 
         View splashBackground = findViewById(R.id.splash_background);
