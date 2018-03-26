@@ -123,6 +123,9 @@ public class CPUFragment extends RecyclerViewFragment {
             Log.crashlyticsI(TAG, "cpuTouchBoostInit");
             cpuTouchBoostInit(items);
         }
+        if (Misc.hascpuinputboost()) {
+            cpuinputboostInit(items);
+        }
     }
 
     private void freqInit(List<RecyclerViewItem> items) {
@@ -537,6 +540,23 @@ public class CPUFragment extends RecyclerViewFragment {
                 -> Misc.enableCpuTouchBoost(isChecked, getActivity()));
 
         items.add(touchBoost);
+    }
+
+    private void cpuinputboostInit(List<RecyclerViewItem> items) {
+        if (Misc.hascpuinputboost()) {
+            SwitchView cpuinputboost = new SwitchView();
+            cpuinputboost.setTitle(getString(R.string.cpu_input_boost));
+            cpuinputboost.setSummary(getString(R.string.cpu_input_boost_summary));
+            cpuinputboost.setChecked(Misc.iscpuinputboostEnabled());
+            cpuinputboost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchView, boolean isChecked) {
+                    Misc.enablecpuinputboost(isChecked, getActivity());
+                }
+            });
+
+            items.add(cpuinputboost);
+        }
     }
 
     private float[] mCPUUsages;
