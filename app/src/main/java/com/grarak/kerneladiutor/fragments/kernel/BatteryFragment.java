@@ -33,6 +33,7 @@ import com.grarak.kerneladiutor.utils.kernel.battery.Battery;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
+import com.grarak.kerneladiutor.views.recyclerview.SelectView;
 import com.grarak.kerneladiutor.views.recyclerview.StatsView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
 
@@ -66,6 +67,15 @@ public class BatteryFragment extends RecyclerViewFragment {
         if (mBattery.hasForceFastCharge()) {
             forceFastChargeInit(items);
         }
+        if (mBattery.hasFastChargeControlAC()) {
+            FastChargeControlACinit(items);
+        }
+        if (mBattery.hasFastChargeControlUSB()) {
+            FastChargeControlUSBinit(items);
+        }
+        if (mBattery.hasFastChargeControlWIRELESS()) {
+            FastChargeControlWirelessinit(items);
+        }
         if (mBattery.hasBlx()) {
             blxInit(items);
         }
@@ -98,14 +108,65 @@ public class BatteryFragment extends RecyclerViewFragment {
     }
 
     private void forceFastChargeInit(List<RecyclerViewItem> items) {
-        SwitchView forceFastCharge = new SwitchView();
-        forceFastCharge.setTitle(getString(R.string.usb_fast_charge));
-        forceFastCharge.setSummary(getString(R.string.usb_fast_charge_summary));
-        forceFastCharge.setChecked(mBattery.isForceFastChargeEnabled());
-        forceFastCharge.addOnSwitchListener((switchView, isChecked)
-                -> mBattery.enableForceFastCharge(isChecked, getActivity()));
+            SelectView forceFastCharge = new SelectView();
+            forceFastCharge.setTitle(getString(R.string.usb_fast_charge));
+            forceFastCharge.setSummary(getString(R.string.usb_fast_charge_summary));
+            forceFastCharge.setItems(mBattery.enableForceFastCharge(getActivity()));
+            forceFastCharge.setItem(mBattery.getForceFastCharge());
+            forceFastCharge.setOnItemSelected(new SelectView.OnItemSelected() {
+            @Override
+            public void onItemSelected(SelectView selectView, int position, String item) {
+                mBattery.setForceFastCharge(position, getActivity());
+            }
+        });
 
-        items.add(forceFastCharge);
+            items.add(forceFastCharge);
+
+    }
+
+    private void FastChargeControlACinit(List<RecyclerViewItem> items) {
+            SelectView FastChargeControl = new SelectView();
+            FastChargeControl.setTitle(getString(R.string.charge_level_ac));
+            FastChargeControl.setSummary(getString(R.string.charge_level_ac_summary));
+            FastChargeControl.setItems(mBattery.getFastChargeControlAC());
+            FastChargeControl.setItem(mBattery.getFastChargeCustomAC());
+            FastChargeControl.setOnItemSelected(new SelectView.OnItemSelected() {
+            @Override
+            public void onItemSelected(SelectView selectView, int position, String item) {
+                mBattery.setFastChargeControlAC(item, getActivity());
+            }
+        });
+            items.add(FastChargeControl);
+    }
+            
+    private void FastChargeControlUSBinit(List<RecyclerViewItem> items) {
+            SelectView FastChargeControl = new SelectView();
+            FastChargeControl.setTitle(getString(R.string.charge_level_usb));
+            FastChargeControl.setSummary(getString(R.string.charge_level_usb_summary));
+            FastChargeControl.setItems(mBattery.getFastChargeControlUSB());
+            FastChargeControl.setItem(mBattery.getFastChargeCustomUSB());
+            FastChargeControl.setOnItemSelected(new SelectView.OnItemSelected() {
+            @Override
+            public void onItemSelected(SelectView selectView, int position, String item) {
+                mBattery.setFastChargeControlUSB(item, getActivity());
+            }
+        });
+            items.add(FastChargeControl);
+    }
+    
+    private void FastChargeControlWirelessinit(List<RecyclerViewItem> items) {
+            SelectView FastChargeControlWireless = new SelectView();
+            FastChargeControlWireless.setTitle(getString(R.string.charge_level_wireless));
+            FastChargeControlWireless.setSummary(getString(R.string.charge_level_wireless_summary));
+            FastChargeControlWireless.setItems(mBattery.getFastChargeControlWIRELESS());
+            FastChargeControlWireless.setItem(mBattery.getFastChargeCustomWIRELESS());
+            FastChargeControlWireless.setOnItemSelected(new SelectView.OnItemSelected() {
+            @Override
+            public void onItemSelected(SelectView selectView, int position, String item) {
+                mBattery.setFastChargeControlWIRELESS(item, getActivity());
+           }
+        });
+            items.add(FastChargeControlWireless);
     }
 
     private void blxInit(List<RecyclerViewItem> items) {
