@@ -247,11 +247,15 @@
   },
   {
     "vendor": [
+      "samsung",
       "samsung"
     ],
     "device": [
       "heroltexx",
-      "hero2ltexx"
+      "herolte",
+      "hero2ltexx",
+      "herolte"
+ 
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/galaxys7.json"
   },
