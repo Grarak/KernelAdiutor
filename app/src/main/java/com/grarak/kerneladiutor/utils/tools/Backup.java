@@ -32,8 +32,6 @@ import java.io.File;
  */
 public class Backup {
 
-    private static final String TAG = Backup.class.getSimpleName();
-
     private static String boot;
     private static String recovery;
     private static String fota;
@@ -92,13 +90,13 @@ public class Backup {
 
     public static void restore(File file, PARTITION partition_type) {
         String command = "dd if='" + file.toString() + "' of=" + getPartition(partition_type);
-        Log.i(TAG, "Executing: " + command);
+        Log.i("Executing: " + command);
         RootUtils.runCommand(command);
     }
 
     public static void backup(String name, PARTITION partition_type) {
         String command = "dd if=" + getPartition(partition_type) + " of='" + getPath(partition_type) + "/" + name + "'";
-        Log.i(TAG, "Executing: " + command);
+        Log.i("Executing: " + command);
         RootUtils.runCommand(command);
     }
 

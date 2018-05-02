@@ -155,7 +155,7 @@ public class RecoveryFragment extends RecyclerViewFragment {
         final Recovery recovery = new Recovery(recovery_command, path == null ? null : new File(path));
         mCommands.add(recovery);
 
-        CardView cardView = new CardView();
+        CardView cardView = new CardView(getActivity());
         cardView.setOnMenuListener((cardView1, popupMenu) -> {
             popupMenu.getMenu().add(Menu.NONE, 0, Menu.NONE, getString(R.string.delete));
             popupMenu.setOnMenuItemClickListener(item -> {

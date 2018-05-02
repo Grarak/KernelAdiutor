@@ -18,8 +18,8 @@ android {
         applicationId "com.grarak.kerneladiutor"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 262
-        versionName "0.9.10.3"
+        versionCode 265
+        versionName "0.9.10.6"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -28,13 +28,13 @@ android {
             initWith debug
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     lintOptions {
@@ -56,9 +56,9 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.google.android.gms:play-services-ads:12.0.0'
-    implementation 'com.google.firebase:firebase-core:12.0.0'
-    implementation 'com.google.android.gms:play-services-auth:12.0.0'
+    implementation 'com.google.android.gms:play-services-ads:12.0.1'
+    implementation 'com.google.firebase:firebase-core:12.0.1'
+    implementation 'com.google.android.gms:play-services-auth:12.0.1'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }

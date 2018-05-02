@@ -52,8 +52,6 @@ import java.util.List;
  */
 public class CPUFragment extends RecyclerViewFragment {
 
-    private static final String TAG = CPUFragment.class.getSimpleName();
-
     private CPUFreq mCPUFreq;
     private CPUBoost mCPUBoost;
 
@@ -97,30 +95,30 @@ public class CPUFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        Log.crashlyticsI(TAG, "freqInit");
+        Log.crashlyticsI("freqInit");
         freqInit(items);
         if (Misc.hasMcPowerSaving()) {
-            Log.crashlyticsI(TAG, "mcPowerSavingInit");
+            Log.crashlyticsI("mcPowerSavingInit");
             mcPowerSavingInit(items);
         }
         if (Misc.hasPowerSavingWq()) {
-            Log.crashlyticsI(TAG, "powerSavingWqInit");
+            Log.crashlyticsI("powerSavingWqInit");
             powerSavingWqInit(items);
         }
         if (Misc.hasCFSScheduler()) {
-            Log.crashlyticsI(TAG, "cfsSchedulerInit");
+            Log.crashlyticsI("cfsSchedulerInit");
             cfsSchedulerInit(items);
         }
         if (Misc.hasCpuQuiet()) {
-            Log.crashlyticsI(TAG, "cpuQuietInit");
+            Log.crashlyticsI("cpuQuietInit");
             cpuQuietInit(items);
         }
         if (mCPUBoost.supported()) {
-            Log.crashlyticsI(TAG, "cpuBoostInit");
+            Log.crashlyticsI("cpuBoostInit");
             cpuBoostInit(items);
         }
         if (Misc.hasCpuTouchBoost()) {
-            Log.crashlyticsI(TAG, "cpuTouchBoostInit");
+            Log.crashlyticsI("cpuTouchBoostInit");
             cpuTouchBoostInit(items);
         }
     }
@@ -135,7 +133,7 @@ public class CPUFragment extends RecyclerViewFragment {
 
         items.add(mCPUUsageBig);
 
-        CardView bigCoresCard = new CardView();
+        CardView bigCoresCard = new CardView(getActivity());
         if (mCPUFreq.isBigLITTLE()) {
             bigCoresCard.setTitle(getString(R.string.cores_string, getString(R.string.cluster_big)));
         }
@@ -151,7 +149,7 @@ public class CPUFragment extends RecyclerViewFragment {
             bigCoresCard.addItem(coreSwitch);
         }
 
-        CardView bigFrequenciesCard = new CardView();
+        CardView bigFrequenciesCard = new CardView(getActivity());
         if (mCPUFreq.isBigLITTLE()) {
             bigFrequenciesCard.setTitle(getString(R.string.frequencies_string, getString(R.string.cluster_big)));
         }
@@ -185,7 +183,7 @@ public class CPUFragment extends RecyclerViewFragment {
             bigFrequenciesCard.addItem(mCPUMaxScreenOffBig);
         }
 
-        CardView bigGovernorsCard = new CardView();
+        CardView bigGovernorsCard = new CardView(getActivity());
         if (mCPUFreq.isBigLITTLE()) {
             bigGovernorsCard.setTitle(getString(R.string.governors_string, getString(R.string.cluster_big)));
         }
@@ -216,7 +214,7 @@ public class CPUFragment extends RecyclerViewFragment {
 
             items.add(mCPUUsageLITTLE);
 
-            CardView LITTLECoresCard = new CardView();
+            CardView LITTLECoresCard = new CardView(getActivity());
             LITTLECoresCard.setTitle(getString(R.string.cores_string, getString(R.string.cluster_little)));
 
             final List<Integer> LITTLECores = mCPUFreq.getLITTLECpuRange();
@@ -230,7 +228,7 @@ public class CPUFragment extends RecyclerViewFragment {
                 LITTLECoresCard.addItem(coreSwitch);
             }
 
-            CardView LITTLEFrequenciesCard = new CardView();
+            CardView LITTLEFrequenciesCard = new CardView(getActivity());
             LITTLEFrequenciesCard.setTitle(getString(R.string.frequencies_string, getString(R.string.cluster_little)));
 
             mCPUMaxLITTLE = new SelectView();
@@ -262,7 +260,7 @@ public class CPUFragment extends RecyclerViewFragment {
                 LITTLEFrequenciesCard.addItem(mCPUMaxScreenOffLITTLE);
             }
 
-            CardView LITTLEGovernorsCard = new CardView();
+            CardView LITTLEGovernorsCard = new CardView(getActivity());
             LITTLEGovernorsCard.setTitle(getString(R.string.governors_string, getString(R.string.cluster_little)));
 
             mCPUGovernorLITTLE = new SelectView();
@@ -348,7 +346,7 @@ public class CPUFragment extends RecyclerViewFragment {
 
     private void cpuQuietInit(List<RecyclerViewItem> items) {
         List<RecyclerViewItem> views = new ArrayList<>();
-        CardView cpuQuietCard = new CardView();
+        CardView cpuQuietCard = new CardView(getActivity());
         cpuQuietCard.setTitle(getString(R.string.cpu_quiet));
 
         if (Misc.hasCpuQuietEnable()) {

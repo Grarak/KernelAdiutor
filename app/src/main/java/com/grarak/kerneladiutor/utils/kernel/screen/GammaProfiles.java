@@ -30,8 +30,6 @@ import org.json.JSONObject;
  */
 public class GammaProfiles {
 
-    private static final String TAG = GammaProfiles.class.getSimpleName();
-
     private JSONObject JSON;
     private KGammaProfiles kgammaProfiles;
     private GammaControlProfiles gammaControlProfiles;
@@ -41,7 +39,7 @@ public class GammaProfiles {
         try {
             JSON = new JSONObject(json);
         } catch (JSONException e) {
-            Log.e(TAG, "Failed to read gamma profiles");
+            Log.e("Failed to read gamma profiles");
             e.printStackTrace();
         }
     }
@@ -83,7 +81,7 @@ public class GammaProfiles {
         try {
             JSON = new JSONObject(json);
         } catch (JSONException e) {
-            Log.e(TAG, "Failed to read gamma profiles");
+            Log.e("Failed to read gamma profiles");
             JSON = null;
         }
     }

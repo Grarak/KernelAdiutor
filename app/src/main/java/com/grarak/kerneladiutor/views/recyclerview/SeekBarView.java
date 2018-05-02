@@ -35,8 +35,6 @@ import java.util.List;
  */
 public class SeekBarView extends RecyclerViewItem {
 
-    private static final String TAG = SeekBarView.class.getSimpleName();
-
     public interface OnSeekBarListener {
         void onStop(SeekBarView seekBarView, int position, String value);
 
@@ -113,7 +111,7 @@ public class SeekBarView extends RecyclerViewItem {
                                 SeekBarView.this, mProgress, mItems.get(mProgress));
                     }
                 } catch (Exception e) {
-                    Log.crashlyticsE(TAG, e.getMessage());
+                    Log.crashlyticsE(e.getMessage());
                 }
             }
         });

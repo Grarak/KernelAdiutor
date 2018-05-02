@@ -22,6 +22,7 @@ package com.grarak.kerneladiutor.views.recyclerview;
 import android.view.View;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.views.AdLayout;
 
 /**
@@ -46,6 +47,7 @@ public class AdView extends RecyclerViewItem {
 
     public void ghReady() {
         if (mAd != null) {
+            Log.crashlyticsI("Github ads ready");
             mAd.loadGHAd();
         }
     }

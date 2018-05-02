@@ -76,7 +76,7 @@ public class GPUFragment extends RecyclerViewFragment {
     }
 
     private void freqInit(List<RecyclerViewItem> items) {
-        CardView freqCard = new CardView();
+        CardView freqCard = new CardView(getActivity());
         freqCard.setTitle(getString(R.string.frequencies));
 
         if (mGPUFreq.has2dCurFreq() && mGPUFreq.get2dAvailableFreqs() != null) {

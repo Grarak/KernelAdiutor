@@ -75,8 +75,6 @@ import java.net.URL;
  */
 public class MainActivity extends BaseActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
     private TextView mRootAccess;
     private TextView mBusybox;
     private TextView mCollectInfo;
@@ -246,14 +244,16 @@ public class MainActivity extends BaseActivity {
                         .putCustomAttribute("type", Device.getBoard()));
             }
 
-            Log.crashlyticsI(TAG, "Build Display ID: "
+            Log.crashlyticsI("Build Display ID: "
                     + Device.getBuildDisplayId());
-            Log.crashlyticsI(TAG, "ROM: "
+            Log.crashlyticsI("ROM: "
                     + Device.ROMInfo.getInstance().getVersion());
-            Log.crashlyticsI(TAG, "Kernel version: "
+            Log.crashlyticsI("Kernel version: "
                     + Device.getKernelVersion(true));
-            Log.crashlyticsI(TAG, "Board: " +
+            Log.crashlyticsI("Board: " +
                     Device.getBoard());
+            Log.crashlyticsI("Google services available: "
+                    + Utils.isGooglePlayServicesAvailable(activity));
         }
 
         /**

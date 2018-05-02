@@ -198,7 +198,7 @@ public class Monitor extends Service {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,
-                    getString(R.string.data_sharing), NotificationManager.IMPORTANCE_MIN);
+                    getString(R.string.data_sharing), NotificationManager.IMPORTANCE_LOW);
             notificationManager.createNotificationChannel(notificationChannel);
 
             PendingIntent disableIntent = PendingIntent.getBroadcast(this, 1,
@@ -219,7 +219,9 @@ public class Monitor extends Service {
                     .setContentText(getString(R.string.data_sharing_summary_notification))
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentIntent(contentIntent)
-                    .addAction(0, getString(R.string.disable), disableIntent);
+                    .addAction(0, getString(R.string.disable), disableIntent)
+                    .setPriority(Notification.PRIORITY_MIN);
+
             startForeground(NotificationId.MONITOR, builder.build());
         }
 

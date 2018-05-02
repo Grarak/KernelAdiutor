@@ -107,7 +107,7 @@ public class ScreenFragment extends RecyclerViewFragment {
             dsipanelInit(gammas);
         }
         if (gammas.size() > 0) {
-            CardView gamma = new CardView();
+            CardView gamma = new CardView(getActivity());
             gamma.setTitle(getString(R.string.gamma));
             for (RecyclerViewItem item : gammas) {
                 gamma.addItem(item);
@@ -128,7 +128,7 @@ public class ScreenFragment extends RecyclerViewFragment {
     private void screenColorInit(List<RecyclerViewItem> items) {
         if (mCalibration.hasColors()) {
 
-            CardView screenColor = new CardView();
+            CardView screenColor = new CardView(getActivity());
             screenColor.setTitle(getString(R.string.screen_color));
 
             List<String> colors = mCalibration.getColors();
@@ -809,7 +809,7 @@ public class ScreenFragment extends RecyclerViewFragment {
     }
 
     private void lcdBackLightInit(List<RecyclerViewItem> items) {
-        CardView lcdBackLightCard = new CardView();
+        CardView lcdBackLightCard = new CardView(getActivity());
         lcdBackLightCard.setTitle(getString(R.string.lcd_backlight));
 
         if (mMisc.hasBrightnessMode()) {
@@ -870,7 +870,7 @@ public class ScreenFragment extends RecyclerViewFragment {
     }
 
     private void backlightDimmerInit(List<RecyclerViewItem> items) {
-        CardView backLightDimmerCard = new CardView();
+        CardView backLightDimmerCard = new CardView(getActivity());
         backLightDimmerCard.setTitle(getString(R.string.backlight_dimmer));
 
         if (mMisc.hasBackLightDimmerEnable()) {
@@ -958,7 +958,7 @@ public class ScreenFragment extends RecyclerViewFragment {
     }
 
     private void mdnieGlobalInit(List<RecyclerViewItem> items) {
-        CardView mdnieCard = new CardView();
+        CardView mdnieCard = new CardView(getActivity());
         mdnieCard.setTitle(getString(R.string.mdnie_global_controls));
 
         if (mMisc.hasRegisterHook()) {

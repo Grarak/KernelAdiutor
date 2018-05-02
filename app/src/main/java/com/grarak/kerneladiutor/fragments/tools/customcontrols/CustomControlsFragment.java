@@ -247,7 +247,7 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     }
 
     private CardView getCard(final Controls.ControlItem controlItem) {
-        CardView cardView = new CardView();
+        CardView cardView = new CardView(getActivity());
         cardView.setOnMenuListener((cardView1, popupMenu) -> {
             Menu menu = popupMenu.getMenu();
             menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));

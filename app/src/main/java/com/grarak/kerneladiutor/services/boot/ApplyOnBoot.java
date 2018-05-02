@@ -58,7 +58,6 @@ import java.util.List;
 
 public class ApplyOnBoot {
 
-    private static final String TAG = ApplyOnBoot.class.getSimpleName();
     private static boolean sCancel;
 
     public interface ApplyOnBootListener {
@@ -185,7 +184,7 @@ public class ApplyOnBoot {
                         return;
                     }
                 }
-                RootUtils.SU su = new RootUtils.SU(true, TAG);
+                RootUtils.SU su = new RootUtils.SU(true, true);
 
                 if (initdEnabled) {
                     RootUtils.mount(true, "/system", su);

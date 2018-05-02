@@ -56,8 +56,8 @@ public class DescriptionFragment extends BaseFragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_description, container, false);
 
-        mTitleView = (TextView) rootView.findViewById(R.id.title);
-        mSummaryView = (TextView) rootView.findViewById(R.id.summary);
+        mTitleView = rootView.findViewById(R.id.title);
+        mSummaryView = rootView.findViewById(R.id.summary);
 
         if (Utils.isTv(getActivity())) {
             mSummaryView.setFocusable(true);

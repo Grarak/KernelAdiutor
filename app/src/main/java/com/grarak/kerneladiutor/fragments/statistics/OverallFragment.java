@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.grarak.kerneladiutor.utils.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +41,7 @@ import com.bvalosek.cpuspy.CpuStateMonitor;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.kernel.gpu.GPUFreq;
@@ -61,8 +61,6 @@ import java.util.List;
  * Created by willi on 19.04.16.
  */
 public class OverallFragment extends RecyclerViewFragment {
-
-    private static final String TAG = OverallFragment.class.getSimpleName();
 
     private CPUFreq mCPUFreq;
     private GPUFreq mGPUFreq;
@@ -157,7 +155,7 @@ public class OverallFragment extends RecyclerViewFragment {
         });
         items.add(frequencyButtonView);
 
-        mFreqBig = new CardView();
+        mFreqBig = new CardView(getActivity());
         if (mCPUFreq.isBigLITTLE()) {
             mFreqBig.setTitle(getString(R.string.cluster_big));
         } else {
@@ -166,7 +164,7 @@ public class OverallFragment extends RecyclerViewFragment {
         items.add(mFreqBig);
 
         if (mCPUFreq.isBigLITTLE()) {
-            mFreqLITTLE = new CardView();
+            mFreqLITTLE = new CardView(getActivity());
             mFreqLITTLE.setTitle(getString(R.string.cluster_little));
             items.add(mFreqLITTLE);
         }
@@ -201,13 +199,13 @@ public class OverallFragment extends RecyclerViewFragment {
             try {
                 mBigMonitor.updateStates();
             } catch (CpuStateMonitor.CpuStateMonitorException ignored) {
-                Log.e(TAG, "Problem getting CPU states");
+                Log.e("Problem getting CPU states");
             }
             if (fragment.mCPUFreq.isBigLITTLE()) {
                 try {
                     mLITTLEMonitor.updateStates();
                 } catch (CpuStateMonitor.CpuStateMonitorException ignored) {
-                    Log.e(TAG, "Problem getting CPU states");
+                    Log.e("Problem getting CPU states");
                 }
             }
             return fragment;

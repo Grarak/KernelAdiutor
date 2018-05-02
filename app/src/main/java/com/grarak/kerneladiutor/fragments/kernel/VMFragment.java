@@ -107,7 +107,7 @@ public class VMFragment extends RecyclerViewFragment {
     }
 
     private void zswapInit(List<RecyclerViewItem> items) {
-        CardView zswapCard = new CardView();
+        CardView zswapCard = new CardView(getActivity());
         zswapCard.setTitle(getString(R.string.zswap));
 
         if (ZSwap.hasEnable()) {

@@ -205,16 +205,16 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
         mTopFab.setOnClickListener(v -> onTopFabClick());
         {
-            Drawable drawable;
-            if ((drawable = getTopFabDrawable()) != null) {
+            Drawable drawable = getTopFabDrawable();
+            if (drawable != null) {
                 mTopFab.setImageDrawable(drawable);
             }
         }
 
         mBottomFab.setOnClickListener(v -> onBottomFabClick());
         {
-            Drawable drawable;
-            if ((drawable = getBottomFabDrawable()) != null) {
+            Drawable drawable = getBottomFabDrawable();
+            if (drawable != null) {
                 mBottomFab.setImageDrawable(drawable);
             }
         }
@@ -716,6 +716,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             public void onAnimationRepeat(Animation animation) {
             }
         });
+        mSlideInOutAnimation.setDuration(250);
         view.startAnimation(mSlideInOutAnimation);
     }
 
@@ -738,6 +739,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             public void onAnimationRepeat(Animation animation) {
             }
         });
+        mSlideInOutAnimation.setDuration(250);
         view.startAnimation(mSlideInOutAnimation);
     }
 

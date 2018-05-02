@@ -227,7 +227,7 @@ public class MiscFragment extends RecyclerViewFragment {
     }
 
     private void networkInit(List<RecyclerViewItem> items) {
-        CardView networkCard = new CardView();
+        CardView networkCard = new CardView(getActivity());
         networkCard.setTitle(getString(R.string.network));
 
         try {

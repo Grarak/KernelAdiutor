@@ -15,7 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keepattributes Signature,*Annotation*
+-keepattributes Signature,*Annotation*,SourceFile,LineNumberTable
 
 -keep class com.grarak.kerneladiutor.** { *; }
 

@@ -23,6 +23,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
 import com.grarak.kerneladiutor.utils.Log;
 
 import com.grarak.kerneladiutor.R;
@@ -44,8 +45,6 @@ import cyanogenmod.app.CustomTile;
  */
 public class Tile extends BroadcastReceiver {
 
-    private static final String TAG = Tile.class.getSimpleName();
-
     private static final String NAME = "name";
     private static final String COMMANDS = "commands";
     private static final String ACTION_TOGGLE_STATE = "com.grarak.kerneladiutor.action.ACTION_TOGGLE_STATE";
@@ -54,11 +53,11 @@ public class Tile extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (ACTION_TOGGLE_STATE.equals(intent.getAction())) {
             String name = intent.getStringExtra(NAME);
-            if (name != null) Log.i(TAG, name);
+            if (name != null) Log.i(name);
             String[] commands = intent.getStringArrayExtra(COMMANDS);
             if (commands != null) {
                 List<String> adjustedCommands = new ArrayList<>();
-                RootUtils.SU su = new RootUtils.SU(true, TAG);
+                RootUtils.SU su = new RootUtils.SU(true, true);
                 for (String command : commands) {
                     synchronized (this) {
                         CPUFreq.ApplyCpu applyCpu;

@@ -49,7 +49,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by willi on 14.04.16.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

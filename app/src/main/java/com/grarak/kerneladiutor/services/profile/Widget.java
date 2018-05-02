@@ -46,8 +46,6 @@ import java.util.List;
  */
 public class Widget extends AppWidgetProvider {
 
-    private static final String TAG = Widget.class.getSimpleName();
-
     private static final String LIST_ITEM_CLICK = "list_item";
     private static final String ITEM_ARG = "item_extra";
 
@@ -92,7 +90,7 @@ public class Widget extends AppWidgetProvider {
                 Utils.toast(context.getString(R.string.press_again_to_apply, profileItem.getName()),
                         context);
             } else {
-                RootUtils.SU su = new RootUtils.SU(true, TAG);
+                RootUtils.SU su = new RootUtils.SU(true, true);
 
                 List<String> adjustedCommands = new ArrayList<>();
                 for (Profiles.ProfileItem.CommandItem command : profileItem.getCommands()) {

@@ -23,12 +23,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.grarak.kerneladiutor.utils.Log;
 import android.widget.Toast;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.services.boot.ApplyOnBoot;
 import com.grarak.kerneladiutor.utils.AppSettings;
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -37,8 +37,6 @@ import com.grarak.kerneladiutor.utils.root.RootUtils;
  * Created by willi on 21.07.16.
  */
 public class Tasker extends BroadcastReceiver {
-
-    private static final String TAG = Tasker.class.getSimpleName();
 
     public static final String EXTRA_BUNDLE = "com.twofortyfouram.locale.intent.extra.BUNDLE";
     public static final String EXTRA_STRING_BLURB = "com.twofortyfouram.locale.intent.extra.BLURB";
@@ -58,7 +56,7 @@ public class Tasker extends BroadcastReceiver {
             String commands = bundle.getString(BUNDLE_EXTRA_STRING_MESSAGE);
             if (commands != null) {
                 String[] cs = commands.split(DIVIDER);
-                Log.i(TAG + ": " + getClass().getSimpleName(), "Applying " + cs[0]);
+                Log.i("Applying " + cs[0]);
                 if (AppSettings.isShowTaskerToast(context)) {
                     Utils.toast(context.getString(R.string.applying_profile, cs[0]), context, Toast.LENGTH_LONG);
                 }
@@ -74,11 +72,11 @@ public class Tasker extends BroadcastReceiver {
                             if (cs[i].startsWith("#") && (applyCpu =
                                     new CPUFreq.ApplyCpu(cs[i].substring(1))).toString() != null) {
                                 for (String applyCpuCommand : ApplyOnBoot.getApplyCpu(applyCpu, su)) {
-                                    Log.i(TAG + ": " + getClass().getSimpleName(), "Run: " + applyCpuCommand);
+                                    Log.i("Run: " + applyCpuCommand);
                                     su.runCommand(applyCpuCommand);
                                 }
                             } else {
-                                Log.i(TAG + ": " + getClass().getSimpleName(), "Run: " + cs[i]);
+                                Log.i("Run: " + cs[i]);
                                 su.runCommand(cs[i]);
                             }
                         }

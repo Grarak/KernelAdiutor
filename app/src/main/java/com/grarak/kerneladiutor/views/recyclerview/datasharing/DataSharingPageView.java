@@ -58,19 +58,8 @@ public class DataSharingPageView extends RecyclerViewItem {
         mNext = view.findViewById(R.id.next_btn);
         mPageText = view.findViewById(R.id.page);
 
-        mPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDataSharingPageListener.onPrevious();
-            }
-        });
-
-        mNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDataSharingPageListener.onNext();
-            }
-        });
+        mPrevious.setOnClickListener(view1 -> mDataSharingPageListener.onPrevious());
+        mNext.setOnClickListener(view12 -> mDataSharingPageListener.onNext());
 
         setFullSpan(true);
         super.onCreateView(view);

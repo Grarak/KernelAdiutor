@@ -118,19 +118,16 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
         }
 
         for (SwitchView view : mEnableViews) {
-            view.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    boolean enabled = false;
-                    for (SwitchView view : mEnableViews) {
-                        if (!enabled && view.isChecked()) {
-                            enabled = true;
-                            continue;
-                        }
-                        if (enabled && view.isChecked()) {
-                            Utils.toast(R.string.hotplug_warning, getActivity());
-                            break;
-                        }
+            view.addOnSwitchListener((switchView, isChecked) -> {
+                boolean enabled = false;
+                for (SwitchView view1 : mEnableViews) {
+                    if (!enabled && view1.isChecked()) {
+                        enabled = true;
+                        continue;
+                    }
+                    if (enabled && view1.isChecked()) {
+                        Utils.toast(R.string.hotplug_warning, getActivity());
+                        break;
                     }
                 }
             });
@@ -142,12 +139,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
         mpdecision.setTitle(getString(R.string.mpdecision));
         mpdecision.setSummary(getString(R.string.mpdecision_summary));
         mpdecision.setChecked(MPDecision.isMpdecisionEnabled());
-        mpdecision.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                MPDecision.enableMpdecision(isChecked, getActivity());
-            }
-        });
+        mpdecision.addOnSwitchListener((switchView, isChecked)
+                -> MPDecision.enableMpdecision(isChecked, getActivity()));
 
         items.add(mpdecision);
         mEnableViews.add(mpdecision);
@@ -164,12 +157,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.intelliplug));
             enable.setSummary(getString(R.string.intelliplug_summary));
             enable.setChecked(mIntelliPlug.isIntelliPlugEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mIntelliPlug.enableIntelliPlug(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> mIntelliPlug.enableIntelliPlug(isChecked, getActivity()));
 
             intelliplug.add(enable);
             mEnableViews.add(enable);
@@ -181,12 +170,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             profile.setSummary(getString(R.string.cpu_hotplug_profile_summary));
             profile.setItems(mIntelliPlug.getIntelliPlugProfileMenu(getActivity()));
             profile.setItem(mIntelliPlug.getIntelliPlugProfile());
-            profile.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mIntelliPlug.setIntelliPlugProfile(position, getActivity());
-                }
-            });
+            profile.setOnItemSelected((selectView, position, item)
+                    -> mIntelliPlug.setIntelliPlugProfile(position, getActivity()));
 
             intelliplug.add(profile);
         }
@@ -196,12 +181,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             eco.setTitle(getString(R.string.eco_mode));
             eco.setSummary(getString(R.string.eco_mode_summary));
             eco.setChecked(mIntelliPlug.isIntelliPlugEcoEnabled());
-            eco.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mIntelliPlug.enableIntelliPlugEco(isChecked, getActivity());
-                }
-            });
+            eco.addOnSwitchListener((switchView, isChecked)
+                    -> mIntelliPlug.enableIntelliPlugEco(isChecked, getActivity()));
 
             intelliplug.add(eco);
         }
@@ -211,12 +192,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             touchBoost.setTitle(getString(R.string.touch_boost));
             touchBoost.setSummary(getString(R.string.touch_boost_summary));
             touchBoost.setChecked(mIntelliPlug.isIntelliPlugTouchBoostEnabled());
-            touchBoost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mIntelliPlug.enableIntelliPlugTouchBoost(isChecked, getActivity());
-                }
-            });
+            touchBoost.addOnSwitchListener((switchView, isChecked)
+                    -> mIntelliPlug.enableIntelliPlugTouchBoost(isChecked, getActivity()));
 
             intelliplug.add(touchBoost);
         }
@@ -271,12 +248,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             maxScreenOffFreq.setSummary(getString(R.string.cpu_max_screen_off_freq_summary));
             maxScreenOffFreq.setItems(list);
             maxScreenOffFreq.setItem(mIntelliPlug.getIntelliPlugScreenOffMax());
-            maxScreenOffFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mIntelliPlug.setIntelliPlugScreenOffMax(position, getActivity());
-                }
-            });
+            maxScreenOffFreq.setOnItemSelected((selectView, position, item)
+                    -> mIntelliPlug.setIntelliPlugScreenOffMax(position, getActivity()));
 
             intelliplug.add(maxScreenOffFreq);
         }
@@ -286,12 +259,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             debug.setTitle(getString(R.string.debug_mask));
             debug.setSummary(getString(R.string.debug_mask_summary));
             debug.setChecked(mIntelliPlug.isIntelliPlugDebugEnabled());
-            debug.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mIntelliPlug.enableIntelliPlugDebug(isChecked, getActivity());
-                }
-            });
+            debug.addOnSwitchListener((switchView, isChecked)
+                    -> mIntelliPlug.enableIntelliPlugDebug(isChecked, getActivity()));
 
             intelliplug.add(debug);
         }
@@ -301,12 +270,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             suspend.setTitle(getString(R.string.suspend));
             suspend.setSummary(getString(R.string.suspend_summary));
             suspend.setChecked(mIntelliPlug.isIntelliPlugSuspendEnabled());
-            suspend.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mIntelliPlug.enableIntelliPlugSuspend(isChecked, getActivity());
-                }
-            });
+            suspend.addOnSwitchListener((switchView, isChecked)
+                    -> mIntelliPlug.enableIntelliPlugSuspend(isChecked, getActivity()));
 
             intelliplug.add(suspend);
         }
@@ -516,12 +481,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.lazyplug));
             enable.setSummary(getString(R.string.lazyplug_summary));
             enable.setChecked(LazyPlug.isEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    LazyPlug.enable(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> LazyPlug.enable(isChecked, getActivity()));
 
             lazyplug.add(enable);
             mEnableViews.add(enable);
@@ -533,12 +494,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             profile.setSummary(getString(R.string.cpu_hotplug_profile_summary));
             profile.setItems(LazyPlug.getProfileMenu(getActivity()));
             profile.setItem(LazyPlug.getProfile());
-            profile.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    LazyPlug.setProfile(position, getActivity());
-                }
-            });
+            profile.setOnItemSelected((selectView, position, item)
+                    -> LazyPlug.setProfile(position, getActivity()));
 
             lazyplug.add(profile);
         }
@@ -548,12 +505,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             touchBoost.setTitle(getString(R.string.touch_boost));
             touchBoost.setSummary(getString(R.string.touch_boost_summary));
             touchBoost.setChecked(LazyPlug.isTouchBoostEnabled());
-            touchBoost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    LazyPlug.enableTouchBoost(isChecked, getActivity());
-                }
-            });
+            touchBoost.addOnSwitchListener((switchView, isChecked)
+                    -> LazyPlug.enableTouchBoost(isChecked, getActivity()));
 
             lazyplug.add(touchBoost);
         }
@@ -636,12 +589,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.blu_plug));
             enable.setSummary(getString(R.string.blu_plug_summary));
             enable.setChecked(BluPlug.isBluPlugEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    BluPlug.enableBluPlug(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> BluPlug.enableBluPlug(isChecked, getActivity()));
 
             bluplug.add(enable);
             mEnableViews.add(enable);
@@ -652,12 +601,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             powersaverMode.setTitle(getString(R.string.powersaver_mode));
             powersaverMode.setSummary(getString(R.string.powersaver_mode_summary));
             powersaverMode.setChecked(BluPlug.isBluPlugPowersaverModeEnabled());
-            powersaverMode.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    BluPlug.enableBluPlugPowersaverMode(isChecked, getActivity());
-                }
-            });
+            powersaverMode.addOnSwitchListener((switchView, isChecked)
+                    -> BluPlug.enableBluPlugPowersaverMode(isChecked, getActivity()));
 
             bluplug.add(powersaverMode);
         }
@@ -836,12 +781,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.msm_hotplug));
             enable.setSummary(getString(R.string.msm_hotplug_summary));
             enable.setChecked(mMSMHotplug.isMsmHotplugEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMHotplug.enableMsmHotplug(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMHotplug.enableMsmHotplug(isChecked, getActivity()));
 
             msmHotplug.add(enable);
             mEnableViews.add(enable);
@@ -852,12 +793,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             debugMask.setTitle(getString(R.string.debug_mask));
             debugMask.setSummary(getString(R.string.debug_mask_summary));
             debugMask.setChecked(mMSMHotplug.isMsmHotplugDebugMaskEnabled());
-            debugMask.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMHotplug.enableMsmHotplugDebugMask(isChecked, getActivity());
-                }
-            });
+            debugMask.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMHotplug.enableMsmHotplugDebugMask(isChecked, getActivity()));
 
             msmHotplug.add(debugMask);
         }
@@ -1055,12 +992,9 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             fastLaneMinFreq.setSummary(getString(R.string.fast_lane_min_freq_summary));
             fastLaneMinFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             fastLaneMinFreq.setItem((mMSMHotplug.getMsmHotplugFastLaneMinFreq() / 1000) + getString(R.string.mhz));
-            fastLaneMinFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMSMHotplug.setMsmHotplugFastLaneMinFreq(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            fastLaneMinFreq.setOnItemSelected((selectView, position, item)
+                    -> mMSMHotplug.setMsmHotplugFastLaneMinFreq(
+                    mCPUFreq.getFreqs().get(position), getActivity()));
 
             msmHotplug.add(fastLaneMinFreq);
         }
@@ -1089,12 +1023,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             ioIsBusy.setTitle(getString(R.string.io_is_busy));
             ioIsBusy.setSummary(getString(R.string.io_is_busy_summary));
             ioIsBusy.setChecked(mMSMHotplug.isMsmHotplugIoIsBusyEnabled());
-            ioIsBusy.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMSMHotplug.enableMsmHotplugIoIsBusy(isChecked, getActivity());
-                }
-            });
+            ioIsBusy.addOnSwitchListener((switchView, isChecked)
+                    -> mMSMHotplug.enableMsmHotplugIoIsBusy(isChecked, getActivity()));
 
             msmHotplug.add(ioIsBusy);
         }
@@ -1126,12 +1056,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             suspendFreq.setSummary(getString(R.string.cpu_max_screen_off_freq_summary));
             suspendFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             suspendFreq.setItem((mMSMHotplug.getMsmHotplugSuspendFreq() / 1000) + getString(R.string.mhz));
-            suspendFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMSMHotplug.setMsmHotplugSuspendFreq(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            suspendFreq.setOnItemSelected((selectView, position, item)
+                    -> mMSMHotplug.setMsmHotplugSuspendFreq(mCPUFreq.getFreqs().get(position), getActivity()));
 
             msmHotplug.add(suspendFreq);
         }
@@ -1173,12 +1099,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.mako_hotplug));
             enable.setSummary(getString(R.string.mako_hotplug_summary));
             enable.setChecked(MakoHotplug.isMakoHotplugEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    MakoHotplug.enableMakoHotplug(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> MakoHotplug.enableMakoHotplug(isChecked, getActivity()));
 
             makoHotplug.add(enable);
             mEnableViews.add(enable);
@@ -1211,12 +1133,9 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             cpufreqUnplugLimit.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             cpufreqUnplugLimit.setItem((MakoHotplug.getMakoHotplugCpuFreqUnplugLimit() / 1000)
                     + getString(R.string.mhz));
-            cpufreqUnplugLimit.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    MakoHotplug.setMakoHotplugCpuFreqUnplugLimit(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            cpufreqUnplugLimit.setOnItemSelected((selectView, position, item)
+                    -> MakoHotplug.setMakoHotplugCpuFreqUnplugLimit(
+                    mCPUFreq.getFreqs().get(position), getActivity()));
 
             makoHotplug.add(cpufreqUnplugLimit);
         }
@@ -1360,12 +1279,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             suspendFreq.setSummary(getString(R.string.cpu_max_screen_off_freq_summary));
             suspendFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             suspendFreq.setItem((MakoHotplug.getMakoHotplugSuspendFreq() / 1000) + getString(R.string.mhz));
-            suspendFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    MakoHotplug.setMakoHotplugSuspendFreq(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            suspendFreq.setOnItemSelected((selectView, position, item)
+                    -> MakoHotplug.setMakoHotplugSuspendFreq(mCPUFreq.getFreqs().get(position), getActivity()));
 
             makoHotplug.add(suspendFreq);
         }
@@ -1386,12 +1301,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(mMBHotplug.getMBName(getActivity()));
             enable.setSummary(getString(R.string.mb_hotplug_summary));
             enable.setChecked(mMBHotplug.isMBHotplugEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMBHotplug.enableMBHotplug(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> mMBHotplug.enableMBHotplug(isChecked, getActivity()));
 
             mbHotplug.add(enable);
             mEnableViews.add(enable);
@@ -1402,12 +1313,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             scroffSingleCore.setTitle(getString(R.string.screen_off_single_cpu));
             scroffSingleCore.setSummary(getString(R.string.screen_off_single_cpu_summary));
             scroffSingleCore.setChecked(mMBHotplug.isMBHotplugScroffSingleCoreEnabled());
-            scroffSingleCore.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMBHotplug.enableMBHotplugScroffSingleCore(isChecked, getActivity());
-                }
-            });
+            scroffSingleCore.addOnSwitchListener((switchView, isChecked)
+                    -> mMBHotplug.enableMBHotplugScroffSingleCore(isChecked, getActivity()));
 
             mbHotplug.add(scroffSingleCore);
         }
@@ -1481,12 +1388,9 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             idleFreq.setSummary(getString(R.string.idle_frequency_summary));
             idleFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
             idleFreq.setItem((mMBHotplug.getMBHotplugIdleFreq() / 1000) + getString(R.string.mhz));
-            idleFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    mMBHotplug.setMBHotplugIdleFreq(mCPUFreq.getFreqs().get(position), getActivity());
-                }
-            });
+            idleFreq.setOnItemSelected((selectView, position, item)
+                    -> mMBHotplug.setMBHotplugIdleFreq(
+                    mCPUFreq.getFreqs().get(position), getActivity()));
 
             mbHotplug.add(idleFreq);
         }
@@ -1496,12 +1400,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             boost.setTitle(getString(R.string.touch_boost));
             boost.setSummary(getString(R.string.touch_boost_summary));
             boost.setChecked(mMBHotplug.isMBHotplugBoostEnabled());
-            boost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    mMBHotplug.enableMBHotplugBoost(isChecked, getActivity());
-                }
-            });
+            boost.addOnSwitchListener((switchView, isChecked)
+                    -> mMBHotplug.enableMBHotplugBoost(isChecked, getActivity()));
 
             mbHotplug.add(boost);
         }
@@ -1558,12 +1458,9 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
                 boostFreq.setItems(mCPUFreq.getAdjustedFreq(getActivity()));
                 boostFreq.setItem((freqs.get(i) / 1000) + getString(R.string.mhz));
                 final int pos = i;
-                boostFreq.setOnItemSelected(new SelectView.OnItemSelected() {
-                    @Override
-                    public void onItemSelected(SelectView selectView, int position, String item) {
-                        mMBHotplug.setMBHotplugBoostFreqs(pos, mCPUFreq.getFreqs().get(position), getActivity());
-                    }
-                });
+                boostFreq.setOnItemSelected((selectView, position, item)
+                        -> mMBHotplug.setMBHotplugBoostFreqs(
+                        pos, mCPUFreq.getFreqs().get(position), getActivity()));
 
                 mbHotplug.add(boostFreq);
             }
@@ -1650,12 +1547,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.alucard_hotplug));
             enable.setSummary(getString(R.string.alucard_hotplug_summary));
             enable.setChecked(AlucardHotplug.isAlucardHotplugEnable());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    AlucardHotplug.enableAlucardHotplug(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> AlucardHotplug.enableAlucardHotplug(isChecked, getActivity()));
 
             alucardHotplug.add(enable);
             mEnableViews.add(enable);
@@ -1666,12 +1559,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             ioIsBusy.setTitle(getString(R.string.io_is_busy));
             ioIsBusy.setSummary(getString(R.string.io_is_busy_summary));
             ioIsBusy.setChecked(AlucardHotplug.isAlucardHotplugHpIoIsBusyEnable());
-            ioIsBusy.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    AlucardHotplug.enableAlucardHotplugHpIoIsBusy(isChecked, getActivity());
-                }
-            });
+            ioIsBusy.addOnSwitchListener((switchView, isChecked)
+                    -> AlucardHotplug.enableAlucardHotplugHpIoIsBusy(isChecked, getActivity()));
 
             alucardHotplug.add(ioIsBusy);
         }
@@ -1701,12 +1590,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             suspend.setTitle(getString(R.string.suspend));
             suspend.setSummary(getString(R.string.suspend_summary));
             suspend.setChecked(AlucardHotplug.isAlucardHotplugSuspendEnabled());
-            suspend.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    AlucardHotplug.enableAlucardHotplugSuspend(isChecked, getActivity());
-                }
-            });
+            suspend.addOnSwitchListener((switchView, isChecked)
+                    -> AlucardHotplug.enableAlucardHotplugSuspend(isChecked, getActivity()));
 
             alucardHotplug.add(suspend);
         }
@@ -1830,12 +1715,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.thunderplug));
             enable.setSummary(getString(R.string.thunderplug_summary));
             enable.setChecked(ThunderPlug.isThunderPlugEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    ThunderPlug.enableThunderPlug(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> ThunderPlug.enableThunderPlug(isChecked, getActivity()));
 
             thunderPlug.add(enable);
             mEnableViews.add(enable);
@@ -1868,12 +1749,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enduranceLevel.setSummary(getString(R.string.endurance_level_summary));
             enduranceLevel.setItems(Arrays.asList(getResources().getStringArray(R.array.endurance_level_items)));
             enduranceLevel.setItem(ThunderPlug.getThunderPlugEnduranceLevel());
-            enduranceLevel.setOnItemSelected(new SelectView.OnItemSelected() {
-                @Override
-                public void onItemSelected(SelectView selectView, int position, String item) {
-                    ThunderPlug.setThunderPlugEnduranceLevel(position, getActivity());
-                }
-            });
+            enduranceLevel.setOnItemSelected((selectView, position, item)
+                    -> ThunderPlug.setThunderPlugEnduranceLevel(position, getActivity()));
 
             thunderPlug.add(enduranceLevel);
         }
@@ -1924,12 +1801,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             touchBoost.setTitle(getString(R.string.touch_boost));
             touchBoost.setSummary(getString(R.string.touch_boost_summary));
             touchBoost.setChecked(ThunderPlug.isThunderPlugTouchBoostEnabled());
-            touchBoost.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    ThunderPlug.enableThunderPlugTouchBoost(isChecked, getActivity());
-                }
-            });
+            touchBoost.addOnSwitchListener((switchView, isChecked)
+                    -> ThunderPlug.enableThunderPlugTouchBoost(isChecked, getActivity()));
 
             thunderPlug.add(touchBoost);
         }
@@ -1950,12 +1823,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.zen_decision));
             enable.setSummary(getString(R.string.zen_decision_summary));
             enable.setChecked(ZenDecision.isZenDecisionEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    ZenDecision.enableZenDecision(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> ZenDecision.enableZenDecision(isChecked, getActivity()));
 
             zenDecision.add(enable);
             mEnableViews.add(enable);
@@ -2020,12 +1889,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             enable.setTitle(getString(R.string.autosmp));
             enable.setSummary(getString(R.string.autosmp_summary));
             enable.setChecked(AutoSmp.isAutoSmpEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    AutoSmp.enableAutoSmp(isChecked, getActivity());
-                }
-            });
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> AutoSmp.enableAutoSmp(isChecked, getActivity()));
 
             autoSmp.add(enable);
             mEnableViews.add(enable);
@@ -2177,12 +2042,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             scroffSingleCore.setTitle(getString(R.string.screen_off_single_cpu));
             scroffSingleCore.setSummary(getString(R.string.screen_off_single_cpu_summary));
             scroffSingleCore.setChecked(AutoSmp.isAutoSmpScroffSingleCoreEnabled());
-            scroffSingleCore.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    AutoSmp.enableAutoSmpScroffSingleCoreActive(isChecked, getActivity());
-                }
-            });
+            scroffSingleCore.addOnSwitchListener((switchView, isChecked)
+                    -> AutoSmp.enableAutoSmpScroffSingleCoreActive(isChecked, getActivity()));
 
             autoSmp.add(scroffSingleCore);
         }
@@ -2308,12 +2169,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
                 enable.setTitle(getString(R.string.hcube));
                 enable.setSummary(getString(R.string.hcube_summary));
                 enable.setChecked(mCoreCtl.isEnabled());
-                enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                    @Override
-                    public void onChanged(SwitchView switchView, boolean isChecked) {
-                        mCoreCtl.enable(isChecked, getActivity());
-                    }
-                });
+                enable.addOnSwitchListener((switchView, isChecked)
+                        -> mCoreCtl.enable(isChecked, getActivity()));
 
                 items.add(enable);
                 mEnableViews.add(enable);
@@ -2338,12 +2195,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment {
             toggle.setTitle(getString(R.string.aio_hotplug));
             toggle.setSummary(getString(R.string.aio_hotplug_summary));
             toggle.setChecked(AiOHotplug.isEnabled());
-            toggle.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    AiOHotplug.enable(isChecked, getActivity());
-                }
-            });
+            toggle.addOnSwitchListener((switchView, isChecked)
+                    -> AiOHotplug.enable(isChecked, getActivity()));
 
             aioHotplug.add(toggle);
             mEnableViews.add(toggle);

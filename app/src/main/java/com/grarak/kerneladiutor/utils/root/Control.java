@@ -39,8 +39,6 @@ import java.util.concurrent.Executors;
  */
 public class Control {
 
-    private static final String TAG = Control.class.getSimpleName();
-
     private static Control sControl;
 
     private boolean mProfileMode;
@@ -75,7 +73,7 @@ public class Control {
     private void apply(String command, String category, String id, final Context context) {
         if (context != null) {
             if (mProfileMode) {
-                Log.i(TAG, "Added to profile: " + id);
+                Log.i("Added to profile: " + id);
                 mProfileCommands.put(id, command);
             } else {
                 Settings settings = new Settings(context);
@@ -88,13 +86,13 @@ public class Control {
                 }
                 settings.putSetting(category, command, id);
                 settings.commit();
-                Log.i(TAG, "saved " + id);
+                Log.i("saved " + id);
             }
         }
 
         if (command.startsWith("#")) return;
         RootUtils.runCommand(command);
-        Log.i(TAG, command);
+        Log.i(command);
         if (context != null) {
             context.bindService(new Intent(context, Monitor.class), new ServiceConnection() {
                         @Override

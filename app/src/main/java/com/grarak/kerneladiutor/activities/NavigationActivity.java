@@ -115,8 +115,6 @@ import java.util.PriorityQueue;
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = NavigationActivity.class.getSimpleName();
-
     private static final String PACKAGE = NavigationActivity.class.getCanonicalName();
     public static final String INTENT_SECTION = PACKAGE + ".INTENT.SECTION";
 
@@ -275,6 +273,8 @@ public class NavigationActivity extends BaseActivity
                 Utils.DONATED = true;
             }
         }
+
+        Log.crashlyticsI("Donated: " + result + " " + Utils.DONATED);
 
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = getToolBar();
@@ -520,7 +520,7 @@ public class NavigationActivity extends BaseActivity
 
         mDrawer.postDelayed(()
                         -> {
-                    Log.crashlyticsI(TAG, "open " + fragment.getClass().getSimpleName());
+                    Log.crashlyticsI("open " + fragment.getClass().getSimpleName());
                     getSupportFragmentManager().beginTransaction().replace(
                             R.id.content_frame, fragment, res + "_key").commitAllowingStateLoss();
                 },

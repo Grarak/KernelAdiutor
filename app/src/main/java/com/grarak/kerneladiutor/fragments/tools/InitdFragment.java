@@ -111,7 +111,7 @@ public class InitdFragment extends RecyclerViewFragment {
         super.load(items);
 
         for (final String initd : Initd.list()) {
-            CardView cardView = new CardView();
+            CardView cardView = new CardView(getActivity());
             cardView.setOnMenuListener((cardView1, popupMenu) -> {
                 Menu menu = popupMenu.getMenu();
                 menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));

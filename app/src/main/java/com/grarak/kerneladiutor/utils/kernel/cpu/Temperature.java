@@ -160,7 +160,7 @@ public class Temperature {
                     }
                 }
             } catch (JSONException ignored) {
-                Log.e(TAG, "Can't read temp.json");
+                Log.e("Can't read temp.json");
             }
         }
 

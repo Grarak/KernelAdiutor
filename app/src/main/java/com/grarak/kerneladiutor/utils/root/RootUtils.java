@@ -39,7 +39,7 @@ public class RootUtils {
     public static boolean rootAccess() {
         SU su = getSU();
         su.runCommand("echo /testRoot/");
-        return !su.denied;
+        return !su.mDenied;
     }
 
     public static boolean busyboxInstalled() {
@@ -104,8 +104,8 @@ public class RootUtils {
     }
 
     public static SU getSU() {
-        if (sInstance == null || sInstance.closed || sInstance.denied) {
-            if (sInstance != null && !sInstance.closed) {
+        if (sInstance == null || sInstance.mClosed || sInstance.mDenied) {
+            if (sInstance != null && !sInstance.mClosed) {
                 sInstance.close();
             }
             sInstance = new SU();
@@ -123,70 +123,71 @@ public class RootUtils {
         private BufferedWriter mWriter;
         private BufferedReader mReader;
         private final boolean mRoot;
-        private final String mTag;
-        private boolean closed;
-        public boolean denied;
-        private boolean firstTry;
+        private boolean mClosed;
+        public boolean mDenied;
+        private boolean mFirstTry;
+        private boolean mLog;
 
         private ReentrantLock mLock = new ReentrantLock();
 
         public SU() {
-            this(true, null);
+            this(true, false);
         }
 
-        public SU(boolean root, String tag) {
+        public SU(boolean root, boolean log) {
             mRoot = root;
-            mTag = tag;
             try {
-                if (mTag != null) {
-                    Log.i(mTag, String.format("%s initialized", root ? "SU" : "SH"));
+                if (log) {
+                    Log.i(String.format("%s initialized", root ? "SU" : "SH"));
                 }
-                firstTry = true;
+                mFirstTry = true;
                 mProcess = Runtime.getRuntime().exec(root ? "su" : "sh");
                 mWriter = new BufferedWriter(new OutputStreamWriter(mProcess.getOutputStream()));
                 mReader = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
-            } catch (IOException e) {
-                if (mTag != null) {
-                    Log.e(mTag, root ? "Failed to run shell as su" : "Failed to run shell as sh");
+                mLog = log;
+            } catch (IOException ignored) {
+                if (log) {
+                    Log.e(root ? "Failed to run shell as su" : "Failed to run shell as sh");
                 }
-                denied = true;
-                closed = true;
+                mDenied = true;
+                mClosed = true;
             }
         }
 
         public String runCommand(final String command) {
-            if (closed) return "";
+            if (mClosed) return "";
             try {
                 mLock.lock();
 
                 StringBuilder sb = new StringBuilder();
                 String callback = "/shellCallback/";
-                mWriter.write(command + "\n");
-                mWriter.write("echo " + callback + "\n");
+                mWriter.write(command + "\necho " + callback + "\n");
                 mWriter.flush();
 
-                String line;
-                while ((line = mReader.readLine()) != null) {
-                    if (line.equals(callback)) {
+                int i;
+                char[] buffer = new char[256];
+                while (true) {
+                    sb.append(buffer, 0, mReader.read(buffer));
+                    if ((i = sb.indexOf(callback)) > -1) {
+                        sb.delete(i, i + callback.length());
                         break;
                     }
-                    sb.append(line).append("\n");
                 }
-                firstTry = false;
-                if (mTag != null) {
-                    Log.i(mTag, "run: " + command + " output: " + sb.toString().trim());
+                mFirstTry = false;
+                if (mLog) {
+                    Log.i("run: " + command + " output: " + sb.toString().trim());
                 }
 
                 return sb.toString().trim();
             } catch (IOException e) {
-                closed = true;
+                mClosed = true;
                 e.printStackTrace();
-                if (firstTry) denied = true;
+                if (mFirstTry) mDenied = true;
             } catch (ArrayIndexOutOfBoundsException e) {
-                denied = true;
+                mDenied = true;
             } catch (Exception e) {
                 e.printStackTrace();
-                denied = true;
+                mDenied = true;
             } finally {
                 mLock.unlock();
             }
@@ -218,14 +219,14 @@ public class RootUtils {
                     }
 
                     mProcess.destroy();
-                    if (mTag != null) {
-                        Log.i(mTag, Utils.strFormat("%s closed: %d",
+                    if (mLog) {
+                        Log.i(Utils.strFormat("%s mClosed: %d",
                                 mRoot ? "SU" : "SH", mProcess.exitValue()));
                     }
                 }
             } finally {
                 mLock.unlock();
-                closed = true;
+                mClosed = true;
             }
         }
 

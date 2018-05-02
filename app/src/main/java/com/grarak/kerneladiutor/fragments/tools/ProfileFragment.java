@@ -210,7 +210,7 @@ public class ProfileFragment extends RecyclerViewFragment {
         }
         for (int i = 0; i < profileItems.size(); i++) {
             final int position = i;
-            final CardView cardView = new CardView();
+            final CardView cardView = new CardView(getActivity());
             cardView.setOnMenuListener((cardView1, popupMenu) -> {
                 Menu menu = popupMenu.getMenu();
                 menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.append));

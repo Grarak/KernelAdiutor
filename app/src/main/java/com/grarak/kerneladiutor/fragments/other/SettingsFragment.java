@@ -215,7 +215,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 }
                 return true;
             case KEY_SECTIONS_ICON:
-                if (key.equals(KEY_SECTIONS_ICON) && !Utils.DONATED) {
+                if (!Utils.DONATED) {
                     ViewUtils.dialogDonate(getActivity()).show();
                     return false;
                 }

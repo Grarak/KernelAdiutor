@@ -78,12 +78,12 @@ public class DeviceFragment extends RecyclerViewFragment {
                 {getString(R.string.kernel), Device.getKernelVersion(true)}
         };
 
-        CardView deviceCard = new CardView();
+        CardView deviceCard = new CardView(getActivity());
         String vendor = Device.getVendor();
         vendor = vendor.substring(0, 1).toUpperCase() + vendor.substring(1);
         deviceCard.setTitle(vendor + " " + Device.getModel());
 
-        CardView boardCard = new CardView();
+        CardView boardCard = new CardView(getActivity());
         boardCard.setTitle(Device.getBoard().toUpperCase());
 
         for (String[] deviceInfo : deviceInfos) {
