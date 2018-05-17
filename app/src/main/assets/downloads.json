@@ -302,6 +302,17 @@
       "X509"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/x3.json"
-  }
-]
+  },
+  {
+   "vendor": [
+    "DIGMA",
+  ],
+   "device": [
+   "Optima 1104S 3G"
+  ],
+   "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/optima.json"
+  },
+ ]
+
+
 
