@@ -292,9 +292,4 @@ public class RecoveryFragment extends RecyclerViewFragment {
         mCommands.clear();
     }
 
-    @Override
-    protected boolean showAd() {
-        return true;
-    }
-
 }

@@ -847,7 +847,6 @@
   <string name="fingerprint_summary">Güvenlik kontrolünü geçmek için parmak izi kullanın. Bu parmak izleriniz kayıtlı olduğu sürece işe yarayacaktır.</string>
   <string name="sections">Bölümler</string>
   <!-- About -->
-  <string name="about_me">Merhaba, ben Willi Ye yani Grarak, Viyana\'da yaşayan 19 yaşında bir öğrenciyim. Oldukça uzun bir süredir Android\'de geliştirme yapıyorum. Ayrıca Kernel Adiutor\'un yanı sıra birkaç aygıt için LineageOS sağlıyor ve ParanoidAndroid üzerinde çalışıyorum. Bu yüzden, bu uygulamayı güncelleyecek zaman bulamazsam lütfen anlayın.</string>
   <!-- Contributors -->
   <string name="commits">%d işlendi</string>
   <string name="no_internet">Lütfen internet bağlantınızı kontrol edin!</string>

@@ -51,7 +51,7 @@ public class ProfileEditActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sChanged = false;
-        if (!Utils.DONATED) {
+        if (!Utils.isDonated(this)) {
             Utils.toast("nice try", this);
             finish();
             return;

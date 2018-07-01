@@ -817,7 +817,6 @@
   <string name="fingerprint_summary">Use a impressão digital para passar a verificação de segurança. Isto funcionará enquanto você tiver impressões digitais registadas.</string>
   <string name="sections">Seções</string>
   <!-- About -->
-  <string name="about_me">Oi, eu sou Willi Ye aka Grarak, uma estudante de 19 anos vivendo em Viena. Tenho desenvolvido para Android há bastante tempo. Ao lado do Kernel Adiutor, também mantenho o LineageOS para alguns dispositivos e trabalhando no ParanoidAndroid. Então por favor, entenda se eu não encontrar tempo para atualizar este aplicativo.</string>
   <!-- Contributors -->
   <string name="commits">%d commits</string>
   <string name="no_internet">Por favor, cheque sua conexão de internet!</string>

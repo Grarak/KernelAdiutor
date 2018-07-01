@@ -846,7 +846,6 @@
   <string name="fingerprint_summary">Ujjlenyomat használata a biztonsági ellenőrzéshez. Ez addig fog működni, amíg az ujjlenyomata regisztrálva van.</string>
   <string name="sections">Szekciók</string>
   <!-- About -->
-  <string name="about_me">Szia, én Willi Ye (Grarak) vagyok, egy 19 éves Bécsben élő diák. Már elég hosszú ideje fejlesztek Androidra. A Kernel Adiutor mellett néhány eszköz esetében lineageOS közreműködő vagyok és a ParanoidAndroid-on is dolgozom. Így kérlek értsd meg, ha nincs mindig időm az alkalmazás frissítésére.</string>
   <!-- Contributors -->
   <string name="commits">%d változtatás</string>
   <string name="no_internet">Kérlek, ellenőrizd az internetkapcsolatod!</string>

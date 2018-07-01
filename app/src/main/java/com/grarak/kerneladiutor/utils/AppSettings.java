@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.grarak.kerneladiutor.R;
@@ -96,7 +97,7 @@ public class AppSettings {
         Prefs.saveString(String.format(CPUSPY_OFFSETS_PREFIX, core), offsets, context);
     }
 
-    public static int getBannerSize(Context context) {
+    public static int getBannerSize(@NonNull Context context) {
         int min = Math.round(context.getResources().getDimension(R.dimen.banner_min_height));
         int max = Math.round(context.getResources().getDimension(R.dimen.banner_max_height));
 
@@ -118,7 +119,7 @@ public class AppSettings {
     }
 
     public static boolean isHideBanner(Context context) {
-        return Prefs.getBoolean(HIDE_BANNER, false, context) && Utils.DONATED;
+        return Prefs.getBoolean(HIDE_BANNER, false, context) && Utils.isDonated(context);
     }
 
     public static boolean isForceCards(Context context) {

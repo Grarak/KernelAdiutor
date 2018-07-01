@@ -45,7 +45,7 @@ public class DataSharingSearchActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!Utils.DONATED) {
+        if (!Utils.isDonated(this)) {
             Utils.toast("nice try", this);
             return;
         }
@@ -81,7 +81,7 @@ public class DataSharingSearchActivity extends BaseActivity {
         protected void postInit() {
             super.postInit();
 
-            ((BaseActivity) getActivity()).getSupportActionBar()
+            ((BaseActivity) requireActivity()).getSupportActionBar()
                     .setTitle(mSelection == null ? getString(R.string.show_all) : mSelection);
             if (mServerSearchDevice == null) {
                 showProgress();
@@ -99,12 +99,12 @@ public class DataSharingSearchActivity extends BaseActivity {
             filterBtn.setFullSpan(true);
             filterBtn.setOnClickListener(view -> {
                 if (mBoards != null) {
-                    new Dialog(getActivity())
+                    new Dialog(requireActivity())
                             .setTitle(getString(R.string.board))
                             .setItems(mBoards.toArray(new String[mBoards.size()]),
                                     (dialogInterface, i) -> {
                                         loadDevices(1, i == 0 ? null : mBoards.get(i));
-                                        ((BaseActivity) getActivity()).getSupportActionBar()
+                                        ((BaseActivity) requireActivity()).getSupportActionBar()
                                                 .setTitle(mSelection = mBoards.get(i));
                                     }).show();
                 }

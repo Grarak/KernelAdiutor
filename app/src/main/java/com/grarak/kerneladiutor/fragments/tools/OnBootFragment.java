@@ -245,9 +245,4 @@ public class OnBootFragment extends RecyclerViewFragment {
         mProfiles = null;
     }
 
-    @Override
-    protected boolean showAd() {
-        return true;
-    }
-
 }

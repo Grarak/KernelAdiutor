@@ -827,7 +827,6 @@
   <string name="fingerprint_summary">Skorzystaj z twojego odciska palców by móc korzystać z aplikacji. Opcja ta działa, dopóki twój odcisk palca został zarejestrowany na twoim urządzeniu.</string>
   <string name="sections">Działy</string>
   <!-- About -->
-  <string name="about_me">Witaj, jestem Willi Ye aka Grarak, jestem 19-letnim studentem z Wiednia. Zajmuję się programowaniem Androida od dłuższego czasu. Poza Kernel Adiutorem utrzymuję również LineageOS dla kilku urządzeń oraz pracuję nad ParanoidAndroid. Więc zrozum, proszę, że nie mogę znaleźć zbyt wiele czasu na aktualizacje tej aplikacji.</string>
   <!-- Contributors -->
   <string name="commits">%d commit\'a/ów</string>
   <string name="no_internet">Sprawdź swoje połączenie internetowe!</string>

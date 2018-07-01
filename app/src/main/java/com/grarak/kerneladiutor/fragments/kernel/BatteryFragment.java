@@ -56,7 +56,7 @@ public class BatteryFragment extends RecyclerViewFragment {
     protected void init() {
         super.init();
 
-        mBattery = Battery.getInstance(getActivity());
+        mBattery = Battery.getInstance(requireActivity());
     }
 
     @Override
@@ -198,14 +198,14 @@ public class BatteryFragment extends RecyclerViewFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        requireActivity().registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     @Override
     public void onPause() {
         super.onPause();
         try {
-            getActivity().unregisterReceiver(mBatteryReceiver);
+            requireActivity().unregisterReceiver(mBatteryReceiver);
         } catch (IllegalArgumentException ignored) {
         }
     }

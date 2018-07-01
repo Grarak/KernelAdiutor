@@ -68,7 +68,6 @@ import java.util.List;
 public class SettingsFragment extends PreferenceFragmentCompat implements
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
-    private static final String KEY_AD_VIEW = "adview";
     private static final String KEY_FORCE_ENGLISH = "forceenglish";
     private static final String KEY_USER_INTERFACE = "user_interface";
     private static final String KEY_DARK_THEME = "darktheme";
@@ -105,7 +104,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         rootView.setPadding(rootView.getPaddingLeft(),
-                Math.round(ViewUtils.getActionBarSize(getActivity())),
+                Math.round(ViewUtils.getActionBarSize(requireActivity())),
                 rootView.getPaddingRight(), rootView.getPaddingBottom());
         return rootView;
     }
@@ -124,10 +123,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.settings);
-
-        if (Utils.DONATED) {
-            getPreferenceScreen().removePreference(findPreference(KEY_AD_VIEW));
-        }
 
         SwitchPreferenceCompat forceEnglish = (SwitchPreferenceCompat) findPreference(KEY_FORCE_ENGLISH);
         if (Resources.getSystem().getConfiguration().locale.getLanguage().startsWith("en")) {
@@ -164,7 +159,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         findPreference(KEY_DELETE_PASSWORD).setOnPreferenceClickListener(this);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || !FingerprintManagerCompat.from(getActivity()).isHardwareDetected()) {
+                || !FingerprintManagerCompat.from(requireActivity()).isHardwareDetected()) {
             ((PreferenceCategory) findPreference(KEY_SECURITY_CATEGORY)).removePreference(
                     findPreference(KEY_FINGERPRINT));
         } else {
@@ -172,7 +167,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             mFingerprint.setEnabled(!AppSettings.getPassword(getActivity()).isEmpty());
         }
 
-        NavigationActivity activity = (NavigationActivity) getActivity();
+        NavigationActivity activity = (NavigationActivity) requireActivity();
         PreferenceCategory sectionsCategory = (PreferenceCategory) findPreference(KEY_SECTIONS);
         for (NavigationActivity.NavigationFragment navigationFragment : activity.getFragments()) {
             Class<? extends Fragment> fragmentClass = navigationFragment.mFragmentClass;
@@ -198,32 +193,27 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         switch (key) {
             case KEY_FORCE_ENGLISH:
             case KEY_DARK_THEME:
-                getActivity().finish();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(NavigationActivity.INTENT_SECTION,
-                        SettingsFragment.class.getCanonicalName());
-                startActivity(intent);
+                relaunchActivity();
                 return true;
             case KEY_MATERIAL_ICON:
-                Utils.setStartActivity(checked, getActivity());
+                Utils.setStartActivity(checked, requireActivity());
                 return true;
             case KEY_HIDE_BANNER:
-                if (!Utils.DONATED) {
+                if (!Utils.isDonated(requireActivity())) {
                     ViewUtils.dialogDonate(getActivity()).show();
                     return false;
                 }
                 return true;
             case KEY_SECTIONS_ICON:
-                if (!Utils.DONATED) {
+                if (!Utils.isDonated(requireActivity())) {
                     ViewUtils.dialogDonate(getActivity()).show();
                     return false;
                 }
-                ((NavigationActivity) getActivity()).appendFragments();
+                ((NavigationActivity) requireActivity()).appendFragments();
                 return true;
             default:
                 if (key.endsWith("_enabled")) {
-                    ((NavigationActivity) getActivity()).appendFragments();
+                    ((NavigationActivity) requireActivity()).appendFragments();
                     return true;
                 }
                 break;
@@ -253,7 +243,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         String key = preference.getKey();
         switch (key) {
             case KEY_BANNER_RESIZER:
-                if (Utils.DONATED) {
+                if (Utils.isDonated(requireActivity())) {
                     Intent intent = new Intent(getActivity(), BannerResizerActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -262,21 +252,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 }
                 return true;
             case KEY_PRIMARY_COLOR:
-                if (Utils.DONATED) {
+                if (Utils.isDonated(requireActivity())) {
                     colorDialog(true);
                 } else {
                     ViewUtils.dialogDonate(getActivity()).show();
                 }
                 return true;
             case KEY_ACCENT_COLOR:
-                if (Utils.DONATED) {
+                if (Utils.isDonated(requireActivity())) {
                     colorDialog(false);
                 } else {
                     ViewUtils.dialogDonate(getActivity()).show();
                 }
                 return true;
             case KEY_APPLY_ON_BOOT_TEST:
-                if (Utils.isServiceRunning(ApplyOnBootService.class, getActivity())) {
+                if (Utils.isServiceRunning(ApplyOnBootService.class, requireActivity())) {
                     Utils.toast(R.string.apply_on_boot_running, getActivity());
                 } else {
                     Intent intent = new Intent(getActivity(), ApplyOnBootService.class);
@@ -344,7 +334,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         int padding = Math.round(getResources().getDimension(R.dimen.dialog_padding));
         linearLayout.setPadding(padding, padding, padding, padding);
 
-        final AppCompatEditText oldPassword = new AppCompatEditText(getActivity());
+        final AppCompatEditText oldPassword = new AppCompatEditText(requireActivity());
         if (!oldPass.isEmpty()) {
             oldPassword.setInputType(InputType.TYPE_CLASS_TEXT
                     | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -352,18 +342,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             linearLayout.addView(oldPassword);
         }
 
-        final AppCompatEditText newPassword = new AppCompatEditText(getActivity());
+        final AppCompatEditText newPassword = new AppCompatEditText(requireActivity());
         newPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         newPassword.setHint(getString(R.string.new_password));
         linearLayout.addView(newPassword);
 
-        final AppCompatEditText confirmNewPassword = new AppCompatEditText(getActivity());
+        final AppCompatEditText confirmNewPassword = new AppCompatEditText(requireActivity());
         confirmNewPassword.setInputType(InputType.TYPE_CLASS_TEXT
                 | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         confirmNewPassword.setHint(getString(R.string.confirm_new_password));
         linearLayout.addView(confirmNewPassword);
 
-        new Dialog(getActivity()).setView(linearLayout)
+        new Dialog(requireActivity()).setView(linearLayout)
                 .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 })
                 .setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
@@ -412,12 +402,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         int padding = Math.round(getResources().getDimension(R.dimen.dialog_padding));
         linearLayout.setPadding(padding, padding, padding, padding);
 
-        final AppCompatEditText mPassword = new AppCompatEditText(getActivity());
+        final AppCompatEditText mPassword = new AppCompatEditText(requireActivity());
         mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         mPassword.setHint(getString(R.string.password));
         linearLayout.addView(mPassword);
 
-        new Dialog(getActivity()).setView(linearLayout)
+        new Dialog(requireActivity()).setView(linearLayout)
                 .setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
                     if (!mPassword.getText().toString().equals(Utils.decodeString(password))) {
                         Utils.toast(getString(R.string.password_wrong), getActivity());
@@ -460,18 +450,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         LinearLayout subView = null;
         for (int i = 0; i < colors.size(); i++) {
             if (subView == null || i % 5 == 0) {
-                subView = new LinearLayout(getActivity());
+                subView = new LinearLayout(requireActivity());
                 subView.setLayoutParams(new ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 linearLayout.addView(subView);
             }
 
-            BorderCircleView circle = new BorderCircleView(getActivity());
+            BorderCircleView circle = new BorderCircleView(requireActivity());
             circle.setChecked(i == selection);
-            circle.setCircleColor(ContextCompat.getColor(getActivity(),
-                    Themes.getColor(colors.get(i), getActivity())));
-            circle.setBorderColor(ContextCompat.getColor(getActivity(),
-                    Themes.getColor(counterPartColor, getActivity())));
+            circle.setCircleColor(ContextCompat.getColor(requireActivity(),
+                    Themes.getColor(colors.get(i), requireActivity())));
+            circle.setBorderColor(ContextCompat.getColor(requireActivity(),
+                    Themes.getColor(counterPartColor, requireActivity())));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
             int margin = (int) getResources().getDimension(R.dimen.color_dialog_margin);
@@ -492,7 +482,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             subView.addView(circle);
         }
 
-        new Dialog(getActivity()).setView(linearLayout)
+        new Dialog(requireActivity()).setView(linearLayout)
                 .setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
                 })
                 .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
@@ -503,14 +493,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                             Themes.saveAccentColor(colors.get(mColorSelection), getActivity());
                         }
                     }
-                    getActivity().finish();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(NavigationActivity.INTENT_SECTION,
-                            SettingsFragment.class.getCanonicalName());
-                    startActivity(intent);
+                    relaunchActivity();
                 })
                 .setOnDismissListener(dialog -> mColorSelection = -1).show();
     }
 
+    private void relaunchActivity() {
+        requireActivity().finish();
+        requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(NavigationActivity.INTENT_SECTION,
+                SettingsFragment.class.getCanonicalName());
+        startActivity(intent);
+    }
 }

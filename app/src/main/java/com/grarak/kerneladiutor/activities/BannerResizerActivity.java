@@ -45,7 +45,7 @@ public class BannerResizerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!Utils.DONATED) {
+        if (!Utils.isDonated(this)) {
             Utils.toast("nice try", this);
             return;
         }
@@ -82,7 +82,7 @@ public class BannerResizerActivity extends BaseActivity {
             int maxHeight = Math.round(getResources().getDimension(R.dimen.banner_max_height));
 
             final View banner = rootView.findViewById(R.id.banner_view);
-            final int px = AppSettings.getBannerSize(getActivity());
+            final int px = AppSettings.getBannerSize(requireActivity());
             setHeight(banner, px);
 
             final TextView text = rootView.findViewById(R.id.seekbar_text);

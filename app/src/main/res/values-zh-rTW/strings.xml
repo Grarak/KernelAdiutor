@@ -832,7 +832,6 @@
   <string name="fingerprint_summary">使用指紋傳遞安全檢查。這將工作，只要你有指紋註冊。</string>
   <string name="sections">部分</string>
   <!-- About -->
-  <string name="about_me">嗨，我是Willi Ye aka Grarak，一個19歲的學生住在維也納。我已經在Android上開發了很長時間了。除了內核Adiutor之外，我還為幾個設備維護LineageOS，並且使用ParanoidAndroid。所以請理解如果我沒有找到更新此應用程序的時間。</string>
   <!-- Contributors -->
   <string name="commits">%d 提交</string>
   <string name="no_internet">請檢查您的互聯網連接！</string>

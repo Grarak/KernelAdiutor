@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
@@ -74,8 +75,11 @@ public class AboutFragment extends RecyclerViewFragment {
         public View onCreateView(@NonNull LayoutInflater inflater,
                                  @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_info, container, false);
+
+            ((TextView) rootView.findViewById(R.id.about_me)).setText(getString(R.string.about_me, 21));
+
             rootView.findViewById(R.id.image).setOnClickListener(view
-                    -> Utils.launchUrl("https://github.com/Grarak", getActivity()));
+                    -> Utils.launchUrl("https://github.com/Grarak", requireActivity()));
             return rootView;
         }
     }

@@ -39,8 +39,8 @@ public class Themes {
     public static class Theme {
         private String mPrimary;
         private String mAccent;
-        private @StyleRes
-        int mStyle;
+        @StyleRes
+        private int mStyle;
 
         private Theme(String primary, String accent, @StyleRes int style) {
             mPrimary = primary;
@@ -66,16 +66,16 @@ public class Themes {
         return Prefs.getBoolean(DARK_THEME_PREF_KEY, false, context);
     }
 
-    public static Theme getTheme(Context context, boolean darktheme) {
+    public static Theme getTheme(Context context, boolean darkTheme) {
         String savedTheme = Prefs.getString(THEME_PREF_KEY, DEFAULT_THEME, context);
         Theme theme;
-        if (darktheme) {
+        if (darkTheme) {
             theme = sThemesDark.get(savedTheme);
         } else {
             theme = sThemes.get(savedTheme);
         }
-        if (theme == null) {
-            if (darktheme) {
+        if (theme == null || !Utils.isDonated(context)) {
+            if (darkTheme) {
                 theme = sThemesDark.get(DEFAULT_THEME);
             } else {
                 theme = sThemes.get(DEFAULT_THEME);

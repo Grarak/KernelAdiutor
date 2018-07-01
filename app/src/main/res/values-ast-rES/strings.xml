@@ -629,7 +629,6 @@
   <string name="fingerprint_summary">Usa la buelga pa pasar la comprobación de seguranza. Esto funcionará si tienes buelgues rexistraes.</string>
   <string name="sections">Seiciones</string>
   <!-- About -->
-  <string name="about_me">Hola, soi Willi Ye tamién conocíu como Grarak, un estudiante de 19 años que vive en Viena. Desendolco p\'Android dende hai bien de tiempu. Amás de Kernel Adiutor tamién calteo LineageOS en dellos preseos y trabayo en Paranoid. Asina qu\'entiendi si nun alcuentro tiempu p\'anovar esta aplicación.</string>
   <!-- Contributors -->
   <string name="commits">%d unvios</string>
   <string name="no_internet">¡Comprueba la conexón d\'internet, por favor!</string>

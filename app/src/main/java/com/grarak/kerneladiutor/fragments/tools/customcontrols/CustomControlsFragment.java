@@ -94,7 +94,7 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                             showControls();
                             break;
                         case 1:
-                            if (Utils.DONATED) {
+                            if (Utils.isDonated(requireActivity())) {
                                 Intent intent = new Intent(getActivity(), FilePickerActivity.class);
                                 intent.putExtra(FilePickerActivity.PATH_INTENT,
                                         Environment.getExternalStorageDirectory().toString());
@@ -463,11 +463,6 @@ public class CustomControlsFragment extends RecyclerViewFragment {
             mImportingThread.cancel(true);
             mImportingThread = null;
         }
-    }
-
-    @Override
-    protected boolean showAd() {
-        return true;
     }
 
 }

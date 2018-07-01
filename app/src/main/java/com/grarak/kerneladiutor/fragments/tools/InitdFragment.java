@@ -248,9 +248,4 @@ public class InitdFragment extends RecyclerViewFragment {
         RootUtils.mount(false, "/system");
     }
 
-    @Override
-    protected boolean showAd() {
-        return true;
-    }
-
 }

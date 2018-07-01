@@ -65,7 +65,7 @@ public class DataSharingFragment extends RecyclerViewFragment {
     @Override
     protected void onBottomFabClick() {
         super.onBottomFabClick();
-        if (!Utils.DONATED) {
+        if (!Utils.isDonated(requireActivity())) {
             ViewUtils.dialogDonate(getActivity()).show();
             return;
         }
@@ -99,11 +99,6 @@ public class DataSharingFragment extends RecyclerViewFragment {
         });
 
         items.add(mDataSharingSwitch);
-    }
-
-    @Override
-    protected boolean showAd() {
-        return true;
     }
 
     private BroadcastReceiver mDisableReceiver = new BroadcastReceiver() {

@@ -838,7 +838,6 @@ sicher?</string>
   <string name="fingerprint_summary">Benutzen sie den Fingerabdruck für den Sicherheitscheck. Dies funktioniert solange ein Fingerabdruck hinterlegt ist.</string>
   <string name="sections">Sektionen</string>
   <!-- About -->
-  <string name="about_me">Hallo, bin ich Willi Ye aka Grarak, ein 19 Jahre Alter Student der in Wien lebt. Ich habe ziemlich lange an Android gearbeitet. Neben Kernel Adiutor kümmer  ich mich auch um LineageOS für einige Geräte und arbeite an ParanoidAndroid. Also bitte haben Sie Verständnis, wenn ich nicht die Zeit finde, um diese Anwendung zu aktualisieren.</string>
   <!-- Contributors -->
   <string name="commits">%d Änderungen</string>
   <string name="no_internet">Bitte überprüfe deine Internetverbindung!</string>

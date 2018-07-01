@@ -127,14 +127,14 @@ public class ProfileFragment extends RecyclerViewFragment {
     @Override
     protected Drawable getTopFabDrawable() {
         Drawable drawable = DrawableCompat.wrap(
-                ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
+                ContextCompat.getDrawable(requireActivity(), R.drawable.ic_add));
         DrawableCompat.setTint(drawable, Color.WHITE);
         return drawable;
     }
 
     @Override
     public int getSpanCount() {
-        int span = Utils.isTablet(getActivity()) ? Utils.getOrientation(getActivity()) ==
+        int span = Utils.isTablet(requireActivity()) ? Utils.getOrientation(getActivity()) ==
                 Configuration.ORIENTATION_LANDSCAPE ? 4 : 3 : Utils.getOrientation(getActivity()) ==
                 Configuration.ORIENTATION_LANDSCAPE ? 3 : 2;
         if (itemsSize() != 0 && span > itemsSize()) {
@@ -202,7 +202,7 @@ public class ProfileFragment extends RecyclerViewFragment {
     protected void load(List<RecyclerViewItem> items) {
         super.load(items);
 
-        mProfiles = new Profiles(getActivity());
+        mProfiles = new Profiles(requireActivity());
         List<Profiles.ProfileItem> profileItems = mProfiles.getAllProfiles();
         if (mTaskerMode && profileItems.size() == 0) {
             Snackbar.make(getRootView(), R.string.no_profiles, Snackbar.LENGTH_LONG).show();
@@ -225,7 +225,7 @@ public class ProfileFragment extends RecyclerViewFragment {
                     List<Profiles.ProfileItem> items1 = mProfiles.getAllProfiles();
                     switch (item.getItemId()) {
                         case 0:
-                            if (Utils.DONATED) {
+                            if (Utils.isDonated(requireActivity())) {
                                 Intent intent = createProfileActivityIntent();
                                 intent.putExtra(ProfileActivity.POSITION_INTENT, position);
                                 startActivityForResult(intent, 2);
@@ -235,7 +235,7 @@ public class ProfileFragment extends RecyclerViewFragment {
                             }
                             break;
                         case 1:
-                            if (Utils.DONATED) {
+                            if (Utils.isDonated(requireActivity())) {
                                 Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
                                 intent.putExtra(ProfileEditActivity.POSITION_INTENT, position);
                                 startActivityForResult(intent, 3);
@@ -290,7 +290,7 @@ public class ProfileFragment extends RecyclerViewFragment {
                             descriptionView.getSummary()),
                             (dialogInterface, i14) -> {
                             },
-                            (dialogInterface, i13) -> ((ProfileTaskerActivity) getActivity()).finish(
+                            (dialogInterface, i13) -> ((ProfileTaskerActivity) requireActivity()).finish(
                                     descriptionView.getSummary().toString(),
                                     mProfiles.getAllProfiles().get(position).getCommands()),
                             dialogInterface -> mSelectDialog = null, getActivity());
@@ -336,7 +336,7 @@ public class ProfileFragment extends RecyclerViewFragment {
 
         if (!mTaskerMode) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
-            int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(getActivity(), Widget.class));
+            int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(requireActivity(), Widget.class));
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.profile_list);
             Tile.publishProfileTile(profileItems, getActivity());
         }
@@ -354,7 +354,7 @@ public class ProfileFragment extends RecyclerViewFragment {
                             startActivityForResult(createProfileActivityIntent(), 0);
                             break;
                         case 1:
-                            if (Utils.DONATED) {
+                            if (Utils.isDonated(requireActivity())) {
                                 Intent intent = new Intent(getActivity(), FilePickerActivity.class);
                                 intent.putExtra(FilePickerActivity.PATH_INTENT,
                                         Environment.getExternalStorageDirectory().toString());
@@ -375,7 +375,7 @@ public class ProfileFragment extends RecyclerViewFragment {
     private Intent createProfileActivityIntent() {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
 
-        NavigationActivity activity = (NavigationActivity) getActivity();
+        NavigationActivity activity = (NavigationActivity) requireActivity();
         ArrayList<NavigationActivity.NavigationFragment> fragments = new ArrayList<>();
         boolean add = false;
         for (NavigationActivity.NavigationFragment fragment : activity.getFragments()) {
@@ -587,11 +587,6 @@ public class ProfileFragment extends RecyclerViewFragment {
 
             return rootView;
         }
-    }
-
-    @Override
-    protected boolean showAd() {
-        return true;
     }
 
 }

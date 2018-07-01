@@ -21,12 +21,7 @@
 
 -keep class com.bumptech.glide.** { *; }
 
--keep class com.google.android.gms.** { *; }
--keep class com.google.ads.** { *; }
-
 -keep class com.google.android.apps.dashclock.** { *; }
-
--keep class com.google.firebase.** { *; }
 
 -keep public class com.mattprecious.swirl.** { *; }
 

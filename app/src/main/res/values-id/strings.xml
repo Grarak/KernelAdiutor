@@ -814,7 +814,6 @@
   <string name="fingerprint_summary">Gunakan sidik jari untuk dapat melewati pemeriksaan keamanan. Ini akan bekerja selama Anda memiliki sidik jari yang terdaftar.</string>
   <string name="sections">Bagian</string>
   <!-- About -->
-  <string name="about_me">Hi, saya Willi Ye aka Grarak, seorang murid berumur 19 tahun yang bertempat tinggal di Vienna. Saya sudah menjadi developer di Android untuk waktu yang cukup lama. Selain Kernel Adiutor saya juga mengurus CyanogenMod untuk beberapa perangkat dan mengerjakan ParanoidAndroid. Jadi harap mengerti jika saya tidak memiliki waktu untuk memperbarui aplikasi ini.</string>
   <!-- Contributors -->
   <string name="commits">%d komit</string>
   <string name="no_internet">Silakan periksa koneksi internet Anda!</string>
