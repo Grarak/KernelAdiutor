@@ -91,9 +91,22 @@ public class MainActivity extends BaseActivity {
             if (!(password = AppSettings.getPassword(this)).isEmpty()) {
                 Intent intent = new Intent(this, SecurityActivity.class);
                 intent.putExtra(SecurityActivity.PASSWORD_INTENT, password);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 0);
             } else {
                 new CheckingTask(this).execute();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 0) {
+            if (resultCode == 1) {
+                new CheckingTask(this).execute();
+            } else {
+                finish();
             }
         }
     }
