@@ -9,6 +9,7 @@
   <string name="no_root">Không có root</string>
   <string name="no_busybox">Không có busybox</string>
   <string name="open">Open %s</string>
+  <string name="disable">Disable</string>
   <!-- Security -->
   <string name="password">Mật khẩu</string>
   <string name="password_wrong">Sai mật khẩu</string>
@@ -19,6 +20,7 @@
   <string name="cancel">Huỷ</string>
   <string name="ok">OK</string>
   <string name="unknown">Không xác định</string>
+  <string name="license_invalid">ขอขอบคุณที่คุณได้สมัครซื้อแอพพลิเคชั่นแล้ว! อาจไม่สามารถตรวจสอบว่าสัญญาอนุญาตล้มเหลว โปรดลองอีกครั้งหลังจาก กรุณาอย่าติดต่อกับฉัน คุณต้องเข้าถึงอินเทอร์เน็ต!</string>
   <string name="pirated">Có vẻ như ứng dụng ủng hộ đã không được mua thông qua cửa hàng Play! Nếu bạn vi phạm bản quyền, bạn nên cảm thấy xấu hổ!</string>
   <string name="donate">Ủng hộ</string>
   <string name="donate_summary">Tính năng này chỉ có sẵn khi ứng dụng ủng hộ được cài đặt! Đừng lo lắng. Bởi vì ứng dụng này là mã nguồn mở, bạn có thể dễ dàng xây dựng nó cho mình và loại bỏ sự kiểm tra này. Nhưng tôi hy vọng bạn hỗ trợ các nhà phát triển. Cảm ơn bạn đã sử dụng Kernel Adiutor! Một khi bạn mua các ứng dụng ủng hộ bạn phải khởi động lại Kernel Adiutor để kích hoạt tất cả tính năng.</string>
@@ -82,6 +84,7 @@
   <string name="virtual_memory">Bộ nhớ ảo</string>
   <string name="entropy">Dữ liệu ngẫu nhiên</string>
   <string name="misc">Tổng hợp</string>
+  <string name="data_sharing">Обменданными</string>
   <string name="custom_controls">Các điều khiển tùy chỉnh</string>
   <string name="downloads">Tải về</string>
   <string name="backup">Sao lưu</string>
@@ -126,8 +129,12 @@
   <string name="version">Phiên bản</string>
   <string name="handlers">Bộ xử lý</string>
   <!-- CPU -->
+  <string name="cores_string">แกน %s</string>
+  <string name="frequencies_string">%s ความถี่</string>
+  <string name="governors_string">ผู้อำนวยการ %s</string>
   <string name="cores_singular">%d lõi</string>
   <string name="cores">%d lõi</string>
+  <string name="cpu_usage">ใช้ CPU</string>
   <string name="no_offline_core">Bạn không thể tắt lõi này!</string>
   <string name="cpu_max_freq">Xung nhịp xử lý tối đa</string>
   <string name="cpu_max_freq_summary">Cài tần số tối đa CPU quy mô lên đến.</string>
@@ -163,7 +170,7 @@
   <string name="input_interval">Khoảng thời gian đầu vào</string>
   <string name="input_interval_summary">Khoảng thời gian tối thiểu tăng cường một CPU khi phát hiện đầu vào.</string>
   <string name="input_boost_freq">Tần số đầu vào tăng cường</string>
-  <string name="input_boost_freq_core">Đầu vào tăng cường tần số lõi %s</string>
+  <string name="input_boost_freq_core">Đầu vào tăng cường tần số lõi %d</string>
   <string name="input_boost_freq_summary">CPU được tăng cường đến tần số này khi phát hiện đầu vào.</string>
   <string name="wakeup_boost">Tăng tốc khả năng thức dậy</string>
   <string name="wakeup_boost_summary">Tăng tốc đánh thức tương tự như tăng tốc tín hiệu đầu vào, nhưng nó xảy ra khi màn hình đã được bật.</string>
@@ -203,7 +210,9 @@
   <string name="cpus_boosted">Đã tăng tốc các CPU</string>
   <string name="cpus_boosted_summary">Số lượng tối đa của CPU được tăng tốc cùng lúc.</string>
   <string name="min_cpu_online">Số CPU trực tuyến tối thiểu</string>
+  <string name="min_cpu_online_summary">จำนวนสูงสุดของ CPU ที่จะได้รับการออนไลน์.</string>
   <string name="max_cpu_online">Số CPU bật tối đa</string>
+  <string name="max_cpu_online_summary">จำนวนสูงสุดของ CPU ที่จะได้รับการออนไลน์.</string>
   <string name="max_cpu_online_screen_off">Số CPU tối đa khi màn hình tắt</string>
   <string name="max_cpu_online_screen_off_summary">Số CPU bật tối đa khi màn hình đang tắt.</string>
   <string name="suspend_defer_time">Đình chỉ thời gian trì hoãn</string>
@@ -213,6 +222,11 @@
   <string name="down_lock_duration">Giảm thời gian khóa</string>
   <string name="down_lock_duration_summary">Khoảng thời gian tối thiểu một CPU được mở.</string>
   <string name="fshift">FShift</string>
+  <string name="lazyplug">LazyPlug</string>
+  <string name="lazyplug_summary">ขอความช่วยเหลือจาก Qualcomm MPDecision เผยแพร่โดย mrg97</string>
+  <string name="lazy">Lườibiếng</string>
+  <string name="possible_cpu_cores">CPU ที่สามารถใช้งานได้</string>
+  <string name="possible_cpu_cores_summary">CPU Lõiอาจจะไม่สามารถใช้งานได้</string>
   <string name="blu_plug">Blu_Plug</string>
   <string name="blu_plug_summary">Một sự thay thế cho Qualcomm MPDecision. Phát triển bởi Code_Blue team.</string>
   <string name="powersaver_mode">Chế độ tiết kiệm</string>
@@ -305,6 +319,14 @@
   <string name="busy_up_threshold_summary">Ngưỡng khi lớn CPU nên được bật.</string>
   <string name="offline_delay">Diễn đàn chậm trễ</string>
   <string name="offline_delay_summary">Thời gian trước khi tắt một CPU.</string>
+  <string name="online_delay">Задержкаонлайн</string>
+  <string name="online_delay_summary">เวลาก่อนที่จะปิด CPU</string>
+  <string name="aio_hotplug">AiO Hotplug</string>
+  <string name="aio_hotplug_summary">AiO HotPlug สำหรับมือถือ Qualcomm Vyvinul Shoaib059</string>
+  <string name="max_cpu_online_big">จำนวน CPU สูงสุด</string>
+  <string name="max_cpu_online_big_summary">จำนวนสูงสุดของ CPU ที่จะได้รับการออนไลน์</string>
+  <string name="max_cpu_online_little">จำนวนสูงสุดของ CPU</string>
+  <string name="max_cpu_online_little_summary">จำนวนสูงสุดของ CPU ที่จะได้รับการออนไลน์</string>
   <!--Thermal-->
   <string name="thermal_info">Chỉ sử dụng một trình điều khiển nhiệt từ các tuỳ chọn sau, sử dụng nhiềucùng một lúc có thể gây ra hành vi không mong muốn.</string>
   <string name="thermald">Nhiệt</string>
@@ -332,6 +354,18 @@
   <string name="temp_limit">Giới hạn nhiệt độ</string>
   <string name="temp_limit_summary">Nếu nhiệt độ đi trên, nhiệt sẽ throttle tần số CPU để hạ nhiệt độ.</string>
   <string name="freq_limit_debug">Tần số giới hạn gỡ lỗi</string>
+  <string name="freq_limit_debug_summary">ไม่สามารถใช้งานได้สำหรับผู้ชาย - ตรวจแก้จุดบกพร่อง CPU ของ CPU ที่ใช้งานได้ดี</string>
+  <string name="temp_limit_min_freq">Temperaturgrenze für minimale Frequenz</string>
+  <string name="temp_limit_min_freq_summary">อุณหภูมิต่ำสุดที่ใช้ในการเคาะอุณหภูมิต่ำสุด</string>
+  <string name="allowed_low_low">Giai 1: Cho phép low low</string>
+  <string name="allowed_low_high">Giai 1: Cho phép low cao</string>
+  <string name="allowed_low_freq">Giai 1: Cho phép low low</string>
+  <string name="allowed_mid_low">Giai đoạn 2: อนุญาตระหว่างต่ำ</string>
+  <string name="allowed_mid_high">Kohta 2: Sallittu keskiarvoista korkeat</string>
+  <string name="allowed_mid_freq">Giai 1: Cho phép low low</string>
+  <string name="allowed_max_low">Giai 1: Cho phép low low</string>
+  <string name="allowed_max_high">Giai đoạn 2: Cho phép giữa cao</string>
+  <string name="allowed_max_freq">Giai đoạn 1: Cho phép thấp thấp</string>
   <string name="check_interval">Khoảng thời gian kiểm tra</string>
   <!-- GPU -->
   <string name="frequencies">Xung nhịp</string>
@@ -689,7 +723,6 @@
   <string name="fingerprint_summary">Sử dụng dấu vân tay để vượt qua kiểm tra an ninh. Tùy chọn này chạy nếu như bạn đã đăng kí dấu vân tay.</string>
   <string name="sections">Phần</string>
   <!-- About -->
-  <string name="libraries_used">Các thư viện sử dụng</string>
   <!-- Contributors -->
   <string name="commits">%d cam kết</string>
   <string name="no_internet">Hãy kiểm tra kết nối mạng của bạn!</string>

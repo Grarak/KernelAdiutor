@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2017 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -19,19 +19,13 @@
  */
 package com.grarak.kerneladiutor.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.crashlytics.android.Crashlytics;
-import com.grarak.kerneladiutor.BuildConfig;
-
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by willi on 02.08.16.
  */
-public class StartActivity extends Activity {
+public class StartActivity extends BaseActivity {
 
     /*
      * This activity only existed, so the user can toggle between
@@ -41,11 +35,11 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
-        }
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (getIntent().getExtras() != null) {
+            intent.putExtras(getIntent().getExtras());
+        }
         startActivity(intent);
         finish();
     }

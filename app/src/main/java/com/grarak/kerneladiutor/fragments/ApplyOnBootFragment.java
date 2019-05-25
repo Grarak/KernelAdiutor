@@ -20,12 +20,12 @@
 package com.grarak.kerneladiutor.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
@@ -45,8 +45,9 @@ import com.grarak.kerneladiutor.fragments.kernel.ScreenFragment;
 import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
-import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.fragments.kernel.WakeFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
+import com.grarak.kerneladiutor.utils.AppSettings;
 
 import java.util.HashMap;
 
@@ -54,6 +55,9 @@ import java.util.HashMap;
  * Created by willi on 03.05.16.
  */
 public class ApplyOnBootFragment extends BaseFragment {
+
+    private static final String PACKAGE = ApplyOnBootFragment.class.getCanonicalName();
+    private static final String INTENT_CATEGORY = PACKAGE + ".INTENT.CATEGORY";
 
     public static final String CPU = "cpu_onboot";
     public static final String CPU_VOLTAGE = "cpuvoltage_onboot";
@@ -81,7 +85,7 @@ public class ApplyOnBootFragment extends BaseFragment {
         sAssignments.put(ThermalFragment.class, THERMAL);
         sAssignments.put(GPUFragment.class, GPU);
         sAssignments.put(ScreenFragment.class, SCREEN);
-        sAssignments.put(WakeFrament.class, WAKE);
+        sAssignments.put(WakeFragment.class, WAKE);
         sAssignments.put(SoundFragment.class, SOUND);
         sAssignments.put(BatteryFragment.class, BATTERY);
         sAssignments.put(LEDFragment.class, LED);
@@ -102,7 +106,7 @@ public class ApplyOnBootFragment extends BaseFragment {
 
     public static ApplyOnBootFragment newInstance(RecyclerViewFragment recyclerViewFragment) {
         Bundle args = new Bundle();
-        args.putString("category", getAssignment(recyclerViewFragment.getClass()));
+        args.putString(INTENT_CATEGORY, getAssignment(recyclerViewFragment.getClass()));
         ApplyOnBootFragment fragment = new ApplyOnBootFragment();
         fragment.setArguments(args);
         return fragment;
@@ -110,12 +114,13 @@ public class ApplyOnBootFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (getActivity() instanceof ProfileActivity) {
             View rootView = inflater.inflate(R.layout.fragment_description, container, false);
 
-            TextView title = (TextView) rootView.findViewById(R.id.title);
-            TextView summary = (TextView) rootView.findViewById(R.id.summary);
+            TextView title = rootView.findViewById(R.id.title);
+            TextView summary = rootView.findViewById(R.id.summary);
 
             title.setText(getString(R.string.apply_on_boot));
             summary.setText(getString(R.string.apply_on_boot_not_available));
@@ -124,15 +129,11 @@ public class ApplyOnBootFragment extends BaseFragment {
         } else {
             View rootView = inflater.inflate(R.layout.fragment_apply_on_boot, container, false);
 
-            final String category = getArguments().getString("category");
-            SwitchCompat switcher = (SwitchCompat) rootView.findViewById(R.id.switcher);
-            switcher.setChecked(Prefs.getBoolean(category, false, getActivity()));
-            switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Prefs.saveBoolean(category, isChecked, getActivity());
-                }
-            });
+            final String category = getArguments().getString(INTENT_CATEGORY);
+            SwitchCompat switcher = rootView.findViewById(R.id.switcher);
+            switcher.setChecked(AppSettings.getBoolean(category, false, getActivity()));
+            switcher.setOnCheckedChangeListener((buttonView, isChecked) ->
+                    AppSettings.saveBoolean(category, isChecked, getActivity()));
             return rootView;
         }
     }

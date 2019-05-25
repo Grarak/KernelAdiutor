@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.statistics;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
@@ -38,10 +38,10 @@ public class DeviceFragment extends RecyclerViewFragment {
     protected void init() {
         super.init();
 
-        String processor = Device.CPUInfo.getProcessor();
-        String hardware = Device.CPUInfo.getVendor();
-        String features = Device.CPUInfo.getFeatures();
-        int ram = (int) Device.MemInfo.getTotalMem();
+        String processor = Device.CPUInfo.getInstance().getProcessor();
+        String hardware = Device.CPUInfo.getInstance().getVendor();
+        String features = Device.CPUInfo.getInstance().getFeatures();
+        int ram = (int) Device.MemInfo.getInstance().getTotalMem();
 
         if (!processor.isEmpty()) {
             addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.processor), processor));
@@ -68,8 +68,8 @@ public class DeviceFragment extends RecyclerViewFragment {
                 {getString(R.string.build_display_id), Device.getBuildDisplayId()},
                 {getString(R.string.baseband), Device.getBaseBand()},
                 {getString(R.string.bootloader), Device.getBootloader()},
-                {getString(R.string.rom), Device.ROMInfo.getVersion()},
-                {getString(R.string.trustzone), Device.TrustZone.getVersion()}
+                {getString(R.string.rom), Device.ROMInfo.getInstance().getVersion()},
+                {getString(R.string.trustzone), Device.TrustZone.getInstance().getVersion()}
         };
 
         String[][] boardInfos = {
@@ -78,12 +78,12 @@ public class DeviceFragment extends RecyclerViewFragment {
                 {getString(R.string.kernel), Device.getKernelVersion(true)}
         };
 
-        CardView deviceCard = new CardView(getActivity());
+        CardView deviceCard = new CardView();
         String vendor = Device.getVendor();
         vendor = vendor.substring(0, 1).toUpperCase() + vendor.substring(1);
         deviceCard.setTitle(vendor + " " + Device.getModel());
 
-        CardView boardCard = new CardView(getActivity());
+        CardView boardCard = new CardView();
         boardCard.setTitle(Device.getBoard().toUpperCase());
 
         for (String[] deviceInfo : deviceInfos) {
@@ -108,6 +108,11 @@ public class DeviceFragment extends RecyclerViewFragment {
 
         items.add(deviceCard);
         items.add(boardCard);
+    }
+
+    @Override
+    protected boolean showAd() {
+        return true;
     }
 
 }

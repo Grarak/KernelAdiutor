@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.led.LED;
 import com.grarak.kerneladiutor.utils.kernel.led.Sec;
 import com.grarak.kerneladiutor.views.recyclerview.CardView;
@@ -36,19 +36,22 @@ import java.util.List;
  */
 public class LEDFragment extends RecyclerViewFragment {
 
+    private LED mLED;
+
     @Override
     protected void init() {
         super.init();
 
+        mLED = LED.getInstance();
         addViewPagerFragment(ApplyOnBootFragment.newInstance(this));
     }
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        if (LED.hasIntensity()) {
+        if (mLED.hasIntensity()) {
             intensityInit(items);
         }
-        if (LED.hasSpeed()) {
+        if (mLED.hasSpeed()) {
             speedInit(items);
         }
         brightnessInit(items);
@@ -63,11 +66,11 @@ public class LEDFragment extends RecyclerViewFragment {
         SeekBarView intensity = new SeekBarView();
         intensity.setTitle(getString(R.string.intensity));
         intensity.setUnit("%");
-        intensity.setProgress(LED.getIntensity());
+        intensity.setProgress(mLED.getIntensity());
         intensity.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                LED.setIntensity(position, getActivity());
+                mLED.setIntensity(position, getActivity());
             }
 
             @Override
@@ -81,12 +84,12 @@ public class LEDFragment extends RecyclerViewFragment {
     private void speedInit(List<RecyclerViewItem> items) {
         SeekBarView speed = new SeekBarView();
         speed.setTitle(getString(R.string.speed));
-        speed.setItems(LED.getSpeedMenu(getActivity()));
-        speed.setProgress(LED.getSpeed());
+        speed.setItems(mLED.getSpeedMenu(getActivity()));
+        speed.setProgress(mLED.getSpeed());
         speed.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                LED.setSpeed(position, getActivity());
+                mLED.setSpeed(position, getActivity());
             }
 
             @Override
@@ -98,7 +101,7 @@ public class LEDFragment extends RecyclerViewFragment {
     }
 
     private void brightnessInit(List<RecyclerViewItem> items) {
-        CardView brightnessCard = new CardView(getActivity());
+        CardView brightnessCard = new CardView();
         brightnessCard.setTitle(getString(R.string.brightness));
 
         if (Sec.hasHighpowerCurrent()) {
@@ -151,7 +154,7 @@ public class LEDFragment extends RecyclerViewFragment {
     }
 
     private void delayInit(List<RecyclerViewItem> items) {
-        CardView delayCard = new CardView(getActivity());
+        CardView delayCard = new CardView();
         delayCard.setTitle(getString(R.string.delay));
 
         if (Sec.hasNotificationDelayOn()) {
@@ -202,22 +205,18 @@ public class LEDFragment extends RecyclerViewFragment {
     }
 
     private void fadeInit(List<RecyclerViewItem> items) {
-        if (LED.hasFade()) {
+        if (mLED.hasFade()) {
             SwitchView fade = new SwitchView();
             fade.setTitle(getString(R.string.fade));
             fade.setSummary(getString(R.string.fade_summary));
-            fade.setChecked(LED.isFadeEnabled());
-            fade.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    LED.enableFade(isChecked, getActivity());
-                }
-            });
+            fade.setChecked(mLED.isFadeEnabled());
+            fade.addOnSwitchListener((switchView, isChecked)
+                    -> mLED.enableFade(isChecked, getActivity()));
 
             items.add(fade);
         }
 
-        CardView fadeCard = new CardView(getActivity());
+        CardView fadeCard = new CardView();
         fadeCard.setTitle(getString(R.string.fade));
 
         if (Sec.hasNotificationRampControl()) {
@@ -225,12 +224,8 @@ public class LEDFragment extends RecyclerViewFragment {
             notificationRampControl.setTitle(getString(R.string.fade_ramp_control));
             notificationRampControl.setSummary(getString(R.string.fade_ramp_control_summary));
             notificationRampControl.setChecked(Sec.isNotificationRampControlEnabled());
-            notificationRampControl.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    Sec.enableNotificationRampControl(isChecked, getActivity());
-                }
-            });
+            notificationRampControl.addOnSwitchListener((switchView, isChecked)
+                    -> Sec.enableNotificationRampControl(isChecked, getActivity()));
 
             fadeCard.addItem(notificationRampControl);
         }
@@ -289,12 +284,8 @@ public class LEDFragment extends RecyclerViewFragment {
         test.setTitle(getString(R.string.test));
         test.setSummary(getString(R.string.led_test_summary));
         test.setChecked(Sec.isTestingPattern());
-        test.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                Sec.testPattern(isChecked);
-            }
-        });
+        test.addOnSwitchListener((switchView, isChecked)
+                -> Sec.testPattern(isChecked));
 
         items.add(test);
     }

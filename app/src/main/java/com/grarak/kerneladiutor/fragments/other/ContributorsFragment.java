@@ -22,7 +22,7 @@ package com.grarak.kerneladiutor.fragments.other;
 import android.support.design.widget.Snackbar;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.WebpageReader;
 import com.grarak.kerneladiutor.utils.other.Contributors;
 import com.grarak.kerneladiutor.views.recyclerview.ContributorView;
@@ -57,11 +57,6 @@ public class ContributorsFragment extends RecyclerViewFragment {
     }
 
     @Override
-    protected boolean needDelay() {
-        return false;
-    }
-
-    @Override
     protected void addItems(List<RecyclerViewItem> items) {
     }
 
@@ -69,11 +64,11 @@ public class ContributorsFragment extends RecyclerViewFragment {
     protected void postInit() {
         super.postInit();
 
-        showProgress();
         if (mWebpageReader == null) {
-            mWebpageReader = new WebpageReader(getActivity(), new WebpageReader.WebpageCallback() {
+            showProgress();
+            mWebpageReader = new WebpageReader(getActivity(), new WebpageReader.WebpageListener() {
                 @Override
-                public void onCallback(String raw, CharSequence html) {
+                public void onSuccess(String url, String raw, CharSequence html) {
                     if (!isAdded()) return;
                     hideProgress();
                     Contributors contributors = new Contributors(raw);
@@ -88,15 +83,22 @@ public class ContributorsFragment extends RecyclerViewFragment {
                         error();
                     }
                 }
+
+                @Override
+                public void onFailure(String url) {
+                    error();
+                }
             });
-            mWebpageReader.execute("https://api.github.com/repos/Grarak/KernelAdiutor/contributors");
+            mWebpageReader.get("https://api.github.com/repos/Grarak/KernelAdiutor/contributors");
         }
     }
 
     private void error() {
-        hideProgress();
-        mErrorBar = Snackbar.make(getRootView(), R.string.no_internet, Snackbar.LENGTH_INDEFINITE);
-        mErrorBar.show();
+        if (isAdded()) {
+            hideProgress();
+            mErrorBar = Snackbar.make(getRootView(), R.string.no_internet, Snackbar.LENGTH_INDEFINITE);
+            mErrorBar.show();
+        }
     }
 
     @Override

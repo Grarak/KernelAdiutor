@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.lmk.LMK;
@@ -60,7 +60,7 @@ public class LMKFragment extends RecyclerViewFragment {
     }
 
     private String getAdjustedSize(int... offsets) {
-        long memTotal = Device.MemInfo.getTotalMem() * 1024L / 100L / 4L;
+        long memTotal = Device.MemInfo.getInstance().getTotalMem() * 1024L / 100L / 4L;
         StringBuilder stringBuilder = new StringBuilder();
         for (int offset : offsets) {
             stringBuilder.append(String.valueOf((int) memTotal * offset)).append(",");
@@ -84,12 +84,8 @@ public class LMKFragment extends RecyclerViewFragment {
         adaptive.setTitle(getString(R.string.lmk_adaptive));
         adaptive.setSummary(getString(R.string.lmk_adaptive_summary));
         adaptive.setChecked(LMK.isAdaptiveEnabled());
-        adaptive.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchView, boolean isChecked) {
-                LMK.enableAdaptive(isChecked, getActivity());
-            }
-        });
+        adaptive.addOnSwitchListener((switchView, isChecked)
+                -> LMK.enableAdaptive(isChecked, getActivity()));
 
         items.add(adaptive);
     }
@@ -140,12 +136,9 @@ public class LMKFragment extends RecyclerViewFragment {
             DescriptionView profile = new DescriptionView();
             profile.setTitle(getString(id));
             profile.setSummary(sProfiles.get(id));
-            profile.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    LMK.setMinFree(((DescriptionView) item).getSummary().toString(), getActivity());
-                    refreshMinFree();
-                }
+            profile.setOnItemClickListener(item -> {
+                LMK.setMinFree(((DescriptionView) item).getSummary().toString(), getActivity());
+                refreshMinFree();
             });
 
             items.add(profile);
@@ -158,12 +151,8 @@ public class LMKFragment extends RecyclerViewFragment {
             swapWait.setTitle(getString(R.string.kill_lmk));
             swapWait.setSummary(getString(R.string.kill_lmk_summary));
             swapWait.setChecked(LMK.isSwapWaitEnabled());
-            swapWait.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    LMK.enableSwapWait(isChecked, getActivity());
-                }
-            });
+            swapWait.addOnSwitchListener((switchView, isChecked)
+                    -> LMK.enableSwapWait(isChecked, getActivity()));
 
             items.add(swapWait);
         }
@@ -197,14 +186,11 @@ public class LMKFragment extends RecyclerViewFragment {
     }
 
     private void refreshMinFree() {
-        getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final List<String> minfrees = LMK.getMinFrees();
-                for (int i = 0; i < minfrees.size(); i++) {
-                    if (i == mMinFrees.size()) break;
-                    mMinFrees.get(i).setProgress(Math.round(Utils.strToInt(minfrees.get(i)) / 256));
-                }
+        getHandler().postDelayed(() -> {
+            final List<String> minfrees = LMK.getMinFrees();
+            for (int i = 0; i < minfrees.size(); i++) {
+                if (i == mMinFrees.size()) break;
+                mMinFrees.get(i).setProgress(Math.round(Utils.strToInt(minfrees.get(i)) / 256));
             }
         }, 250);
     }

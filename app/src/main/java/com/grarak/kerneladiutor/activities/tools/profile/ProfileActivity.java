@@ -19,9 +19,9 @@
  */
 package com.grarak.kerneladiutor.activities.tools.profile;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
@@ -60,6 +60,7 @@ import java.util.List;
 public class ProfileActivity extends BaseActivity {
 
     public static final String POSITION_INTENT = "position";
+    public static final String FRAGMENTS_INTENT = "fragments";
     public static final String RESULT_ID_INTENT = "result_id";
     public static final String RESULT_COMMAND_INTENT = "result_command";
 
@@ -74,18 +75,14 @@ public class ProfileActivity extends BaseActivity {
     protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mItems.clear();
-        boolean add = false;
-        for (int id : NavigationActivity.sActualFragments.keySet()) {
-            if (id == R.string.kernel) {
-                add = true;
-            } else if (add && NavigationActivity.sActualFragments.get(id) != null) {
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(id + "_key");
-                mItems.put(getString(id), fragment == null ? NavigationActivity.sActualFragments.get(id)
-                        : fragment);
-            } else if (id == R.string.tools) {
-                break;
-            }
+        Intent intent = getIntent();
+
+        ArrayList<NavigationActivity.NavigationFragment> fragments =
+                intent.getParcelableArrayListExtra(FRAGMENTS_INTENT);
+
+        for (NavigationActivity.NavigationFragment navigationFragment : fragments) {
+            mItems.put(getString(navigationFragment.mId), getFragment(navigationFragment.mId,
+                    navigationFragment.mFragmentClass));
         }
 
         if (mItems.size() < 1) {
@@ -94,7 +91,7 @@ public class ProfileActivity extends BaseActivity {
             return;
         }
 
-        mProfilePosition = getIntent().getIntExtra(POSITION_INTENT, -1);
+        mProfilePosition = intent.getIntExtra(POSITION_INTENT, -1);
         if (savedInstanceState != null && (mMode = savedInstanceState.getInt("mode")) != 0) {
             if (mMode == 1) {
                 initNewMode(savedInstanceState);
@@ -103,20 +100,26 @@ public class ProfileActivity extends BaseActivity {
             }
         } else {
             new Dialog(this).setItems(getResources().getStringArray(R.array.profile_modes),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 0:
-                                    initNewMode(savedInstanceState);
-                                    break;
-                                case 1:
-                                    currentSettings();
-                                    break;
-                            }
+                    (dialog, which) -> {
+                        switch (which) {
+                            case 0:
+                                initNewMode(savedInstanceState);
+                                break;
+                            case 1:
+                                currentSettings();
+                                break;
                         }
                     }).setCancelable(false).show();
         }
+    }
+
+    public Fragment getFragment(int res, Class<? extends Fragment> fragmentClass) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(res + "_key");
+        if (fragment == null) {
+            fragment = Fragment.instantiate(this, fragmentClass.getCanonicalName());
+        }
+        return fragment;
     }
 
     private void initNewMode(Bundle savedInstanceState) {
@@ -126,29 +129,22 @@ public class ProfileActivity extends BaseActivity {
         Control.clearProfileCommands();
         Control.setProfileMode(true);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        final ViewPager viewPager = findViewById(R.id.viewpager);
 
         if (savedInstanceState != null) {
             mHideWarningDialog = savedInstanceState.getBoolean("hidewarningdialog");
         }
         if (!mHideWarningDialog) {
-            ViewUtils.dialogBuilder(getString(R.string.profile_warning), null, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            }, new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    mHideWarningDialog = true;
-                }
-            }, this).show();
+            ViewUtils.dialogBuilder(getString(R.string.profile_warning), null,
+                    (dialogInterface, i) -> {
+                    }, dialog -> mHideWarningDialog = true, this).show();
         }
 
         viewPager.setOffscreenPageLimit(mItems.size());
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), mItems);
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        TabLayout tabLayout = findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -168,12 +164,8 @@ public class ProfileActivity extends BaseActivity {
             }
         });
 
-        findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                returnIntent(Control.getProfileCommands());
-            }
-        });
+        findViewById(R.id.done).setOnClickListener(view ->
+                returnIntent(Control.getProfileCommands()));
     }
 
     private void currentSettings() {
@@ -264,10 +256,10 @@ public class ProfileActivity extends BaseActivity {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile_dialog, container, false);
 
-            LinearLayout checkBoxParent = (LinearLayout) rootView.findViewById(R.id.checkbox_parent);
+            LinearLayout checkBoxParent = rootView.findViewById(R.id.checkbox_parent);
             final HashMap<AppCompatCheckBox, Class> checkBoxes = new HashMap<>();
             for (final String name : mList.keySet()) {
                 AppCompatCheckBox compatCheckBox = new AppCompatCheckBox(getActivity());
@@ -279,49 +271,38 @@ public class ProfileActivity extends BaseActivity {
                 checkBoxes.put(compatCheckBox, mList.get(name).getClass());
             }
 
-            rootView.findViewById(R.id.select_all).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (AppCompatCheckBox compatCheckBox : checkBoxes.keySet()) {
-                        compatCheckBox.setChecked(true);
-                    }
+            rootView.findViewById(R.id.select_all).setOnClickListener(v -> {
+                for (AppCompatCheckBox compatCheckBox : checkBoxes.keySet()) {
+                    compatCheckBox.setChecked(true);
                 }
             });
 
-            AppCompatImageButton cancel = (AppCompatImageButton) rootView.findViewById(R.id.cancel);
+            AppCompatImageButton cancel = rootView.findViewById(R.id.cancel);
             DrawableCompat.setTint(cancel.getDrawable(), ViewUtils.getThemeAccentColor(getActivity()));
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().finish();
-                }
-            });
+            cancel.setOnClickListener(v -> getActivity().finish());
 
-            AppCompatImageButton done = (AppCompatImageButton) rootView.findViewById(R.id.done);
+            AppCompatImageButton done = rootView.findViewById(R.id.done);
             DrawableCompat.setTint(done.getDrawable(), ViewUtils.getThemeAccentColor(getActivity()));
-            done.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    List<String> categories = new ArrayList<>();
-                    for (AppCompatCheckBox compatCheckBox : checkBoxes.keySet()) {
-                        if (compatCheckBox.isChecked()) {
-                            categories.add(ApplyOnBootFragment.getAssignment(checkBoxes.get(compatCheckBox)));
-                        }
+            done.setOnClickListener(v -> {
+                List<String> categories = new ArrayList<>();
+                for (AppCompatCheckBox compatCheckBox : checkBoxes.keySet()) {
+                    if (compatCheckBox.isChecked()) {
+                        categories.add(ApplyOnBootFragment.getAssignment(checkBoxes.get(compatCheckBox)));
                     }
-                    if (categories.size() < 1) {
-                        Utils.toast(R.string.nothing_selected, getActivity());
-                        return;
-                    }
-
-                    LinkedHashMap<String, String> items = new LinkedHashMap<>();
-                    List<Settings.SettingsItem> settingsItems = new Settings(getActivity()).getAllSettings();
-                    for (Settings.SettingsItem item : settingsItems) {
-                        if (categories.contains(item.getCategory())) {
-                            items.put(item.getId(), item.getSetting());
-                        }
-                    }
-                    ((ProfileActivity) getActivity()).returnIntent(items);
                 }
+                if (categories.size() < 1) {
+                    Utils.toast(R.string.nothing_selected, getActivity());
+                    return;
+                }
+
+                LinkedHashMap<String, String> items = new LinkedHashMap<>();
+                List<Settings.SettingsItem> settingsItems = new Settings(getActivity()).getAllSettings();
+                for (Settings.SettingsItem item : settingsItems) {
+                    if (categories.contains(item.getCategory())) {
+                        items.put(item.getId(), item.getSetting());
+                    }
+                }
+                ((ProfileActivity) getActivity()).returnIntent(items);
             });
 
             return rootView;

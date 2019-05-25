@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatEditText;
@@ -35,8 +36,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.grarak.kerneladiutor.R;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.FingerprintUiHelper;
-import com.grarak.kerneladiutor.utils.Prefs;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.mattprecious.swirl.SwirlView;
 
@@ -78,7 +79,7 @@ public class SecurityActivity extends BaseActivity {
         setContentView(R.layout.activity_security);
 
         final String password = Utils.decodeString(getIntent().getStringExtra(PASSWORD_INTENT));
-        AppCompatEditText editText = (AppCompatEditText) findViewById(R.id.edittext);
+        AppCompatEditText editText = findViewById(R.id.edittext);
         mPasswordWrong = findViewById(R.id.password_wrong);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -102,7 +103,7 @@ public class SecurityActivity extends BaseActivity {
         });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && Prefs.getBoolean("fingerprint", false, this)) {
+                && AppSettings.isFingerprint(this)) {
             mFingerprintManagerCompat = FingerprintManagerCompat.from(this);
             if (mFingerprintManagerCompat.isHardwareDetected()
                     && mFingerprintManagerCompat.hasEnrolledFingerprints()
@@ -112,6 +113,7 @@ public class SecurityActivity extends BaseActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void loadFingerprint() {
         try {
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
@@ -139,7 +141,7 @@ public class SecurityActivity extends BaseActivity {
         }
 
         mCryptoObject = new FingerprintManagerCompat.CryptoObject(mCipher);
-        FrameLayout fingerprintParent = (FrameLayout) findViewById(R.id.fingerprint_parent);
+        FrameLayout fingerprintParent = findViewById(R.id.fingerprint_parent);
         final SwirlView swirlView = new SwirlView(new ContextThemeWrapper(this, R.style.Swirl));
         swirlView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));

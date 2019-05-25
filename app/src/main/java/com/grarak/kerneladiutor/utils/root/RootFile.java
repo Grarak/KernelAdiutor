@@ -110,7 +110,7 @@ public class RootFile {
     }
 
     public boolean isDirectory() {
-        return "true".equals(mSU.runCommand("[ -d " + mFile + " ] && echo true"));
+        return "true".equals(mSU.runCommand("[ -d '" + mFile + "' ] && echo true"));
     }
 
     public RootFile getParentFile() {
@@ -118,7 +118,7 @@ public class RootFile {
     }
 
     public RootFile getRealPath() {
-        return new RootFile(mSU.runCommand("realpath \"" + mFile + "\""), mSU);
+        return new RootFile(mSU.runCommand("realpath '" + mFile + "'"), mSU);
     }
 
     public boolean isEmpty() {
@@ -126,7 +126,7 @@ public class RootFile {
     }
 
     public boolean exists() {
-        String output = mSU.runCommand("[ -e " + mFile + " ] && echo true");
+        String output = mSU.runCommand("[ -e '" + mFile + "' ] && echo true");
         return output != null && output.equals("true");
     }
 

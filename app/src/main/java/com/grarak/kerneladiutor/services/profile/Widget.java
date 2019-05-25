@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2018 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -26,13 +26,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.SparseArray;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
-import com.grarak.kerneladiutor.services.boot.Service;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.services.boot.ApplyOnBoot;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -49,6 +50,8 @@ public class Widget extends AppWidgetProvider {
 
     private static final String LIST_ITEM_CLICK = "list_item";
     private static final String ITEM_ARG = "item_extra";
+
+    private static final SparseArray<Long> sProfileLastClicked = new SparseArray<>();
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -81,23 +84,14 @@ public class Widget extends AppWidgetProvider {
         if (intent.getAction().equals(LIST_ITEM_CLICK)) {
             final int position = intent.getIntExtra(ITEM_ARG, 0);
             Profiles.ProfileItem profileItem = new Profiles(context).getAllProfiles().get(position);
-            if (!Prefs.getBoolean("profileclicked" + position, false, context)) {
-                Prefs.saveBoolean("profileclicked" + position, true, context);
+
+            long lastClicked = sProfileLastClicked.get(position, 0L);
+            long currentTime = SystemClock.elapsedRealtime();
+            if (currentTime - lastClicked > 2000) {
+                sProfileLastClicked.put(position, currentTime);
                 Utils.toast(context.getString(R.string.press_again_to_apply, profileItem.getName()),
                         context);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(2000);
-                            Prefs.saveBoolean("profileclicked" + position, false, context);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
             } else {
-                Prefs.saveBoolean("profileclicked" + position, false, context);
                 RootUtils.SU su = new RootUtils.SU(true, TAG);
 
                 List<String> adjustedCommands = new ArrayList<>();
@@ -107,7 +101,7 @@ public class Widget extends AppWidgetProvider {
                         if (command.getCommand().startsWith("#")
                                 && (applyCpu = new CPUFreq.ApplyCpu(command.getCommand()
                                 .substring(1))).toString() != null) {
-                            adjustedCommands.addAll(Service.getApplyCpu(applyCpu, su));
+                            adjustedCommands.addAll(ApplyOnBoot.getApplyCpu(applyCpu, su));
                         } else {
                             adjustedCommands.add(command.getCommand());
                         }
@@ -187,7 +181,6 @@ public class Widget extends AppWidgetProvider {
         @Override
         public void onDestroy() {
         }
-
     }
 
     public static class WidgetService extends RemoteViewsService {
@@ -196,7 +189,5 @@ public class Widget extends AppWidgetProvider {
         public RemoteViewsFactory onGetViewFactory(Intent intent) {
             return new ListViewFactory(getApplicationContext());
         }
-
     }
-
 }

@@ -1,0 +1,3364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Default.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Default.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Default.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Red.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/redPrimary</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Red.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Pink.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/pinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Pink.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Purple.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Purple.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Green.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greenPrimary</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Green.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Orange.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Orange.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Brown.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/brownPrimary</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Brown.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Grey.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Grey.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Blue_Grey.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/blue_greyPrimary</item>
+        <item name="colorPrimaryDark">@color/blue_greyPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Blue_Grey.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Teal.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/tealPrimary</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Teal.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Purple.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_purplePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_purplePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Purple.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Lime.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/limePrimary</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Lime.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Indigo.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/indigoPrimary</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Indigo.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Deep_Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Cyan.Deep_Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/cyanPrimary</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+        <item name="colorAccent">@color/deep_orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Cyan.Deep_Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Default" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Default.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Default.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Red" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Red.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/redAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Red.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Pink" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Pink.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Pink.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Blue" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Blue.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/blueAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Blue.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Green" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Green.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/greenAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Green.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Orange" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Orange.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/orangeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Orange.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Brown" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Brown.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/brownAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Brown.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Blue_Grey" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Blue_Grey.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/blue_greyAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Blue_Grey.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Teal" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Teal.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/tealAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Teal.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Deep_Purple" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Deep_Purple.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/deep_purpleAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Deep_Purple.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Lime" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Lime.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/limeAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Lime.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Indigo" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Indigo.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/indigoAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Indigo.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Cyan" parent="AppThemeParent">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Cyan.Dark</item>
+    </style>
+
+    <style name="Theme.Deep_Orange.Cyan.Dark" parent="AppThemeParentDark">
+        <item name="colorPrimary">@color/deep_orangePrimary</item>
+        <item name="colorPrimaryDark">@color/deep_orangePrimaryDark</item>
+        <item name="colorAccent">@color/cyanAccent</item>
+        <item name="edittext_build_prop_style">@style/Theme.Deep_Orange.Cyan.Dark</item>
+    </style>
+
+</resources>

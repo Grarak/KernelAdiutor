@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2017 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -19,6 +19,7 @@
  */
 package com.grarak.kerneladiutor.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
@@ -29,6 +30,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.hardware.display.DisplayManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -39,12 +41,13 @@ import android.support.annotation.StringRes;
 import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.util.Base64;
-import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Toast;
 
 import com.grarak.kerneladiutor.BuildConfig;
 import com.grarak.kerneladiutor.activities.StartActivity;
+import com.grarak.kerneladiutor.activities.StartActivityMaterial;
 import com.grarak.kerneladiutor.utils.root.RootFile;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 
@@ -75,13 +78,21 @@ public class Utils {
     public static boolean DONATED = BuildConfig.DEBUG;
     public static boolean DARK_THEME;
 
+    public static void startService(Context context, Intent intent) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
+        }
+    }
+
     public static String upperCaseEachWord(String text) {
         char[] chars = text.toCharArray();
         for (int i = 0; i < chars.length; i++) {
             if (i == 0) {
                 chars[i] = Character.toUpperCase(chars[0]);
-            } else if (Character.isWhitespace(chars[i])) {
-                chars[i] = Character.toUpperCase(chars[i]);
+            } else if (Character.isWhitespace(chars[i]) && i != chars.length - 1) {
+                chars[i + 1] = Character.toUpperCase(chars[i + 1]);
             }
         }
 
@@ -89,30 +100,28 @@ public class Utils {
     }
 
     public static boolean isScreenOn(Context context) {
-        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            return powerManager.isInteractive();
+            DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+            for (Display display : dm.getDisplays()) {
+                if (display.getState() != Display.STATE_OFF) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            return powerManager.isScreenOn();
         }
-        return powerManager.isScreenOn();
-    }
-
-    public static float getAverage(float... numbers) {
-        float average = 0;
-        for (float num : numbers) {
-            average += num;
-        }
-        average /= numbers.length;
-        return average;
     }
 
     public static String getRandomString(int length) {
         Random random = new Random();
-        String text = "";
+        StringBuilder text = new StringBuilder();
         String chars = "abcdefghijklmnopqrstuvwxyz0123456789";
         for (int i = 0; i < length; i++) {
-            text += chars.charAt(random.nextInt(chars.length()));
+            text.append(chars.charAt(random.nextInt(chars.length())));
         }
-        return text;
+        return text.toString();
     }
 
     public static long computeSHAHash(String password) throws Exception {
@@ -138,13 +147,24 @@ public class Utils {
                 .getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 
+    public static void setupStartActivity(Context context) {
+        PackageManager pm = context.getPackageManager();
+        if (Utils.hideStartActivity()) {
+            pm.setComponentEnabledSetting(new ComponentName(context, StartActivity.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+            pm.setComponentEnabledSetting(new ComponentName(context, StartActivityMaterial.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        } else {
+            setStartActivity(Prefs.getBoolean("materialicon", false, context), context);
+        }
+    }
+
     public static void setStartActivity(boolean material, Context context) {
         PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(context, StartActivity.class),
                 material ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED :
                         PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-        pm.setComponentEnabledSetting(new ComponentName(BuildConfig.APPLICATION_ID,
-                        BuildConfig.APPLICATION_ID + ".activities.StartActivity-Material"),
+        pm.setComponentEnabledSetting(new ComponentName(context, StartActivityMaterial.class),
                 material ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
                         PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
@@ -184,14 +204,6 @@ public class Utils {
         }
     }
 
-    public static void setLocale(String lang, Context context) {
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        context.getApplicationContext().getResources().updateConfiguration(config, null);
-    }
-
     public static boolean hasCMSDK() {
         return cyanogenmod.os.Build.CM_VERSION.SDK_INT >= cyanogenmod.os.Build.CM_VERSION_CODES.APRICOT;
     }
@@ -221,17 +233,6 @@ public class Utils {
     public static String getExternalStorage() {
         String path = RootUtils.runCommand("echo ${SECONDARY_STORAGE%%:*}");
         return path.contains("/") ? path : null;
-    }
-
-    public static String getInternalStorage() {
-        String dataPath = existFile("/data/media/0", true) ? "/data/media/0" : "/data/media";
-        if (!new RootFile(dataPath).isEmpty()) {
-            return dataPath;
-        }
-        if (existFile("/sdcard", true)) {
-            return "/sdcard";
-        }
-        return Environment.getExternalStorageDirectory().getPath();
     }
 
     public static String getInternalDataStorage() {
@@ -295,7 +296,7 @@ public class Utils {
         try {
             digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "Exception while getting digest", e);
+            Log.e(TAG, "Exception while getting digest " + e.getMessage());
             return null;
         }
 
@@ -303,7 +304,7 @@ public class Utils {
         try {
             is = new FileInputStream(updateFile);
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "Exception while getting FileInputStream", e);
+            Log.e(TAG, "Exception while getting FileInputStream " + e.getMessage());
             return null;
         }
 
@@ -325,7 +326,7 @@ public class Utils {
             try {
                 is.close();
             } catch (IOException e) {
-                Log.e(TAG, "Exception on closing MD5 input stream", e);
+                Log.e(TAG, "Exception on closing MD5 input stream " + e.getMessage());
             }
         }
     }
@@ -376,7 +377,7 @@ public class Utils {
     }
 
     public static String strFormat(String text, Object... format) {
-        return String.format(text, format);
+        return String.format(Locale.getDefault(), text, format);
     }
 
     public static Float strToFloat(String text) {
@@ -433,8 +434,9 @@ public class Utils {
         }
     }
 
-    public static int getOrientation(Context context) {
-        return context.getResources().getConfiguration().orientation;
+    public static int getOrientation(Activity activity) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && activity.isInMultiWindowMode() ?
+                Configuration.ORIENTATION_PORTRAIT : activity.getResources().getConfiguration().orientation;
     }
 
     public static boolean isPropRunning(String key) {

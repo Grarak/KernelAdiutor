@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2018 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -19,17 +19,18 @@
  */
 package com.grarak.kerneladiutor.views.recyclerview;
 
-import android.support.v7.widget.CardView;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by willi on 17.04.16.
@@ -41,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private final List<RecyclerViewItem> mItems;
-    private final HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
+    private final Map<RecyclerViewItem, View> mViews = new HashMap<>();
     private OnViewChangedListener mOnViewChangedListener;
     private View mFirstItem;
 
@@ -51,8 +52,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        mItems.get(position).onCreateView(holder.itemView);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        RecyclerViewItem item = mItems.get(position);
+        item.onCreateView(holder.itemView);
     }
 
     @Override
@@ -60,27 +62,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mItems.size();
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+        RecyclerViewItem item = mItems.get(position);
         View view;
-        if (mItems.get(position).cacheable()) {
-            if (mViews.containsKey(mItems.get(position))) {
-                view = mViews.get(mItems.get(position));
+        if (item.cacheable()) {
+            if (mViews.containsKey(item)) {
+                view = mViews.get(item);
             } else {
-                mViews.put(mItems.get(position), view = LayoutInflater.from(parent.getContext())
-                        .inflate(mItems.get(position).getLayoutRes(), parent, false));
+                mViews.put(item, view = LayoutInflater.from(parent.getContext())
+                        .inflate(item.getLayoutRes(), parent, false));
             }
         } else {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(mItems.get(position).getLayoutRes(), parent, false);
+            try {
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(item.getLayoutRes(), parent, false);
+            } catch (Exception ignored) {
+                throw new IllegalArgumentException("Couldn't inflate " + item.getClass().getSimpleName());
+            }
         }
         ViewGroup viewGroup = (ViewGroup) view.getParent();
         if (viewGroup != null) {
             viewGroup.removeView(view);
         }
-        if (mItems.get(position).cardCompatible()
-                && Prefs.getBoolean("forcecards", false, view.getContext())) {
-            CardView cardView = new CardView(view.getContext());
+        if (item.cardCompatible() && AppSettings.isForceCards(parent.getContext())) {
+            android.support.v7.widget.CardView cardView =
+                    new android.support.v7.widget.CardView(view.getContext());
             cardView.setRadius(view.getResources().getDimension(R.dimen.cardview_radius));
             cardView.setCardElevation(view.getResources().getDimension(R.dimen.cardview_elevation));
             cardView.setUseCompatPadding(true);
@@ -91,8 +99,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (position == 0) {
             mFirstItem = view;
         }
-        mItems.get(position).setOnViewChangeListener(mOnViewChangedListener);
-        mItems.get(position).onCreateHolder(parent, view);
+        item.setOnViewChangeListener(mOnViewChangedListener);
+        item.onCreateHolder(parent, view);
+
         return new RecyclerView.ViewHolder(view) {
         };
     }

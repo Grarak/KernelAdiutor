@@ -20,7 +20,7 @@
 package com.grarak.kerneladiutor.fragments.statistics;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -46,7 +46,7 @@ public class InputsFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        List<Device.Input.Item> inputs = Device.Input.getItems();
+        List<Device.Input.Item> inputs = Device.Input.getInstance().getItems();
         for (Device.Input.Item input : inputs) {
             String name;
             if ((name = input.getName()) != null) {
@@ -78,6 +78,11 @@ public class InputsFragment extends RecyclerViewFragment {
                 }
             }
         }
+    }
+
+    @Override
+    protected boolean showAd() {
+        return true;
     }
 
 }

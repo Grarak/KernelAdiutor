@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2018 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -23,9 +23,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.PopupMenu;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -33,9 +33,10 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by willi on 18.04.16.
@@ -45,8 +46,6 @@ public class CardView extends RecyclerViewItem {
     public interface OnMenuListener {
         void onMenuReady(CardView cardView, PopupMenu popupMenu);
     }
-
-    private Activity mActivity;
 
     private android.support.v7.widget.CardView mRootView;
     private View mTitleParent;
@@ -60,22 +59,17 @@ public class CardView extends RecyclerViewItem {
     private PopupMenu mPopupMenu;
     private OnMenuListener mOnMenuListener;
 
-    private List<RecyclerViewItem> mItems = new ArrayList<>();
-    private HashMap<RecyclerViewItem, View> mViews = new HashMap<>();
+    private final Map<RecyclerViewItem, View> mViews = new LinkedHashMap<>();
 
-    private List<RecyclerViewItem> mLoading = new ArrayList<>();
-    private List<Runnable> mRunnables = new ArrayList<>();
+    private AsyncLayoutInflater mAsyncLayoutInflater;
+    private final Object mAsyncSemaphore = new Object();
+    private boolean mInflaterBusy;
+    private final Queue<RecyclerViewItem> mInflaterQueue = new LinkedBlockingQueue<>();
+    private final Queue<RecyclerViewItem> mInflaterNotReadyQueue = new LinkedBlockingQueue<>();
 
     private int mLayoutHeight;
     private ValueAnimator mLayoutAnimator;
     private boolean mShowLayout = true;
-
-    public CardView(Activity activity) {
-        if (activity == null) {
-            throw new IllegalStateException("Activity can't be null");
-        }
-        mActivity = activity;
-    }
 
     @Override
     public int getLayoutRes() {
@@ -86,7 +80,7 @@ public class CardView extends RecyclerViewItem {
     public void onRecyclerViewCreate(Activity activity) {
         super.onRecyclerViewCreate(activity);
 
-        for (RecyclerViewItem item : mItems) {
+        for (RecyclerViewItem item : mViews.keySet()) {
             item.onRecyclerViewCreate(activity);
         }
     }
@@ -94,17 +88,27 @@ public class CardView extends RecyclerViewItem {
     private void initLayouts(View view) {
         mRootView = (android.support.v7.widget.CardView) view;
         mTitleParent = view.findViewById(R.id.title_parent);
-        mTitle = (TextView) view.findViewById(R.id.card_title);
-        mArrow = (AppCompatImageView) view.findViewById(R.id.arrow_image);
+        mTitle = view.findViewById(R.id.card_title);
+        mArrow = view.findViewById(R.id.arrow_image);
         mLayoutParent = view.findViewById(R.id.layout_parent);
-        mLayout = (LinearLayout) view.findViewById(R.id.card_layout);
+        mLayout = view.findViewById(R.id.card_layout);
     }
 
     @Override
     void onCreateHolder(ViewGroup parent, View view) {
         super.onCreateHolder(parent, view);
         initLayouts(view);
-        setupLayout();
+
+        if (mAsyncLayoutInflater == null) {
+            parent.getHandler().post(() -> {
+                mAsyncLayoutInflater = new AsyncLayoutInflater(parent.getContext());
+                while (mInflaterNotReadyQueue.size() != 0) {
+                    addView(mInflaterNotReadyQueue.poll());
+                }
+            });
+        } else if (mLayout.getChildCount() == 0) {
+            setupLayout();
+        }
     }
 
     @Override
@@ -112,29 +116,23 @@ public class CardView extends RecyclerViewItem {
         initLayouts(view);
 
         mMenuButton = view.findViewById(R.id.menu_button);
-        mMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mPopupMenu != null) {
-                    mPopupMenu.show();
-                }
+        mMenuButton.setOnClickListener(v -> {
+            if (mPopupMenu != null) {
+                mPopupMenu.show();
             }
         });
 
         mLayoutParent.setVisibility(mShowLayout ? View.VISIBLE : View.GONE);
         mArrow.setRotationX(mShowLayout ? 0 : 180);
 
-        mTitleParent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mLayoutParent.getVisibility() == View.VISIBLE) {
-                    mLayoutHeight = mLayoutParent.getHeight();
-                }
-                if (mLayoutAnimator == null) {
-                    mShowLayout = !mShowLayout;
-                    animateLayout(!mShowLayout);
-                    viewChanged();
-                }
+        mTitleParent.setOnClickListener(v -> {
+            if (mLayoutParent.getVisibility() == View.VISIBLE) {
+                mLayoutHeight = mLayoutParent.getHeight();
+            }
+            if (mLayoutAnimator == null) {
+                mShowLayout = !mShowLayout;
+                animateLayout(!mShowLayout);
+                viewChanged();
             }
         });
         super.onCreateView(view);
@@ -143,12 +141,8 @@ public class CardView extends RecyclerViewItem {
     private void animateLayout(final boolean collapse) {
         mArrow.animate().rotationX(collapse ? 180 : 0).setDuration(500).start();
         mLayoutAnimator = ValueAnimator.ofInt(collapse ? mLayoutHeight : 0, collapse ? 0 : mLayoutHeight);
-        mLayoutAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setLayoutParentHeight((int) animation.getAnimatedValue());
-            }
-        });
+        mLayoutAnimator.addUpdateListener(animation
+                -> setLayoutParentHeight((int) animation.getAnimatedValue()));
         mLayoutAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -181,10 +175,9 @@ public class CardView extends RecyclerViewItem {
     }
 
     public void addItem(final RecyclerViewItem item) {
-        if (item == this) {
+        if (item instanceof CardView) {
             throw new IllegalStateException("Cardinception!");
         }
-        mItems.add(item);
         addView(item);
     }
 
@@ -194,19 +187,22 @@ public class CardView extends RecyclerViewItem {
     }
 
     public int size() {
-        return mItems.size();
+        synchronized (mAsyncSemaphore) {
+            return mInflaterQueue.size()
+                    + mInflaterNotReadyQueue.size()
+                    + mViews.size();
+        }
     }
 
     public void removeItem(RecyclerViewItem item) {
-        mItems.remove(item);
+        mViews.remove(item);
         if (mLayout != null) {
             mLayout.removeView(mViews.get(item));
         }
     }
 
     public void clearItems() {
-        mRunnables.clear();
-        mItems.clear();
+        mViews.clear();
         if (mLayout != null) {
             mLayout.removeAllViews();
         }
@@ -215,21 +211,28 @@ public class CardView extends RecyclerViewItem {
     private void setupLayout() {
         if (mLayout != null) {
             mLayout.removeAllViews();
-            for (final RecyclerViewItem item : mItems) {
+            for (final RecyclerViewItem item : mViews.keySet()) {
                 addView(item);
             }
         }
     }
 
     private void addView(final RecyclerViewItem item) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (mLoading.contains(item)) {
-                    return;
-                }
-                mLoading.add(item);
-                View view = LayoutInflater.from(mActivity).inflate(item.getLayoutRes(), null, false);
+        if (item == null) return;
+
+        synchronized (mAsyncSemaphore) {
+            if (mAsyncLayoutInflater == null) {
+                mInflaterNotReadyQueue.offer(item);
+                return;
+            }
+
+            if (mInflaterBusy) {
+                mInflaterQueue.offer(item);
+                return;
+            }
+
+            mInflaterBusy = true;
+            mAsyncLayoutInflater.inflate(item.getLayoutRes(), mLayout, (view, resid, parent) -> {
                 mViews.put(item, view);
                 item.setOnViewChangeListener(getOnViewChangedListener());
                 item.onCreateView(view);
@@ -237,20 +240,9 @@ public class CardView extends RecyclerViewItem {
                     mLayout.addView(view);
                 }
 
-                quit();
-            }
-
-            private void quit() {
-                mLoading.remove(item);
-                mRunnables.remove(this);
-                if (mRunnables.size() > 0 && mRunnables.get(0) != null) {
-                    mActivity.runOnUiThread(mRunnables.get(0));
-                }
-            }
-        };
-        mRunnables.add(runnable);
-        if (mRunnables.size() == 1) {
-            mActivity.runOnUiThread(mRunnables.get(0));
+                mInflaterBusy = false;
+                addView(mInflaterQueue.poll());
+            });
         }
     }
 
@@ -263,7 +255,7 @@ public class CardView extends RecyclerViewItem {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        for (RecyclerViewItem item : mItems) {
+        for (RecyclerViewItem item : mViews.keySet()) {
             item.onDestroy();
         }
     }
@@ -293,12 +285,8 @@ public class CardView extends RecyclerViewItem {
             mOnMenuListener.onMenuReady(this, mPopupMenu);
         }
         if (mRootView != null && getOnItemClickListener() != null) {
-            mRootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    getOnItemClickListener().onClick(CardView.this);
-                }
-            });
+            mRootView.setOnClickListener(view
+                    -> getOnItemClickListener().onClick(CardView.this));
         }
     }
 

@@ -1,0 +1,408 @@
+- artifact: com.crashlytics.sdk.android:beta:+
+  name: Android SDK for Beta
+  copyrightHolder: Fabric
+  license: Crashlytics Terms of Service
+  licenseUrl: http://try.crashlytics.com/terms/terms-of-service.pdf
+  skip: true
+- artifact: com.android.support:support-compat:+
+  name: Android Support Library compat
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: android.arch.lifecycle:runtime:+
+  name: Android Lifecycle Runtime
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/topic/libraries/architecture/index.html
+- artifact: com.android.support:support-fragment:+
+  name: support-fragment
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:support-media-compat:+
+  name: support-media-compat
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.google.firebase:firebase-analytics:+
+  name: firebase-analytics
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.android.support:support-vector-drawable:+
+  name: Android Support VectorDrawable
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.github.bumptech.glide:disklrucache:+
+  name: Glide Disk LRU Cache Library
+  copyrightHolder: Bump Technologies
+  license: Simplified BSD License
+  licenseUrl: http://www.opensource.org/licenses/bsd-license
+  url: https://github.com/bumptech/glide
+- artifact: io.fabric.sdk.android:fabric:+
+  name: Android SDK Fabric
+  copyrightHolder: Fabric
+  license: Fabric Software and Services Agreement
+  licenseUrl: https://fabric.io/terms
+  skip: true
+- artifact: com.android.support:appcompat-v7:+
+  name: Android AppCompat Library v7
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: android.arch.core:common:+
+  name: Android Arch-Common
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/topic/libraries/architecture/index.html
+- artifact: com.google.android.gms:play-services-basement:+
+  name: play-services-basement
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.android.support:transition:+
+  name: Android Transition Support Library
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.github.bumptech.glide:gifdecoder:+
+  name: Glide GIF Decoder Library
+  copyrightHolder: Bump Technologies
+  license: Simplified BSD License
+  licenseUrl: http://www.opensource.org/licenses/bsd-license
+  url: https://github.com/bumptech/glide
+- artifact: com.github.bumptech.glide:annotations:+
+  name: Glide Annotations
+  copyrightHolder: Bump Technologies
+  license: Simplified BSD License
+  licenseUrl: http://www.opensource.org/licenses/bsd-license
+  url: https://github.com/bumptech/glide
+- artifact: com.android.support:support-compat:+
+  name: support-compat
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.google.android.gms:play-services-gass-license:+
+  name: play-services-gass-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.android.support:support-annotations:+
+  name: Android Support Library Annotations
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.google.android.gms:play-services-tasks:+
+  name: play-services-tasks
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: android.arch.lifecycle:viewmodel:+
+  name: Android Lifecycle ViewModel
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/topic/libraries/architecture/index.html
+- artifact: com.android.support:animated-vector-drawable:+
+  name: Android Support AnimatedVectorDrawable
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.google.firebase:firebase-ads:+
+  name: firebase-ads
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.firebase:firebase-core:+
+  name: firebase-core
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.android.support:support-media-compat:+
+  name: Android Support Library media compat
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.google.firebase:firebase-iid-license:+
+  name: firebase-iid-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.firebase:firebase-analytics-impl:+
+  name: firebase-analytics-impl
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.android.support:support-fragment:+
+  name: Android Support Library fragment
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.google.firebase:firebase-iid:+
+  name: firebase-iid
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: android.arch.lifecycle:common:+
+  name: Android Lifecycle-Common
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/topic/libraries/architecture/index.html
+- artifact: com.crashlytics.sdk.android:crashlytics:+
+  name: Android SDK Crashlytics
+  copyrightHolder: Fabric
+  license: Crashlytics Terms of Service
+  licenseUrl: http://try.crashlytics.com/terms/terms-of-service.pdf
+  skip: true
+- artifact: com.android.support:preference-v7:+
+  name: Android Support Preference v7
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.crashlytics.sdk.android:crashlytics-core:+
+  name: Android SDK Crashlytics Core
+  copyrightHolder: Google Inc.
+  license: Crashlytics Terms of Service
+  licenseUrl: http://try.crashlytics.com/terms/terms-of-service.pdf
+  skip: true
+- artifact: com.android.support:preference-v14:+
+  name: Android Support Preference v14
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.android.support:recyclerview-v7:+
+  name: Android Support RecyclerView v7
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.google.android.gms:play-services-ads-lite-license:+
+  name: play-services-ads-lite-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.github.bumptech.glide:glide:+
+  name: Glide
+  copyrightHolder: Bump Technologies
+  license: Simplified BSD License
+  licenseUrl: http://www.opensource.org/licenses/bsd-license
+  url: https://github.com/bumptech/glide
+- artifact: com.android.support:support-annotations:+
+  name: support-annotations
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.google.android.gms:play-services-ads:+
+  name: play-services-ads
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-tasks-license:+
+  name: play-services-tasks-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-ads-license:+
+  name: play-services-ads-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.mikhaellopez:circularimageview:+
+  name: com.mikhaellopez:circularimageview
+  copyrightHolder: Lopez Mikhael
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/lopspower/CircularImageView
+- artifact: com.google.firebase:firebase-analytics-license:+
+  name: firebase-analytics-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: org.adw.library:discrete-seekbar:+
+  name: discrete-seekbar
+  copyrightHolder: Gustavo Claramunt
+  license: The Apache Software License, Version 2.0
+- artifact: com.google.android.gms:play-services-basement-license:+
+  name: play-services-basement-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: org.cyanogenmod:platform.sdk:+
+  name: CyanogenMod Platform SDK
+  copyrightHolder: CyanogenMod
+  license: Apache License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/CyanogenMod/cm_platform_sdk
+- artifact: com.crashlytics.sdk.android:answers:+
+  name: Android SDK Answers
+  copyrightHolder: Fabric
+  license: Answers Terms of Service
+  licenseUrl: https://answers.io/terms
+  skip: true
+- artifact: com.google.firebase:firebase-common:+
+  name: firebase-common
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.mattprecious.swirl:swirl:+
+  name: Swirl
+  copyrightHolder: Matthew Precious
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/mattprecious/swirl/
+- artifact: com.android.support:support-core-ui:+
+  name: Android Support Library core UI
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: android.arch.core:runtime:+
+  name: Android Arch-Runtime
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/topic/libraries/architecture/index.html
+- artifact: com.google.android.gms:play-services-gass:+
+  name: play-services-gass
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.firebase:firebase-common-license:+
+  name: firebase-common-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.android.support:support-core-utils:+
+  name: Android Support Library core utils
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.android.support:support-v4:+
+  name: support-v4
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.github.ozodrukh:CircularReveal:+
+  name: CircularReveal
+  copyrightHolder: Abdullaev Ozodrukh
+  license: The MIT License (MIT)
+- artifact: com.google.android.apps.dashclock:dashclock-api:+
+  name: DashClock API
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://dashclock.com/api
+- artifact: com.android.support:support-core-utils:+
+  name: support-core-utils
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.google.android.gms:play-services-ads-lite:+
+  name: play-services-ads-lite
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.firebase:firebase-analytics-impl-license:+
+  name: firebase-analytics-impl-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: android.arch.lifecycle:livedata-core:+
+  name: Android Lifecycle LiveData Core
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/topic/libraries/architecture/index.html
+- artifact: com.android.support:support-core-ui:+
+  name: support-core-ui
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:design:+
+  name: Android Design Support Library
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.android.support:cardview-v7:+
+  name: Android Support CardView v7
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.android.support:support-v4:+
+  name: Android Support Library v4
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://developer.android.com/tools/extras/support-library.html
+- artifact: com.google.android.gms:play-services-base:+
+  name: play-services-base
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-base:+
+  name: play-services-auth-base
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-base-license:+
+  name: play-services-auth-base-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-api-phone:+
+  name: play-services-auth-api-phone
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth-api-phone-license:+
+  name: play-services-auth-api-phone-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-auth:+
+  name: play-services-auth
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true
+- artifact: com.google.android.gms:play-services-base-license:+
+  name: play-services-base-license
+  copyrightHolder: Google Inc.
+  license: Android Software Development Kit License
+  licenseUrl: https://developer.android.com/studio/terms.html
+  skip: true

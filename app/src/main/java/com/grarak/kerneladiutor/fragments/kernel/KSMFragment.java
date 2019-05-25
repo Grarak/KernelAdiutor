@@ -21,7 +21,7 @@ package com.grarak.kerneladiutor.fragments.kernel;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.ApplyOnBootFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.kernel.ksm.KSM;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -36,12 +36,15 @@ import java.util.List;
  */
 public class KSMFragment extends RecyclerViewFragment {
 
+    private KSM mKSM;
+
     private List<DescriptionView> mInfos = new ArrayList<>();
 
     @Override
     protected void init() {
         super.init();
 
+        mKSM = KSM.getInstance();
         addViewPagerFragment(ApplyOnBootFragment.newInstance(this));
     }
 
@@ -49,45 +52,37 @@ public class KSMFragment extends RecyclerViewFragment {
     protected void addItems(List<RecyclerViewItem> items) {
         infoInit(items);
 
-        if (KSM.hasEnable()) {
+        if (mKSM.hasEnable()) {
             SwitchView enable = new SwitchView();
             enable.setTitle(getString(R.string.ksm));
             enable.setSummary(getString(R.string.ksm_summary));
-            enable.setChecked(KSM.isEnabled());
-            enable.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    KSM.enableKsm(isChecked, getActivity());
-                }
-            });
+            enable.setChecked(mKSM.isEnabled());
+            enable.addOnSwitchListener((switchView, isChecked)
+                    -> mKSM.enableKsm(isChecked, getActivity()));
 
             items.add(enable);
         }
 
-        if (KSM.hasDeferredTimer()) {
+        if (mKSM.hasDeferredTimer()) {
             SwitchView deferredTimer = new SwitchView();
             deferredTimer.setTitle(getString(R.string.deferred_timer));
             deferredTimer.setSummary(getString(R.string.deferred_timer_summary));
-            deferredTimer.setChecked(KSM.isDeferredTimerEnabled());
-            deferredTimer.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                @Override
-                public void onChanged(SwitchView switchView, boolean isChecked) {
-                    KSM.enableDeferredTimer(isChecked, getActivity());
-                }
-            });
+            deferredTimer.setChecked(mKSM.isDeferredTimerEnabled());
+            deferredTimer.addOnSwitchListener((switchView, isChecked)
+                    -> mKSM.enableDeferredTimer(isChecked, getActivity()));
 
             items.add(deferredTimer);
         }
 
-        if (KSM.hasPagesToScan()) {
+        if (mKSM.hasPagesToScan()) {
             SeekBarView pagesToScan = new SeekBarView();
             pagesToScan.setTitle(getString(R.string.pages_to_scan));
             pagesToScan.setMax(1024);
-            pagesToScan.setProgress(KSM.getPagesToScan());
+            pagesToScan.setProgress(mKSM.getPagesToScan());
             pagesToScan.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
-                    KSM.setPagesToScan(position, getActivity());
+                    mKSM.setPagesToScan(position, getActivity());
                 }
 
                 @Override
@@ -98,17 +93,17 @@ public class KSMFragment extends RecyclerViewFragment {
             items.add(pagesToScan);
         }
 
-        if (KSM.hasSleepMilliseconds()) {
+        if (mKSM.hasSleepMilliseconds()) {
             SeekBarView sleepMilliseconds = new SeekBarView();
             sleepMilliseconds.setTitle(getString(R.string.sleep_milliseconds));
             sleepMilliseconds.setUnit(getString(R.string.ms));
             sleepMilliseconds.setMax(5000);
             sleepMilliseconds.setOffset(50);
-            sleepMilliseconds.setProgress(KSM.getSleepMilliseconds() / 50);
+            sleepMilliseconds.setProgress(mKSM.getSleepMilliseconds() / 50);
             sleepMilliseconds.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
-                    KSM.setSleepMilliseconds(position * 50, getActivity());
+                    mKSM.setSleepMilliseconds(position * 50, getActivity());
                 }
 
                 @Override
@@ -119,16 +114,16 @@ public class KSMFragment extends RecyclerViewFragment {
             items.add(sleepMilliseconds);
         }
 
-        if (KSM.hasMaxCpuPercentage()) {
+        if (mKSM.hasMaxCpuPercentage()) {
             SeekBarView maxCpuPercentage = new SeekBarView();
             maxCpuPercentage.setTitle(getString(R.string.max_cpu_usage));
             maxCpuPercentage.setSummary(getString(R.string.max_cpu_usage_summary));
             maxCpuPercentage.setUnit("%");
-            maxCpuPercentage.setProgress(KSM.getMaxCpuPercentage());
+            maxCpuPercentage.setProgress(mKSM.getMaxCpuPercentage());
             maxCpuPercentage.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
-                    KSM.setMaxCpuPercentage(position, getActivity());
+                    mKSM.setMaxCpuPercentage(position, getActivity());
                 }
 
                 @Override
@@ -142,10 +137,10 @@ public class KSMFragment extends RecyclerViewFragment {
 
     private void infoInit(List<RecyclerViewItem> items) {
         mInfos.clear();
-        for (int i = 0; i < KSM.getInfosSize(); i++) {
-            if (KSM.hasInfo(i)) {
+        for (int i = 0; i < mKSM.getInfosSize(); i++) {
+            if (mKSM.hasInfo(i)) {
                 DescriptionView info = new DescriptionView();
-                info.setTitle(KSM.getInfoText(i, getActivity()));
+                info.setTitle(mKSM.getInfoText(i, getActivity()));
 
                 items.add(info);
                 mInfos.add(info);
@@ -153,13 +148,25 @@ public class KSMFragment extends RecyclerViewFragment {
         }
     }
 
+    private List<String> mInfoSummaries = new ArrayList<>();
+
+    @Override
+    protected void refreshThread() {
+        super.refreshThread();
+
+        mInfoSummaries.clear();
+        for (int i = 0; i < mInfos.size(); i++) {
+            mInfoSummaries.add(mKSM.getInfo(i));
+        }
+    }
+
     @Override
     protected void refresh() {
         super.refresh();
 
-        if (mInfos.size() > 0) {
+        if (mInfos.size() > 0 && mInfos.size() == mInfoSummaries.size()) {
             for (int i = 0; i < mInfos.size(); i++) {
-                mInfos.get(i).setSummary(KSM.getInfo(i));
+                mInfos.get(i).setSummary(mInfoSummaries.get(i));
             }
         }
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.grarak.kerneladiutor.views.BorderCircleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/circle"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginRight="10dp"
+    android:clickable="false"
+    android:focusable="false"
+    app:bordercolor="?attr/colorAccent"
+    app:circlecolor="?attr/colorPrimary" />

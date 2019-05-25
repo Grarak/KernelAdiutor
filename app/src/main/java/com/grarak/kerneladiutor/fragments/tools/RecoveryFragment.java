@@ -19,20 +19,19 @@
  */
 package com.grarak.kerneladiutor.fragments.tools;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -40,8 +39,8 @@ import android.widget.LinearLayout;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.FilePickerActivity;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.root.RootFile;
@@ -75,7 +74,8 @@ public class RecoveryFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getTopFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
+        Drawable drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
         DrawableCompat.setTint(drawable, Color.WHITE);
         return drawable;
     }
@@ -118,30 +118,23 @@ public class RecoveryFragment extends RecyclerViewFragment {
 
     private void add() {
         mAddDialog = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.recovery_commands), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        addAction(Recovery.RECOVERY_COMMAND.WIPE_DATA, null);
-                        break;
-                    case 1:
-                        addAction(Recovery.RECOVERY_COMMAND.WIPE_CACHE, null);
-                        break;
-                    case 2:
-                        Intent intent = new Intent(getActivity(), FilePickerActivity.class);
-                        intent.putExtra(FilePickerActivity.PATH_INTENT, "/sdcard");
-                        intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".zip");
-                        startActivityForResult(intent, 0);
-                        break;
-                }
+                R.array.recovery_commands), (dialogInterface, i) -> {
+            switch (i) {
+                case 0:
+                    addAction(Recovery.RECOVERY_COMMAND.WIPE_DATA, null);
+                    break;
+                case 1:
+                    addAction(Recovery.RECOVERY_COMMAND.WIPE_CACHE, null);
+                    break;
+                case 2:
+                    Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                    intent.putExtra(FilePickerActivity.PATH_INTENT,
+                            Environment.getExternalStorageDirectory().toString());
+                    intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".zip");
+                    startActivityForResult(intent, 0);
+                    break;
             }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mAddDialog = null;
-            }
-        });
+        }).setOnDismissListener(dialogInterface -> mAddDialog = null);
         mAddDialog.show();
     }
 
@@ -162,22 +155,16 @@ public class RecoveryFragment extends RecyclerViewFragment {
         final Recovery recovery = new Recovery(recovery_command, path == null ? null : new File(path));
         mCommands.add(recovery);
 
-        CardView cardView = new CardView(getActivity());
-        cardView.setOnMenuListener(new CardView.OnMenuListener() {
-            @Override
-            public void onMenuReady(final CardView cardView, PopupMenu popupMenu) {
-                popupMenu.getMenu().add(Menu.NONE, 0, Menu.NONE, getString(R.string.delete));
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == 0) {
-                            mCommands.remove(recovery);
-                            removeItem(cardView);
-                        }
-                        return false;
-                    }
-                });
-            }
+        CardView cardView = new CardView();
+        cardView.setOnMenuListener((cardView1, popupMenu) -> {
+            popupMenu.getMenu().add(Menu.NONE, 0, Menu.NONE, getString(R.string.delete));
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == 0) {
+                    mCommands.remove(recovery);
+                    removeItem(cardView1);
+                }
+                return false;
+            });
         });
 
         DescriptionView descriptionView = new DescriptionView();
@@ -201,64 +188,39 @@ public class RecoveryFragment extends RecyclerViewFragment {
 
     private void flashNow(final int recoveryOption) {
         mFlashDialog = ViewUtils.dialogBuilder(getString(R.string.flash_now_confirm),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                (dialogInterface, i) -> {
+                },
+                (dialogInterface, i) -> {
+                    String file = "/cache/recovery/" + mCommands.get(0).getFile(recoveryOption == 1 ?
+                            Recovery.RECOVERY.TWRP : Recovery.RECOVERY.CWM);
+                    RootFile recoveryFile = new RootFile(file);
+                    recoveryFile.delete();
+                    for (Recovery commands : mCommands) {
+                        for (String command : commands.getCommands(recoveryOption == 1 ?
+                                Recovery.RECOVERY.TWRP :
+                                Recovery.RECOVERY.CWM))
+                            recoveryFile.write(command, true);
                     }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String file = "/cache/recovery/" + mCommands.get(0).getFile(recoveryOption == 1 ?
-                                Recovery.RECOVERY.TWRP : Recovery.RECOVERY.CWM);
-                        RootFile recoveryFile = new RootFile(file);
-                        recoveryFile.delete();
-                        for (Recovery commands : mCommands) {
-                            for (String command : commands.getCommands(recoveryOption == 1 ?
-                                    Recovery.RECOVERY.TWRP :
-                                    Recovery.RECOVERY.CWM))
-                                recoveryFile.write(command, true);
-                        }
-                        RootUtils.runCommand("reboot recovery");
-                    }
-                }, new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        mFlashDialog = null;
-                    }
-                }, getActivity());
+                    RootUtils.runCommand("reboot recovery");
+                },
+                dialogInterface -> mFlashDialog = null, getActivity());
         mFlashDialog.show();
     }
 
     private void reboot() {
         mRebootDialog = new Dialog(getActivity()).setItems(getResources()
-                .getStringArray(R.array.recovery_reboot_options), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, final int selection) {
-                mRebootConfirmDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                RootUtils.runCommand(getActivity().getResources().getStringArray(
-                                        R.array.recovery_reboot_values)[selection]);
-                            }
-                        }, new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                mRebootConfirmDialog = null;
-                            }
-                        }, getActivity());
-                mRebootConfirmDialog.show();
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mRebootDialog = null;
-            }
-        });
+                        .getStringArray(R.array.recovery_reboot_options),
+                (dialog, selection) -> {
+                    mRebootConfirmDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
+                            (dialog1, which) -> {
+                            },
+                            (dialog12, which)
+                                    -> RootUtils.runCommand(getActivity().getResources().getStringArray(
+                                    R.array.recovery_reboot_values)[selection]),
+                            dialog13 -> mRebootConfirmDialog = null, getActivity());
+                    mRebootConfirmDialog.show();
+                })
+                .setOnDismissListener(dialog -> mRebootDialog = null);
         mRebootDialog.show();
     }
 
@@ -274,12 +236,12 @@ public class RecoveryFragment extends RecyclerViewFragment {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                                 @Nullable Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater,
+                                 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_recovery_options, container, false);
-            mRecoveryOption = Prefs.getInt("recovery_option", 0, getActivity());
+            mRecoveryOption = AppSettings.getRecoveryOption(getActivity());
 
-            LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.layout);
+            LinearLayout layout = rootView.findViewById(R.id.layout);
             String[] options = getResources().getStringArray(R.array.recovery_options);
 
             final List<AppCompatCheckBox> checkBoxes = new ArrayList<>();
@@ -294,38 +256,29 @@ public class RecoveryFragment extends RecyclerViewFragment {
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 final int position = i;
-                checkBox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        for (int i = 0; i < checkBoxes.size(); i++) {
-                            checkBoxes.get(i).setChecked(position == i);
-                        }
-                        Prefs.saveInt("recovery_option", position, getActivity());
-                        mRecoveryOption = position;
+                checkBox.setOnClickListener(view -> {
+                    for (int i1 = 0; i1 < checkBoxes.size(); i1++) {
+                        checkBoxes.get(i1).setChecked(position == i1);
                     }
+                    AppSettings.saveRecoveryOption(position, getActivity());
+                    mRecoveryOption = position;
                 });
 
                 checkBoxes.add(checkBox);
                 layout.addView(checkBox);
             }
 
-            rootView.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mRecoveryFragment != null && mRecoveryFragment.itemsSize() > 0) {
-                        mRecoveryFragment.flashNow(mRecoveryOption);
-                    } else {
-                        Utils.toast(R.string.add_action_first, getActivity());
-                    }
+            rootView.findViewById(R.id.button).setOnClickListener(view -> {
+                if (mRecoveryFragment != null && mRecoveryFragment.itemsSize() > 0) {
+                    mRecoveryFragment.flashNow(mRecoveryOption);
+                } else {
+                    Utils.toast(R.string.add_action_first, getActivity());
                 }
             });
 
-            rootView.findViewById(R.id.reboot_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mRecoveryFragment != null) {
-                        mRecoveryFragment.reboot();
-                    }
+            rootView.findViewById(R.id.reboot_button).setOnClickListener(v -> {
+                if (mRecoveryFragment != null) {
+                    mRecoveryFragment.reboot();
                 }
             });
 
@@ -338,4 +291,10 @@ public class RecoveryFragment extends RecyclerViewFragment {
         super.onDestroy();
         mCommands.clear();
     }
+
+    @Override
+    protected boolean showAd() {
+        return true;
+    }
+
 }

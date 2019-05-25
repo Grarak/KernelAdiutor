@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -27,28 +28,12 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.widget.FrameLayout;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 
 public class BorderCircleView extends FrameLayout {
-
-    public static final SparseArray<String> sAccentColors = new SparseArray<>();
-
-    static {
-        sAccentColors.put(R.color.red_accent, "red_accent");
-        sAccentColors.put(R.color.pink_accent, "pink_accent");
-        sAccentColors.put(R.color.purple_accent, "purple_accent");
-        sAccentColors.put(R.color.blue_accent, "blue_accent");
-        sAccentColors.put(R.color.green_accent, "green_accent");
-        sAccentColors.put(R.color.orange_accent, "orange_accent");
-        sAccentColors.put(R.color.brown_accent, "brown_accent");
-        sAccentColors.put(R.color.grey_accent, "grey_accent");
-        sAccentColors.put(R.color.blue_grey_accent, "blue_grey_accent");
-        sAccentColors.put(R.color.teal_accent, "teal_accent");
-    }
 
     private final Drawable mCheck;
     private boolean mChecked;
@@ -73,19 +58,30 @@ public class BorderCircleView extends FrameLayout {
         DrawableCompat.setTint(mCheck, Color.WHITE);
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(ViewUtils.getThemeAccentColor(context));
-
         mPaintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintBorder.setColor(ViewUtils.getColorPrimaryColor(context));
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BorderCircleView, defStyleAttr, 0);
+
+        int primaryColor = ViewUtils.getColorPrimaryColor(getContext());
+        int accentColor = ViewUtils.getThemeAccentColor(getContext());
+        mPaint.setColor(a.getColor(R.styleable.BorderCircleView_circlecolor, accentColor));
+        mPaintBorder.setColor(a.getColor(R.styleable.BorderCircleView_bordercolor, primaryColor));
+
+        a.recycle();
+
         mPaintBorder.setStrokeWidth((int) getResources().getDimension(R.dimen.circleview_border));
         mPaintBorder.setStyle(Paint.Style.STROKE);
 
         setWillNotDraw(false);
     }
 
-    @Override
-    public void setBackgroundColor(int color) {
+    public void setCircleColor(int color) {
         mPaint.setColor(color);
+        invalidate();
+    }
+
+    public void setBorderColor(int color) {
+        mPaintBorder.setColor(color);
         invalidate();
     }
 

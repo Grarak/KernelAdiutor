@@ -8,6 +8,7 @@
     <string name="no_root">No root</string>
     <string name="no_busybox">No busybox</string>
     <string name="open">Open %s</string>
+    <string name="disable">Disable</string>
 
     <!-- Security -->
     <string name="password">Password</string>
@@ -149,9 +150,13 @@
     <string name="handlers">Handlers</string>
 
     <!-- CPU -->
+    <string name="cores_string">%s cores</string>
+    <string name="frequencies_string">%s frequencies</string>
+    <string name="governors_string">%s governors</string>
     <string name="cores_singular">%d core</string>
     <string name="cores">%d cores</string>
     <string name="cpu_usage">CPU Usage</string>
+    <string name="cpu_usage_string">%s CPU Usage</string>
     <string name="no_offline_core">You can\'t offline this core!</string>
     <string name="cpu_max_freq">CPU Maximum Frequency</string>
     <string name="cpu_max_freq_summary">Set the maximum frequency the CPU scales up to.</string>
@@ -338,6 +343,8 @@
     <string name="busy_up_threshold_summary">Threshold when big CPUs should be turned on.</string>
     <string name="offline_delay">Offline Delay</string>
     <string name="offline_delay_summary">Time before turning off a CPU.</string>
+    <string name="online_delay">Online Delay</string>
+    <string name="online_delay_summary">Time before turning on a CPU.</string>
     <string name="aio_hotplug">AiO Hotplug</string>
     <string name="aio_hotplug_summary">All in One HotPlug for Qualcomm devices. Developed by Shoaib0597.</string>
     <string name="max_cpu_online_big">Maximum big CPUs Online</string>
@@ -519,6 +526,8 @@
     <string name="pocket_mode_summary">Enabling this will turn off wake controls when the device is in a pocket.</string>
     <string name="timeout">Timeout</string>
     <string name="timeout_summary">Set a duration when the wake controls will be disabled after the screen goes off.</string>
+    <string name="charge_timeout">Charge Timeout</string>
+    <string name="charge_timeout_summary">Set a duration when the wake controls will be disabled after the screen goes off while charging.</string>
     <string name="power_key_suspend">Power Key Suspend</string>
     <string name="power_key_suspend_summary">Enabling this will turn off wake controls when the screen is turned off by the power key.</string>
     <string name="area">Area</string>
@@ -526,6 +535,10 @@
     <string name="height">Height</string>
     <string name="vibration">Vibration</string>
     <string name="vibration_strength">Vibration Strength</string>
+    <string name="key_power_mode">Power Key Mode</string>
+    <string name="key_power_mode_summary">Wake controls will only be active when you put your device into sleep with the power key.</string>
+    <string name="charging_mode">Charging Mode</string>
+    <string name="charging_mode_summary">Wake controls will only be active when device is charging.</string>
 
     <!-- Sound -->
     <string name="sound_control">Sound Control</string>
@@ -690,9 +703,25 @@
     <string name="bcmdhd_wakelock_divider">BCMDHD Wakelock Divider</string>
 
     <!-- Data Sharing -->
+    <string name="data_sharing_summary_notification">Data sharing is active! Click to learn more about this feature.</string>
     <string name="data_sharing_summary">Share your settings with others! Kernel Adiutor will automatically collect information and compile a score list available to all people.</string>
     <string name="data_sharing_summary_link">You can access the list on &lt;a href="https://www.grarak.com/kerneladiutor">grarak.com&lt;/a>.</string>
     <string name="sharing_enable">Sharing enable</string>
+    <string name="filter">Filter</string>
+    <string name="board">Board</string>
+    <string name="show_all">Show all</string>
+    <string name="failed_board">Failed to load boards.</string>
+    <string name="failed_devices">Failed to load devices.</string>
+    <string name="previous">Previous</string>
+    <string name="page">Page</string>
+    <string name="next">Next</string>
+    <string name="kernel_version">Kernel Version</string>
+    <string name="potential_sot">Potential SOT</string>
+    <string name="screen_always_on">when screen is always on</string>
+    <string name="lower_better">lower is better</string>
+    <string name="cpu_score">CPU Score</string>
+    <string name="cpu_information">CPU Information</string>
+    <string name="default_settings">Default (no modifications made)</string>
 
     <!-- Custom Controls -->
     <string name="welcome">Welcome</string>
@@ -822,6 +851,7 @@
     <string name="hide_banner">Hide banner</string>
     <string name="force_cards">Force cards</string>
     <string name="force_cards_summary">Use cards for items if possible.</string>
+    <string name="primary_color">Primary color</string>
     <string name="accent_color">Accent Color</string>
     <string name="section_icons">Section Icons</string>
     <string name="section_icons_summary">Show icons for each section in navigation drawer.</string>
@@ -865,7 +895,8 @@
 
     <!-- About -->
     <string name="about_me">Hi, I\'m Willi Ye aka Grarak, a 19 year old student living in Vienna. I\'ve been developing on Android for quite a long time. Beside Kernel Adiutor I\'m also maintaining LineageOS for few devices and working on ParanoidAndroid. So please understand if I don\'t find the time to update this application.</string>
-    <string name="libraries_used">Libraries used</string>
+    <string name="software_licenses">Software Licenses</string>
+    <string name="software_licenses_summary">View licenses</string>
 
     <!-- Contributors -->
     <string name="commits">%d commits</string>

@@ -61,56 +61,44 @@ public class CodeView extends RecyclerViewItem {
 
     @Override
     public void onCreateView(final View view) {
-        mTitleView = (TextView) view.findViewById(R.id.title);
-        mSummaryView = (TextView) view.findViewById(R.id.summary);
-        mRequiredText = (TextView) view.findViewById(R.id.required_text);
-        mCodeView = (TextView) view.findViewById(R.id.code);
+        mTitleView = view.findViewById(R.id.title);
+        mSummaryView = view.findViewById(R.id.summary);
+        mRequiredText = view.findViewById(R.id.required_text);
+        mCodeView = view.findViewById(R.id.code);
         mTestTextView = view.findViewById(R.id.test_text);
         mTestButtonView = view.findViewById(R.id.test_button);
         mOutputParent = view.findViewById(R.id.output_parent);
-        TextView outputTitle = (TextView) view.findViewById(R.id.output_title);
+        TextView outputTitle = view.findViewById(R.id.output_title);
 
         final View progress = view.findViewById(R.id.progress);
-        final TextView outputTextView = (TextView) view.findViewById(R.id.output);
+        final TextView outputTextView = view.findViewById(R.id.output);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mScriptThread != null) return;
-                if (getOnItemClickListener() != null) {
-                    getOnItemClickListener().onClick(CodeView.this);
-                }
+        view.setOnClickListener(v -> {
+            if (mScriptThread != null) return;
+            if (getOnItemClickListener() != null) {
+                getOnItemClickListener().onClick(CodeView.this);
             }
         });
-        mTestButtonView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mScriptThread != null) return;
-                mOutputParent.setVisibility(View.VISIBLE);
-                outputTextView.setVisibility(View.GONE);
-                progress.setVisibility(View.VISIBLE);
-                mScriptThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mOutput = RootUtils.runScript(mCode.toString());
-                        ((Activity) view.getContext()).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progress.setVisibility(View.GONE);
-                                outputTextView.setVisibility(View.VISIBLE);
-                                outputTextView.setText(mOutput);
-                                mTestTextView.setVisibility(View.GONE);
-                                mTestButtonView.setVisibility(View.GONE);
-                                mScriptThread = null;
-                                if (mOnTestListener != null) {
-                                    mOnTestListener.onTestResult(CodeView.this, mOutput);
-                                }
-                            }
-                        });
+        mTestButtonView.setOnClickListener(v -> {
+            if (mScriptThread != null) return;
+            mOutputParent.setVisibility(View.VISIBLE);
+            outputTextView.setVisibility(View.GONE);
+            progress.setVisibility(View.VISIBLE);
+            mScriptThread = new Thread(() -> {
+                mOutput = RootUtils.runScript(mCode.toString());
+                ((Activity) view.getContext()).runOnUiThread(() -> {
+                    progress.setVisibility(View.GONE);
+                    outputTextView.setVisibility(View.VISIBLE);
+                    outputTextView.setText(mOutput);
+                    mTestTextView.setVisibility(View.GONE);
+                    mTestButtonView.setVisibility(View.GONE);
+                    mScriptThread = null;
+                    if (mOnTestListener != null) {
+                        mOnTestListener.onTestResult(CodeView.this, mOutput);
                     }
                 });
-                mScriptThread.start();
-            }
+            });
+            mScriptThread.start();
         });
 
         super.onCreateView(view);

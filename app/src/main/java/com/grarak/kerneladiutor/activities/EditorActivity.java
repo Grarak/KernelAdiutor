@@ -55,7 +55,7 @@ public class EditorActivity extends BaseActivity {
         }
 
         CharSequence text = getIntent().getCharSequenceExtra(TEXT_INTENT);
-        mEditText = (AppCompatEditText) findViewById(R.id.edittext);
+        mEditText = findViewById(R.id.edittext);
         if (text != null) {
             mEditText.append(text);
         }

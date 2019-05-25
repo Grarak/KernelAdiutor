@@ -25,7 +25,7 @@ import android.support.design.widget.Snackbar;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.tools.DownloadsActivity;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.WebpageReader;
 import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
@@ -39,12 +39,6 @@ import java.util.List;
  * Created by willi on 06.07.16.
  */
 public class DownloadsFragment extends RecyclerViewFragment {
-
-    public static DownloadsFragment newInstance(SupportedDownloads support) {
-        DownloadsFragment fragment = new DownloadsFragment();
-        fragment.mSupport = support;
-        return fragment;
-    }
 
     private SupportedDownloads mSupport;
     private WebpageReader mWebpageReader;
@@ -71,21 +65,19 @@ public class DownloadsFragment extends RecyclerViewFragment {
     }
 
     @Override
-    protected boolean needDelay() {
-        return false;
-    }
-
-    @Override
     protected void postInit() {
         super.postInit();
-        if (mWebpageReader == null && mSupport != null) {
+        if (mSupport == null) {
+            mSupport = new SupportedDownloads(getActivity());
+        }
+        if (mWebpageReader == null) {
             showProgress();
-            mWebpageReader = new WebpageReader(getActivity(), new WebpageReader.WebpageCallback() {
+            mWebpageReader = new WebpageReader(getActivity(), new WebpageReader.WebpageListener() {
 
                 private int mKernelCount;
 
                 @Override
-                public void onCallback(String raw, CharSequence html) {
+                public void onSuccess(String url, String raw, CharSequence html) {
                     if (!isAdded()) return;
                     hideProgress();
                     final SupportedDownloads.Kernels kernels = new SupportedDownloads.Kernels(raw);
@@ -94,9 +86,9 @@ public class DownloadsFragment extends RecyclerViewFragment {
                     final List<SupportedDownloads.KernelContent> contents = new ArrayList<>();
                     if (kernels.readable()) {
                         for (int i = 0; i < kernels.length(); i++) {
-                            WebpageReader reader = new WebpageReader(getActivity(), new WebpageReader.WebpageCallback() {
+                            WebpageReader reader = new WebpageReader(getActivity(), new WebpageReader.WebpageListener() {
                                 @Override
-                                public void onCallback(String raw, CharSequence html) {
+                                public void onSuccess(String url, String raw, CharSequence html) {
                                     if (!isAdded()) return;
                                     mKernelCount++;
                                     SupportedDownloads.KernelContent content = new SupportedDownloads.KernelContent(raw);
@@ -107,13 +99,22 @@ public class DownloadsFragment extends RecyclerViewFragment {
                                         addViews(contents);
                                     }
                                 }
+
+                                @Override
+                                public void onFailure(String url) {
+                                }
                             });
-                            reader.execute(kernels.getLink(i));
+                            reader.get(kernels.getLink(i));
                             mKernelWebpageReader.add(reader);
                         }
                     } else {
                         error();
                     }
+                }
+
+                @Override
+                public void onFailure(String url) {
+                    error();
                 }
 
                 private void addViews(List<SupportedDownloads.KernelContent> contents) {
@@ -124,12 +125,9 @@ public class DownloadsFragment extends RecyclerViewFragment {
                                     && content.getShortDescription() != null
                                     && content.getLongDescription() != null) {
                                 KernelItemView kernelItemView = new KernelItemView(content);
-                                kernelItemView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                                    @Override
-                                    public void onClick(RecyclerViewItem item) {
-                                        mKernelContent = content;
-                                        requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                                    }
+                                kernelItemView.setOnItemClickListener(item -> {
+                                    mKernelContent = content;
+                                    requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                                 });
                                 addItem(kernelItemView);
                             }
@@ -140,7 +138,7 @@ public class DownloadsFragment extends RecyclerViewFragment {
                     }
                 }
             });
-            mWebpageReader.execute(mSupport.getLink());
+            mWebpageReader.get(mSupport.getLink());
         }
     }
 

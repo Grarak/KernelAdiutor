@@ -22,7 +22,7 @@ package com.grarak.kerneladiutor.fragments.statistics;
 import android.content.res.Configuration;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Device;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
@@ -34,6 +34,15 @@ import java.util.List;
  * Created by willi on 05.08.16.
  */
 public class MemoryFragment extends RecyclerViewFragment {
+
+    private Device.MemInfo mMemInfo;
+
+    @Override
+    protected void init() {
+        super.init();
+
+        mMemInfo = Device.MemInfo.getInstance();
+    }
 
     @Override
     protected boolean showViewPager() {
@@ -53,15 +62,20 @@ public class MemoryFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        List<String> mems = Device.MemInfo.getItems();
+        List<String> mems = mMemInfo.getItems();
         for (String mem : mems) {
             DescriptionView memView = new DescriptionView();
             memView.setTitle(mem);
-            memView.setSummary(Device.MemInfo.getItem(mem).replace(" ", "")
+            memView.setSummary(mMemInfo.getItem(mem).replace(" ", "")
                     .replace("kB", getString(R.string.kb)));
 
             items.add(memView);
         }
+    }
+
+    @Override
+    protected boolean showAd() {
+        return true;
     }
 
 }

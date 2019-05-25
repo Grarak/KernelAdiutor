@@ -805,7 +805,6 @@
   <string name="fingerprint_summary">セキュリティチェックを通過するため指紋を使用します。指紋登録済みの場合のみ有効です。</string>
   <string name="sections">セクション</string>
   <!-- About -->
-  <string name="libraries_used">使用中のライブラリ</string>
   <!-- Contributors -->
   <string name="commits">コミット数 %d</string>
   <string name="no_internet">インターネット接続を確認して下さい!</string>

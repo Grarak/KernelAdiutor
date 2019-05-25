@@ -20,6 +20,7 @@
 package com.grarak.kerneladiutor.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 
@@ -55,7 +56,8 @@ public class BannerResizerActivity extends BaseActivity {
         getSupportActionBar().setTitle(getString(R.string.banner_resizer));
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, getFragment(),
                 BannerResizerFragment.class.getSimpleName()).commit();
-        findViewById(R.id.content_frame).setPadding(0, Math.round(ViewUtils.getActionBarSize(this)), 0, 0);
+        findViewById(R.id.content_frame).setPadding(0,
+                Math.round(ViewUtils.getActionBarSize(this)), 0, 0);
     }
 
     private Fragment getFragment() {
@@ -71,7 +73,8 @@ public class BannerResizerActivity extends BaseActivity {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater,
+                                 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_banner_resizer, container, false);
 
             final int minHeight = Math.round(getResources().getDimension(R.dimen.banner_min_height));
@@ -79,13 +82,13 @@ public class BannerResizerActivity extends BaseActivity {
             int maxHeight = Math.round(getResources().getDimension(R.dimen.banner_max_height));
 
             final View banner = rootView.findViewById(R.id.banner_view);
-            final int px = Prefs.getInt("banner_size", defaultHeight, getActivity());
+            final int px = AppSettings.getBannerSize(getActivity());
             setHeight(banner, px);
 
-            final TextView text = (TextView) rootView.findViewById(R.id.seekbar_text);
+            final TextView text = rootView.findViewById(R.id.seekbar_text);
             text.setText(Utils.strFormat("%d" + getString(R.string.px), px));
 
-            final DiscreteSeekBar seekBar = (DiscreteSeekBar) rootView.findViewById(R.id.seekbar);
+            final DiscreteSeekBar seekBar = rootView.findViewById(R.id.seekbar);
             seekBar.setMax(maxHeight - minHeight);
             seekBar.setProgress(px - minHeight);
             seekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
@@ -104,20 +107,15 @@ public class BannerResizerActivity extends BaseActivity {
                 }
             });
 
-            rootView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    seekBar.setProgress(px - minHeight);
-                }
-            });
+            rootView.findViewById(R.id.cancel).setOnClickListener(v
+                    -> seekBar.setProgress(px - minHeight));
 
-            rootView.findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Prefs.saveInt("banner_size", seekBar.getProgress() + minHeight, getActivity());
-                    NavigationActivity.bannerResize();
-                    getActivity().finish();
-                }
+            rootView.findViewById(R.id.restore).setOnClickListener(v
+                    -> seekBar.setProgress(defaultHeight - minHeight));
+
+            rootView.findViewById(R.id.done).setOnClickListener(v -> {
+                AppSettings.saveBannerSize(seekBar.getProgress() + minHeight, getActivity());
+                getActivity().finish();
             });
 
             return rootView;

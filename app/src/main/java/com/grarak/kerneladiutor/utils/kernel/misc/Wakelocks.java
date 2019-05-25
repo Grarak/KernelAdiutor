@@ -69,9 +69,10 @@ public class Wakelocks {
                 return context.getString(mTitle);
             }
 
-            String[] paths = mPath.split("/");
-            return Utils.upperCaseEachWord(paths[paths.length - 1].replace("enable_", "")
-                    .replace("_ws", "").replace("_", " "));
+            return Utils.upperCaseEachWord(mPath.substring(mPath.lastIndexOf('/') + 1)
+                    .replace("enable_", "")
+                    .replace("_ws", "")
+                    .replace("_", " "));
         }
 
         public void enable(boolean enable, Context context) {

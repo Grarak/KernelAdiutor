@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
+ * Copyright (C) 2015-2018 Willi Ye <williye97@gmail.com>
  *
  * This file is part of Kernel Adiutor.
  *
@@ -25,34 +25,33 @@ import android.preference.PreferenceManager;
 /**
  * Created by willi on 01.01.16.
  */
-public class Prefs {
+class Prefs {
 
-    public static void remove(String name, Context context) {
+    static void remove(String name, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().remove(name).apply();
     }
 
-    public static int getInt(String name, int defaults, Context context) {
+    static int getInt(String name, int defaults, Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(name, defaults);
     }
 
-    public static void saveInt(String name, int value, Context context) {
+    static void saveInt(String name, int value, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(name, value).apply();
     }
 
-    public static boolean getBoolean(String name, boolean defaults, Context context) {
+    static boolean getBoolean(String name, boolean defaults, Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
     }
 
-    public static void saveBoolean(String name, boolean value, Context context) {
+    static void saveBoolean(String name, boolean value, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
     }
 
-    public static String getString(String name, String defaults, Context context) {
+    static String getString(String name, String defaults, Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(name, defaults);
     }
 
-    public static void saveString(String name, String value, Context context) {
+    static void saveString(String name, String value, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(name, value).apply();
     }
-
 }

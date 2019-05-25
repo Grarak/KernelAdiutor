@@ -20,14 +20,13 @@
 package com.grarak.kerneladiutor.fragments.tools.customcontrols;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -38,7 +37,7 @@ import com.grarak.kerneladiutor.database.tools.customcontrols.Controls;
 import com.grarak.kerneladiutor.database.tools.customcontrols.ExportControl;
 import com.grarak.kerneladiutor.database.tools.customcontrols.ImportControl;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.tools.customcontrols.CustomControlException;
@@ -52,6 +51,7 @@ import com.grarak.kerneladiutor.views.recyclerview.SeekBarView;
 import com.grarak.kerneladiutor.views.recyclerview.SwitchView;
 import com.grarak.kerneladiutor.views.recyclerview.customcontrols.ErrorView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,12 +66,9 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     private Dialog mDeleteDialog;
     private Dialog mDonateDialog;
 
-    private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoadingThread;
     private AsyncTask<Void, Void, ImportControl> mImportingThread;
     private Controls mControlsProvider;
     private Controls.ControlItem mExportItem;
-
-    private boolean mLoaded;
 
     @Override
     protected boolean showTopFab() {
@@ -80,7 +77,8 @@ public class CustomControlsFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getTopFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
+        Drawable drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
         DrawableCompat.setTint(drawable, Color.WHITE);
         return drawable;
     }
@@ -89,38 +87,28 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     protected void onTopFabClick() {
         super.onTopFabClick();
         mOptionsDialog = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.custom_controls_options), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        showControls();
-                        break;
-                    case 1:
-                        if (Utils.DONATED) {
-                            Intent intent = new Intent(getActivity(), FilePickerActivity.class);
-                            intent.putExtra(FilePickerActivity.PATH_INTENT, "/sdcard");
-                            intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
-                            startActivityForResult(intent, 1);
-                        } else {
-                            mDonateDialog = ViewUtils.dialogDonate(getActivity())
-                                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-                                            mDonateDialog = null;
-                                        }
-                                    });
-                            mDonateDialog.show();
-                        }
-                        break;
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mOptionsDialog = null;
-            }
-        });
+                R.array.custom_controls_options),
+                (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            showControls();
+                            break;
+                        case 1:
+                            if (Utils.DONATED) {
+                                Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                                intent.putExtra(FilePickerActivity.PATH_INTENT,
+                                        Environment.getExternalStorageDirectory().toString());
+                                intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
+                                startActivityForResult(intent, 1);
+                            } else {
+                                mDonateDialog = ViewUtils.dialogDonate(getActivity())
+                                        .setOnDismissListener(dialog1 -> mDonateDialog = null);
+                                mDonateDialog.show();
+                            }
+                            break;
+                    }
+                })
+                .setOnDismissListener(dialog -> mOptionsDialog = null);
         if (!getActivity().isFinishing()) {
             try {
                 mOptionsDialog.show();
@@ -131,19 +119,11 @@ public class CustomControlsFragment extends RecyclerViewFragment {
 
     private void showControls() {
         mItemsDialog = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.custom_controls_items), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(getActivity(), CustomControlsActivity.class);
-                i.putParcelableArrayListExtra(CustomControlsActivity.SETTINGS_INTENT, Items.getSettings(which));
-                startActivityForResult(i, 0);
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mItemsDialog = null;
-            }
-        });
+                R.array.custom_controls_items), (dialog, which) -> {
+            Intent i = new Intent(getActivity(), CustomControlsActivity.class);
+            i.putParcelableArrayListExtra(CustomControlsActivity.SETTINGS_INTENT, Items.getSettings(which));
+            startActivityForResult(i, 0);
+        }).setOnDismissListener(dialog -> mItemsDialog = null);
         mItemsDialog.show();
     }
 
@@ -178,45 +158,18 @@ public class CustomControlsFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        if (!mLoaded) {
-            mLoaded = true;
-            load(items);
-        }
+        load(items);
     }
 
     private void reload() {
-        if (mLoadingThread == null) {
-            mLoadingThread = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
-
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    clearItems();
-                    showProgress();
-                }
-
-                @Override
-                protected List<RecyclerViewItem> doInBackground(Void... params) {
-                    List<RecyclerViewItem> items = new ArrayList<>();
-                    load(items);
-                    return items;
-                }
-
-                @Override
-                protected void onPostExecute(List<RecyclerViewItem> items) {
-                    super.onPostExecute(items);
-                    for (RecyclerViewItem item : items) {
-                        addItem(item);
-                    }
-                    hideProgress();
-                    mLoadingThread = null;
-                }
-            };
-            mLoadingThread.execute();
-        }
+        clearItems();
+        reload(new ReloadHandler<>());
     }
 
-    private void load(List<RecyclerViewItem> items) {
+    @Override
+    protected void load(List<RecyclerViewItem> items) {
+        super.load(items);
+
         mControlsProvider = new Controls(getActivity());
         for (final Controls.ControlItem item : mControlsProvider.getAllControls()) {
             CardView cardView = getCard(item);
@@ -235,12 +188,9 @@ public class CustomControlsFragment extends RecyclerViewFragment {
                     }
 
                     switchView.setChecked(Values.getBool(item.getString("enable")));
-                    switchView.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-                        @Override
-                        public void onChanged(SwitchView switchView, boolean isChecked) {
-                            Values.run(item.getApply(), item, isChecked ? "1" : "0");
-                            mControlsProvider.commit();
-                        }
+                    switchView.addOnSwitchListener((switchView1, isChecked) -> {
+                        Values.run(item.getApply(), item, isChecked ? "1" : "0");
+                        mControlsProvider.commit();
                     });
 
                     cardView.addItem(switchView);
@@ -278,13 +228,10 @@ public class CustomControlsFragment extends RecyclerViewFragment {
 
                     genericSelectView.setValue(Values.getString(item.getString("value")));
                     genericSelectView.setValueRaw(genericSelectView.getValue());
-                    genericSelectView.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
-                        @Override
-                        public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
-                            Values.run(item.getApply(), item, value);
-                            genericSelectView.setValue(value);
-                            mControlsProvider.commit();
-                        }
+                    genericSelectView.setOnGenericValueListener((genericSelectView1, value) -> {
+                        Values.run(item.getApply(), item, value);
+                        genericSelectView1.setValue(value);
+                        mControlsProvider.commit();
                     });
 
                     cardView.addItem(genericSelectView);
@@ -300,58 +247,41 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     }
 
     private CardView getCard(final Controls.ControlItem controlItem) {
-        CardView cardView = new CardView(getActivity());
-        cardView.setOnMenuListener(new CardView.OnMenuListener() {
+        CardView cardView = new CardView();
+        cardView.setOnMenuListener((cardView1, popupMenu) -> {
+            Menu menu = popupMenu.getMenu();
+            menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));
+            final MenuItem onBoot = menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
+            onBoot.setChecked(controlItem.isOnBootEnabled());
+            menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.export));
+            menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.delete));
 
-            @Override
-            public void onMenuReady(CardView cardView, PopupMenu popupMenu) {
-                Menu menu = popupMenu.getMenu();
-                menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.edit));
-                final MenuItem onBoot = menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
-                onBoot.setChecked(controlItem.isOnBootEnabled());
-                menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.export));
-                menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.delete));
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case 0:
-                                edit(controlItem);
-                                break;
-                            case 1:
-                                onBoot.setChecked(!onBoot.isChecked());
-                                controlItem.enableOnBoot(onBoot.isChecked());
-                                mControlsProvider.commit();
-                                break;
-                            case 2:
-                                mExportItem = controlItem;
-                                requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                                break;
-                            case 3:
-                                mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                            }
-                                        }, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                delete(controlItem.getUniqueId());
-                                            }
-                                        }, new DialogInterface.OnDismissListener() {
-                                            @Override
-                                            public void onDismiss(DialogInterface dialog) {
-                                                mDeleteDialog = null;
-                                            }
-                                        }, getActivity()).setTitle(getString(R.string.delete));
-                                mDeleteDialog.show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
-            }
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case 0:
+                        edit(controlItem);
+                        break;
+                    case 1:
+                        onBoot.setChecked(!onBoot.isChecked());
+                        controlItem.enableOnBoot(onBoot.isChecked());
+                        mControlsProvider.commit();
+                        break;
+                    case 2:
+                        mExportItem = controlItem;
+                        requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        break;
+                    case 3:
+                        mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
+                                (dialog, which) -> {
+                                },
+                                (dialog, which) -> delete(controlItem.getUniqueId()),
+                                dialog -> mDeleteDialog = null, getActivity())
+                                .setTitle(getString(R.string.delete));
+                        mDeleteDialog.show();
+                        break;
+                }
+                return false;
+            });
         });
         return cardView;
     }
@@ -402,62 +332,74 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     }
 
     private void showExportDialog() {
-        ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        }, new ViewUtils.OnDialogEditTextListener() {
-            @Override
-            public void onClick(String text) {
-                if (text.isEmpty()) {
-                    Utils.toast(R.string.name_empty, getActivity());
-                    return;
-                }
-                if (new ExportControl(mExportItem, mControlsProvider.getVersion()).export(text)) {
-                    Utils.toast(getString(R.string.exported_item, text, Utils.getInternalDataStorage()
-                            + "/controls"), getActivity());
-                } else {
-                    Utils.toast(getString(R.string.already_exists, text), getActivity());
-                }
-            }
-        }, getActivity()).setTitle(getString(R.string.name))
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        mExportItem = null;
+        ViewUtils.dialogEditText(null,
+                (dialog, which) -> {
+                },
+                text -> {
+                    if (text.isEmpty()) {
+                        Utils.toast(R.string.name_empty, getActivity());
+                        return;
                     }
-                }).show();
+                    if (new ExportControl(mExportItem, mControlsProvider.getVersion()).export(text)) {
+                        Utils.toast(getString(R.string.exported_item, text, Utils.getInternalDataStorage()
+                                + "/controls"), getActivity());
+                    } else {
+                        Utils.toast(getString(R.string.already_exists, text), getActivity());
+                    }
+                }, getActivity()).setTitle(getString(R.string.name))
+                .setOnDismissListener(dialog -> mExportItem = null).show();
     }
 
     private void importing(final String path) {
         if (mImportingThread == null) {
-            mImportingThread = new AsyncTask<Void, Void, ImportControl>() {
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    showProgress();
-                }
-
-                @Override
-                protected ImportControl doInBackground(Void... params) {
-                    return new ImportControl(path);
-                }
-
-                @Override
-                protected void onPostExecute(ImportControl importControl) {
-                    super.onPostExecute(importControl);
-                    hideProgress();
-                    mImportingThread = null;
-                    if (!importControl.readable()) {
-                        Utils.toast(R.string.import_malformed, getActivity());
-                    } else if (!importControl.matchesVersion()) {
-                        Utils.toast(R.string.import_wrong_version, getActivity());
-                    } else {
-                        updateControls(importControl.getResults());
-                    }
-                }
-            };
+            mImportingThread = new ImportTask(this, path);
             mImportingThread.execute();
+        }
+    }
+
+    private static class ImportTask extends AsyncTask<Void, Void, ImportControl> {
+
+        private WeakReference<CustomControlsFragment> mRefFragment;
+        private String mPath;
+
+        private ImportTask(CustomControlsFragment fragment, String path) {
+            mRefFragment = new WeakReference<>(fragment);
+            mPath = path;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            CustomControlsFragment fragment = mRefFragment.get();
+            if (fragment != null) {
+                fragment.showProgress();
+            }
+        }
+
+        @Override
+        protected ImportControl doInBackground(Void... voids) {
+            CustomControlsFragment fragment = mRefFragment.get();
+            if (fragment != null) {
+                return new ImportControl(mPath);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ImportControl importControl) {
+            super.onPostExecute(importControl);
+            CustomControlsFragment fragment = mRefFragment.get();
+            if (fragment == null) return;
+
+            fragment.hideProgress();
+            fragment.mImportingThread = null;
+            if (!importControl.readable()) {
+                Utils.toast(R.string.import_malformed, fragment.getActivity());
+            } else if (!importControl.matchesVersion()) {
+                Utils.toast(R.string.import_wrong_version, fragment.getActivity());
+            } else {
+                fragment.updateControls(importControl.getResults());
+            }
         }
     }
 
@@ -505,8 +447,8 @@ public class CustomControlsFragment extends RecyclerViewFragment {
 
         if (data != null) {
             if (requestCode == 0) {
-                HashMap<String, Object> results = (HashMap<String, Object>) data.getSerializableExtra(
-                        CustomControlsActivity.RESULT_INTENT);
+                HashMap<String, Object> results = (HashMap<String, Object>)
+                        data.getSerializableExtra(CustomControlsActivity.RESULT_INTENT);
                 updateControls(results);
             } else if (requestCode == 1) {
                 importing(data.getStringExtra(FilePickerActivity.RESULT_INTENT));
@@ -517,10 +459,15 @@ public class CustomControlsFragment extends RecyclerViewFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mLoadingThread != null) {
-            mLoadingThread.cancel(true);
-            mLoadingThread = null;
+        if (mImportingThread != null) {
+            mImportingThread.cancel(true);
+            mImportingThread = null;
         }
-        mLoaded = false;
     }
+
+    @Override
+    protected boolean showAd() {
+        return true;
+    }
+
 }

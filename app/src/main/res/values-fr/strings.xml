@@ -619,7 +619,6 @@
   <string name="password_too_long">Le mot de passe est trop long (max. 32 caractères)</string>
   <string name="set_password_first">Définissez d\'abord un mot de passe</string>
   <!-- About -->
-  <string name="libraries_used">Librairies utilisées</string>
   <!-- Contributors -->
   <!-- Help -->
   <string name="have_to_donate_summary">Non, cette application est open source. Vous pouvez facilement la compiler. Les fonctions de la donation sont activés par défaut lorsque vous compilez un apk, donc il y a aucun besoin de changer des lignes de code.</string>

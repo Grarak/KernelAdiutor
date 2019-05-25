@@ -32,7 +32,7 @@ import android.text.TextWatcher;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.EditorActivity;
 import com.grarak.kerneladiutor.activities.tools.CustomControlsActivity;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.tools.customcontrols.Items;
 import com.grarak.kerneladiutor.views.recyclerview.EditTextView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
@@ -87,21 +87,13 @@ public class CreateFragment extends RecyclerViewFragment {
                 codeView.setCode(setting.getDefault());
                 codeView.setTesting(setting.getUnit() != Items.Setting.Unit.APPLY);
 
-                codeView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                    @Override
-                    public void onClick(RecyclerViewItem item) {
-                        Intent intent = new Intent(getActivity(), EditorActivity.class);
-                        intent.putExtra(EditorActivity.TITLE_INTENT, setting.getName(getActivity()).toString());
-                        intent.putExtra(EditorActivity.TEXT_INTENT, codeView.getCode());
-                        startActivityForResult(intent, mSettings.indexOf(setting));
-                    }
+                codeView.setOnItemClickListener(item -> {
+                    Intent intent = new Intent(getActivity(), EditorActivity.class);
+                    intent.putExtra(EditorActivity.TITLE_INTENT, setting.getName(getActivity()).toString());
+                    intent.putExtra(EditorActivity.TEXT_INTENT, codeView.getCode());
+                    startActivityForResult(intent, mSettings.indexOf(setting));
                 });
-                codeView.setOnTestListener(new CodeView.OnTestListener() {
-                    @Override
-                    public void onTestResult(CodeView codeView, String output) {
-                        showFab();
-                    }
-                });
+                codeView.setOnTestListener((codeView1, output) -> showFab());
 
                 items.add(codeView);
                 mCodeViews.put(setting, codeView);
@@ -165,7 +157,7 @@ public class CreateFragment extends RecyclerViewFragment {
         if (output != null && !output.isEmpty()) {
             switch (unit) {
                 case BOOLEAN:
-                    return output.matches("(0|1)");
+                    return output.matches("([01])");
                 case INTEGER:
                     return output.matches("(|-)\\d*");
                 case STRING:

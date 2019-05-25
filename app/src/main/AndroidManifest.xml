@@ -24,10 +24,11 @@
         android:allowBackup="true"
         android:banner="@drawable/ic_banner"
         android:fullBackupContent="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Pink">
+        android:theme="@style/Theme.Default.Pink">
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="d89b7ebb31b3bb0ca514a4171c6af37c7c9579c9" />
@@ -43,12 +44,11 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        <activity-alias
-            android:name=".activities.StartActivity-Material"
-            android:banner="@drawable/ic_banner_material"
+
+        <activity
+            android:name=".activities.StartActivityMaterial"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_material"
-            android:targetActivity=".activities.StartActivity">
+            android:icon="@mipmap/ic_launcher_material">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +58,7 @@
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity-alias>
+        </activity>
 
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.NavigationActivity" />
@@ -76,9 +76,10 @@
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation" />
         <activity android:name=".activities.BannerResizerActivity" />
         <activity android:name=".activities.tools.profile.ProfileEditActivity" />
+        <activity android:name=".activities.DataSharingSearchActivity" />
 
         <receiver
-            android:name=".services.boot.Receiver"
+            android:name=".services.boot.OnBootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -87,12 +88,11 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".services.boot.Service" />
-        <service
-            android:name=".services.monitor.Monitor"
-            android:process=":monitoring" />
+        <service android:name=".services.boot.ApplyOnBootService" />
+        <receiver android:name=".services.boot.ApplyOnBoot$CancelReceiver" />
 
-        <receiver android:name=".services.boot.Service$CancelReceiver" />
+        <service android:name=".services.monitor.Monitor" />
+        <receiver android:name=".services.monitor.Monitor$DisableReceiver" />
 
         <!-- Profile Widget -->
         <receiver android:name=".services.profile.Widget">
@@ -137,10 +137,7 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".services.profile.Tasker"
-            android:process=":background">
-
+        <receiver android:name=".services.profile.Tasker">
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
             </intent-filter>

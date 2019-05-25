@@ -24,16 +24,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Log;
 
 import com.grarak.kerneladiutor.database.Settings;
-import com.grarak.kerneladiutor.services.monitor.IMonitor;
 import com.grarak.kerneladiutor.services.monitor.Monitor;
+import com.grarak.kerneladiutor.utils.Log;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by willi on 02.05.16.
@@ -47,7 +46,7 @@ public class Control {
     private boolean mProfileMode;
     private LinkedHashMap<String, String> mProfileCommands = new LinkedHashMap<>();
 
-    private List<Thread> mThreads = new ArrayList<>();
+    private Executor mExecutor = Executors.newSingleThreadExecutor();
 
     public static String setProp(String prop, String value) {
         return "setprop " + prop + " " + value;
@@ -73,7 +72,7 @@ public class Control {
         return "chown " + group + " " + file;
     }
 
-    private synchronized void apply(String command, String category, String id, final Context context) {
+    private void apply(String command, String category, String id, final Context context) {
         if (context != null) {
             if (mProfileMode) {
                 Log.i(TAG, "Added to profile: " + id);
@@ -82,7 +81,8 @@ public class Control {
                 Settings settings = new Settings(context);
                 List<Settings.SettingsItem> items = settings.getAllSettings();
                 for (int i = 0; i < items.size(); i++) {
-                    if (items.get(i).getId().equals(id) && items.get(i).getCategory().equals(category)) {
+                    if (items.get(i).getId().equals(id)
+                            && items.get(i).getCategory().equals(category)) {
                         settings.delete(i);
                     }
                 }
@@ -98,14 +98,12 @@ public class Control {
         if (context != null) {
             context.bindService(new Intent(context, Monitor.class), new ServiceConnection() {
                         @Override
-                        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                            try {
-                                IMonitor monitor = IMonitor.Stub.asInterface(iBinder);
-                                monitor.onSettingsChange();
-                                context.unbindService(this);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
+                        public void onServiceConnected(ComponentName componentName,
+                                                       IBinder iBinder) {
+                            Monitor.MonitorBinder monitorBinder =
+                                    (Monitor.MonitorBinder) iBinder;
+                            monitorBinder.onSettingsChange();
+                            context.unbindService(this);
                         }
 
                         @Override
@@ -116,24 +114,9 @@ public class Control {
         }
     }
 
-    private void run(final String command, final String category, final String id,
-                     final Context context) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                apply(command, category, id, context);
-                if (mThreads.size() > 0) {
-                    mThreads.remove(0);
-                    if (mThreads.size() > 0 && mThreads.get(0) != null && !mThreads.get(0).isAlive()) {
-                        mThreads.get(0).start();
-                    }
-                }
-            }
-        });
-        mThreads.add(thread);
-        if (mThreads.size() == 1) {
-            mThreads.get(0).start();
-        }
+    private synchronized void run(final String command, final String category, final String id,
+                                  final Context context) {
+        mExecutor.execute(() -> apply(command, category, id, context));
     }
 
     private static Control getInstance() {

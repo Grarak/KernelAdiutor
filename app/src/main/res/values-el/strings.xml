@@ -384,7 +384,6 @@
   <string name="set_password_first">Ορίστε έναν κωδικό πρόσβασης πρώτα</string>
   <string name="sections">Ενότητες</string>
   <!-- About -->
-  <string name="libraries_used">Βιβλιοθήκες που χρησιμοποιούνται</string>
   <!-- Contributors -->
   <string name="no_internet">Παρακαλώ ελέγξτε τη σύνδεσή σας στο internet!</string>
   <!-- Help -->

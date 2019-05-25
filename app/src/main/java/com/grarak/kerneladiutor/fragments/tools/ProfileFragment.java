@@ -22,29 +22,28 @@ package com.grarak.kerneladiutor.fragments.tools;
 import android.Manifest;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.FilePickerActivity;
+import com.grarak.kerneladiutor.activities.NavigationActivity;
 import com.grarak.kerneladiutor.activities.tools.profile.ProfileActivity;
 import com.grarak.kerneladiutor.activities.tools.profile.ProfileEditActivity;
 import com.grarak.kerneladiutor.activities.tools.profile.ProfileTaskerActivity;
@@ -53,11 +52,12 @@ import com.grarak.kerneladiutor.database.tools.profiles.ImportProfile;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
 import com.grarak.kerneladiutor.fragments.DescriptionFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
-import com.grarak.kerneladiutor.services.boot.Service;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.SwitcherFragment;
+import com.grarak.kerneladiutor.services.boot.ApplyOnBoot;
 import com.grarak.kerneladiutor.services.profile.Tile;
 import com.grarak.kerneladiutor.services.profile.Widget;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
@@ -77,17 +77,18 @@ import java.util.List;
  */
 public class ProfileFragment extends RecyclerViewFragment {
 
+    private static final String TASKER_KEY = "tasker";
+
     public static ProfileFragment newInstance(boolean tasker) {
+        Bundle args = new Bundle();
+        args.putBoolean(TASKER_KEY, tasker);
         ProfileFragment fragment = new ProfileFragment();
-        fragment.mTaskerMode = tasker;
+        fragment.setArguments(args);
         return fragment;
     }
 
     private boolean mTaskerMode;
     private Profiles mProfiles;
-
-    private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
-    private boolean mLoaded;
 
     private LinkedHashMap<String, String> mCommands;
     private Dialog mDeleteDialog;
@@ -99,6 +100,14 @@ public class ProfileFragment extends RecyclerViewFragment {
     private Dialog mSelectDialog;
 
     private DetailsFragment mDetailsFragment;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mTaskerMode = getArguments().getBoolean(TASKER_KEY);
+        }
+    }
 
     @Override
     protected boolean showViewPager() {
@@ -117,7 +126,8 @@ public class ProfileFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getTopFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
+        Drawable drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(getActivity(), R.drawable.ic_add));
         DrawableCompat.setTint(drawable, Color.WHITE);
         return drawable;
     }
@@ -136,7 +146,6 @@ public class ProfileFragment extends RecyclerViewFragment {
     @Override
     protected void init() {
         super.init();
-        if (!isAdded()) return;
 
         if (mTaskerMode) {
             addViewPagerFragment(new TaskerToastFragment());
@@ -144,7 +153,13 @@ public class ProfileFragment extends RecyclerViewFragment {
             addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.profile_tasker),
                     getString(R.string.profile_tasker_summary)));
             if (Utils.hasCMSDK()) {
-                addViewPagerFragment(ProfileTileFragment.newInstance(this));
+                addViewPagerFragment(SwitcherFragment.newInstance(getString(R.string.profile_tile),
+                        getString(R.string.profile_tile_summary),
+                        AppSettings.isProfileTile(getActivity()),
+                        (compoundButton, b) -> {
+                            AppSettings.saveProfileTile(b, getActivity());
+                            Tile.publishProfileTile(mProfiles.getAllProfiles(), getActivity());
+                        }));
             }
         }
 
@@ -173,49 +188,20 @@ public class ProfileFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        if (!mLoaded) {
-            mLoaded = true;
-            load(items);
-        }
+        load(items);
     }
 
     private void reload() {
-        if (mLoader == null) {
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    clearItems();
-                    mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
-                        @Override
-                        protected void onPreExecute() {
-                            super.onPreExecute();
-                            showProgress();
-                        }
-
-                        @Override
-                        protected List<RecyclerViewItem> doInBackground(Void... voids) {
-                            List<RecyclerViewItem> items = new ArrayList<>();
-                            load(items);
-                            return items;
-                        }
-
-                        @Override
-                        protected void onPostExecute(List<RecyclerViewItem> items) {
-                            super.onPostExecute(items);
-                            for (RecyclerViewItem item : items) {
-                                addItem(item);
-                            }
-                            hideProgress();
-                            mLoader = null;
-                        }
-                    };
-                    mLoader.execute();
-                }
-            }, 250);
-        }
+        getHandler().postDelayed(() -> {
+            clearItems();
+            reload(new ReloadHandler<>());
+        }, 250);
     }
 
-    private void load(List<RecyclerViewItem> items) {
+    @Override
+    protected void load(List<RecyclerViewItem> items) {
+        super.load(items);
+
         mProfiles = new Profiles(getActivity());
         List<Profiles.ProfileItem> profileItems = mProfiles.getAllProfiles();
         if (mTaskerMode && profileItems.size() == 0) {
@@ -224,152 +210,118 @@ public class ProfileFragment extends RecyclerViewFragment {
         }
         for (int i = 0; i < profileItems.size(); i++) {
             final int position = i;
-            final CardView cardView = new CardView(getActivity());
-            cardView.setOnMenuListener(new CardView.OnMenuListener() {
-                @Override
-                public void onMenuReady(final CardView cardView, PopupMenu popupMenu) {
-                    Menu menu = popupMenu.getMenu();
-                    menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.append));
-                    menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.edit));
-                    menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.details));
-                    final MenuItem onBoot = menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
-                    onBoot.setChecked(mProfiles.getAllProfiles().get(position).isOnBootEnabled());
-                    menu.add(Menu.NONE, 4, Menu.NONE, getString(R.string.export));
-                    menu.add(Menu.NONE, 5, Menu.NONE, getString(R.string.delete));
+            final CardView cardView = new CardView();
+            cardView.setOnMenuListener((cardView1, popupMenu) -> {
+                Menu menu = popupMenu.getMenu();
+                menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.append));
+                menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.edit));
+                menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.details));
+                final MenuItem onBoot = menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.on_boot)).setCheckable(true);
+                onBoot.setChecked(mProfiles.getAllProfiles().get(position).isOnBootEnabled());
+                menu.add(Menu.NONE, 4, Menu.NONE, getString(R.string.export));
+                menu.add(Menu.NONE, 5, Menu.NONE, getString(R.string.delete));
 
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            List<Profiles.ProfileItem> items = mProfiles.getAllProfiles();
-                            switch (item.getItemId()) {
-                                case 0:
-                                    if (Utils.DONATED) {
-                                        Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                                        intent.putExtra(ProfileActivity.POSITION_INTENT, position);
-                                        startActivityForResult(intent, 2);
-                                    } else {
-                                        mDonateDialog = ViewUtils.dialogDonate(getActivity());
-                                        mDonateDialog.show();
-                                    }
-                                    break;
-                                case 1:
-                                    if (Utils.DONATED) {
-                                        Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
-                                        intent.putExtra(ProfileEditActivity.POSITION_INTENT, position);
-                                        startActivityForResult(intent, 3);
-                                    } else {
-                                        mDonateDialog = ViewUtils.dialogDonate(getActivity());
-                                        mDonateDialog.show();
-                                    }
-                                    break;
-                                case 2:
-                                    if (items.get(position).getName() != null) {
-                                        List<Profiles.ProfileItem.CommandItem> commands = items.get(position).getCommands();
-                                        if (commands.size() > 0) {
-                                            setForegroundText(items.get(position).getName().toUpperCase());
-                                            mDetailsFragment.setText(commands);
-                                            showForeground();
-                                        } else {
-                                            Utils.toast(R.string.profile_empty, getActivity());
-                                        }
-                                    }
-                                    break;
-                                case 3:
-                                    onBoot.setChecked(!onBoot.isChecked());
-                                    items.get(position).enableOnBoot(onBoot.isChecked());
-                                    mProfiles.commit();
-                                    break;
-                                case 4:
-                                    mExportProfile = items.get(position);
-                                    requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                                    break;
-                                case 5:
-                                    mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                }
-                                            }, new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    mProfiles.delete(position);
-                                                    mProfiles.commit();
-                                                    reload();
-                                                }
-                                            }, new DialogInterface.OnDismissListener() {
-                                                @Override
-                                                public void onDismiss(DialogInterface dialogInterface) {
-                                                    mDeleteDialog = null;
-                                                }
-                                            }, getActivity());
-                                    mDeleteDialog.show();
-                                    break;
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    List<Profiles.ProfileItem> items1 = mProfiles.getAllProfiles();
+                    switch (item.getItemId()) {
+                        case 0:
+                            if (Utils.DONATED) {
+                                Intent intent = createProfileActivityIntent();
+                                intent.putExtra(ProfileActivity.POSITION_INTENT, position);
+                                startActivityForResult(intent, 2);
+                            } else {
+                                mDonateDialog = ViewUtils.dialogDonate(getActivity());
+                                mDonateDialog.show();
                             }
-                            return false;
-                        }
-                    });
-                }
+                            break;
+                        case 1:
+                            if (Utils.DONATED) {
+                                Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
+                                intent.putExtra(ProfileEditActivity.POSITION_INTENT, position);
+                                startActivityForResult(intent, 3);
+                            } else {
+                                mDonateDialog = ViewUtils.dialogDonate(getActivity());
+                                mDonateDialog.show();
+                            }
+                            break;
+                        case 2:
+                            if (items1.get(position).getName() != null) {
+                                List<Profiles.ProfileItem.CommandItem> commands = items1.get(position).getCommands();
+                                if (commands.size() > 0) {
+                                    setForegroundText(items1.get(position).getName().toUpperCase());
+                                    mDetailsFragment.setText(commands);
+                                    showForeground();
+                                } else {
+                                    Utils.toast(R.string.profile_empty, getActivity());
+                                }
+                            }
+                            break;
+                        case 3:
+                            onBoot.setChecked(!onBoot.isChecked());
+                            items1.get(position).enableOnBoot(onBoot.isChecked());
+                            mProfiles.commit();
+                            break;
+                        case 4:
+                            mExportProfile = items1.get(position);
+                            requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                            break;
+                        case 5:
+                            mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
+                                    (dialogInterface, i16) -> {
+                                    },
+                                    (dialogInterface, i15) -> {
+                                        mProfiles.delete(position);
+                                        mProfiles.commit();
+                                        reload();
+                                    },
+                                    dialogInterface -> mDeleteDialog = null, getActivity());
+                            mDeleteDialog.show();
+                            break;
+                    }
+                    return false;
+                });
             });
 
             final DescriptionView descriptionView = new DescriptionView();
             descriptionView.setSummary(profileItems.get(i).getName());
-            descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    if (mTaskerMode) {
-                        mSelectDialog = ViewUtils.dialogBuilder(getString(R.string.select_question,
-                                descriptionView.getSummary()), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ((ProfileTaskerActivity) getActivity()).finish(
-                                        descriptionView.getSummary().toString(),
-                                        mProfiles.getAllProfiles().get(position).getCommands());
-                            }
-                        }, new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                mSelectDialog = null;
-                            }
-                        }, getActivity());
-                        mSelectDialog.show();
-                    } else {
-                        mApplyDialog = ViewUtils.dialogBuilder(getString(R.string.apply_question,
-                                descriptionView.getSummary()), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+            descriptionView.setOnItemClickListener(item -> {
+                if (mTaskerMode) {
+                    mSelectDialog = ViewUtils.dialogBuilder(getString(R.string.select_question,
+                            descriptionView.getSummary()),
+                            (dialogInterface, i14) -> {
+                            },
+                            (dialogInterface, i13) -> ((ProfileTaskerActivity) getActivity()).finish(
+                                    descriptionView.getSummary().toString(),
+                                    mProfiles.getAllProfiles().get(position).getCommands()),
+                            dialogInterface -> mSelectDialog = null, getActivity());
+                    mSelectDialog.show();
+                } else {
+                    mApplyDialog = ViewUtils.dialogBuilder(getString(R.string.apply_question,
+                            descriptionView.getSummary()),
+                            (dialogInterface, i12) -> {
+                            },
+                            (dialogInterface, i1) -> {
                                 for (Profiles.ProfileItem.CommandItem command : mProfiles.getAllProfiles()
                                         .get(position).getCommands()) {
                                     CPUFreq.ApplyCpu applyCpu;
                                     if (command.getCommand().startsWith("#") && ((applyCpu =
                                             new CPUFreq.ApplyCpu(command.getCommand().substring(1)))
                                             .toString() != null)) {
-                                        for (String applyCpuCommand : Service.getApplyCpu(applyCpu,
+                                        for (String applyCpuCommand : ApplyOnBoot.getApplyCpu(applyCpu,
                                                 RootUtils.getSU())) {
-                                            Control.runSetting(applyCpuCommand, null, null, null);
+                                            Control.runSetting(applyCpuCommand,
+                                                    null, null, null);
                                         }
                                     } else {
-                                        Control.runSetting(command.getCommand(), null, null, null);
+                                        Control.runSetting(command.getCommand(),
+                                                null, null, null);
                                     }
                                 }
-                            }
-                        }, new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                mApplyDialog = null;
-                            }
-                        }, getActivity());
-                        try {
-                            mApplyDialog.show();
-                        } catch (NullPointerException ignored) {
-                        }
+                            },
+                            dialogInterface -> mApplyDialog = null, getActivity());
+                    try {
+                        mApplyDialog.show();
+                    } catch (NullPointerException ignored) {
                     }
                 }
             });
@@ -394,40 +346,52 @@ public class ProfileFragment extends RecyclerViewFragment {
     protected void onTopFabClick() {
         super.onTopFabClick();
 
-        mOptionsDialog = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.profile_options), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        startActivityForResult(new Intent(getActivity(), ProfileActivity.class), 0);
-                        break;
-                    case 1:
-                        if (Utils.DONATED) {
-                            Intent intent = new Intent(getActivity(), FilePickerActivity.class);
-                            intent.putExtra(FilePickerActivity.PATH_INTENT, "/sdcard");
-                            intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
-                            startActivityForResult(intent, 1);
-                        } else {
-                            mDonateDialog = ViewUtils.dialogDonate(getActivity())
-                                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-                                            mDonateDialog = null;
-                                        }
-                                    });
-                            mDonateDialog.show();
-                        }
-                        break;
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mOptionsDialog = null;
-            }
-        });
+        mOptionsDialog = new Dialog(getActivity()).setItems(
+                getResources().getStringArray(R.array.profile_options),
+                (dialogInterface, i) -> {
+                    switch (i) {
+                        case 0:
+                            startActivityForResult(createProfileActivityIntent(), 0);
+                            break;
+                        case 1:
+                            if (Utils.DONATED) {
+                                Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                                intent.putExtra(FilePickerActivity.PATH_INTENT,
+                                        Environment.getExternalStorageDirectory().toString());
+                                intent.putExtra(FilePickerActivity.EXTENSION_INTENT, ".json");
+                                startActivityForResult(intent, 1);
+                            } else {
+                                mDonateDialog = ViewUtils.dialogDonate(getActivity())
+                                        .setOnDismissListener(dialog -> mDonateDialog = null);
+                                mDonateDialog.show();
+                            }
+                            break;
+                    }
+                })
+                .setOnDismissListener(dialogInterface -> mOptionsDialog = null);
         mOptionsDialog.show();
+    }
+
+    private Intent createProfileActivityIntent() {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+
+        NavigationActivity activity = (NavigationActivity) getActivity();
+        ArrayList<NavigationActivity.NavigationFragment> fragments = new ArrayList<>();
+        boolean add = false;
+        for (NavigationActivity.NavigationFragment fragment : activity.getFragments()) {
+            if (fragment.mId == R.string.kernel) {
+                add = true;
+                continue;
+            }
+            if (!add) continue;
+            if (fragment.mFragmentClass == null) break;
+            if (activity.getActualFragments().get(fragment.mId) != null) {
+                fragments.add(fragment);
+            }
+        }
+        intent.putParcelableArrayListExtra(ProfileActivity.FRAGMENTS_INTENT, fragments);
+
+        return intent;
     }
 
     @Override
@@ -483,69 +447,53 @@ public class ProfileFragment extends RecyclerViewFragment {
 
     private void showImportDialog(final ImportProfile importProfile) {
         mImportProfile = importProfile;
-        ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }, new ViewUtils.OnDialogEditTextListener() {
-            @Override
-            public void onClick(String text) {
-                if (text.isEmpty()) {
-                    Utils.toast(R.string.name_empty, getActivity());
-                    return;
-                }
-
-                for (Profiles.ProfileItem profileItem : mProfiles.getAllProfiles()) {
-                    if (text.equals(profileItem.getName())) {
-                        Utils.toast(getString(R.string.already_exists, text), getActivity());
+        ViewUtils.dialogEditText(null,
+                (dialogInterface, i) -> {
+                },
+                text -> {
+                    if (text.isEmpty()) {
+                        Utils.toast(R.string.name_empty, getActivity());
                         return;
                     }
-                }
 
-                mProfiles.putProfile(text, importProfile.getResults());
-                mProfiles.commit();
-                reload();
-            }
-        }, getActivity()).setTitle(getString(R.string.name)).setOnDismissListener(
-                new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        mImportProfile = null;
+                    for (Profiles.ProfileItem profileItem : mProfiles.getAllProfiles()) {
+                        if (text.equals(profileItem.getName())) {
+                            Utils.toast(getString(R.string.already_exists, text), getActivity());
+                            return;
+                        }
                     }
-                }).show();
+
+                    mProfiles.putProfile(text, importProfile.getResults());
+                    mProfiles.commit();
+                    reload();
+                }, getActivity()).setTitle(getString(R.string.name))
+                .setOnDismissListener(dialogInterface -> mImportProfile = null).show();
     }
 
     private void create(final LinkedHashMap<String, String> commands) {
         mCommands = commands;
-        ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }, new ViewUtils.OnDialogEditTextListener() {
-            @Override
-            public void onClick(String text) {
-                if (text.isEmpty()) {
-                    Utils.toast(R.string.name_empty, getActivity());
-                    return;
-                }
-
-                for (Profiles.ProfileItem profileItem : mProfiles.getAllProfiles()) {
-                    if (text.equals(profileItem.getName())) {
-                        Utils.toast(getString(R.string.already_exists, text), getActivity());
+        ViewUtils.dialogEditText(null,
+                (dialogInterface, i) -> {
+                },
+                text -> {
+                    if (text.isEmpty()) {
+                        Utils.toast(R.string.name_empty, getActivity());
                         return;
                     }
-                }
 
-                mProfiles.putProfile(text, commands);
-                mProfiles.commit();
-                reload();
-            }
-        }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mCommands = null;
-            }
-        }).setTitle(getString(R.string.name)).show();
+                    for (Profiles.ProfileItem profileItem : mProfiles.getAllProfiles()) {
+                        if (text.equals(profileItem.getName())) {
+                            Utils.toast(getString(R.string.already_exists, text), getActivity());
+                            return;
+                        }
+                    }
+
+                    mProfiles.putProfile(text, commands);
+                    mProfiles.commit();
+                    reload();
+                }, getActivity())
+                .setOnDismissListener(dialogInterface -> mCommands = null)
+                .setTitle(getString(R.string.name)).show();
     }
 
     @Override
@@ -567,41 +515,24 @@ public class ProfileFragment extends RecyclerViewFragment {
     }
 
     private void showExportDialog() {
-        ViewUtils.dialogEditText(null, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }, new ViewUtils.OnDialogEditTextListener() {
-            @Override
-            public void onClick(String text) {
-                if (text.isEmpty()) {
-                    Utils.toast(R.string.name_empty, getActivity());
-                    return;
-                }
+        ViewUtils.dialogEditText(null, (dialogInterface, i) -> {
+                },
+                text -> {
+                    if (text.isEmpty()) {
+                        Utils.toast(R.string.name_empty, getActivity());
+                        return;
+                    }
 
-                if (new ExportProfile(mExportProfile, mProfiles.getVersion()).export(text)) {
-                    Utils.toast(getString(R.string.exported_item, text, Utils.getInternalDataStorage()
-                            + "/profiles"), getActivity());
-                } else {
-                    Utils.toast(getString(R.string.already_exists, text), getActivity());
-                }
-            }
-        }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mExportProfile = null;
-            }
-        }).setTitle(getString(R.string.name)).show();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mLoader != null) {
-            mLoader.cancel(true);
-            mLoader = null;
-        }
-        mLoaded = false;
+                    if (new ExportProfile(mExportProfile, mProfiles.getVersion()).export(text)) {
+                        Utils.toast(getString(R.string.exported_item,
+                                text, Utils.getInternalDataStorage()
+                                        + "/profiles"), getActivity());
+                    } else {
+                        Utils.toast(getString(R.string.already_exists, text), getActivity());
+                    }
+                }, getActivity())
+                .setOnDismissListener(dialogInterface -> mExportProfile = null)
+                .setTitle(getString(R.string.name)).show();
     }
 
     public static class DetailsFragment extends BaseFragment {
@@ -610,10 +541,11 @@ public class ProfileFragment extends RecyclerViewFragment {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater,
+                                 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile_details, container, false);
 
-            mCodeText = (TextView) rootView.findViewById(R.id.code_text);
+            mCodeText = rootView.findViewById(R.id.code_text);
 
             return rootView;
         }
@@ -625,7 +557,7 @@ public class ProfileFragment extends RecyclerViewFragment {
                 if (command.getCommand().startsWith("#")
                         & ((applyCpu =
                         new CPUFreq.ApplyCpu(command.getCommand().substring(1))).toString() != null)) {
-                    for (String applyCpuCommand : Service.getApplyCpu(applyCpu, RootUtils.getSU())) {
+                    for (String applyCpuCommand : ApplyOnBoot.getApplyCpu(applyCpu, RootUtils.getSU())) {
                         commandsText.append(applyCpuCommand).append("\n");
                     }
                 } else {
@@ -640,55 +572,26 @@ public class ProfileFragment extends RecyclerViewFragment {
         }
     }
 
-    public static class ProfileTileFragment extends BaseFragment {
-
-        public static ProfileTileFragment newInstance(ProfileFragment profileFragment) {
-            ProfileTileFragment fragment = new ProfileTileFragment();
-            fragment.mProfileFragment = profileFragment;
-            return fragment;
-        }
-
-        private ProfileFragment mProfileFragment;
-
+    public static class TaskerToastFragment extends BaseFragment {
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                                 @Nullable Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_profile_tile, container, false);
+        public View onCreateView(@NonNull LayoutInflater inflater,
+                                 @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_apply_on_boot, container, false);
 
-            SwitchCompat switchCompat = (SwitchCompat) rootView.findViewById(R.id.switcher);
-            switchCompat.setChecked(Prefs.getBoolean("profiletile", false, getActivity()));
-            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Prefs.saveBoolean("profiletile", b, getActivity());
-                    Tile.publishProfileTile(mProfileFragment.mProfiles.getAllProfiles(), getActivity());
-                }
-            });
+            ((TextView) rootView.findViewById(R.id.title)).setText(getString(R.string.profile_tasker_toast));
+            SwitchCompat switchCompat = rootView.findViewById(R.id.switcher);
+            switchCompat.setChecked(AppSettings.isShowTaskerToast(getActivity()));
+            switchCompat.setOnCheckedChangeListener((compoundButton, b)
+                    -> AppSettings.saveShowTaskerToast(b, getActivity()));
 
             return rootView;
         }
     }
 
-    public static class TaskerToastFragment extends BaseFragment {
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                                 @Nullable Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_apply_on_boot, container, false);
-
-            ((TextView) rootView.findViewById(R.id.title)).setText(getString(R.string.profile_tasker_toast));
-            SwitchCompat switchCompat = (SwitchCompat) rootView.findViewById(R.id.switcher);
-            switchCompat.setChecked(Prefs.getBoolean("showtaskertoast", true, getActivity()));
-            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Prefs.saveBoolean("showtaskertoast", b, getActivity());
-                }
-            });
-
-            return rootView;
-        }
+    @Override
+    protected boolean showAd() {
+        return true;
     }
 
 }

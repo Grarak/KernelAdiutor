@@ -19,7 +19,6 @@
  */
 package com.grarak.kerneladiutor.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
@@ -28,10 +27,13 @@ import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -41,11 +43,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.view.View;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.fragments.BaseFragment;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.kernel.BatteryFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUFragment;
 import com.grarak.kerneladiutor.fragments.kernel.CPUHotplugFragment;
@@ -61,11 +61,12 @@ import com.grarak.kerneladiutor.fragments.kernel.ScreenFragment;
 import com.grarak.kerneladiutor.fragments.kernel.SoundFragment;
 import com.grarak.kerneladiutor.fragments.kernel.ThermalFragment;
 import com.grarak.kerneladiutor.fragments.kernel.VMFragment;
-import com.grarak.kerneladiutor.fragments.kernel.WakeFrament;
+import com.grarak.kerneladiutor.fragments.kernel.WakeFragment;
 import com.grarak.kerneladiutor.fragments.other.AboutFragment;
 import com.grarak.kerneladiutor.fragments.other.ContributorsFragment;
 import com.grarak.kerneladiutor.fragments.other.HelpFragment;
 import com.grarak.kerneladiutor.fragments.other.SettingsFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.fragments.statistics.DeviceFragment;
 import com.grarak.kerneladiutor.fragments.statistics.InputsFragment;
 import com.grarak.kerneladiutor.fragments.statistics.MemoryFragment;
@@ -80,11 +81,13 @@ import com.grarak.kerneladiutor.fragments.tools.RecoveryFragment;
 import com.grarak.kerneladiutor.fragments.tools.customcontrols.CustomControlsFragment;
 import com.grarak.kerneladiutor.fragments.tools.downloads.DownloadsFragment;
 import com.grarak.kerneladiutor.services.monitor.Monitor;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Device;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.utils.WebpageReader;
+import com.grarak.kerneladiutor.utils.kernel.battery.Battery;
 import com.grarak.kerneladiutor.utils.kernel.cpuhotplug.Hotplug;
 import com.grarak.kerneladiutor.utils.kernel.cpuvoltage.Voltage;
 import com.grarak.kerneladiutor.utils.kernel.entropy.Entropy;
@@ -100,30 +103,29 @@ import com.grarak.kerneladiutor.utils.kernel.wake.Wake;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
 import com.grarak.kerneladiutor.utils.tools.Backup;
 import com.grarak.kerneladiutor.utils.tools.SupportedDownloads;
-import com.grarak.kerneladiutor.views.AdNativeExpress;
+import com.grarak.kerneladiutor.views.AdLayout;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public final static List<NavigationFragment> sFragments = new ArrayList<>();
-    public final static LinkedHashMap<Integer, Fragment> sActualFragments = new LinkedHashMap<>();
+    private static final String TAG = NavigationActivity.class.getSimpleName();
 
-    private static Callback sCallback;
+    private static final String PACKAGE = NavigationActivity.class.getCanonicalName();
+    public static final String INTENT_SECTION = PACKAGE + ".INTENT.SECTION";
 
-    private interface Callback {
-        void onBannerResize();
-    }
+    private ArrayList<NavigationFragment> mFragments = new ArrayList<>();
+    private Map<Integer, Class<? extends Fragment>> mActualFragments = new LinkedHashMap<>();
 
-    private Handler mHandler = new Handler();
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
-    private boolean mExit;
+    private long mLastTimeBackbuttonPressed;
 
     private int mSelection;
     private boolean mLicenseDialog = true;
@@ -131,146 +133,142 @@ public class NavigationActivity extends BaseActivity
     private WebpageReader mAdsFetcher;
     private boolean mFetchingAds;
 
-    private boolean mAllowCommit;
-
     @Override
     protected boolean setStatusBarColor() {
         return false;
     }
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAllowCommit = true;
-        if (sFragments.size() <= 0) {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    initFragments();
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-
-                    for (NavigationActivity.NavigationFragment fragment : sFragments) {
-                        if (fragment.mId == R.string.settings) {
-                            fragment.mFragment = new SettingsFragment();
-                            fragment.mDrawable = R.drawable.ic_settings;
-                        }
-                    }
-
-                    init(savedInstanceState);
-                }
-            }.execute();
+        if (savedInstanceState == null) {
+            new FragmentLoader(this).execute();
         } else {
+            mFragments = savedInstanceState.getParcelableArrayList("fragments");
             init(savedInstanceState);
         }
     }
 
-    private void initFragments() {
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.statistics));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.overall, new OverallFragment(), R.drawable.ic_chart));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.device, new DeviceFragment(), R.drawable.ic_device));
-        if (Device.MemInfo.getItems().size() > 0) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.memory, new MemoryFragment(), R.drawable.ic_save));
+    private static class FragmentLoader extends AsyncTask<Void, Void, Void> {
+
+        private WeakReference<NavigationActivity> mRefActivity;
+
+        private FragmentLoader(NavigationActivity activity) {
+            mRefActivity = new WeakReference<>(activity);
         }
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.inputs, new InputsFragment(), R.drawable.ic_keyboard));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.kernel));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu, new CPUFragment(), R.drawable.ic_cpu));
-        if (Voltage.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu_voltage, new CPUVoltageFragment(), R.drawable.ic_bolt));
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            NavigationActivity activity = mRefActivity.get();
+            if (activity == null) return null;
+            activity.initFragments();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            NavigationActivity activity = mRefActivity.get();
+            if (activity == null) return;
+            activity.init(null);
+        }
+    }
+
+    private void initFragments() {
+        mFragments.clear();
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.statistics));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.overall, OverallFragment.class, R.drawable.ic_chart));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.device, DeviceFragment.class, R.drawable.ic_device));
+        if (Device.MemInfo.getInstance().getItems().size() > 0) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.memory, MemoryFragment.class, R.drawable.ic_save));
+        }
+        if (Device.Input.getInstance().supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.inputs, InputsFragment.class, R.drawable.ic_keyboard));
+        }
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.kernel));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu, CPUFragment.class, R.drawable.ic_cpu));
+        if (Voltage.getInstance().supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu_voltage, CPUVoltageFragment.class, R.drawable.ic_bolt));
         }
         if (Hotplug.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu_hotplug, new CPUHotplugFragment(), R.drawable.ic_switch));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu_hotplug, CPUHotplugFragment.class, R.drawable.ic_switch));
         }
         if (Thermal.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.thermal, new ThermalFragment(), R.drawable.ic_temperature));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.thermal, ThermalFragment.class, R.drawable.ic_temperature));
         }
         if (GPU.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.gpu, new GPUFragment(), R.drawable.ic_gpu));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.gpu, GPUFragment.class, R.drawable.ic_gpu));
         }
         if (Screen.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.screen, new ScreenFragment(), R.drawable.ic_display));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.screen, ScreenFragment.class, R.drawable.ic_display));
         }
         if (Wake.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.wake, new WakeFrament(), R.drawable.ic_unlock));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.wake, WakeFragment.class, R.drawable.ic_unlock));
         }
-        if (Sound.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.sound, new SoundFragment(), R.drawable.ic_music));
+        if (Sound.getInstance().supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.sound, SoundFragment.class, R.drawable.ic_music));
         }
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.battery, new BatteryFragment(), R.drawable.ic_battery));
-        if (LED.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.led, new LEDFragment(), R.drawable.ic_led));
+        if (Battery.getInstance(this).supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.battery, BatteryFragment.class, R.drawable.ic_battery));
         }
-        if (IO.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.io_scheduler, new IOFragment(), R.drawable.ic_sdcard));
+        if (LED.getInstance().supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.led, LEDFragment.class, R.drawable.ic_led));
         }
-        if (KSM.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.ksm, new KSMFragment(), R.drawable.ic_merge));
+        if (IO.getInstance().supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.io_scheduler, IOFragment.class, R.drawable.ic_sdcard));
+        }
+        if (KSM.getInstance().supported()) {
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.ksm, KSMFragment.class, R.drawable.ic_merge));
         }
         if (LMK.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.lmk, new LMKFragment(), R.drawable.ic_stackoverflow));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.lmk, LMKFragment.class, R.drawable.ic_stackoverflow));
         }
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.virtual_memory, new VMFragment(), R.drawable.ic_server));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.virtual_memory, VMFragment.class, R.drawable.ic_server));
         if (Entropy.supported()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.entropy, new EntropyFragment(), R.drawable.ic_numbers));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.entropy, EntropyFragment.class, R.drawable.ic_numbers));
         }
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.misc, new MiscFragment(), R.drawable.ic_clear));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.tools));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.data_sharing, new DataSharingFragment(), R.drawable.ic_database));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.custom_controls, new CustomControlsFragment(), R.drawable.ic_console));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.misc, MiscFragment.class, R.drawable.ic_clear));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.tools));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.data_sharing, DataSharingFragment.class, R.drawable.ic_database));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.custom_controls, CustomControlsFragment.class, R.drawable.ic_console));
 
         SupportedDownloads supportedDownloads = new SupportedDownloads(this);
         if (supportedDownloads.getLink() != null) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.downloads, DownloadsFragment.newInstance(supportedDownloads), R.drawable.ic_download));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.downloads, DownloadsFragment.class, R.drawable.ic_download));
         }
         if (Backup.hasBackup()) {
-            sFragments.add(new NavigationActivity.NavigationFragment(R.string.backup, new BackupFragment(), R.drawable.ic_restore));
+            mFragments.add(new NavigationActivity.NavigationFragment(R.string.backup, BackupFragment.class, R.drawable.ic_restore));
         }
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.build_prop_editor, new BuildpropFragment(), R.drawable.ic_edit));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.profile, new ProfileFragment(), R.drawable.ic_layers));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.recovery, new RecoveryFragment(), R.drawable.ic_security));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.initd, new InitdFragment(), R.drawable.ic_shell));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.on_boot, new OnBootFragment(), R.drawable.ic_start));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.other));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.settings));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.about, new AboutFragment(), R.drawable.ic_about));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.contributors, new ContributorsFragment(), R.drawable.ic_people));
-        sFragments.add(new NavigationActivity.NavigationFragment(R.string.help, new HelpFragment(), R.drawable.ic_help));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.build_prop_editor, BuildpropFragment.class, R.drawable.ic_edit));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.profile, ProfileFragment.class, R.drawable.ic_layers));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.recovery, RecoveryFragment.class, R.drawable.ic_security));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.initd, InitdFragment.class, R.drawable.ic_shell));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.on_boot, OnBootFragment.class, R.drawable.ic_start));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.other));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.settings, SettingsFragment.class, R.drawable.ic_settings));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.about, AboutFragment.class, R.drawable.ic_about));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.contributors, ContributorsFragment.class, R.drawable.ic_people));
+        mFragments.add(new NavigationActivity.NavigationFragment(R.string.help, HelpFragment.class, R.drawable.ic_help));
     }
 
     private void init(Bundle savedInstanceState) {
-        int result = Prefs.getInt("license", -1, this);
-        int intentResult = getIntent().getIntExtra("result", -1);
+        int result = getIntent().getIntExtra("result", -1);
 
-        if ((result == intentResult && (result == 1 || result == 2)) && mLicenseDialog) {
-            ViewUtils.dialogBuilder(getString(R.string.license_invalid), null,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    }, new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            mLicenseDialog = false;
-                            Prefs.saveInt("license", -1, NavigationActivity.this);
-                        }
-                    }, this).show();
-        } else if ((result != intentResult || result == 3) && mLicenseDialog) {
-            ViewUtils.dialogBuilder(getString(R.string.pirated), null, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            }, new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    mLicenseDialog = false;
-                    Prefs.saveInt("license", -1, NavigationActivity.this);
-                }
-            }, this).show();
+        if ((result == 1 || result == 2) && mLicenseDialog) {
+            ViewUtils.dialogBuilder(getString(R.string.license_invalid),
+                    null,
+                    (dialog, which) -> {
+                    },
+                    dialog -> mLicenseDialog = false, this)
+                    .show();
+        } else if (result == 3 && mLicenseDialog) {
+            ViewUtils.dialogBuilder(getString(R.string.pirated),
+                    null,
+                    (dialog, which) -> {
+                    },
+                    dialog -> mLicenseDialog = false, this)
+                    .show();
         } else {
             mLicenseDialog = false;
             if (result == 0) {
@@ -278,89 +276,78 @@ public class NavigationActivity extends BaseActivity
             }
         }
 
-        sCallback = new Callback() {
-            @Override
-            public void onBannerResize() {
-                Fragment fragment = sActualFragments.get(mSelection);
-                if (fragment instanceof RecyclerViewFragment) {
-                    ((RecyclerViewFragment) fragment).resizeBanner();
-                }
-            }
-        };
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = getToolBar();
         setSupportActionBar(toolbar);
 
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, 0, 0);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        mNavigationView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    v.clearFocus();
-                }
+        mNavigationView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                v.clearFocus();
             }
         });
-        appendFragments(false);
 
         if (savedInstanceState != null) {
-            mSelection = savedInstanceState.getInt("selection");
+            mSelection = savedInstanceState.getInt(INTENT_SECTION);
             mLicenseDialog = savedInstanceState.getBoolean("license");
             mFetchingAds = savedInstanceState.getBoolean("fetching_ads");
         }
 
-        String section = getIntent().getStringExtra("section");
+        appendFragments(false);
+        String section = getIntent().getStringExtra(INTENT_SECTION);
         if (section != null) {
-            for (int id : sActualFragments.keySet()) {
-                if (sActualFragments.get(id) != null
-                        && sActualFragments.get(id).getClass().getCanonicalName().equals(section)) {
-                    mSelection = id;
+            for (Map.Entry<Integer, Class<? extends Fragment>> entry : mActualFragments.entrySet()) {
+                Class<? extends Fragment> fragmentClass = entry.getValue();
+                if (fragmentClass != null && fragmentClass.getCanonicalName().equals(section)) {
+                    mSelection = entry.getKey();
                     break;
                 }
             }
-            getIntent().removeExtra("section");
+            getIntent().removeExtra(INTENT_SECTION);
         }
 
-        if (mSelection == 0 || !sActualFragments.containsKey(mSelection)) {
+        if (mSelection == 0 || mActualFragments.get(mSelection) == null) {
             mSelection = firstTab();
         }
-        onItemSelected(mSelection, false, false);
+        onItemSelected(mSelection, false);
 
-        if (Prefs.getBoolean("data_sharing", true, this)) {
+        if (AppSettings.isDataSharing(this)) {
             startService(new Intent(this, Monitor.class));
         }
 
         if (!mFetchingAds && !Utils.DONATED) {
             mFetchingAds = true;
-            mAdsFetcher = new WebpageReader(this, new WebpageReader.WebpageCallback() {
+            mAdsFetcher = new WebpageReader(this, new WebpageReader.WebpageListener() {
                 @Override
-                public void onCallback(String raw, CharSequence html) {
-                    if (raw == null || raw.isEmpty()) return;
-                    AdNativeExpress.GHAds ghAds = new AdNativeExpress.GHAds(raw);
+                public void onSuccess(String url, String raw, CharSequence html) {
+                    AdLayout.GHAds ghAds = new AdLayout.GHAds(raw);
                     if (ghAds.readable()) {
                         ghAds.cache(NavigationActivity.this);
-                        for (int id : sActualFragments.keySet()) {
-                            Fragment fragment = sActualFragments.get(id);
-                            if (fragment instanceof RecyclerViewFragment) {
-                                ((RecyclerViewFragment) fragment).ghAdReady();
-                            }
+                        Fragment fragment = getFragment(mSelection);
+                        if (fragment instanceof RecyclerViewFragment) {
+                            ((RecyclerViewFragment) fragment).ghAdReady();
                         }
                     }
                 }
+
+                @Override
+                public void onFailure(String url) {
+                }
             });
-            mAdsFetcher.execute(AdNativeExpress.ADS_FETCH);
+            mAdsFetcher.get(AdLayout.ADS_FETCH);
         }
     }
 
     private int firstTab() {
-        for (int id : sActualFragments.keySet()) {
-            if (sActualFragments.get(id) != null) {
-                return id;
+        for (Map.Entry<Integer, Class<? extends Fragment>> entry : mActualFragments.entrySet()) {
+            if (entry.getValue() != null) {
+                return entry.getKey();
             }
         }
         return 0;
@@ -371,26 +358,25 @@ public class NavigationActivity extends BaseActivity
     }
 
     private void appendFragments(boolean setShortcuts) {
-        sActualFragments.clear();
+        mActualFragments.clear();
         Menu menu = mNavigationView.getMenu();
         menu.clear();
 
         SubMenu lastSubMenu = null;
-        for (NavigationFragment navigationFragment : sFragments) {
-            Fragment fragment = navigationFragment.mFragment;
+        for (NavigationFragment navigationFragment : mFragments) {
+            Class<? extends Fragment> fragmentClass = navigationFragment.mFragmentClass;
             int id = navigationFragment.mId;
 
             Drawable drawable = ContextCompat.getDrawable(this,
                     Utils.DONATED
-                            && Prefs.getBoolean("section_icons", false, this)
+                            && AppSettings.isSectionIcons(this)
                             && navigationFragment.mDrawable != 0 ? navigationFragment.mDrawable :
                             R.drawable.ic_blank);
 
-            if (fragment == null) {
+            if (fragmentClass == null) {
                 lastSubMenu = menu.addSubMenu(id);
-                sActualFragments.put(id, null);
-            } else if (Prefs.getBoolean(fragment.getClass().getSimpleName() + "_enabled",
-                    true, this)) {
+                mActualFragments.put(id, null);
+            } else if (AppSettings.isFragmentEnabled(fragmentClass, this)) {
                 MenuItem menuItem = lastSubMenu == null ? menu.add(0, id, 0, id) :
                         lastSubMenu.add(0, id, 0, id);
                 menuItem.setIcon(drawable);
@@ -398,7 +384,7 @@ public class NavigationActivity extends BaseActivity
                 if (mSelection != 0) {
                     mNavigationView.setCheckedItem(mSelection);
                 }
-                sActualFragments.put(id, fragment);
+                mActualFragments.put(id, fragmentClass);
             }
         }
         if (setShortcuts) {
@@ -406,9 +392,10 @@ public class NavigationActivity extends BaseActivity
         }
     }
 
-    private NavigationFragment getNavigationFragment(Fragment fragment) {
-        for (NavigationFragment navigationFragment : sFragments) {
-            if (fragment == navigationFragment.mFragment) {
+    private NavigationFragment findNavigationFragmentByClass(Class<? extends Fragment> fragmentClass) {
+        if (fragmentClass == null) return null;
+        for (NavigationFragment navigationFragment : mFragments) {
+            if (fragmentClass == navigationFragment.mFragmentClass) {
                 return navigationFragment;
             }
         }
@@ -417,77 +404,67 @@ public class NavigationActivity extends BaseActivity
 
     private void setShortcuts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) return;
-        HashMap<Fragment, Integer> openendFragmentsCount = new HashMap<>();
 
-        for (int id : sActualFragments.keySet()) {
-            Fragment fragment = sActualFragments.get(id);
-            if (fragment == null || fragment.getClass() == SettingsFragment.class) continue;
+        PriorityQueue<Class<? extends Fragment>> queue = new PriorityQueue<>(
+                (o1, o2) -> {
+                    int opened1 = AppSettings.getFragmentOpened(o1, this);
+                    int opened2 = AppSettings.getFragmentOpened(o2, this);
+                    return opened2 - opened1;
+                });
 
-            int opened = Prefs.getInt(fragment.getClass().getSimpleName() + "_opened", 0, this);
-            openendFragmentsCount.put(fragment, opened);
+        for (Map.Entry<Integer, Class<? extends Fragment>> entry : mActualFragments.entrySet()) {
+            Class<? extends Fragment> fragmentClass = entry.getValue();
+            if (fragmentClass == null || fragmentClass == SettingsFragment.class) continue;
+
+            queue.offer(fragmentClass);
         }
 
-        int max = 0;
-        for (Map.Entry<Fragment, Integer> map : openendFragmentsCount.entrySet()) {
-            if (max < map.getValue()) {
-                max = map.getValue();
-            }
-        }
-
-        int count = 0;
         List<ShortcutInfo> shortcutInfos = new ArrayList<>();
         ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
         shortcutManager.removeAllDynamicShortcuts();
-        for (int i = max; i >= 0; i--) {
-            for (Map.Entry<Fragment, Integer> map : openendFragmentsCount.entrySet()) {
-                if (i == map.getValue()) {
-                    NavigationFragment navFragment = getNavigationFragment(map.getKey());
-                    if (navFragment == null) continue;
+        for (int i = 0; i < 4; i++) {
+            NavigationFragment fragment = findNavigationFragmentByClass(queue.poll());
+            if (fragment == null || fragment.mFragmentClass == null) continue;
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.putExtra(INTENT_SECTION, fragment.mFragmentClass.getCanonicalName());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                    if (count == 4) break;
-                    count++;
-
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.putExtra("section", navFragment.mFragment.getClass().getCanonicalName());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                    ShortcutInfo shortcut = new ShortcutInfo.Builder(this,
-                            navFragment.mFragment.getClass().getSimpleName())
-                            .setShortLabel(getString(navFragment.mId))
-                            .setLongLabel(Utils.strFormat(getString(R.string.open), getString(navFragment.mId)))
-                            .setIcon(Icon.createWithResource(this, navFragment.mDrawable == 0 ?
-                                    R.drawable.ic_blank : navFragment.mDrawable))
-                            .setIntent(intent)
-                            .build();
-                    shortcutInfos.add(shortcut);
-                }
-            }
+            ShortcutInfo shortcut = new ShortcutInfo.Builder(this,
+                    fragment.mFragmentClass.getSimpleName())
+                    .setShortLabel(getString(fragment.mId))
+                    .setLongLabel(Utils.strFormat(getString(R.string.open), getString(fragment.mId)))
+                    .setIcon(Icon.createWithResource(this, fragment.mDrawable == 0 ?
+                            R.drawable.ic_blank : fragment.mDrawable))
+                    .setIntent(intent)
+                    .build();
+            shortcutInfos.add(shortcut);
         }
         shortcutManager.setDynamicShortcuts(shortcutInfos);
     }
 
+    public ArrayList<NavigationFragment> getFragments() {
+        return mFragments;
+    }
+
+    public Map<Integer, Class<? extends Fragment>> getActualFragments() {
+        return mActualFragments;
+    }
+
     @Override
     public void onBackPressed() {
-        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+        if (mDrawer != null && mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            if ((sActualFragments.get(mSelection) instanceof BaseFragment
-                    && !((BaseFragment) sActualFragments.get(mSelection)).onBackPressed())
-                    || (sActualFragments.get(mSelection) != null
-                    && sActualFragments.get(mSelection).getClass() == SettingsFragment.class)) {
-                if (mExit) {
-                    mExit = false;
-                    super.onBackPressed();
-                } else {
+            Fragment currentFragment = getFragment(mSelection);
+            if (!(currentFragment instanceof BaseFragment)
+                    || !((BaseFragment) currentFragment).onBackPressed()) {
+                long currentTime = SystemClock.elapsedRealtime();
+                if (currentTime - mLastTimeBackbuttonPressed > 2000) {
+                    mLastTimeBackbuttonPressed = currentTime;
                     Utils.toast(R.string.press_back_again_exit, this);
-                    mExit = true;
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mExit = false;
-                        }
-                    }, 2000);
+                } else {
+                    super.onBackPressed();
                 }
             }
         }
@@ -496,9 +473,10 @@ public class NavigationActivity extends BaseActivity
     @Override
     public void finish() {
         super.finish();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        for (int key : sActualFragments.keySet()) {
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag(key + "_key");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        for (int id : mActualFragments.keySet()) {
+            Fragment fragment = fragmentManager.findFragmentByTag(id + "_key");
             if (fragment != null) {
                 fragmentTransaction.remove(fragment);
             }
@@ -514,81 +492,101 @@ public class NavigationActivity extends BaseActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        mAllowCommit = false;
-        outState.putInt("selection", mSelection);
+        outState.putParcelableArrayList("fragments", mFragments);
+        outState.putInt(INTENT_SECTION, mSelection);
         outState.putBoolean("license", mLicenseDialog);
         outState.putBoolean("fetching_ads", mFetchingAds);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        onItemSelected(item.getItemId(), true, true);
+        onItemSelected(item.getItemId(), true);
         return true;
     }
 
-    private void onItemSelected(final int res, boolean delay, boolean saveOpened) {
+    private void onItemSelected(final int res, boolean saveOpened) {
         mDrawer.closeDrawer(GravityCompat.START);
         getSupportActionBar().setTitle(getString(res));
         mNavigationView.setCheckedItem(res);
         mSelection = res;
-        Fragment fragment = getFragment(res);
-        if (fragment instanceof RecyclerViewFragment) {
-            ((RecyclerViewFragment) fragment).mDelay = delay;
-        } else if (fragment instanceof SettingsFragment) {
-            ((SettingsFragment) fragment).mDelay = delay;
-        }
-        if (mAllowCommit) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment,
-                    res + "_key").commit();
-        }
+        final Fragment fragment = getFragment(res);
 
         if (saveOpened) {
-            String openedName = fragment.getClass().getSimpleName() + "_opened";
-            Prefs.saveInt(openedName, Prefs.getInt(openedName, 0, this) + 1, this);
+            AppSettings.saveFragmentOpened(fragment.getClass(),
+                    AppSettings.getFragmentOpened(fragment.getClass(), this) + 1,
+                    this);
         }
         setShortcuts();
-    }
 
-    @Override
-    protected void onResumeFragments() {
-        super.onResumeFragments();
-        mAllowCommit = true;
+        mDrawer.postDelayed(()
+                        -> {
+                    Log.crashlyticsI(TAG, "open " + fragment.getClass().getSimpleName());
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.content_frame, fragment, res + "_key").commitAllowingStateLoss();
+                },
+                250);
     }
 
     private Fragment getFragment(int res) {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(res + "_key");
-        if (fragment == null) {
-            return sActualFragments.get(res);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(res + "_key");
+        if (fragment == null && mActualFragments.containsKey(res)) {
+            fragment = Fragment.instantiate(this,
+                    mActualFragments.get(res).getCanonicalName());
         }
         return fragment;
     }
 
-    public static void bannerResize() {
-        if (sCallback != null) {
-            sCallback.onBannerResize();
-        }
-    }
-
-    public static class NavigationFragment {
+    public static class NavigationFragment implements Parcelable {
 
         public int mId;
-        public Fragment mFragment;
+        public Class<? extends Fragment> mFragmentClass;
         private int mDrawable;
 
         NavigationFragment(int id) {
             this(id, null, 0);
         }
 
-        NavigationFragment(int id, Fragment fragment, int drawable) {
+        NavigationFragment(int id, Class<? extends Fragment> fragment, int drawable) {
             mId = id;
-            mFragment = fragment;
+            mFragmentClass = fragment;
             mDrawable = drawable;
+        }
+
+        NavigationFragment(Parcel parcel) {
+            mId = parcel.readInt();
+            mFragmentClass = (Class<? extends Fragment>) parcel.readSerializable();
+            mDrawable = parcel.readInt();
         }
 
         @Override
         public String toString() {
             return String.valueOf(mId);
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(mId);
+            dest.writeSerializable(mFragmentClass);
+            dest.writeInt(mDrawable);
+        }
+
+        public static final Creator CREATOR = new Creator<NavigationFragment>() {
+            @Override
+            public NavigationFragment createFromParcel(Parcel source) {
+                return new NavigationFragment(source);
+            }
+
+            @Override
+            public NavigationFragment[] newArray(int size) {
+                return new NavigationFragment[0];
+            }
+        };
     }
 
 }

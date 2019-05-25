@@ -9,6 +9,7 @@
   <string name="no_root">Nincs root jog</string>
   <string name="no_busybox">Nincs busybox</string>
   <string name="open">%s megnyitása</string>
+  <string name="disable">Letiltás</string>
   <!-- Security -->
   <string name="password">Jelszó</string>
   <string name="password_wrong">Hibás jelszó</string>
@@ -128,9 +129,13 @@
   <string name="version">Verizó</string>
   <string name="handlers">Kezelők</string>
   <!-- CPU -->
+  <string name="cores_string">%s mag</string>
+  <string name="frequencies_string">%s frekvencia</string>
+  <string name="governors_string">%s irányítók</string>
   <string name="cores_singular">%d mag</string>
   <string name="cores">%d mag</string>
   <string name="cpu_usage">CPU használat</string>
+  <string name="cpu_usage_string">%s CPU használat</string>
   <string name="no_offline_core">Nem kapcsolhatod ki ezt a magot!</string>
   <string name="cpu_max_freq">Maximális CPU frekvencia</string>
   <string name="cpu_max_freq_summary">A maximális frekvencia, amit a CPU használhat.</string>
@@ -138,9 +143,9 @@
   <string name="cpu_min_freq_summary">A minimális frekvencia, amit a CPU használhat.</string>
   <string name="cpu_max_screen_off_freq">Maximális CPU frekvencia kikapcsolt képernyőnél</string>
   <string name="cpu_max_screen_off_freq_summary">A maximális frekvencia beállítása, amit a CPU használhat kikapcsolt képernyő mellett.</string>
-  <string name="cpu_governor">CPU ütemező</string>
+  <string name="cpu_governor">CPU irányító</string>
   <string name="cpu_governor_summary">A CPU iránytó határozza meg, hogyan viselkedik a CPU a változó terhelés alatt. Az irányító módosítása hatással lesz arra, hogy hogyan fog lépkedni a CPU az elérhető frekvenciákon.</string>
-  <string name="cpu_governor_tunables">CPU ütemező beállítások</string>
+  <string name="cpu_governor_tunables">CPU irányító hangolások</string>
   <string name="governor_tunables_summary">A különböző konfigurációs elemek, amelyek ütemező-függőek.</string>
   <string name="cpu_governor_tunables_read_error">Nem sikerült beolvasni a jelenlegi CPU ütemezőt.\n\nHa egy QCOM big.LITTLE eszközt használsz, akkor ez egy ismert probléma. A rendszer arra kényszeríti a CPU-t, hogy kikapcsolja a magokat, így rendkívül nehezen olvasható ki a CPU-specifikus statisztika. Próbáld ezt a lehetőséget újra kiválasztani. A CPU néha nem hajlandó a magot bekapcsolni.</string>
   <string name="tunables_error">%s nem hangolható</string>
@@ -206,7 +211,9 @@
   <string name="cpus_boosted">CPU-k gyorsítva</string>
   <string name="cpus_boosted_summary">Maximálisan gyorsított magok száma egy időben.</string>
   <string name="min_cpu_online">Minimális aktív CPU</string>
+  <string name="min_cpu_online_summary">Az aktív CPU minimális száma.</string>
   <string name="max_cpu_online">Maximális aktív CPU</string>
+  <string name="max_cpu_online_summary">Az aktív CPU maximális száma.</string>
   <string name="max_cpu_online_screen_off">Maximális CPU kikapcsolt képernyőnél</string>
   <string name="max_cpu_online_screen_off_summary">A mindig aktív CPU maximális száma, ha a képernyő ki van kapcsolva.</string>
   <string name="suspend_defer_time">Felfüggesztés idejének elhalasztása</string>
@@ -313,6 +320,14 @@
   <string name="busy_up_threshold_summary">Küszöb, amikor a nagy CPU-kat be kell kapcsolni.</string>
   <string name="offline_delay">Offline késleltetés</string>
   <string name="offline_delay_summary">A CPU kikapcsolása előtti idő.</string>
+  <string name="online_delay">Online késleltetés</string>
+  <string name="online_delay_summary">A CPU kikapcsolása előtti idő.</string>
+  <string name="aio_hotplug">AiO Hotplug</string>
+  <string name="aio_hotplug_summary">Minden egyben HotPlug Qualcomm eszközökhöz. Fejlesztette: Shoaib0597.</string>
+  <string name="max_cpu_online_big">Maximális aktív nagy CPU</string>
+  <string name="max_cpu_online_big_summary">Az aktív nagy CPU maximális száma.</string>
+  <string name="max_cpu_online_little">Maximális aktív KIS CPU</string>
+  <string name="max_cpu_online_little_summary">Az aktív KIS CPU maximális száma.</string>
   <!--Thermal-->
   <string name="thermal_info">Csak egy termikus vezérlőt használj a következő lehetőségek közül, több egy időben való használata szokatlan viselkedést okozhat.</string>
   <string name="thermald">Thermald</string>
@@ -364,10 +379,10 @@
   <string name="gpu_min_freq">Minimális GPU frekvencia</string>
   <string name="gpu_min_freq_summary">A minimális frekvencia, amit a GPU használhat.</string>
   <string name="gpu_2d_governor">GPU 2D irányító</string>
-  <string name="gpu_2d_governor_summary">A GPU 2D ütemezőjének beállítása.</string>
-  <string name="gpu_governor">GPU ütemező</string>
+  <string name="gpu_2d_governor_summary">A GPU 2D irányítójának beállítása.</string>
+  <string name="gpu_governor">CPU irányító</string>
   <string name="gpu_governor_summary">A GPU irányítójának beállítása.</string>
-  <string name="gpu_governor_tunables">GPU ütemező beállítások</string>
+  <string name="gpu_governor_tunables">GPU irányító hangolások</string>
   <string name="simple_gpu_algorithm">Egyszerű GPU algoritmus</string>
   <string name="simple_gpu_algorithm_summary">Egy kiegészítő az MSM Adreno TZ GPU irányítóhoz. Fejlesztő: faux123.</string>
   <string name="laziness">Lustaság</string>
@@ -484,6 +499,8 @@
   <string name="pocket_mode_summary">Ha ezt engedélyezed, akkor kikapcsolod az ébresztési vezérlőket, amikor a készülék a zsebedben van.</string>
   <string name="timeout">Időkorlát</string>
   <string name="timeout_summary">Időtartam beállítása, mikor a ébresztési vezérlők letiltódnak, miután a képernyő kikapcsolt.</string>
+  <string name="charge_timeout">Töltés késleltetés</string>
+  <string name="charge_timeout_summary">Időtartam beállítása, mikor a ébresztési vezérlők letiltódnak, miután a képernyő kikapcsolt.</string>
   <string name="power_key_suspend">Bekapcsológomb felfüggesztése</string>
   <string name="power_key_suspend_summary">Ezt engedélyezve az ébresztési vezérlők kikapcsolásra kerülnek, ha a képernyő a bekapcsoló gombbal lett kikapcsolva.</string>
   <string name="area">Terület</string>
@@ -491,6 +508,10 @@
   <string name="height">Magasság</string>
   <string name="vibration">Rezgés</string>
   <string name="vibration_strength">Rezgés erőssége</string>
+  <string name="key_power_mode">Bekapcsológomb mód</string>
+  <string name="key_power_mode_summary">Ébresztési vezérlők csak akkor aktívak, ha az eszközt a bekapcsológombbal küldte alvó módba.</string>
+  <string name="charging_mode">Töltés mód</string>
+  <string name="charging_mode_summary">Ébresztési vezérlők csak akkor aktívak, ha a készülék töltődik.</string>
   <!-- Sound -->
   <string name="sound_control">Hangvezérlő</string>
   <string name="headset_highperf_mode">Fülhallgató nagy teljesítményű mód</string>
@@ -641,9 +662,29 @@
   <string name="bluesleep_wakelock">BlueSleep Wakelock</string>
   <string name="bluesleep_wakelock_summary">BlueSleep wakelock megakadályozása.</string>
   <string name="wlan_rx_wakelock_divider">wlan_rx wakelock elválasztó</string>
+  <string name="wlan_ctrl_wakelock_divider">wlan_ctrl wakelock elválasztó</string>
   <string name="msm_hsic_wakelock_divider">msm_hsic wakelock elválasztó</string>
   <string name="bcmdhd_wakelock_divider">BCMDHD Wakelock elválasztó</string>
   <!-- Data Sharing -->
+  <string name="data_sharing_summary_notification">Az adatok megosztása aktív! Ide kattintva tudhat meg többet erről a funkcióról.</string>
+  <string name="data_sharing_summary">Ossza meg másokkal a beállításait! A Kernel Adiutor automatikusan információkat gyűjt és összeállít egy mindenki számára elérhető pontszám listát.</string>
+  <string name="data_sharing_summary_link">A lista elérhető itt: &lt;a href=\"https://www.grarak.com/kerneladiutor\"&gt;grarak.com&lt;/a&gt;.</string>
+  <string name="sharing_enable">Megosztás engedélyezése</string>
+  <string name="filter">Szűrő</string>
+  <string name="board">Tábla</string>
+  <string name="show_all">Összes mutatása</string>
+  <string name="failed_board">Nem sikerült betölteni a táblázatot.</string>
+  <string name="failed_devices">Nem sikerült az eszközlista betöltése</string>
+  <string name="previous">Előző</string>
+  <string name="page">Oldal</string>
+  <string name="next">Következő</string>
+  <string name="kernel_version">Kernel verzió</string>
+  <string name="potential_sot">Potenciális SOT</string>
+  <string name="screen_always_on">amikor a képernyő be van kapcsolva</string>
+  <string name="lower_better">az alacsonyabb jobb</string>
+  <string name="cpu_score">CPU pontszám</string>
+  <string name="cpu_information">CPU információ</string>
+  <string name="default_settings">Alapértelmezett (nincsenek módosítások)</string>
   <!-- Custom Controls -->
   <string name="welcome">Üdvözöllek</string>
   <string name="custom_controls_summary">Ebben a részben hozhatsz létre, vagy importálhatsz egyéni vezérlőket, amelyek nem léteznek az alkalmazásban (még).</string>
@@ -805,7 +846,7 @@
   <string name="fingerprint_summary">Ujjlenyomat használata a biztonsági ellenőrzéshez. Ez addig fog működni, amíg az ujjlenyomata regisztrálva van.</string>
   <string name="sections">Szekciók</string>
   <!-- About -->
-  <string name="libraries_used">Használt könyvtárak</string>
+  <string name="about_me">Szia, én Willi Ye (Grarak) vagyok, egy 19 éves Bécsben élő diák. Már elég hosszú ideje fejlesztek Androidra. A Kernel Adiutor mellett néhány eszköz esetében lineageOS közreműködő vagyok és a ParanoidAndroid-on is dolgozom. Így kérlek értsd meg, ha nincs mindig időm az alkalmazás frissítésére.</string>
   <!-- Contributors -->
   <string name="commits">%d változtatás</string>
   <string name="no_internet">Kérlek, ellenőrizd az internetkapcsolatod!</string>

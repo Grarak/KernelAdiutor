@@ -23,12 +23,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import com.grarak.kerneladiutor.utils.Log;
 
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
-import com.grarak.kerneladiutor.services.boot.Service;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.services.boot.ApplyOnBoot;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.cpu.CPUFreq;
 import com.grarak.kerneladiutor.utils.root.RootUtils;
@@ -64,7 +64,7 @@ public class Tile extends BroadcastReceiver {
                         CPUFreq.ApplyCpu applyCpu;
                         if (command.startsWith("#") && command.contains("%d")
                                 && (applyCpu = new CPUFreq.ApplyCpu(command.substring(1))).toString() != null) {
-                            adjustedCommands.addAll(Service.getApplyCpu(applyCpu, su));
+                            adjustedCommands.addAll(ApplyOnBoot.getApplyCpu(applyCpu, su));
                         } else {
                             adjustedCommands.add(command);
                         }
@@ -80,7 +80,7 @@ public class Tile extends BroadcastReceiver {
 
     public static void publishProfileTile(List<Profiles.ProfileItem> profiles, Context context) {
         if (!Utils.hasCMSDK()) return;
-        if (profiles == null || profiles.size() < 1 || !Prefs.getBoolean("profiletile", true, context)) {
+        if (profiles == null || profiles.size() < 1 || !AppSettings.isProfileTile(context)) {
             try {
                 CMStatusBarManager.getInstance(context).removeTile(0);
             } catch (RuntimeException ignored) {
@@ -120,7 +120,7 @@ public class Tile extends BroadcastReceiver {
         try {
             CMStatusBarManager.getInstance(context).publishTile(0, mCustomTile);
         } catch (Exception e) {
-            Prefs.saveBoolean("profiletile", false, context);
+            AppSettings.saveProfileTile(false, context);
         }
     }
 

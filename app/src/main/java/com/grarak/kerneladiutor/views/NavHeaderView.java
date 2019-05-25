@@ -21,7 +21,6 @@ package com.grarak.kerneladiutor.views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,12 +30,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.utils.Prefs;
+import com.grarak.kerneladiutor.utils.AppSettings;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
@@ -84,12 +82,12 @@ public class NavHeaderView extends LinearLayout {
         };
 
         LayoutInflater.from(context).inflate(R.layout.nav_header_view, this);
-        mImage = (ImageView) findViewById(R.id.nav_header_pic);
+        mImage = findViewById(R.id.nav_header_pic);
 
         boolean noPic;
         try {
-            String uri = Prefs.getString("previewpicture", null, mImage.getContext());
-            if (uri == null || uri.equals("nopicture")) noPic = true;
+            String uri = AppSettings.getPreviewPicture(getContext());
+            if (uri == null) noPic = true;
             else {
                 setImage(Uri.parse(uri));
                 noPic = false;
@@ -99,33 +97,26 @@ public class NavHeaderView extends LinearLayout {
             noPic = true;
         }
 
-        if (noPic) Prefs.saveString("previewpicture", "nopicture", mImage.getContext());
+        if (noPic) {
+            AppSettings.resetPreviewPicture(getContext());
+        }
 
-        findViewById(R.id.nav_header_fab).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                new Dialog(context).setItems(v.getResources()
-                        .getStringArray(R.array.main_header_picture_items), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                v.getContext().startActivity(new Intent(v.getContext(),
-                                        MainHeaderActivity.class));
-                                break;
-                            case 1:
-                                if (Prefs.getString("previewpicture", null, v.getContext())
-                                        .equals("nopicture"))
-                                    return;
-                                Prefs.saveString("previewpicture", "nopicture", v.getContext());
-                                mImage.setImageDrawable(null);
-                                animateBg();
-                                break;
-                        }
+        findViewById(R.id.nav_header_fab).setOnClickListener(v
+                -> new Dialog(context).setItems(v.getResources()
+                        .getStringArray(R.array.main_header_picture_items),
+                (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            v.getContext().startActivity(new Intent(v.getContext(),
+                                    MainHeaderActivity.class));
+                            break;
+                        case 1:
+                            AppSettings.resetPreviewPicture(getContext());
+                            mImage.setImageDrawable(null);
+                            animateBg();
+                            break;
                     }
-                }).show();
-            }
-        });
+                }).show());
     }
 
     public static class MainHeaderActivity extends Activity {
@@ -152,7 +143,7 @@ public class NavHeaderView extends LinearLayout {
                 try {
                     Uri selectedImageUri = data.getData();
                     sCallback.setImage(selectedImageUri);
-                    Prefs.saveString("previewpicture", selectedImageUri.toString(), this);
+                    AppSettings.savePreviewPicture(selectedImageUri.toString(), this);
                     sCallback.animate();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -160,7 +151,6 @@ public class NavHeaderView extends LinearLayout {
                 }
             finish();
         }
-
     }
 
     public void animateBg() {

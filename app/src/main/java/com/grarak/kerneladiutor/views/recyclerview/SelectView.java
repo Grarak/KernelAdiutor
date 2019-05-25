@@ -21,7 +21,6 @@ package com.grarak.kerneladiutor.views.recyclerview;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.View;
 
 import com.grarak.kerneladiutor.R;
@@ -83,20 +82,14 @@ public class SelectView extends ValueView {
     private void showDialog(Context context) {
         String[] items = mItems.toArray(new String[mItems.size()]);
 
-        mDialog = new Dialog(context).setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setItem(which);
-                if (mOnItemSelected != null) {
-                    mOnItemSelected.onItemSelected(SelectView.this, which, mItems.get(which));
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mDialog = null;
-            }
-        });
+        mDialog = new Dialog(context).setItems(items,
+                (dialog, which) -> {
+                    setItem(which);
+                    if (mOnItemSelected != null) {
+                        mOnItemSelected.onItemSelected(SelectView.this, which, mItems.get(which));
+                    }
+                })
+                .setOnDismissListener(dialog -> mDialog = null);
         if (getTitle() != null) {
             mDialog.setTitle(getTitle());
         }
@@ -108,12 +101,7 @@ public class SelectView extends ValueView {
         super.refresh();
 
         if (mView != null && getValue() != null) {
-            mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showDialog(v.getContext());
-                }
-            });
+            mView.setOnClickListener(v -> showDialog(v.getContext()));
         }
     }
 }

@@ -19,8 +19,7 @@
  */
 package com.grarak.kerneladiutor.utils.root;
 
-import android.util.Log;
-
+import com.grarak.kerneladiutor.utils.Log;
 import com.grarak.kerneladiutor.utils.Utils;
 
 import java.io.BufferedReader;
@@ -28,13 +27,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by willi on 30.12.15.
  */
 public class RootUtils {
 
-    private static SU su;
+    private static SU sInstance;
 
     public static boolean rootAccess() {
         SU su = getSU();
@@ -79,10 +79,12 @@ public class RootUtils {
     }
 
     public static void mount(boolean writeable, String mountpoint, SU su) {
-        su.runCommand(writeable ? "mount -o remount,rw " + mountpoint + " " + mountpoint :
-                "mount -o remount,ro " + mountpoint + " " + mountpoint);
-        su.runCommand(writeable ? "mount -o remount,rw " + mountpoint :
-                "mount -o remount,ro " + mountpoint);
+        su.runCommand(String.format("mount -o remount,%s %s %s",
+                writeable ? "rw" : "ro", mountpoint, mountpoint));
+        su.runCommand(String.format("mount -o remount,%s %s",
+                writeable ? "rw" : "ro", mountpoint));
+        su.runCommand(String.format("mount -o %s,remount %s",
+                writeable ? "rw" : "ro", mountpoint));
     }
 
     public static String runScript(String text, String... arguments) {
@@ -93,8 +95,8 @@ public class RootUtils {
     }
 
     public static void closeSU() {
-        if (su != null) su.close();
-        su = null;
+        if (sInstance != null) sInstance.close();
+        sInstance = null;
     }
 
     public static String runCommand(String command) {
@@ -102,13 +104,13 @@ public class RootUtils {
     }
 
     public static SU getSU() {
-        if (su == null || su.closed || su.denied) {
-            if (su != null && !su.closed) {
-                su.close();
+        if (sInstance == null || sInstance.closed || sInstance.denied) {
+            if (sInstance != null && !sInstance.closed) {
+                sInstance.close();
             }
-            su = new SU();
+            sInstance = new SU();
         }
-        return su;
+        return sInstance;
     }
 
     /*
@@ -123,8 +125,10 @@ public class RootUtils {
         private final boolean mRoot;
         private final String mTag;
         private boolean closed;
-        private boolean denied;
+        public boolean denied;
         private boolean firstTry;
+
+        private ReentrantLock mLock = new ReentrantLock();
 
         public SU() {
             this(true, null);
@@ -150,71 +154,79 @@ public class RootUtils {
             }
         }
 
-        public synchronized String runCommand(final String command) {
-            synchronized (this) {
-                try {
-                    StringBuilder sb = new StringBuilder();
-                    String callback = "/shellCallback/";
-                    mWriter.write(command + "\necho " + callback + "\n");
-                    mWriter.flush();
+        public String runCommand(final String command) {
+            if (closed) return "";
+            try {
+                mLock.lock();
 
-                    int i;
-                    char[] buffer = new char[256];
-                    while (true) {
-                        sb.append(buffer, 0, mReader.read(buffer));
-                        if ((i = sb.indexOf(callback)) > -1) {
-                            sb.delete(i, i + callback.length());
-                            break;
-                        }
-                    }
-                    firstTry = false;
-                    if (mTag != null) {
-                        Log.i(mTag, "run: " + command + " output: " + sb.toString().trim());
-                    }
+                StringBuilder sb = new StringBuilder();
+                String callback = "/shellCallback/";
+                mWriter.write(command + "\n");
+                mWriter.write("echo " + callback + "\n");
+                mWriter.flush();
 
-                    return sb.toString().trim();
-                } catch (IOException e) {
-                    closed = true;
-                    e.printStackTrace();
-                    if (firstTry) denied = true;
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    denied = true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    denied = true;
+                String line;
+                while ((line = mReader.readLine()) != null) {
+                    if (line.equals(callback)) {
+                        break;
+                    }
+                    sb.append(line).append("\n");
                 }
-                return null;
+                firstTry = false;
+                if (mTag != null) {
+                    Log.i(mTag, "run: " + command + " output: " + sb.toString().trim());
+                }
+
+                return sb.toString().trim();
+            } catch (IOException e) {
+                closed = true;
+                e.printStackTrace();
+                if (firstTry) denied = true;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                denied = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                denied = true;
+            } finally {
+                mLock.unlock();
             }
+            return null;
         }
 
         public void close() {
             try {
-                if (mWriter != null) {
-                    mWriter.write("exit\n");
-                    mWriter.flush();
-
-                    mWriter.close();
-                }
-                if (mReader != null) {
-                    mReader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (mProcess != null) {
                 try {
-                    mProcess.waitFor();
-                } catch (InterruptedException e) {
+                    mLock.lock();
+                    if (mWriter != null) {
+                        mWriter.write("exit\n");
+                        mWriter.flush();
+
+                        mWriter.close();
+                    }
+                    if (mReader != null) {
+                        mReader.close();
+                    }
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                mProcess.destroy();
-                if (mTag != null) {
-                    Log.i(mTag, String.format("%s closed: %d", mRoot ? "SU" : "SH", mProcess.exitValue()));
+                if (mProcess != null) {
+                    try {
+                        mProcess.waitFor();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    mProcess.destroy();
+                    if (mTag != null) {
+                        Log.i(mTag, Utils.strFormat("%s closed: %d",
+                                mRoot ? "SU" : "SH", mProcess.exitValue()));
+                    }
                 }
+            } finally {
+                mLock.unlock();
+                closed = true;
             }
-            closed = true;
         }
 
     }

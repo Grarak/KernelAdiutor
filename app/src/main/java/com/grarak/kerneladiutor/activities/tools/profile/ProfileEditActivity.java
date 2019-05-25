@@ -19,9 +19,7 @@
  */
 package com.grarak.kerneladiutor.activities.tools.profile;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,14 +27,13 @@ import android.support.v4.app.Fragment;
 import com.grarak.kerneladiutor.R;
 import com.grarak.kerneladiutor.activities.BaseActivity;
 import com.grarak.kerneladiutor.database.tools.profiles.Profiles;
-import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
+import com.grarak.kerneladiutor.fragments.recyclerview.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.ViewUtils;
 import com.grarak.kerneladiutor.views.dialog.Dialog;
 import com.grarak.kerneladiutor.views.recyclerview.DescriptionView;
 import com.grarak.kerneladiutor.views.recyclerview.RecyclerViewItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,7 +97,6 @@ public class ProfileEditActivity extends BaseActivity {
 
         private Profiles mProfiles;
         private Profiles.ProfileItem mItem;
-        private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
 
         private Dialog mDeleteDialog;
 
@@ -136,70 +132,35 @@ public class ProfileEditActivity extends BaseActivity {
         }
 
         private void reload() {
-            if (mLoader == null) {
-                getHandler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        clearItems();
-                        mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
-                            @Override
-                            protected void onPreExecute() {
-                                super.onPreExecute();
-                                showProgress();
-                            }
-
-                            @Override
-                            protected List<RecyclerViewItem> doInBackground(Void... params) {
-                                List<RecyclerViewItem> items = new ArrayList<>();
-                                load(items);
-                                return items;
-                            }
-
-                            @Override
-                            protected void onPostExecute(List<RecyclerViewItem> items) {
-                                super.onPostExecute(items);
-                                for (RecyclerViewItem item : items) {
-                                    addItem(item);
-                                }
-                                hideProgress();
-                                mLoader = null;
-                            }
-                        };
-                        mLoader.execute();
-                    }
-                }, 250);
-            }
+            getHandler().postDelayed(() -> {
+                clearItems();
+                reload(new ReloadHandler<>());
+            }, 250);
         }
 
-        private void load(List<RecyclerViewItem> items) {
+        @Override
+        protected void load(List<RecyclerViewItem> items) {
+            super.load(items);
+
             for (final Profiles.ProfileItem.CommandItem commandItem : mItem.getCommands()) {
                 final DescriptionView descriptionView = new DescriptionView();
                 descriptionView.setTitle(commandItem.getPath());
                 descriptionView.setSummary(commandItem.getCommand());
-                descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                    @Override
-                    public void onClick(RecyclerViewItem item) {
-                        mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.delete_question,
-                                descriptionView.getTitle()), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                descriptionView.setOnItemClickListener(item -> {
+                    mDeleteDialog = ViewUtils.dialogBuilder(
+                            getString(R.string.delete_question,
+                                    descriptionView.getTitle()),
+                            (dialog, which) -> {
+                            },
+                            (dialog, which) -> {
                                 sChanged = true;
                                 mItem.delete(commandItem);
                                 mProfiles.commit();
                                 reload();
-                            }
-                        }, new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                mDeleteDialog = null;
-                            }
-                        }, getActivity());
-                        mDeleteDialog.show();
-                    }
+                            },
+                            dialog -> mDeleteDialog = null,
+                            getActivity());
+                    mDeleteDialog.show();
                 });
 
                 items.add(descriptionView);
