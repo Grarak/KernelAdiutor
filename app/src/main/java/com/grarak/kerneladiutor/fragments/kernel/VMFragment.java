@@ -95,7 +95,7 @@ public class VMFragment extends RecyclerViewFragment {
         zram.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
             @Override
             public void onStop(SeekBarView seekBarView, int position, String value) {
-                ZRAM.setDisksize(position * 10, getActivity());
+                ZRAM.setDisksize(position * 16, getActivity());
             }
 
             @Override
